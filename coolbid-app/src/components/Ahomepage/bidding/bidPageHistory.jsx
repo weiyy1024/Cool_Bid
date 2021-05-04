@@ -174,7 +174,7 @@ const BidPage = () => {
             direction='row'
             className={classes.infoAndHistory}
           >
-            <Link href='#' className={classes.infoAndHistoryLink}>
+            <Link href='./info' className={classes.infoAndHistoryLink}>
               商品資訊
             </Link>
             <Link href='#' className={classes.infoAndHistoryLink}>

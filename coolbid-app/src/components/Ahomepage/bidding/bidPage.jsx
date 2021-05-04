@@ -166,7 +166,7 @@ const BidPage = () => {
               商品資訊
             </Link>
             <Link
-              href='#'
+              href='./history'
               className={classes.infoAndHistoryLink}
             >
               出價紀錄

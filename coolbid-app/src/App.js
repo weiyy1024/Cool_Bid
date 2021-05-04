@@ -36,7 +36,7 @@ function App() {
             render={({ match }) => <Category data={match} />}
           />
           <Route
-            path='/Ahomepage/product/:product_id'
+            path='/Ahomepage/product/:product_id/info'
             component={BidPage}
             render={({ match }) => <Category data={match} />}
           />
