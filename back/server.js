@@ -13,6 +13,13 @@ var conn = mysql.createConnection({
   database: 'coolbidLatest',
   port: 8889
 })
+// var conn2 = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: 'root',
+//   database: 'coolbid',
+//   port: 8889
+// })
 //-----------------------------------------------------
 // 設置session
 app.use(
@@ -142,56 +149,82 @@ app.get('/filter/:filter', function (req, res) {
   })
 })
 //搜尋
-app.get('/search/:keyword', function (req, res) {
-  let test = req.params.keyword
-  let productsql = `
-  select productId,userId,productName,brandName,categoryName,bagSexDescription,bagtypeDescription,
-  bagColorDescription,clothSexDescription,clothSizeDescription,clothSeasonDescription,
-  shoesSexDescription,shoesSizeDescription,shoesYearDescription,watchSexDescription,
-  watchTypeDescription,productConditionDescription,productName,startPrice,perPrice,
+// app.get('/search/:keyword', function (req, res) {
+//   let test = req.params.keyword
+//   let productsql = `
+//   select productId,userId,productName,brandName,categoryName,bagSexDescription,bagtypeDescription,
+//   bagColorDescription,clothSexDescription,clothSizeDescription,clothSeasonDescription,
+//   shoesSexDescription,shoesSizeDescription,shoesYearDescription,watchSexDescription,
+//   watchTypeDescription,productConditionDescription,productName,startPrice,perPrice,
+//   directPrice,nowPrice,endTime,productDescription,productStatusDescription from product
+//   inner join member on product.shopId = member.memberId
+//   inner join brand on product.brandId = brand.brandId
+//   inner join category on product.categoryId = category.categoryId
+//   left outer join bagSex on product.bagSexId = bagSex.bagSexId
+//   left outer join bagtype on product.bagTypeId = bagType.bagTypeId
+//   left outer join bagColor on product.bagColorId = bagColor.bagColorId
+//   left outer join clothSex on product.clothSexId = clothSex.clothSexId
+//   left outer join clothSize on product.clothSizeId = clothSize.clothSizeId
+//   left outer join clothSeason on product.clothSeasonId = clothSeason.clothSeasonId
+//   left outer join shoesSex on product.shoesSexId = shoesSex.shoesSexId
+//   left outer join shoesSize on product.shoesSizeId = shoesSize.shoesSizeId
+//   left outer join shoesYear on product.shoesYearId = shoesYear.shoesYearId
+//   left outer join watchSex on product.watchSexId = watchSex.watchSexId
+//   left outer join watchType on product.watchTypeId = watchType.watchTypeId
+//   inner join productCondition on product.productConditionId = productCondition.productConditionId
+//   inner join productStatus on product.productStatusId = productStatus.productStatusId
+//   `
+//   let sql = `
+//   ${productsql} where userId LIKE '%${test}%'union
+//   ${productsql} where productName LIKE '%${test}%'union
+//   ${productsql} where brandName LIKE '%${test}%'union
+//   ${productsql} where categoryName LIKE '%${test}%'union
+//   ${productsql} where bagSexDescription LIKE '%${test}%'union
+//   ${productsql} where bagtypeDescription LIKE '%${test}%'union
+//   ${productsql} where bagColorDescription LIKE '%${test}%'union
+//   ${productsql} where clothSexDescription LIKE '%${test}%'union
+//   ${productsql} where clothSizeDescription LIKE '%${test}%'union
+//   ${productsql} where clothSeasonDescription LIKE '%${test}%'union
+//   ${productsql} where shoesSexDescription LIKE '%${test}%'union
+//   ${productsql} where shoesSizeDescription LIKE '%${test}%'union
+//   ${productsql} where shoesYearDescription LIKE '%${test}%'union
+//   ${productsql} where watchSexDescription LIKE '%${test}%'union
+//   ${productsql} where watchTypeDescription LIKE '%${test}%'union
+//   ${productsql} where productConditionDescription LIKE '%${test}%'union
+//   ${productsql} where productDescription LIKE '%${test}%'
+//   `
+//   conn2.query(sql, function (err, result) {
+//     res.send(result)
+//     // res.send(test + 'ok')
+//   })
+// })
+
+app.get('/search/:id', function (req, res) {
+  let test = req.params.id
+  let productsql2 = `
+  select productId,userId,productName,brandName,categoryName,productConditionDescription,productName,startPrice,perPrice,
   directPrice,nowPrice,endTime,productDescription,productStatusDescription from product
   inner join member on product.shopId = member.memberId
   inner join brand on product.brandId = brand.brandId
   inner join category on product.categoryId = category.categoryId
-  left outer join bagSex on product.bagSexId = bagSex.bagSexId
-  left outer join bagtype on product.bagTypeId = bagType.bagTypeId
-  left outer join bagColor on product.bagColorId = bagColor.bagColorId
-  left outer join clothSex on product.clothSexId = clothSex.clothSexId
-  left outer join clothSize on product.clothSizeId = clothSize.clothSizeId
-  left outer join clothSeason on product.clothSeasonId = clothSeason.clothSeasonId
-  left outer join shoesSex on product.shoesSexId = shoesSex.shoesSexId
-  left outer join shoesSize on product.shoesSizeId = shoesSize.shoesSizeId
-  left outer join shoesYear on product.shoesYearId = shoesYear.shoesYearId
-  left outer join watchSex on product.watchSexId = watchSex.watchSexId
-  left outer join watchType on product.watchTypeId = watchType.watchTypeId
   inner join productCondition on product.productConditionId = productCondition.productConditionId
   inner join productStatus on product.productStatusId = productStatus.productStatusId
   `
-  let sql = `
-  ${productsql} where userId LIKE '%${test}%'union
-  ${productsql} where productName LIKE '%${test}%'union
-  ${productsql} where brandName LIKE '%${test}%'union
-  ${productsql} where categoryName LIKE '%${test}%'union
-  ${productsql} where bagSexDescription LIKE '%${test}%'union
-  ${productsql} where bagtypeDescription LIKE '%${test}%'union
-  ${productsql} where bagColorDescription LIKE '%${test}%'union
-  ${productsql} where clothSexDescription LIKE '%${test}%'union
-  ${productsql} where clothSizeDescription LIKE '%${test}%'union
-  ${productsql} where clothSeasonDescription LIKE '%${test}%'union
-  ${productsql} where shoesSexDescription LIKE '%${test}%'union
-  ${productsql} where shoesSizeDescription LIKE '%${test}%'union
-  ${productsql} where shoesYearDescription LIKE '%${test}%'union
-  ${productsql} where watchSexDescription LIKE '%${test}%'union
-  ${productsql} where watchTypeDescription LIKE '%${test}%'union
-  ${productsql} where productConditionDescription LIKE '%${test}%'union
-  ${productsql} where productDescription LIKE '%${test}%'
+  let sql2 = `
+  ${productsql2} where userId LIKE '%${test}%'  union
+  ${productsql2} where productName LIKE '%${test}%'  union
+  ${productsql2} where brandName LIKE '%${test}%'  union
+  ${productsql2} where categoryName LIKE '%${test}%'  union
+  ${productsql2} where productConditionDescription LIKE '%${test}%'  union
+  ${productsql2} where productDescription LIKE '%${test}%'
   `
-  conn.query(sql, function (err, result) {
+  conn.query(sql2, function (err, result) {
+    console.log(result)
     res.send(result)
-    // res.send(test + 'ok')
+    // res.send('ok');
   })
 })
-
+//-----------------------------post方法------------------------
 // app.post('/search',function(req,res){
 //     let test = req.body.test
 //     // console.log(test)

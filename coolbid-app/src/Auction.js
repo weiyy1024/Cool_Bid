@@ -24,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
- //test
- 
 function Auction() {
   const [user, setUser] = useState()
 

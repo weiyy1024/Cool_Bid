@@ -7,7 +7,6 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import Pagination from '@material-ui/lab/Pagination'
-import Ps5Pic from '../CatProduct/images/Ps5.jpeg'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import axios from 'axios'
 import './search.css'
@@ -61,7 +60,7 @@ export function ItemDiv(props) {
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv2'}>
         <img
           className={sort === 1 ? 'productImg' : 'productImg2'}
-          src={Ps5Pic}
+          src={'/imgs/' + data.productId + '.jpg'}
         ></img>
         <FavoriteIcon
           className={sort === 1 ? 'Favorite' : 'Favorite2'}

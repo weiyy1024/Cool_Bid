@@ -48,7 +48,7 @@ const ToggleItem = styled.div`
   top: 0;
   width: 100%;
   position: fixed;
-  z-index: 99999;
+  z-index: 99;
   background-color: ${({ theme }) => theme.bg};
   img {
     width: 2.7rem;
