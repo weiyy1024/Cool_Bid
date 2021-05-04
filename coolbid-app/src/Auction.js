@@ -35,7 +35,7 @@ function Auction() {
     setUser(prompt('請輸入暱稱', 'Guest'))
     setWs(webSocket(server))
   }, [])
-
+  // test 2
   return (
     <Grid container spacing={3} style={{ padding: '20px', maxWidth: '100vw' }}>
       <Grid item xs style={{ height: '100vh' }}>
