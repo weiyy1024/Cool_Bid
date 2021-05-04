@@ -32,7 +32,7 @@ export default function Login(props) {
         password: pwd
       })
       .then((e) => {
-        alert('memberId ' + account)
+        // alert('memberId ' + account)
         alert(e.data)
         console.log(e)
         window.location.href = 'http://localhost:3000/'
