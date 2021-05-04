@@ -20,7 +20,7 @@ import {
 
 import useStyles from '../../../styles/BidPageStyle'
 
-import PrimarySearchAppBar from '../../../utils/AppBar'
+// import PrimarySearchAppBar from '../../../utils/AppBar'
 
 import BidFunc from './bidFunc' // bidding function
 
@@ -39,8 +39,8 @@ const BidPage = () => {
 
   return (
     <>
-      <header>{PrimarySearchAppBar()}</header>
-      <Container className={classes.root}>
+      {/* <header>{PrimarySearchAppBar()}</header> */}
+      <Container style={ { marginTop: '18rem' } } className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
           <Link color='inherit' href='/bidding' onClick={handleClick}>
             Home Page
