@@ -1,0 +1,29 @@
+
+.nav {
+  width: 100%;
+  color: #bbb;
+  background: #2e2e2e;
+  letter-spacing: .1rem;
+  font-size: 2rem;
+}
+
+.nav ul {
+  text-align: center;
+  margin: 0;
+}
+
+.nav ul li {
+  display: inline-block;
+  padding: 0 9rem;
+  line-height: 5rem;
+  cursor: pointer;
+}
+.nav ul li a{
+  color:#bbb;
+  text-decoration: none;
+}
+.nav ul li:hover {
+  background: #00939C;
+}
+
+/*# sourceMappingURL=.nav2.css.map */

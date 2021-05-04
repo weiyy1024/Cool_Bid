@@ -1,0 +1,155 @@
+/**Variables**/
+$container-bgColor: #444;
+$left-bgColor: rgba(74, 8, 9, 0.7);
+$left-button-hover: rgba(212, 26, 50, 0.7);
+$right-bgColor: rgba(255, 249, 239, 0.8);
+$right-button-hover: rgba(208, 176, 108, 0.7);
+$hover-width: 75%;
+$small-width: 25%;
+$animateSpeed: 1000ms;
+
+html, body {
+   padding: 0;
+   margin: 0;
+   font-family: 'Open Sans', sans-serif;
+   width: 100%;
+   height: 100%;
+   overflow-x: hidden;
+}
+
+.container {
+   position: relative;
+   width: 100%;
+   height: 100%;
+   background: $container-bgColor;
+}
+
+// Screens
+.screen {
+   position: absolute;
+   width: 50%;
+   height: 100%;
+   overflow: hidden;
+}
+
+.screen.left {
+   left: 0;
+   background: url('https://wallpapercave.com/wp/94kcr3K.jpg') center center no-repeat;
+   background-size: cover;
+   &:before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: $left-bgColor;
+   }
+}
+
+.screen.right {
+   right: 0;
+   background: url('https://www.gentlemansgazette.com/wp-content/uploads/2014/10/Straw-or-Hay-Colored-White-Wine.jpg') center center no-repeat;
+   background-size: cover;
+   &:before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: $right-bgColor;
+   }
+}
+
+.info {
+   position: absolute;
+   left: 50%;
+   top: 20%;
+   width: 100%;
+   transform: translateX(-50%);
+   text-align: center;
+}
+
+h1 {
+   font-size: 6rem;
+   text-align: center;
+   font-family: 'Parisienne', cursive;
+}
+
+h1.red-wine {
+   color: $left-button-hover;
+}
+
+h1.white-wine {
+   color: $right-button-hover
+}
+
+// Buttons
+button {
+   background-color: rgba(255, 255, 255, 0);
+   border: none;
+}
+.button {
+   display: block;
+   height: 2.6rem;
+   padding-top: 1.2rem;
+   width: 15rem;
+   text-align: center;
+   border-radius: 4px;
+   font-weight: 600;
+   font-size: 1rem;
+   text-transform: uppercase;
+   text-decoration: none;
+   transition: all .2s;
+   letter-spacing: 1px;
+}
+
+.left .button {
+   color: $left-button-hover;
+   border: 3px solid $left-button-hover;
+}
+
+.right .button {
+   color: $right-button-hover;
+   border: 3px solid $right-button-hover;
+}
+
+.left .button:hover {
+   border-color: $left-button-hover;
+   background-color: $left-button-hover;
+   color: white;
+}
+
+.right .button:hover {
+   border-color: $right-button-hover;
+   background-color: $right-button-hover;
+   color: white;
+}
+
+// Transitions
+.screen.left, .screen.right, .screen.right:before, .screen.left:before {
+   transition: $animateSpeed all ease-in-out;
+}
+
+// Hovering
+.hover-left .left, .hover-right .right {
+   width: $hover-width;
+}
+.hover-left .right, .hover-right .left {
+   width: $small-width;
+}
+.hover-left .right:before, .hover-right .left:before {
+   z-index: 2;
+}
+
+@media(max-width: 800px) {
+   h1 {
+      font-size: 5rem;
+   }
+   .button {
+      width: 12rem;
+   }
+}
+
+@media(max-width: 700px) {
+   h1 {
+      font-size: 4rem;
+   }
+}

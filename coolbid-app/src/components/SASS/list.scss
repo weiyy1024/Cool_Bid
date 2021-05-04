@@ -1,0 +1,78 @@
+// tabs
+
+.tabs > ul {
+  list-style: none;
+  display: inline-flex;
+  border-bottom: solid 1px #707070;
+  width: 100%;
+  padding-bottom: 10px;
+  justify-content: center;
+
+  li {
+    padding: 10px 50px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #707070;
+    position: relative;
+    padding-bottom: 8px;
+  }
+
+  a:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: -5px;
+    height: 0;
+    border-bottom: 1px solid #707070;
+    transition: 0.3s;
+  }
+
+  a:hover:after {
+    left: 0%;
+    right: 0%;
+  }
+}
+
+//table
+
+.Table_wrap {
+  width: 960px;
+  text-align: center;
+  border: solid 1px hsl(0, 0%, 44%);
+  padding: 10px 20px 50px 20px; //上右下左
+  box-sizing: border-box;
+  margin-bottom: 100px;
+}
+
+.Table_container {
+  margin: auto;
+  border: 1px solid #707070;
+  color: hsl(0, 0%, 44%);
+  border-radius: 10px;
+  margin-top: 50px;
+  box-sizing: border-box;
+}
+
+//
+.Address_wrap {
+  width: 960px;
+  text-align: right;
+  border:1px solid #707070; 
+  .btnArea{height: 50px;}
+  button {
+    margin-left: 10px;
+  }
+}
+
+.Address_list{
+  border: 1px solid #707070;
+  margin:10px auto 20px auto;//上右下左
+  text-align: left;
+  width: 600px;
+ line-height: 2rem;
+ padding:10px 10px 10px 20px;
+  .dataArea{margin-top: 30px;}
+}

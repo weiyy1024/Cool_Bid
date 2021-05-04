@@ -1,0 +1,139 @@
+.ProductContainer{
+    position: relative;
+    margin: 2rem;
+    width: 24rem;
+    border-radius: 4px;
+    background: #dbdbdb;
+    box-shadow: -4px 4px 20px 0px #eeeeee, 49px -9px 98px #f2f2f2bf;
+  
+}
+.ProductContainer2{
+    margin: 2rem;
+    width:80%;
+    height: 100%;
+    margin: 2rem auto;
+    display: flex;
+    border-radius: 2rem;
+    box-shadow: -4px 4px 20px 0px #eeeeee, 49px -9px 98px #f2f2f2bf;
+}
+.productImg{
+    height: 24rem;
+    width: 24rem;
+    border-top-left-radius: 3rem;
+}
+.ProductImgDiv{
+    position: relative;
+    width: 100%;
+    top: 0;
+}
+.ProductImgDiv2{
+    position: relative;
+    height: 22.5rem;
+    width: 22.5rem;
+    margin-left: 4rem;
+}
+
+.Favorite{
+    position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.Favorite2{
+    position: absolute;
+    bottom: 1.5rem;
+    left: 94rem;  
+  cursor: pointer;
+}
+.Favorite:hover{
+    color: rgb(254 63 29);
+}
+.Favorite2:hover{
+    color: rgb(254 63 29);
+}
+.Information{
+    position: relative;
+}
+.Information2{
+    position: relative;
+    padding: 2rem;
+margin-left: 5rem;
+}
+
+p.title {
+    font-size: 2rem;
+    margin-bottom: 0;
+    padding: 1rem 2rem 0 2rem;
+  }
+  p.title2 {
+    font-size: 2.4rem;
+    padding: 1rem 2rem 0 0;
+    margin-bottom: 0;
+
+  }
+  p.price {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 0;
+    display: none;
+  }
+  p.price2 {
+    font-size: 1.8rem;
+    text-align: left;
+    margin-bottom: 0;
+  }
+  .biddingPrice2{
+    font-size: 1.8rem;
+    text-align: left;
+    margin-bottom: 0;
+  }
+  .biddingPrice{
+    font-size: 1.8rem;
+    text-align: left;
+    margin-bottom: 0;
+    margin-left: 2rem;
+  }
+  p.time {
+    font-size: 1.8rem;
+  }
+  .countDownContainer {
+    display: flex;
+    user-select: none;
+    cursor: default;
+    margin-left: 1rem;
+
+}
+.countDownContainer2 {
+    display: flex;
+    user-select: none;
+    cursor: default;
+    margin-top:2rem ;
+    margin-bottom: 0;
+}
+.infoEnd{
+    font-size: 1rem;
+    text-align: left;
+    margin: 2rem 0 .4rem 1rem;
+}
+.infoEnd2{
+    font-size: 1rem;
+    margin-bottom: .4rem;
+    margin-top: 1rem;
+}
+.info{
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+.info2{
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+
+.infoTitle{
+    text-align: center;
+    padding: .2rem 1.05rem;
+}
+.infoTitle1{
+    text-align: center;
+    padding: .2rem .2rem .2rem 2rem;
+}
