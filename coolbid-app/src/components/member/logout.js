@@ -7,7 +7,16 @@
 
 import React from 'react'
 import axios from 'axios'
+import Button from '@material-ui/core/Button'
+import './log.css'
+import styled from '@emotion/styled'
 
+const LoginContainer = styled.div`
+  width: 25%;
+  height: 30rem;
+  margin: 20rem auto;
+  color: grey;
+`
 export default function Logout(props) {
   axios.defaults.withCredentials = true
   const handlelogout = () => {
@@ -24,14 +33,15 @@ export default function Logout(props) {
   })
 
   return (
-    <>
-      <button
-        style={{ marginLeft: 450, marginTop: 300 }}
+    <LoginContainer>
+      <Button
+        className="submitBtn"
+        variant="contained"
+        color="primary"
         onClick={handlelogout}
       >
-        {' '}
         登出
-      </button>
-    </>
+      </Button>
+    </LoginContainer>
   )
 }

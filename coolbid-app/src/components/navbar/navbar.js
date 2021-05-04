@@ -137,9 +137,7 @@ const Title = styled(NavLink)`
 `
 const Member = styled(NavLink)`
   text-decoration: none;
-  dl {
-    // font-size: 20rem;
-  }
+  color: white;
   &:hover {
     dl {
       visibility: visible;
@@ -192,7 +190,6 @@ export default function NavBar() {
   const [search, setSearch] = useState('')
   const handleSearch = () => {
     window.location.href = 'http://localhost:3000/Ahomepage/search/' + search
-    // window.location.href = 'http://localhost:3000/Ahomepage/search?keyword=全新'
   }
 
   const iconStye = {

@@ -4,9 +4,9 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-// import Ps5Pic from '../images/Ps5.jpeg'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import axios from 'axios'
+import { NavLink } from 'react-router-dom'
 import '../style/product.css'
 
 const Products = styled.div`
@@ -62,10 +62,12 @@ export function ItemDiv(props) {
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
-        <img
-          className={sort === 1 ? 'productImg' : 'productImg3'}
-          src={'/imgs/' + data.productId + '.jpg'}
-        ></img>
+        <NavLink to={'/Ahomepage/product/product?=' + data.productId}>
+          <img
+            className={sort === 1 ? 'productImg' : 'productImg3'}
+            src={'/imgs/' + data.productId + '.jpg'}
+          />
+        </NavLink>
         <FavoriteIcon
           className={sort === 1 ? 'Favorite' : 'Favorite3'}
           onClick={() => handlelike(data.productId)}

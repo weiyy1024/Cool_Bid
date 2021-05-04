@@ -1,6 +1,6 @@
 /* eslint-disable space-before-function-paren */
 import React from 'react'
-import NavBar from './components/navbar/navbar'
+// import NavBar from './components/navbar/navbar'
 import Ahomepage from './components/Ahomepage/aHomepage'
 import Category from './components/Ahomepage/CatProduct/category'
 import Homepage from './components/Homepage/homepage'
@@ -18,6 +18,7 @@ import RenewMemberPwd from './components/member/account/renewMemberPwd'
 import ForgetMemberPwd from './components/member/forgetMemberPwd'
 import BidPage from './components/Ahomepage/bidding/bidPage'
 import BidPageHistory from './components/Ahomepage/bidding/bidPageHistory'
+import NavBar from './components/navbar/navbar'
 
 function App() {
   return (

@@ -16,7 +16,7 @@ export default function MemberDropDown() {
         <NavLink to="/BackStage/sellerInfo">賣家後台</NavLink>
       </dd>
       <dd>
-        <NavLink to="/member/purchase">購買清單</NavLink>
+        <NavLink to="/BackStage/orders">訂單資訊</NavLink>
       </dd>
       <dd>
         <NavLink to="/Shopping/WishList">收藏清單</NavLink>
