@@ -10,7 +10,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import WbSunnyIcon from '@material-ui/icons/WbSunny'
 import Brightness2Icon from '@material-ui/icons/Brightness2'
 import SearchBar1 from 'material-ui-search-bar'
-import Tooltip from '@material-ui/core/Tooltip'
+// import Tooltip from '@material-ui/core/Tooltip'
 // country
 import DialogSelect from './components/Country'
 // bidding
@@ -22,6 +22,7 @@ import Note from './components/Note'
 // dorp down
 import DropDown from './components/Dropdown'
 import AuctionDropDown from './components/AuctionDropDown'
+import MemberDropDown from './components/member'
 // Theme switch
 const theme = {
   light: {
@@ -134,6 +135,17 @@ const Title = styled(NavLink)`
     }
   }
 `
+const Member = styled(NavLink)`
+  text-decoration: none;
+  dl {
+    // font-size: 20rem;
+  }
+  &:hover {
+    dl {
+      visibility: visible;
+    }
+  }
+`
 
 // SearchBar
 const SearchDiv = styled.div`
@@ -225,9 +237,10 @@ export default function NavBar() {
         </SearchDiv>
         <ThreeIcons>
           <Note />
-          <Tooltip title="Account" arrow>
+          <Member className="Chomepage" to="/Member">
             <AccountCircleIcon style={iconStye} />
-          </Tooltip>
+            <MemberDropDown />
+          </Member>
           <Bidding />
           <ShoppingCart />
         </ThreeIcons>

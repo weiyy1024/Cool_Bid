@@ -67,10 +67,10 @@ function App() {
             component={ForgetMemberPwd}
             exact
           />
-          <Route path="/Member/shippingInfo" component={Login} exact />
-          <Route path="/Member/paymentInfo" component={Login} exact />
-          <Route path="/Member/coolCoin" component={Login} exact />
-          <Route path="/Member/purchase" component={Login} exact />
+          <Route path="/member/shippingInfo" component={Login} exact />
+          <Route path="/member/paymentInfo" component={Login} exact />
+          <Route path="/member/coolCoin" component={Login} exact />
+          <Route path="/member/purchase" component={Login} exact />
 
           {/* Seller */}
           <Route path="/BackStage/product" component={AddProductEdit} exact />
