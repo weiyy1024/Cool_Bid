@@ -17,7 +17,7 @@ const Products = styled.div`
 `
 
 export function ItemDiv(props) {
-  const { data, index, handlelike, sort } = props
+  const { data, sort } = props
   const [days, setDays] = useState(0)
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)
@@ -56,6 +56,9 @@ export function ItemDiv(props) {
     clearInterval(timer)
     countdown()
   }, [data])
+  const handlelike = (e) => {
+    console.log(e)
+  }
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
@@ -65,7 +68,7 @@ export function ItemDiv(props) {
         ></img>
         <FavoriteIcon
           className={sort === 1 ? 'Favorite' : 'Favorite3'}
-          onClick={(e) => handlelike(e, index)}
+          onClick={() => handlelike(data.productId)}
           style={{
             fontSize: '3.6rem'
           }}
@@ -285,11 +288,6 @@ export default function Product(props) {
       setProductData(sortAfter)
     }
   }, [sortTime])
-  const handlelike = (e, index) => {
-    console.log(e)
-    console.log(index)
-  }
-
   return (
     <Products>
       {productData[0]
@@ -299,7 +297,6 @@ export default function Product(props) {
                 key={index}
                 index={index}
                 data={item}
-                handlelike={handlelike}
                 sort={sort}
                 sortPrice={sortPrice}
                 sortTime={sortTime}

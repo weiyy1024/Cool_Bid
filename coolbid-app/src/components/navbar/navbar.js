@@ -114,7 +114,7 @@ const Navbar = styled.div`
 const LogoBox = styled(NavLink)`
   background: url(${logo}) no-repeat center;
   font-size: 4rem;
-  width:200px;
+  width: 200px;
   color: ${({ theme }) => theme.textColor};
   text-decoration: none;
 `
