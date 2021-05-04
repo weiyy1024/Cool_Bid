@@ -52,8 +52,8 @@ app.post('/member/signin', function (req, res) {
       if (err) console.log(err)
       else if (result[0]) {
         req.session.user = result
-        res.send('login')
-      } else res.send('login failed')
+        res.send('登入成功')
+      } else res.send('登入失敗，請重試')
     }
   )
 })
@@ -71,7 +71,7 @@ app.get('/member/signin', (req, res) => {
 // 登出
 app.get('/logout', function (req, res) {
   req.session.destroy() //刪除session
-  res.send('logout')
+  res.send('登出成功')
 })
 
 //商品類別
