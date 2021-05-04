@@ -11,9 +11,10 @@ import {
 } from '@material-ui/core'
 import PaymentIcon from '@material-ui/icons/Payment'
 
-import '../../../styles/bidFunc.css'
+import useStyles from '../../../styles/bidFuncStyle'
 
 const bidPriceStep = 300
+const bidTimes = 6
 const directBuyPrice = 50000
 
 const directBuy = () => {
@@ -63,83 +64,97 @@ const BidFunc = () => {
 
   const saveMoney = () => {
     const priceDiff = directBuyPrice - nowBidPrice
-    return priceDiff <= 1000
+    return priceDiff <= 5000
       ? `${parseFloat(((1 - nowBidPrice / directBuyPrice) * 100).toFixed(2))}%`
       : `${directBuyPrice - nowBidPrice}元`
   }
 
+  const classes = useStyles()
+
   return (
-    <Container>
-      <Typography variant="h5" color="primary" onChange={handleNowPriceChange}>
+    <Container className={classes.bidFuncWrapper}>
+      <Typography variant='h4' color='primary' onChange={handleNowPriceChange}>
         目前出價：{nowBidPrice}元
       </Typography>
-      <Typography variant="h5" color="primary">
+      <Typography variant='h4' color='primary'>
+        出價次數：{bidTimes}次
+      </Typography>
+      <Typography variant='h4' color='primary'>
         出價增額：{bidPriceStep}元
       </Typography>
-      <hr />
-      <Typography variant="h5" color="secondary">
-        {directBuyPrice}元{' '}
-      </Typography>
-      <Button
-        className="buy"
-        onClick={directBuy}
-        variant="outlined"
-        color="secondary"
-      >
-        <IconButton color="secondary" size="small">
-          <PaymentIcon />
-        </IconButton>
-        直接購買
-      </Button>
       <br />
-      <FormControl component="fieldset">
-        <RadioGroup
-          aria-label="gender"
-          name="gender1"
-          onChange={handleBidMethodChange}
+      <hr />
+      <br />
+      <div className={classes.directBuyGroup}>
+        <Typography
+          variant='h5'
+          color='secondary'
+          className={classes.directBuy}
         >
-          <FormControlLabel
-            control={<Radio />}
-            value="autoBid"
-            label="自動出價"
-            defaultChecked
-          />
-          <input
-            type="number"
-            onChange={handleAutoBidPriceChange}
-            min={nowBidPrice + bidPriceStep}
-            max={directBuyPrice}
-            step={bidPriceStep}
-            defaultValue={nowBidPrice + bidPriceStep}
-          />
-          <FormControlLabel
-            control={<Radio />}
-            value="directBid"
-            label="直接出價"
-          />
-          <input
-            type="number"
-            onChange={handleDirectBidPriceChange}
-            min={nowBidPrice + bidPriceStep}
-            max={directBuyPrice}
-            step={bidPriceStep}
-            defaultValue={nowBidPrice + bidPriceStep}
-          />
+          {directBuyPrice}元{' '}
+        </Typography>
+        <Button
+          className={classes.buy}
+          onClick={directBuy}
+          variant='outlined'
+          color='secondary'
+        >
+          <IconButton color='secondary' size='small'>
+            <PaymentIcon />
+          </IconButton>
+          直接購買
+        </Button>
+      </div>
+      <br />
+      <FormControl component='fieldset' className={classes.bidFuncGroup}>
+        <RadioGroup onChange={handleBidMethodChange}>
+          <div className={classes.autoBidGroup}>
+            <FormControlLabel
+              control={<Radio />}
+              value='autoBid'
+              label='自動出價'
+            />
+            <input
+              type='number'
+              onChange={handleAutoBidPriceChange}
+              min={nowBidPrice + bidPriceStep}
+              max={directBuyPrice}
+              step={bidPriceStep}
+              defaultValue={nowBidPrice + bidPriceStep}
+            />
+          </div>
+          <div className={classes.directBidGroup}>
+            <FormControlLabel
+              control={<Radio />}
+              value='directBid'
+              label='直接出價'
+            />
+            <input
+              type='number'
+              onChange={handleDirectBidPriceChange}
+              min={nowBidPrice + bidPriceStep}
+              max={directBuyPrice}
+              step={bidPriceStep}
+              defaultValue={nowBidPrice + bidPriceStep}
+            />
+          </div>
         </RadioGroup>
       </FormControl>
       <br />
-      <Button
-        className="go"
-        onClick={bidNow}
-        variant="contained"
-        color="primary"
-        disableElevation
-      >
-        我要出價
-      </Button>
-      <Typography variant="h5" color="primary">
-        已省下 {saveMoney()}
-      </Typography>
+      <div className={classes.bidNowGroup}>
+        <Button
+          className={classes.go}
+          onClick={bidNow}
+          variant='contained'
+          color='primary'
+          disableElevation
+        >
+          我要出價
+        </Button>
+        <Typography variant='h4' color='primary' className={classes.save}>
+          已省下 {saveMoney()}
+        </Typography>
+      </div>
     </Container>
   )
 }

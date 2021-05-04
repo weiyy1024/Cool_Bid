@@ -9,37 +9,21 @@ import {
   CardMedia,
   Typography,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
+  Paper,
+  Button
 } from '@material-ui/core'
 
-import useStyles from '../../../styles/BidPageStyle'
-
-import PrimarySearchAppBar from '../../../utils/AppBar'
+import useStyles from '../../../styles/bidPageStyle'
 
 import BidFunc from './bidFunc' // bidding function
 
 const handleClick = () => {}
-
-const createData = (name, ID, bid, time) => {
-  return { name, ID, bid, time }
-}
-
-const rows = [
-  createData('叛逆a維婷', 'WEIYYY', '30,000元', '2021/04/02 15:03')
-]
 
 const BidPage = () => {
   const classes = useStyles()
 
   return (
     <>
-      <header>{PrimarySearchAppBar()}</header>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
           <Link color='inherit' href='/bidding' onClick={handleClick}>
@@ -57,7 +41,11 @@ const BidPage = () => {
             *Jordan 4 Retro University Blue
           </Link>
         </Breadcrumbs>
-        <Grid className={classes.productWrapper} container='true' direction='row'>
+        <Grid
+          className={classes.productWrapper}
+          container='true'
+          direction='row'
+        >
           <Card className={classes.productImageWrapper}>
             <CardActionArea>
               <div className={classes.mainMediaWrapper}>
@@ -87,120 +75,106 @@ const BidPage = () => {
             </CardActionArea>
           </Card>
           <div className={classes.productInfoWrapper}>
-            <Typography variant='h2'>*Women Adidas Training 3</Typography>
-            <Typography variant='h4'>剩下 *6天6小時 結束</Typography>
-            <Typography variant='h4'>
-              目前出價：*30,000元 / 共出價 *6 次
+            <Typography variant='h2' className={classes.productTitle}>
+              *Women Adidas Training 3
             </Typography>
-            <Typography variant='h4'>出價增額：*300元</Typography>
-            <Typography variant='h4'>最高出價：*LEN</Typography>
-            <Typography variant='h4'>商品狀況：*九成新</Typography>
-            <Typography variant='h4'>商品顏色：*黃色</Typography>
-            <Typography variant='h4'>運送方式</Typography>
-            <Typography variant='h4'>付款方式</Typography>
-            <Typography variant='h4'>退貨方式</Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              剩下 *6天6小時 結束
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              最高出價：*LEN
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              商品狀況：*九成新
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              商品顏色：*黃色
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              運送方式：*宅配 店到店
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              付款方式：*信用卡
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              退貨方式：*不接受退貨
+            </Typography>
           </div>
           <Card className={classes.productBidWrapper}>
             <BidFunc />
           </Card>
         </Grid>
         <Card component={Paper}>
-          <Grid container='true' direction='row' justify='space-around'>
+          <Grid
+            container='true'
+            direction='row'
+            justify='space-around'
+            className={classes.store}
+          >
             <img
               className={classes.storeMedia}
               src='https://crazypetter.com.tw/wp-content/uploads/2019/07/BLOW-%E6%88%90%E9%95%B7%E5%8F%B2_190413_0911.jpg'
             />
             <div className={classes.storeInfo}>
-              <Typography variant='h3'>
-                *LEN的商店
-                <span>
-                  <Link>Follow</Link>
-                </span>
+              <div className={classes.storeNameGroup}>
+                <Typography variant='h3' className={classes.storeName}>
+                  *LEN 的商店
+                </Typography>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  className={classes.follow}
+                >
+                  Follow
+                </Button>
+              </div>
+              <Typography variant='h4' className={classes.storeInfo}>
+                *棒槌賣家
               </Typography>
-              <Typography variant='h5'>*棒槌賣家</Typography>
-              <Typography variant='h5'>粉絲：*999</Typography>
+              <Typography variant='h4' className={classes.storeInfo}>
+                粉絲：*999
+              </Typography>
             </div>
-            <div>
-              <Link>關於我</Link>
-            </div>
-            <div>
-              <Link>買家評價(*1234)</Link>
-            </div>
-            <div>
-              <Link>所有商品(*87)</Link>
-            </div>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.storeButton}
+            >
+              關於我
+            </Button>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.storeButton}
+            >
+              買家評價(*1234)
+            </Button>
+            <Button
+              variant='contained'
+              color='primary'
+              className={classes.storeButton}
+            >
+              所有商品(*87)
+            </Button>
           </Grid>
-          <Grid container='true' direction='row'>
-            <Link>商品資訊</Link>
+          <Typography
+            container='true'
+            direction='row'
+            className={classes.infoAndHistory}
+          >
+            <Link href='#' className={classes.infoAndHistoryLink}>
+              商品資訊
+            </Link>
             <Link
-              href='/bidding/category/product/biddingHistory'
-              aria-current='page'
+              href='#'
+              className={classes.infoAndHistoryLink}
             >
               出價紀錄
             </Link>
-          </Grid>
-          <div>*商品介紹</div>
-        </Card>
-        <br />
-        <Card>
-          <Grid container='true' direction='row' justify='space-around'>
-            <img
-              className={classes.storeMedia}
-              src='https://crazypetter.com.tw/wp-content/uploads/2019/07/BLOW-%E6%88%90%E9%95%B7%E5%8F%B2_190413_0911.jpg'
-            />
-            <div className={classes.storeInfo}>
-              <Typography variant='h3'>
-                *LEN的商店
-                <span>
-                  <Link>Follow</Link>
-                </span>
-              </Typography>
-              <Typography variant='h5'>*棒槌賣家</Typography>
-              <Typography variant='h5'>粉絲：*999</Typography>
-            </div>
-            <div>
-              <Link>關於我</Link>
-            </div>
-            <div>
-              <Link>買家評價(*1234)</Link>
-            </div>
-            <div>
-              <Link>所有商品(*87)</Link>
-            </div>
-          </Grid>
-          <Grid container='true' direction='row'>
-            <Link>商品資訊</Link>
-            <Link
-              href='/bidding/category/product/biddingHistory'
-              aria-current='page'
-            >
-              出價紀錄
-            </Link>
-          </Grid>
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='simple table'>
-              <TableHead>
-                <TableRow>
-                  <TableCell>出價者</TableCell>
-                  <TableCell>ID</TableCell>
-                  <TableCell>出價金額</TableCell>
-                  <TableCell>出價時間</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map(row => (
-                  <TableRow key={row.name}>
-                    <TableCell component='th' scope='row'>
-                      {row.name}
-                    </TableCell>
-                    <TableCell>{row.ID}</TableCell>
-                    <TableCell>{row.bid}</TableCell>
-                    <TableCell>{row.time}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          </Typography>
+          <Typography paragraph='true' className={classes.productDetail}>
+            *生活中，若貓出現了，我們就不得不考慮它出現了的事實。每個人的一生中，幾乎可說碰到貓這件事，是必然會發生的。面對如此難題，我們必須設想周全。就我個人來說，貓對我的意義，不能不說非常重大。儘管貓看似不顯眼，卻佔據了我的腦海。我們可以很篤定的說，這需要花很多時間來嚴謹地論證。顯克微支曾經說過，誰能從道德敗壞的地方脫出來，還保持潔白，便是有了最偉大的功德。這讓我的思緒清晰了。在這種不可避免的衝突下，我們必須解決這個問題。探討貓時，如果發現非常複雜，那麼想必不簡單。
+          </Typography>
         </Card>
       </Container>
     </>
