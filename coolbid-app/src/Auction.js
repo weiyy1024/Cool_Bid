@@ -24,22 +24,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
- //test
- 
 function Auction() {
   const [user, setUser] = useState()
 
   const [ws, setWs] = useState()
   const server = 'http://localhost:3002/'
   const classes = useStyles()
-  // 連線server
+
   useEffect(() => {
     setUser(prompt('請輸入暱稱', 'Guest'))
     setWs(webSocket(server))
   }, [])
-  // test 2
+
   return (
-    <Grid container spacing={3} style={{ padding: '20px', maxWidth: '100vw' }}>
+    <Grid container spacing={3} style={{ padding: '20px', maxWidth: '100vw', marginTop: '200px', fontSize: '2rem' }}>
       <Grid item xs style={{ height: '100vh' }}>
         <BidHistory ws={ws} user={user} />
       </Grid>

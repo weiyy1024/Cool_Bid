@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
+// logo
+import logo from '../../coolbid.svg'
 // icons
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import WbSunnyIcon from '@material-ui/icons/WbSunny'
 import Brightness2Icon from '@material-ui/icons/Brightness2'
 import SearchBar1 from 'material-ui-search-bar'
 import Tooltip from '@material-ui/core/Tooltip'
-
 // country
 import DialogSelect from './components/Country'
 // bidding
@@ -48,7 +49,7 @@ const ToggleItem = styled.div`
   top: 0;
   width: 100%;
   position: fixed;
-  z-index: 99999;
+  z-index: 99;
   background-color: ${({ theme }) => theme.bg};
   img {
     width: 2.7rem;
@@ -110,10 +111,11 @@ const Navbar = styled.div`
   position: fixed;
 `
 
-const Logo = styled(NavLink)`
+const LogoBox = styled(NavLink)`
+  background: url(${logo}) no-repeat center;
   font-size: 4rem;
+  width:200px;
   color: ${({ theme }) => theme.textColor};
-  margin-top: 2rem;
   text-decoration: none;
 `
 const NavLeft = styled.div`
@@ -198,9 +200,7 @@ export default function NavBar() {
         </Toggle>
       </ToggleItem>
       <Navbar style={{ zIndex: '1000' }}>
-        <Logo to="/" className="logo">
-          CoolBid
-        </Logo>
+        <LogoBox to="/" className="logo" />
         &nbsp;&nbsp;
         <NavLeft>
           <Title className="Ahomepage" to="/Ahomepage">
