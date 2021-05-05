@@ -51,7 +51,14 @@ export default function DialogSelect () {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'inline-block',
+        position: 'absolute',
+        right: '2rem',
+        top: '5px'
+      }}
+    >
       <Tooltip title="Language" arrow placement="left">
         <img
           onClick={handleClickOpen}

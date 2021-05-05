@@ -35,7 +35,7 @@ const theme = {
     icon: 'goldenrod'
   },
   dark: {
-    backgroundColor: '#123',
+    backgroundColor: '#000',
     textColor: 'aliceblue',
     searchBorder: 'none',
     ball: '3.5rem',
@@ -45,20 +45,16 @@ const theme = {
   }
 }
 const ToggleItem = styled.div`
-  position: absolute;
-  padding-top: 1rem;
-  top: 0;
-  width: 100%;
   position: fixed;
-  z-index: 99;
+  top: 0;
+  height: 35px;
+  width: 100%;
   background-color: ${({ theme }) => theme.bg};
   img {
-    width: 2.7rem;
-    height: 2.7rem;
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
-    top: 1rem;
-    right: 8rem;
-    position: fixed;
     cursor: pointer;
   }
 `
@@ -67,14 +63,13 @@ const Toggle = styled.div`
   color: ${({ theme }) => theme.icon};
   border-radius: 50px;
   padding: 1px 5px;
-  position: relative;
+  position: absolute;
   cursor: pointer;
-  margin-bottom: 2rem;
   width: 5rem;
   height: 2.5rem;
+  top: 4px;
+  right: 60px;
   display: inline-block;
-  float: right;
-  right: 1rem;
 `
 const MoonIcon = styled(Brightness2Icon)`
   position: absolute;
@@ -105,9 +100,9 @@ const Navbar = styled.div`
   background-color: ${({ theme }) => {
     return theme.backgroundColor
   }};
-  top: 4.5rem;
+  top: 35px;
   width: 100%;
-  height: 12rem;
+  height: 90px;
   display: flex;
   position: fixed;
 `
@@ -120,7 +115,7 @@ const LogoBox = styled(NavLink)`
   text-decoration: none;
 `
 const NavLeft = styled.div`
-  margin: 6rem 0rem 6rem 3rem;
+  margin: 15px 0 60px 30px;
   display: flex;
 `
 const Title = styled(NavLink)`
@@ -147,7 +142,7 @@ const Member = styled(NavLink)`
 
 // SearchBar
 const SearchDiv = styled.div`
-  margin: 5rem auto;
+  margin: 25px auto;
   width: 40rem;
   transform: translateX(-20rem);
 `
@@ -165,7 +160,7 @@ const SearchBar = styled(SearchBar1)`
 const ThreeIcons = styled.div`
   display: flex;
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 10px;
   right: 0.5rem;
   color: ${({ theme }) => theme.textColor};
   cursor: pointer;
@@ -230,6 +225,7 @@ export default function NavBar() {
               setSearch(e)
             }}
             onRequestSearch={handleSearch}
+            style={{ borderRadius: '30px' }}
           ></SearchBar>
         </SearchDiv>
         <ThreeIcons>
