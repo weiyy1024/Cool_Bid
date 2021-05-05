@@ -47,13 +47,14 @@ const theme = {
 const ToggleItem = styled.div`
   position: fixed;
   top: 0;
-  height: 35px;
+  height: 30px;
   width: 100%;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: #1e1f26;
+  z-index: 99;
   img {
     position: relative;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -62,32 +63,33 @@ const Toggle = styled.div`
   background: ${({ theme }) => theme.toggle};
   color: ${({ theme }) => theme.icon};
   border-radius: 50px;
-  padding: 1px 5px;
+  padding: 1px 3px;
   position: absolute;
   cursor: pointer;
   width: 5rem;
-  height: 2.5rem;
-  top: 4px;
+  height: 2.2rem;
+  top: 3px;
   right: 60px;
   display: inline-block;
 `
 const MoonIcon = styled(Brightness2Icon)`
   position: absolute;
   left: 0.5rem;
-  top: 0.6rem;
+  top: 0.5rem;
 `
 const SunnyIcon = styled(WbSunnyIcon)`
   position: absolute;
   right: 0.5rem;
-  top: 0.6rem;
+  top: 0.5rem;
 `
 const Ball = styled.div`
-  height: 2rem;
-  width: 2rem;
+  height: 1.8rem;
+  width: 1.8rem;
   position: absolute;
   background-color: #fafafa;
   border-radius: 50%;
   top: 0.3rem;
+  box-shadow: 0 2px 2px rgba(0, 0, 0,.5);
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
   left: ${({ theme }) => theme.ball};
@@ -100,7 +102,7 @@ const Navbar = styled.div`
   background-color: ${({ theme }) => {
     return theme.backgroundColor
   }};
-  top: 35px;
+  top: 30px;
   width: 100%;
   height: 90px;
   display: flex;
@@ -119,7 +121,7 @@ const NavLeft = styled.div`
   display: flex;
 `
 const Title = styled(NavLink)`
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: ${({ theme }) => theme.textColor};
   padding: 1.5rem;
   text-decoration: none;
@@ -142,7 +144,7 @@ const Member = styled(NavLink)`
 
 // SearchBar
 const SearchDiv = styled.div`
-  margin: 25px auto;
+  margin: 22px auto;
   width: 40rem;
   transform: translateX(-20rem);
 `
@@ -160,7 +162,7 @@ const SearchBar = styled(SearchBar1)`
 const ThreeIcons = styled.div`
   display: flex;
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   right: 0.5rem;
   color: ${({ theme }) => theme.textColor};
   cursor: pointer;
@@ -188,7 +190,7 @@ export default function NavBar() {
   }
 
   const iconStye = {
-    fontSize: '3.5rem',
+    fontSize: '3rem',
     paddingBottom: '.5rem',
     paddingRight: '2rem'
   }
@@ -205,18 +207,15 @@ export default function NavBar() {
       </ToggleItem>
       <Navbar style={{ zIndex: '1000' }}>
         <LogoBox to="/" className="logo" />
-        &nbsp;&nbsp;
         <NavLeft>
           <Title className="Ahomepage" to="/Ahomepage">
             競標區
             <DropDown />
           </Title>
-          &nbsp;&nbsp;
           <Title className="Chomepage" to="/Chomepage">
             拍賣會
             <AuctionDropDown />
           </Title>
-          &nbsp;&nbsp;
         </NavLeft>
         <SearchDiv>
           <SearchBar

@@ -98,7 +98,7 @@ function AuctionTime(props) {
 
   return (
     <>
-      <h2>結標倒數: {time}</h2>
+      <h2 style={{ marginTop: '0' }}>結標倒數: {time}</h2>
       <BorderLinearProgress variant="determinate" value={(time / 10) * 100} />
       <Card
         className={classes.root}
@@ -108,7 +108,7 @@ function AuctionTime(props) {
           <CardMedia
             component="img"
             alt="Contemplative Reptile"
-            height="350"
+            height="300"
             image="https://cdn-origin.cool-style.com.tw/cool/2020/08/2020-Air-Jordan-1-High-OG-Dior-Wolf-Grey-Sail-Photon-Dust-White-To-Buy.jpg"
             title={product}
           />

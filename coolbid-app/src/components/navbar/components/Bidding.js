@@ -181,7 +181,7 @@ export default function Bidding() {
           <GavelIcon
             onClick={toggleDrawer('right', true)}
             style={{
-              fontSize: '3.5rem',
+              fontSize: '3rem',
               paddingBottom: '.5rem',
               paddingRight: '2rem'
             }}
