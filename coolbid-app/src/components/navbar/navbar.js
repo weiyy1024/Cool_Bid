@@ -39,9 +39,9 @@ const theme = {
     textColor: 'aliceblue',
     searchBorder: 'none',
     ball: '3.5rem',
-    bg: '#1e1f26',
+    bg: '#313235',
     toggle: '#ffc400',
-    icon: '#c27e00;'
+    icon: '#c27e00'
   }
 }
 const ToggleItem = styled.div`
@@ -49,7 +49,7 @@ const ToggleItem = styled.div`
   top: 0;
   height: 30px;
   width: 100%;
-  background-color: #1e1f26;
+  background-color: #222327;
   z-index: 99;
   img {
     position: relative;
@@ -60,27 +60,27 @@ const ToggleItem = styled.div`
   }
 `
 const Toggle = styled.div`
-  background: ${({ theme }) => theme.toggle};
-  color: ${({ theme }) => theme.icon};
+  background: #ffc400;
+  color: #c27e00;
   border-radius: 50px;
   padding: 1px 3px;
   position: absolute;
   cursor: pointer;
   width: 5rem;
-  height: 2.2rem;
-  top: 3px;
+  height: 2rem;
+  top: 4px;
   right: 60px;
   display: inline-block;
 `
 const MoonIcon = styled(Brightness2Icon)`
   position: absolute;
   left: 0.5rem;
-  top: 0.5rem;
+  top: 0.4rem;
 `
 const SunnyIcon = styled(WbSunnyIcon)`
   position: absolute;
   right: 0.5rem;
-  top: 0.5rem;
+  top: 0.4rem;
 `
 const Ball = styled.div`
   height: 1.8rem;
@@ -88,7 +88,7 @@ const Ball = styled.div`
   position: absolute;
   background-color: #fafafa;
   border-radius: 50%;
-  top: 0.3rem;
+  top: 0.2rem;
   box-shadow: 0 2px 2px rgba(0, 0, 0,.5);
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
@@ -134,7 +134,7 @@ const Title = styled(NavLink)`
 `
 const Member = styled(NavLink)`
   text-decoration: none;
-  color: white;
+  color: ${({ theme }) => theme.textColor};
   &:hover {
     dl {
       visibility: visible;
@@ -170,7 +170,7 @@ const ThreeIcons = styled.div`
 // Navbar--End
 
 export default function NavBar() {
-  const [currentTheme, setCurrentTheme] = useState('dark')
+  const [currentTheme, setCurrentTheme] = useState('light')
 
   // Dark Mode function
   const toggleTheme = () => {

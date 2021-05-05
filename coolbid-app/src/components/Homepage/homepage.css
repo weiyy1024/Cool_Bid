@@ -4,17 +4,17 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:900");
 
 .loader {
-  margin-top: 15rem;
+  margin-top: 10rem;
   margin-bottom: 15rem;
   width: 100%;
-  height: 100vh;
+  height: 85vh;
   position: relative;
 }
 
 .first-loader {
   width: 100%;
   height: 100%;
-  background-color: #123;
+  background-color: #edae10;
   position: absolute;
   right: 0;
   top: 0;
@@ -65,7 +65,7 @@
 }
 
 .full-stop {
-  color: #123;
+  color: #edae10;
   opacity: 1;
   animation: fadeOut 0.5s forwards 2.5s;
 }
