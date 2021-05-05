@@ -21,7 +21,7 @@ const directBuy = () => {
   console.log(`直接購買，${directBuyPrice}元`)
 }
 
-const BidFunc = () => {
+const BidFunc = props => {
   const [bidMethod, setBidMethod] = useState()
   const [nowBidPrice, setNowBidPrice] = useState(30000)
   const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
@@ -29,25 +29,26 @@ const BidFunc = () => {
     nowBidPrice + bidPriceStep
   )
 
-  const handleNowPriceChange = (e) => {
+  const handleNowPriceChange = e => {
     setAutoBidPrice(e.target.value)
     setDirectBidPrice(e.target.value)
   }
 
-  const handleBidMethodChange = (e) => {
+  const handleBidMethodChange = e => {
     setBidMethod(e.target.value)
   }
 
-  const handleAutoBidPriceChange = (e) => {
+  const handleAutoBidPriceChange = e => {
     setAutoBidPrice(e.target.value)
   }
 
-  const handleDirectBidPriceChange = (e) => {
+  const handleDirectBidPriceChange = e => {
     setDirectBidPrice(e.target.value)
   }
 
   const bidNow = () => {
     bidTimes++
+
     if (bidMethod === 'autoBid') {
       console.log(`自動出價，最高價 ${autoBidPrice}`)
       // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep))
@@ -114,6 +115,7 @@ const BidFunc = () => {
               control={<Radio />}
               value='autoBid'
               label='自動出價'
+              style={{ width: '14rem' }}
             />
             <input
               type='number'
@@ -129,6 +131,7 @@ const BidFunc = () => {
               control={<Radio />}
               value='directBid'
               label='直接出價'
+              style={{ width: '14rem' }}
             />
             <input
               type='number'

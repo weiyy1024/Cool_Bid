@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    margin: '200px auto 0',
+    margin: '18rem auto 0',
     padding: theme.spacing(2, 0)
   },
   productWrapper: {
@@ -76,12 +76,21 @@ const useStyles = makeStyles((theme) => ({
     color: '#444',
     fontSize: '2rem',
     padding: '.5rem 5rem',
-    borderRadius: '1rem'
+    borderRadius: '1rem',
+    cursor: 'pointer'
   },
   productDetail: {
     padding: '1rem 5rem',
     lineHeight: '3.5rem',
     fontSize: '1.7rem'
+  },
+  table: {
+    padding: '1rem 6.5rem',
+    width: '150rem'
+  },
+  th: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold'
   }
 }))
 
