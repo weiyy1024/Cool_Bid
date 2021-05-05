@@ -7,7 +7,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import Tooltip from '@material-ui/core/Tooltip'
 
 const iconStyle = {
-  fontSize: '3.5rem',
+  fontSize: '3rem',
   paddingBottom: '.5rem',
   paddingRight: '2rem'
 }

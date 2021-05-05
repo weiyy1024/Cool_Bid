@@ -131,10 +131,18 @@ function BidHistory(props) {
     <div style={{ height: '100%' }}>
       <Card
         style={{
+          height: '77vh',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '0px 0px 3px 3px'
+        }}
+      >
+              <Card
+        style={{
           height: 'auto',
           padding: '0 10px',
           backgroundColor: '#fff',
-          borderRadius: '3px 3px 0px 0px'
+          borderRadius: '3px 3px 0px 0px',
+          boxShadow: '0 5px 20px rgba(0,0,0,.2) '
         }}
       >
         <h4>目前競標商品：{product}</h4>
@@ -146,15 +154,7 @@ function BidHistory(props) {
           目前最高價：NT$ {bidMsg.length === 0 ? 0 : numberWithCommas(bidPrice)}
         </h4>
       </Card>
-      <Card
-        style={{
-          height: '70vh',
-
-          backgroundColor: '#f9f9f9',
-          borderRadius: '0px 0px 3px 3px'
-        }}
-      >
-        <div style={{ height: '100%', overflow: 'scroll' }}>
+        <div style={{ height: '80%', overflow: 'scroll' }}>
           <ol reversed>
             {bidMsg
               .slice()
@@ -179,12 +179,14 @@ function BidHistory(props) {
           alignItems="center"
           style={{
             position: 'sticky',
+            height: '60px',
             bottom: '0',
             backgroundColor: '#fff',
-            paddingBottom: '20px'
+            paddingTop: '15px',
+            boxShadow: '0 -5px 20px rgba(0,0,0,.2) '
           }}
         >
-          <h3>出價</h3>
+          <span style={{ marginTop: '5px' }}>出價</span>
           <Grid item xs={12}>
             <ButtonGroup
               variant="contained"
