@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Collapse from '@material-ui/core/Collapse'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-// import OrderList from '../Order22/OrderList'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,10 +36,10 @@ export default function NestedList() {
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      <ListItem button>
+      <ListItem button component={Link} to="/BackStage">
         <ListItemText primary="首頁" />
       </ListItem>
-      <ListItem button>
+      <ListItem button component={Link} to="/BackStage/orders">
         <ListItemText primary="訂單" />
       </ListItem>
       <ListItem button onClick={handleClick}>
@@ -48,19 +48,29 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            component={Link}
+            to="/BackStage/product"
+          >
             <ListItemText primary="商品清單" />
           </ListItem>
         </List>
       </Collapse>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
+          <ListItem
+            button
+            className={classes.nested}
+            component={Link}
+            to="/BackStage/editProduct"
+          >
             <ListItemText primary="新增商品" />
           </ListItem>
         </List>
       </Collapse>
-      <ListItem button>
+      {/* <ListItem button>
         <ListItemText primary="金流" />
       </ListItem>
       <ListItem button>
@@ -68,8 +78,8 @@ export default function NestedList() {
       </ListItem>
       <ListItem button>
         <ListItemText primary="聊聊" />
-      </ListItem>
-      <ListItem button>
+      </ListItem> */}
+      <ListItem button component={Link} to="/BackStage/sellerInfo">
         <ListItemText primary="設定" />
       </ListItem>
     </List>
