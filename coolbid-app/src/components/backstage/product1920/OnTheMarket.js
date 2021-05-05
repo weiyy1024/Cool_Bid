@@ -10,54 +10,22 @@ import ProductTabs from './ProductTabs'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 
-function Date(id, pic, name, kind, bid, basic, per, direct, deadline, status) {
-  return { id, pic, name, kind, bid, basic, per, direct, deadline, status }
-}
-
-const rows = [
-  Date(
-    1,
-    'null',
-    'coolAdidas',
-    '衣服',
-    1000,
-    1000,
-    200,
-    5000,
-    '2021/05/20 15:00',
-    '未出貨'
-  ),
-  Date(
-    2,
-    'null',
-    'coolAdidas',
-    '衣服',
-    1000,
-    1000,
-    200,
-    5000,
-    '2021/05/20 15:00',
-    '未出貨'
-  ),
-  Date(
-    3,
-    'null',
-    'coolAdidas',
-    '衣服',
-    1000,
-    1000,
-    200,
-    5000,
-    '2021/05/20 15:00',
-    '未出貨'
-  )
-]
-
-function handleClick(e) {
-  alert(e.target.id)
-}
-
 export default function OnTheMarket() {
+  const list = [
+    {
+      id: 1,
+      pic: 'null',
+      name: 'coolAdidas',
+      kind: '手錶',
+      bid: 1000,
+      basic: 2000,
+      per: 100,
+      direct: 9000,
+      deadline: '2021-05-27T10:30',
+      status: '未出貨'
+    }
+  ]
+
   return (
     <div className="Table_wrap">
       <ProductTabs />
@@ -80,29 +48,30 @@ export default function OnTheMarket() {
           </TableHead>
 
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id} id={row.id}>
-                <TableCell align="center">{row.pic}</TableCell>
-                <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.kind}</TableCell>
-                <TableCell align="center">{row.bid}</TableCell>
-                <TableCell align="center">{row.basic}</TableCell>
-                <TableCell align="center">{row.per}</TableCell>
-                <TableCell align="center">{row.direct}</TableCell>
-                <TableCell align="center">{row.deadline}</TableCell>
-                <TableCell align="center">{row.status}</TableCell>
+            {list.map((item) => {
+              return (
+                <TableRow key={item.id}>
+                <TableCell align="center">{item.pic}</TableCell>
+                <TableCell align="center">{item.name}</TableCell>
+                <TableCell align="center">{item.kind}</TableCell>
+                <TableCell align="center">{item.bid}</TableCell>
+                <TableCell align="center">{item.basic}</TableCell>
+                <TableCell align="center">{item.per}</TableCell>
+                <TableCell align="center">{item.direct}</TableCell>
+                <TableCell align="center">{item.deadline}</TableCell>
+                <TableCell align="center">{item.status}</TableCell>
                 <TableCell align="center">
-                  {/* <input type="submit" value="編輯" class="button SetStoreInfo_Submit" onClick={handleClickEdit}/> */}
+                  {/* <input type="submit" value="編輯" class="button SetStoreInfo_Submit" onClick={window.location.href="/edit/{row.id}"}/> */}
                   <input
                     type="submit"
                     value="刪除"
                     className="button SetStoreInfo_Submit"
-                    id={row.id}
-                    onClick={handleClick}
+                    id={item.id}
                   />
                 </TableCell>
               </TableRow>
-            ))}
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
