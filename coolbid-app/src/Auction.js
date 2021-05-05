@@ -37,18 +37,18 @@ function Auction() {
   }, [])
 
   return (
-    <Grid container spacing={3} style={{ padding: '20px', maxWidth: '100vw', marginTop: '200px', fontSize: '2rem' }}>
-      <Grid item xs style={{ height: '100vh' }}>
+    <Grid container spacing={3} style={{ padding: '20px', maxWidth: '100vw', marginTop: '110px', fontSize: '1.5rem' }}>
+      <Grid item xs style={{ height: '80vh' }}>
         <BidHistory ws={ws} user={user} />
       </Grid>
       <Grid
         item
         xs={6}
-        style={{ position: 'relative', textAlign: 'center', height: '100vh' }}
+        style={{ position: 'relative', textAlign: 'center', height: '79vh' }}
       >
         <AuctionTime ws={ws} />
       </Grid>
-      <Grid item xs style={{ height: '100vh' }}>
+      <Grid item xs style={{ height: '80vh' }}>
         <Chat ws={ws} user={user} />
       </Grid>
       <Grid item xs={12}>

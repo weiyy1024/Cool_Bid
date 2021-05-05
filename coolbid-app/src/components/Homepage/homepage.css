@@ -44,7 +44,7 @@
   bottom: 0;
   left: 5%;
   margin: auto;
-  background-image: url("https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg");
+  background-image: url("https://images.squarespace-cdn.com/content/v1/571c2c65f8508283c1fa9ef8/1611070840640-GJCFHK6E5DZ6B522SLVX/ke17ZwdGBToddI8pDm48kHzrC-JEZJG2OjNMuRpqDE97gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UZ7YExVwEf_taIerBSdW5PNdzicLaVLE9l8pI-bh2x1ThbcSGSL7ORD0H2uCez34ng/202101_DowJones_Fashion.jpg");
   background-size: cover;
 }
 
@@ -126,7 +126,7 @@
 
 @keyframes backgroundText {
   to {
-    background-image: url("https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg");
+    background-image: url("https://images.squarespace-cdn.com/content/v1/571c2c65f8508283c1fa9ef8/1611070840640-GJCFHK6E5DZ6B522SLVX/ke17ZwdGBToddI8pDm48kHzrC-JEZJG2OjNMuRpqDE97gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UZ7YExVwEf_taIerBSdW5PNdzicLaVLE9l8pI-bh2x1ThbcSGSL7ORD0H2uCez34ng/202101_DowJones_Fashion.jpg");
     background-size: 200%;
     background-position: center;
     background-clip: text;

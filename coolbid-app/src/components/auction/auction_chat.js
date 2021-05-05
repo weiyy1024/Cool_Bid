@@ -17,7 +17,7 @@ import Card from '@material-ui/core/Card'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '90%',
+    height: '100%',
     backgroundColor: '#f9f9f9',
     padding: '10px',
     overflow: 'scroll',
