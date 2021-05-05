@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 150,
     marginRight: 40,
-
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper
   },

@@ -20,6 +20,7 @@ import BidPage from './components/Ahomepage/bidding/bidPage'
 import NavBar from './components/navbar/navbar'
 import Backstage from './components/backstage/backStage'
 import AuctionCountdown from './AuctionCountdown'
+import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 
 function App() {
   return (
@@ -47,25 +48,25 @@ function App() {
           />
           {/* Chomepage */}
           <Route path="/Chomepage" component={Auction} exact />
-          <Route path="/Chomepage/coming" component={AuctionCountdown} />
+          <Route path="/Chomepage/coming" component={AuctionCountdown} exact />
           {/* Member */}
-          <Route path="/Member/signin" component={Login} exact />
-          <Route path="/Member/signout" component={Logout} exact />
-          <Route path="/Member/edit" component={EditMemberInfo} exact />
+          <Route path="/member/signin" component={Login} exact />
+          <Route path="/member/signout" component={Logout} exact />
+          <Route path="/member/edit" component={EditMemberInfo} exact />
           <Route
-            path="/Member/renewMemberPwd"
+            path="/member/renewMemberPwd"
             component={RenewMemberPwd}
             exact
           />
           <Route
-            path="/Member/forgetMemberPwd"
+            path="/member/forgetMemberPwd"
             component={ForgetMemberPwd}
             exact
           />
           <Route path="/member/shippingInfo" component={Login} exact />
           <Route path="/member/paymentInfo" component={Login} exact />
           <Route path="/member/coolCoin" component={Login} exact />
-          <Route path="/member/purchase" component={Login} exact />
+          <Route path="/member/purchase" component={BuyList} exact />
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
