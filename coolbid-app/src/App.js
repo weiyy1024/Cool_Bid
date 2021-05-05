@@ -70,7 +70,6 @@ function App() {
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
           <Route path="/BackStage/product" component={AddProductEdit} exact />
-          <Route path="/BackStage/product" component={AddProductEdit} exact />
           <Route
             path="/BackStage/editProduct"
             component={AddProductTable}

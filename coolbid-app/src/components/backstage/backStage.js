@@ -4,8 +4,6 @@ import React from 'react'
 import Breadcrumbs from './Main/Breadcrumbs'
 import SellerBackendList from './Main/SellerBackendList'
 import '../SASS/Main.scss'
-import OrderList from './Order22/OrderList'
-
 export default function Backstage() {
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -16,9 +14,7 @@ export default function Backstage() {
         <div className="List">
           <SellerBackendList />
         </div>
-        <div>
-          <OrderList />
-        </div>
+        <div></div>
       </div>
     </div>
   )

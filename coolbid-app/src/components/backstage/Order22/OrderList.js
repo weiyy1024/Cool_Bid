@@ -5,6 +5,8 @@ import OrderListItem from './OrderListItem'
 import OrderTabs from './OrderTabs'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
+import Breadcrumbs from '../Main/Breadcrumbs'
+import SellerBackendList from '../Main/SellerBackendList'
 
 function OrderList() {
   // const [list, setList] = useState([
@@ -56,13 +58,25 @@ function OrderList() {
   ]
 
   return (
-    <div className="Table_wrap">
-      <OrderTabs />
-      <TableContainer className="Table_container">
-        {list.map((item) => {
-          return <OrderListItem key={item.orderId} detail={item} />
-        })}
-      </TableContainer>
+    <div className="sellerBackend_Member_Wrap">
+      <div className="breadcrumbsArea">
+        <Breadcrumbs />
+      </div>
+      <div className="sellerBackend_Member_Container">
+        <div className="List">
+          <SellerBackendList />
+        </div>
+        <div>
+          <div className="Table_wrap">
+            <OrderTabs />
+            <TableContainer className="Table_container">
+              {list.map((item) => {
+                return <OrderListItem key={item.orderId} detail={item} />
+              })}
+            </TableContainer>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
