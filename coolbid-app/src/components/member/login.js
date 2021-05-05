@@ -52,10 +52,14 @@ export default function Login(props) {
         password: pwd
       })
       .then((e) => {
-        // alert('memberId ' + account)
-        alert(e.data)
-        console.log(e)
-        window.location.href = 'http://localhost:3000/'
+        if (e.data) {
+          alert('登入成功')
+          // 把member資訊存入session
+          window.sessionStorage.setItem('userinfo', JSON.stringify(e.data))
+          window.location.href = 'http://localhost:3000/'
+        } else {
+          alert('登入失敗')
+        }
       })
   }
   if (loginStatus) {
