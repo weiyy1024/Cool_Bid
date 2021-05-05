@@ -29,7 +29,12 @@ const createData = (name, ID, bid, time) => {
   return { name, ID, bid, time }
 }
 
-const rows = [createData('叛逆a維婷', 'WEIYYY', '30,000元', '2021/04/02 15:03')]
+const rows = [
+  createData('Len', 'LEN', '31,800元', '2021/05/04 21:34'),
+  createData('偶是瑋瑋~', 'WEIWEI', '30,000元', '2021/05/04 11:57'),
+  createData('慈慈', 'JOU', '28,500元', '2021/05/02 09:06'),
+  createData('叛逆a維婷', 'WEIYYY', '27,000元', '2021/05/01 15:03')
+]
 
 const BidPage = () => {
   const classes = useStyles()
@@ -42,7 +47,7 @@ const BidPage = () => {
             Home Page
           </Link>
           <Link color='inherit' href='/bidding/category' onClick={handleClick}>
-            *Shoes
+            Bags
           </Link>
           <Link
             color='textPrimary'
@@ -50,7 +55,7 @@ const BidPage = () => {
             onClick={handleClick}
             aria-current='page'
           >
-            *Jordan 4 Retro University Blue
+            Supreme x Louis Vuitton Christopher Backpack
           </Link>
         </Breadcrumbs>
         <Grid
@@ -63,53 +68,54 @@ const BidPage = () => {
               <div className={classes.mainMediaWrapper}>
                 <CardMedia
                   className={classes.mainMedia}
-                  image='https://crazypetter.com.tw/wp-content/uploads/2019/07/BLOW-%E6%88%90%E9%95%B7%E5%8F%B2_190413_0911.jpg'
+                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/9f677276a14605b81ba77ceb40676368.jpg'
                 />
               </div>
               <div className={classes.smallMediaWrapper}>
                 <CardMedia
                   className={classes.smallMedia}
-                  image='https://d32kak7w9u5ewj.cloudfront.net/media/image/2019/05/7d6f16273425458b9c024e39c6a8d257.jpg'
+                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/9f677276a14605b81ba77ceb40676368.jpg'
                 />
                 <CardMedia
                   className={classes.smallMedia}
-                  image='https://images.newtalk.tw/resize_action2/600/album/news/450/5f320cead54d0.jpg'
+                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/f838499cabb02f038c3ca1a92b24c1fe.jpg'
                 />
                 <CardMedia
                   className={classes.smallMedia}
-                  image='https://image6.thenewslens.com/2020/9/rxmmtnksz4gossrgu7x12zyu012635.jpg?auto=compress&fit=crop&h=648&q=85&updated_at=2020-09-04-15-31-06&w=1080'
+                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/f838499cabb02f038c3ca1a92b24c1fe.jpg'
                 />
                 <CardMedia
                   className={classes.smallMedia}
-                  image='https://d20aeo683mqd6t.cloudfront.net/zh-hant/articles/title_images/000/040/396/original/pixta_58825456_M.jpg?2020&d=750x400'
+                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/49744594c9f4a427321924705497bd66.jpg'
                 />
               </div>
             </CardActionArea>
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              *Women Adidas Training 3
+              Supreme x Louis Vuitton <br />
+              Christopher Backpack
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              剩下 *6天6小時 結束
+              剩下 6天6小時 結束
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              最高出價：*LEN
+              最高出價：Len
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品狀況：*九成新
+              商品狀況：九成新
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：*黃色
+              商品顏色：紅色
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              運送方式：*宅配 店到店
+              運送方式：宅配 店到店
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              付款方式：*信用卡
+              付款方式：信用卡
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              退貨方式：*不接受退貨
+              退貨方式：不接受退貨
             </Typography>
           </div>
           <Card className={classes.productBidWrapper}>
@@ -130,7 +136,7 @@ const BidPage = () => {
             <div className={classes.storeInfo}>
               <div className={classes.storeNameGroup}>
                 <Typography variant='h3' className={classes.storeName}>
-                  *LEN 的商店
+                  LEN 的商店
                 </Typography>
                 <Button
                   variant='outlined'
@@ -141,10 +147,10 @@ const BidPage = () => {
                 </Button>
               </div>
               <Typography variant='h4' className={classes.storeInfo}>
-                *棒槌賣家
+                金槌賣家
               </Typography>
               <Typography variant='h4' className={classes.storeInfo}>
-                粉絲：*999
+                粉絲：666
               </Typography>
             </div>
             <Button
@@ -159,14 +165,14 @@ const BidPage = () => {
               color='primary'
               className={classes.storeButton}
             >
-              買家評價(*1234)
+              買家評價(3856)
             </Button>
             <Button
               variant='contained'
               color='primary'
               className={classes.storeButton}
             >
-              所有商品(*87)
+              所有商品(87)
             </Button>
           </Grid>
           <Typography

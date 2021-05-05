@@ -14,7 +14,7 @@ import PaymentIcon from '@material-ui/icons/Payment'
 import useStyles from '../../../styles/bidFuncStyle'
 
 const bidPriceStep = 300
-const bidTimes = 6
+let bidTimes = 3
 const directBuyPrice = 50000
 
 const directBuy = () => {
@@ -47,6 +47,7 @@ const BidFunc = () => {
   }
 
   const bidNow = () => {
+    bidTimes++
     if (bidMethod === 'autoBid') {
       console.log(`自動出價，最高價 ${autoBidPrice}`)
       // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep))
