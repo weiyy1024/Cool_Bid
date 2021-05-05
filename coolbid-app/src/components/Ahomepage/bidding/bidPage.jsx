@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   Container,
@@ -10,7 +10,13 @@ import {
   Typography,
   Grid,
   Paper,
-  Button
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
 } from '@material-ui/core'
 
 import useStyles from '../../../styles/bidPageStyle'
@@ -19,8 +25,33 @@ import BidFunc from './bidFunc' // bidding function
 
 const handleClick = () => {}
 
+const createData = (name, ID, bid, time) => {
+  return { name, ID, bid, time }
+}
+
+const rows = [
+  createData('Len', 'LEN', '31,800元', '2021/05/04 21:34'),
+  createData('偶是瑋瑋~', 'WEIWEI', '30,000元', '2021/05/04 11:57'),
+  createData('慈慈', 'JOU', '28,500元', '2021/05/02 09:06'),
+  createData('叛逆a維婷', 'WEIYYY', '27,000元', '2021/05/01 15:03')
+]
+
+// const inputHistoryData = () => {
+//   rows.push(createData('test', 'TEST', '99,999元', '2021/05/05 15:30'))
+// }
+
 const BidPage = () => {
   const classes = useStyles()
+
+  let [toggle, setToggle] = useState(true)
+
+  const handleToggleInfo = () => {
+    setToggle((toggle = true))
+  }
+
+  const handleToggleHistory = () => {
+    setToggle((toggle = false))
+  }
 
   return (
     <>
@@ -163,14 +194,24 @@ const BidPage = () => {
             direction='row'
             className={classes.infoAndHistory}
           >
-            <Link href='#' className={classes.infoAndHistoryLink}>
+            <Link
+              className={classes.infoAndHistoryLink}
+              onClick={handleToggleInfo}
+            >
               商品資訊
             </Link>
-            <Link href='./history' className={classes.infoAndHistoryLink}>
+            <Link
+              className={classes.infoAndHistoryLink}
+              onClick={handleToggleHistory}
+            >
               出價紀錄
             </Link>
           </Typography>
-          <Typography paragraph='true' className={classes.productDetail}>
+          <Typography
+            paragraph='true'
+            className={classes.productDetail}
+            style={toggle ? { display: 'block' } : { display: 'none' }}
+          >
             The Louis Vuitton x Supreme Christopher backpack in red is a
             structured bag dripping in style. It comes with adjustable leather
             shoulder straps, a leather top handle, flap opening, press stud and
@@ -184,10 +225,38 @@ const BidPage = () => {
             goods, debuted at Louis Vuitton’s Fall 2017 menswear show in Paris.
             The Christopher backpack conjures up the rugged spirit of a hiking
             pack according to Louis Vuitton. This much coveted Louis Vuitton x
-            Supreme Christopher backpack features a white Supreme logo in Futura
+            Supreme Christopher backpack features a white Supreme logo in Future
             Heavy Oblique font and has an interior big enough to fit a variety
             of items.
           </Typography>
+          <TableContainer
+            style={toggle ? { display: 'none' } : { display: 'block' }}
+            component={Paper}
+            className={classes.table}
+          >
+            <Table aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.th}>出價者</TableCell>
+                  <TableCell className={classes.th}>ID</TableCell>
+                  <TableCell className={classes.th}>出價金額</TableCell>
+                  <TableCell className={classes.th}>出價時間</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map(row => (
+                  <TableRow key={row.name}>
+                    <TableCell component='th' scope='row'>
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.ID}</TableCell>
+                    <TableCell>{row.bid}</TableCell>
+                    <TableCell>{row.time}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Card>
       </Container>
     </>

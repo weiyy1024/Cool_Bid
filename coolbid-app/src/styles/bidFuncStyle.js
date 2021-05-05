@@ -23,12 +23,14 @@ const useStyles = makeStyles(theme => ({
   autoBidGroup: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: '1rem'
   },
   directBidGroup: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: '1rem'
   },
   bidNowGroup: {
     display: 'flex',
@@ -38,7 +40,7 @@ const useStyles = makeStyles(theme => ({
   },
   go: {
     fontSize: '2rem',
-    margin: '.5rem 0 4.5rem'
+    margin: '.5rem 0 2.5rem'
   },
   save: {
     padding: '2rem 5rem',
