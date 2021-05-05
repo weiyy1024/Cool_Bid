@@ -19,6 +19,7 @@ import ForgetMemberPwd from './components/member/forgetMemberPwd'
 import BidPage from './components/Ahomepage/bidding/bidPage'
 import BidPageHistory from './components/Ahomepage/bidding/bidPageHistory'
 import NavBar from './components/navbar/navbar'
+import Backstage from './components/backstage/backStage'
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
           <Route path="/member/purchase" component={Login} exact />
 
           {/* Seller */}
+          <Route path="/BackStage" component={Backstage} exact />
           <Route path="/BackStage/product" component={AddProductEdit} exact />
           <Route
             path="/BackStage/editProduct"

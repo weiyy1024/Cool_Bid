@@ -13,7 +13,7 @@ export default function MemberDropDown() {
         <NavLink to="/member/signout">登出</NavLink>
       </dd>
       <dd>
-        <NavLink to="/BackStage/sellerInfo">賣家後台</NavLink>
+        <NavLink to="/BackStage">賣家後台</NavLink>
       </dd>
       <dd>
         <NavLink to="/BackStage/orders">訂單資訊</NavLink>
