@@ -11,7 +11,7 @@ export default function AuctionDropDown() {
           <NavLink to="/Chomepage/歷史紀錄">歷史紀錄</NavLink>
         </dd>
         <dd>
-          <NavLink to="/Chomepage/即將舉行">即將舉行</NavLink>
+          <NavLink to="/Chomepage/coming">即將舉行</NavLink>
         </dd>
         <dd>
           <NavLink to="/Chomepage/about me">about me</NavLink>
