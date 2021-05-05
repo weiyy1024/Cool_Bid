@@ -47,7 +47,7 @@ function App() {
           />
           {/* Chomepage */}
           <Route path="/Chomepage" component={Auction} exact />
-          <Route path="/Chomepage/coming" component={AuctionCountdown} />
+          <Route path="/Chomepage/coming" component={AuctionCountdown} exact/>
           {/* Member */}
           <Route path="/Member/signin" component={Login} exact />
           <Route path="/Member/signout" component={Logout} exact />
