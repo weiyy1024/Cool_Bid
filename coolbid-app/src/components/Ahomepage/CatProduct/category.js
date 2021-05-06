@@ -22,7 +22,6 @@ const CategoryContainer = styled.div`
   height: 240rem;
 `
 const SortList = styled.div`
-  margin-top: 3rem;
   margin-right: 5rem;
   float: right;
   display: flex;
@@ -39,6 +38,7 @@ const SortList = styled.div`
 const Bread = styled.div`
   font-size: 2rem;
   margin: 3rem;
+  margin-bottom: 0;
   width: 100%;
 `
 // brand
@@ -254,7 +254,7 @@ export default function Category(props) {
 
   // filterCheckbox
   const handleChecked = (e) => {
-    // for filter vlaue array
+    // for filter value array
     const myFilter = filterValue.map((item) => item)
     const addFilter = e.target.value
     // const find2 = myFilter.find((item) => item === addFilter)
@@ -319,19 +319,19 @@ export default function Category(props) {
       {/* sort */}
       <SortList>
         <div onClick={() => changeSort(1)}>
-          <DashboardIcon />
+          <DashboardIcon style={{ position: 'relative', top: '4px' }} />
           圖像式瀏覽
         </div>
         <div onClick={() => changeSort(2)}>
-          <ListIcon />
+          <ListIcon style={{ position: 'relative', top: '4px' }}/>
           條列式瀏覽
         </div>
         <div onClick={changeSortPrice}>
-          <MonetizationOnIcon />
+          <MonetizationOnIcon style={{ position: 'relative', top: '4px' }}/>
           價格排列
         </div>
         <div onClick={changeSortTime}>
-          <AccessAlarmsIcon />
+          <AccessAlarmsIcon style={{ position: 'relative', top: '4px' }}/>
           截止排列
         </div>
       </SortList>
