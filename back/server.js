@@ -5,11 +5,12 @@ var session = require('express-session')
 
 app.use(express.json())
 app.listen(3001)
+
 var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'UnicornglLen3550', // merge 的時候如果有衝突請改回 root
   database: 'coolbidLatest',
   port: 8889
 })
@@ -84,6 +85,18 @@ app.get('/logout', function (req, res) {
 //商品類別
 app.get('/category/:category', function (req, res) {
   let test = req.params.category
+  conn.query(
+    'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE c.categoryName = ?',
+    [test],
+    function (err, result) {
+      res.send(result)
+    }
+  )
+})
+
+// bidding history
+app.get('/product/:product_id', function (req, res) {
+  let test = req.params.product_id
   conn.query(
     'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE c.categoryName = ?',
     [test],
