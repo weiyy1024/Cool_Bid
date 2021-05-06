@@ -237,6 +237,33 @@ app.get('/search/:id', function (req, res) {
     // res.send('ok');
   })
 })
+
+// 撈使用者的收藏清單 20200507 Jou
+app.post('/likeproduct', function (req, res){
+  conn.query('select productId from wishproduct where memberId = ?',
+  [req.body.memberId], function (err, result) {
+    if (err) console.log(err)
+    res.send(result)
+  })
+})
+
+// 收藏/取消收藏 20200507 Jou
+app.post('/collectproduct', function (req, res){
+  if (req.body.collect == 'true') {
+    conn.query('insert into `wishproduct` (`memberId`, `productId`) values (?, ?)',
+    [req.body.memberId, req.body.productId], function (err, result){
+      if (err) console.log(err)
+      res.send('收藏成功')
+    })
+  } else{
+    conn.query('delete from `wishproduct` where `memberId` = ? and `productId` = ? '
+    ,[req.body.memberId, req.body.productId], function (err, result){
+      if (err) console.log(err)
+      res.send('取消收藏')
+    })
+  }
+})
+
 //-----------------------------post方法------------------------
 // app.post('/search',function(req,res){
 //     let test = req.body.test
