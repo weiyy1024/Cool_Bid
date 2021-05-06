@@ -42,9 +42,19 @@ export default function Ahomepage() {
       {/* 分類選項 */}
       <div className="category">
         {category.map((item) => (
-          <NavLink key={item.categoryId} to={'/Ahomepage/' + item.categoryName}>
-            <img className="eachCat" src={item.src}></img>
-          </NavLink>
+          <div
+            key={item.categoryId}
+            style={{
+              width: '220px',
+              height: '220px',
+              overflow: 'hidden',
+              borderRadius: '50%'
+            }}
+          >
+            <NavLink to={'/Ahomepage/' + item.categoryName}>
+              <img className="eachCat" src={item.src}></img>
+            </NavLink>
+          </div>
         ))}
       </div>
       {/* 跑馬燈 */}

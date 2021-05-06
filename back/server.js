@@ -5,6 +5,7 @@ var session = require('express-session')
 
 app.use(express.json())
 app.listen(3001)
+
 var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
@@ -93,6 +94,18 @@ app.get('/category/:category', function (req, res) {
   )
 })
 
+// 商品
+app.get('/product/:product_id', function (req, res) {
+  let para = req.params.product_id
+  conn.query(
+    'SELECT * FROM `product` WHERE productId = ?',
+    [para],
+    function (err, result) {
+      res.send(result)
+    }
+  )
+})
+
 //品牌
 app.get('/brand/:brand', function (req, res) {
   let test = req.params.brand
@@ -108,7 +121,7 @@ app.get('/brand/:brand', function (req, res) {
 app.get('/genders/:cat', function (req, res) {
   let test = req.params.cat
   conn.query(
-    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId   WHERE categoryName=? AND detailTitleDescription = 'Genders'`,
+    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId WHERE categoryName=? AND detailTitleDescription = 'Genders'`,
     [test],
     function (err, result) {
       res.send(result)
