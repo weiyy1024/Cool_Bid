@@ -197,12 +197,16 @@ p.title {
     font-size: 2rem;
     margin-bottom: 0;
     padding: 1rem 2rem 0 2rem;
+    /* 三行換行 Jou 20210506*/
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
   p.title3 {
     font-size: 2.4rem;
     padding: 1rem 2rem 0 0;
     margin-bottom: 0;
-
   }
   p.price {
     font-size: 2rem;

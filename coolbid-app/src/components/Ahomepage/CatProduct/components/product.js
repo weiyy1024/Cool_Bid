@@ -78,7 +78,10 @@ export function ItemDiv(props) {
         />
       </div>
       <div className={sort === 1 ? 'Information' : 'Information3'}>
+        {/* 商品標題加超連結 條列式標題文字顏色待修改 Jou 20210506 */}
+        <NavLink style={{ textDecoration: 'none' }} to={'/Ahomepage/product/product?=' + data.productId}>
         <p className={sort === 1 ? 'title' : 'title3'}>{data.productName}</p>
+        </NavLink>
         <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
           <span>最高出價：</span> NT.<span>{data.directPrice}</span>
         </p>
