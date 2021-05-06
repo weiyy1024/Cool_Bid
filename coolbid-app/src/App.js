@@ -23,6 +23,7 @@ import AuctionCountdown from './AuctionCountdown'
 import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 import Address from './components/backstage/Member/info/Address'
 import CloseAuction from './components/backstage/product1920/CloseAuction'
+import ShoppingCart from './components/member/carts/shoppingCart'
 
 function App() {
   return (
@@ -87,9 +88,9 @@ function App() {
           <Route path="/BackStage/orders" component={OrderList} exact />
 
           {/* Shopping */}
-          <Route path="/Shopping/Cart" component={Login} exact />
+          <Route path="/Shopping/Cart" component={ShoppingCart} exact />
           <Route path="/Shopping/Bidding" component={Login} exact />
-          <Route path="/Shopping/WishList" component={Login} exact />
+          <Route path="/Shopping/WishList" component={ShoppingCart} exact />
         </Switch>
       </div>
     </BrowserRouter>
