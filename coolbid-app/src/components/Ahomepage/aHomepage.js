@@ -6,15 +6,7 @@ import bag from './images/bag.jpeg'
 import cloth from './images/P351白370.jpeg'
 import shoes from './images/shoes2.jpeg'
 import watch from './images/watch.jpeg'
-// import Category from './CatProduct/category'
 import './Ahomepage.css'
-// import {
-//   // BrowserRouter,
-//   Switch,
-//   Route
-// } from 'react-router-dom'
-
-// import { renderRoutes } from 'react-router-config'
 
 const category = [
   {

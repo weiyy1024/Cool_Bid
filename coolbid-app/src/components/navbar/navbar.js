@@ -89,7 +89,7 @@ const Ball = styled.div`
   background-color: #fafafa;
   border-radius: 50%;
   top: 0.2rem;
-  box-shadow: 0 2px 2px rgba(0, 0, 0,.5);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
   -webkit-transition: all 300ms linear;
   transition: all 300ms linear;
   left: ${({ theme }) => theme.ball};
@@ -229,7 +229,7 @@ export default function NavBar() {
         </SearchDiv>
         <ThreeIcons>
           <Note />
-          <Member className="Chomepage" to="/Member">
+          <Member className="Chomepage" to="/member/edit">
             <AccountCircleIcon style={iconStye} />
             <MemberDropDown />
           </Member>

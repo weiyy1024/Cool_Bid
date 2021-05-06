@@ -5,6 +5,17 @@ import OrderTabs from '../../Order22/OrderTabs'
 import BuyListItem from './BuyListItem'
 import '../../../SASS/list.scss'
 import '../../../SASS/Components.scss'
+import styled from '@emotion/styled'
+import NestedList from '../../Main/MemberList'
+
+const BuyListContainer = styled.div`
+  width: 70%;
+  margin: 20rem auto;
+  display: flex;
+  .shipList {
+    width: 20%;
+  }
+`
 
 function BuyList() {
   // const [list, setList] = useState(
@@ -56,14 +67,17 @@ function BuyList() {
   ]
 
   return (
-    <div className="Table_wrap">
-      <OrderTabs />
-      <TableContainer className="Table_container">
-        {list.map((item) => {
-          return <BuyListItem key={item.orderId} detail={item} />
-        })}
-      </TableContainer>
-    </div>
+    <BuyListContainer>
+      <NestedList />
+      <div className="Table_wrap">
+        <OrderTabs />
+        <TableContainer className="Table_container">
+          {list.map((item) => {
+            return <BuyListItem key={item.orderId} detail={item} />
+          })}
+        </TableContainer>
+      </div>
+    </BuyListContainer>
   )
 }
 

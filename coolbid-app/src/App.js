@@ -21,6 +21,7 @@ import NavBar from './components/navbar/navbar'
 import Backstage from './components/backstage/backStage'
 import AuctionCountdown from './AuctionCountdown'
 import BuyList from './components/backstage/Member/PurchaseList/BuyList'
+import Address from './components/backstage/Member/info/Address'
 
 function App() {
   return (
@@ -48,11 +49,8 @@ function App() {
           />
           {/* Chomepage */}
           <Route path="/Chomepage" component={Auction} exact />
-<<<<<<< HEAD
           <Route path="/Chomepage/coming" component={AuctionCountdown} exact />
-=======
-          <Route path="/Chomepage/coming" component={AuctionCountdown} exact/>
->>>>>>> 9059b15760697b30f09833cb359bf9f5de091d83
+          <Route path="/Chomepage/coming" component={AuctionCountdown} exact />
           {/* Member */}
           <Route path="/member/signin" component={Login} exact />
           <Route path="/member/signout" component={Logout} exact />
@@ -67,7 +65,7 @@ function App() {
             component={ForgetMemberPwd}
             exact
           />
-          <Route path="/member/shippingInfo" component={Login} exact />
+          <Route path="/member/shippingInfo" component={Address} exact />
           <Route path="/member/paymentInfo" component={Login} exact />
           <Route path="/member/coolCoin" component={Login} exact />
           <Route path="/member/purchase" component={BuyList} exact />
