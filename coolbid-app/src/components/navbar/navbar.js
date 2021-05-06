@@ -229,7 +229,7 @@ export default function NavBar() {
         </SearchDiv>
         <ThreeIcons>
           <Note />
-          <Member className="Chomepage" to="/member/edit">
+          <Member className="Chomepage" to="/member/signin">
             <AccountCircleIcon style={iconStye} />
             <MemberDropDown />
           </Member>

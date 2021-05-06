@@ -9,7 +9,7 @@ import Search from './components/Ahomepage/search/search'
 import Auction from './Auction'
 import Login from './components/member/login'
 import Logout from './components/member/logout'
-import AddProductEdit from './components/backstage/product1920/AddProductEdit'
+// import AddProductEdit from './components/backstage/product1920/AddProductEdit'
 import AddProductTable from './components/backstage/product1920/AddProductTable'
 import SetStoreInfo from './components/backstage/SetStoreInfo21/SetStoreInfo'
 import OrderList from './components/backstage/Order22/OrderList'
@@ -22,6 +22,7 @@ import Backstage from './components/backstage/backStage'
 import AuctionCountdown from './AuctionCountdown'
 import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 import Address from './components/backstage/Member/info/Address'
+import CloseAuction from './components/backstage/product1920/CloseAuction'
 
 function App() {
   return (
@@ -72,7 +73,11 @@ function App() {
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
-          <Route path="/BackStage/product" component={AddProductEdit} exact />
+          <Route
+            path="/BackStage/product/:status"
+            exact
+            render={({ match }) => <CloseAuction data={match} />}
+          />
           <Route
             path="/BackStage/editProduct"
             component={AddProductTable}
