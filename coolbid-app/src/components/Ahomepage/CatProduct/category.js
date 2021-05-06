@@ -17,7 +17,7 @@ import Pagination from '@material-ui/lab/Pagination'
 // import { Breadcrumbs } from '@material-ui/core'
 
 const CategoryContainer = styled.div`
-  margin-top: 16.5rem;
+  margin-top: 12rem;
   width: 100%;
   height: 240rem;
 `

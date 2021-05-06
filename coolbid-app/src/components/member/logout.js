@@ -21,9 +21,10 @@ export default function Logout(props) {
   axios.defaults.withCredentials = true
   const handlelogout = () => {
     axios.get('http://localhost:3001/logout').then((e) => {
-      // console.log(document.cookie)
       alert(e.data)
       console.log(e)
+      // 清sessionstorage
+      window.sessionStorage.clear()
       window.location.href = 'http://localhost:3000/'
     })
   }

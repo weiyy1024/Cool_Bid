@@ -60,8 +60,8 @@ app.post('/member/signin', function (req, res) {
       if (err) console.log(err)
       else if (result[0]) {
         req.session.user = result
-        res.send('登入成功')
-      } else res.send('登入失敗，請重試')
+        res.send(result[0])
+      } else res.send('')
     }
   )
 })

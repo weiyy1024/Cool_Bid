@@ -136,24 +136,25 @@ function BidHistory(props) {
           borderRadius: '0px 0px 3px 3px'
         }}
       >
-              <Card
-        style={{
-          height: 'auto',
-          padding: '0 10px',
-          backgroundColor: '#fff',
-          borderRadius: '3px 3px 0px 0px',
-          boxShadow: '0 5px 20px rgba(0,0,0,.2) '
-        }}
-      >
-        <h4>目前競標商品：{product}</h4>
-        <h4>
-          最高出價者：
-          {bidMsg.length === 0 ? '' : bidMsg[bidMsg.length - 1].user}
-        </h4>
-        <h4>
-          目前最高價：NT$ {bidMsg.length === 0 ? 0 : numberWithCommas(bidPrice)}
-        </h4>
-      </Card>
+        <Card
+          style={{
+            height: 'auto',
+            padding: '0 10px',
+            backgroundColor: '#fff',
+            borderRadius: '3px 3px 0px 0px',
+            boxShadow: '0 5px 20px rgba(0,0,0,.2) '
+          }}
+        >
+          <h4 style={{ margin: '1rem 0' }}>目前競標商品：{product}</h4>
+          <h4 style={{ margin: '1rem 0' }}>
+            最高出價者：
+            {bidMsg.length === 0 ? '' : bidMsg[bidMsg.length - 1].user}
+          </h4>
+          <h4 style={{ margin: '1rem 0' }}>
+            目前最高價：NT${' '}
+            {bidMsg.length === 0 ? 0 : numberWithCommas(bidPrice)}
+          </h4>
+        </Card>
         <div style={{ height: '80%', overflow: 'scroll' }}>
           <ol reversed>
             {bidMsg

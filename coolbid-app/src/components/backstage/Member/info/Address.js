@@ -2,6 +2,17 @@
 import React from 'react'
 import '../../../SASS/list.scss'
 import '../../../SASS/Components.scss'
+import styled from '@emotion/styled'
+import NestedList from '../../Main/MemberList'
+
+const AddressContainer = styled.div`
+  width: 70%;
+  margin: 20rem auto;
+  display: flex;
+  .shipList {
+    width: 20%;
+  }
+`
 
 function Address() {
   // const [data, setDate] = useState(
@@ -23,27 +34,29 @@ function Address() {
   ]
 
   return (
-    <>
-      <div className="Address_wrap">
-        <div className="btnArea">
-          <button className="button">新增地址</button>
-        </div>
-
-        {data.map((item, index) => {
-          return (
-            <div key={index} className="Address_list">
-              <button className="button">刪除</button>
-              <div className="dataArea">
-                <p>姓名：{item.name}</p>
-                <p>手機：{item.phone}</p>
-                <p>超商：{item.convenience}</p>
-                <p>地址：{item.address}</p>
+    <AddressContainer>
+      <NestedList className="shipList" />
+      <div>
+        <div className="Address_wrap">
+          <div className="btnArea">
+            <button className="button">新增地址</button>
+          </div>
+          {data.map((item, index) => {
+            return (
+              <div key={index} className="Address_list">
+                <button className="button">刪除</button>
+                <div className="dataArea">
+                  <p>姓名：{item.name}</p>
+                  <p>手機：{item.phone}</p>
+                  <p>超商：{item.convenience}</p>
+                  <p>地址：{item.address}</p>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
-    </>
+    </AddressContainer>
   )
 }
 

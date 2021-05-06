@@ -23,7 +23,11 @@
   text-decoration: none;
 }
 .nav ul li:hover {
-  background: #00939C;
+  background: #edae10;
+}
+
+.nav ul li:hover a {
+  color: #000;
 }
 
 /*# sourceMappingURL=.nav2.css.map */

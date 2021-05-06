@@ -1,0 +1,18 @@
+.form_warp {
+  width: 600px;
+  border: 1px #707070 solid;
+  line-height: 5rem;
+  padding: 50px;
+  border-radius: 10px;
+}
+
+.form_row {
+  border-bottom: 1px #707070 solid;
+  padding-bottom: 10px;
+}
+
+.button {
+  float: right;
+  margin: 0px 20px;
+}
+/*# sourceMappingURL=from.css.map */

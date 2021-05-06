@@ -1,6 +1,6 @@
 /* eslint-disable space-before-function-paren */
 import React, { useState } from 'react'
-import { NavLink, BrowserRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Drawer from '@material-ui/core/Drawer'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
@@ -16,36 +16,37 @@ const ProductDiv = styled.div`
   display: flex;
 `
 const ProductImg = styled.div`
-  width: 22rem;
-  height: 22rem;
+  width: 15rem;
+  height: 15rem;
+  margin-right: 1.5rem;
 `
 const ProductInfo = styled.div`
   .productName {
-    font-size: 2.6rem;
-    margin-top: 6rem;
+    font-size: 2.4rem;
     margin-bottom: 0;
   }
   .productPrice {
     font-size: 2rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     margin-bottom: 0.2rem;
   }
   .seller {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-top: 1rem;
   }
   .countdown {
     margin-top: 0.5rem;
   }
 `
 const Total = styled.div`
-  border-top: solid 0.3rem rgb(17, 17, 120);
-  border-bottom: solid 0.3rem rgb(17, 17, 120);
+  border-bottom: solid 1px grey;
   height: 5rem;
   font-size: 2.5rem;
   line-height: 5rem;
   color: rgb(17, 17, 49);
   display: flex;
   position: relative;
+  padding: 0 2rem;
   div {
     position: absolute;
     right: 2rem;
@@ -91,16 +92,27 @@ export function ItemDiv(props) {
   return (
     <ProductDiv>
       <ProductImg>
-        <img src={data.img}></img>
+        <img
+          src={data.img}
+          style={{ objectFit: 'scale-down', height: '100%', width: '100%' }}
+        ></img>
       </ProductImg>
       <ProductInfo>
-        <p className="productName">{data.productName}</p>
-        <p className="productPrice">$NT.{data.price}</p>
-        <BrowserRouter>
-          <span className="seller">
-            賣家：<NavLink to="/seller">{data.sellerId}</NavLink>
-          </span>
-        </BrowserRouter>
+        <p
+          className="productName"
+          style={{
+            maxWidth: '200px',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+          }}
+        >
+          {data.productName}
+        </p>
+        <p className="productPrice">NT$ {data.price}</p>
+        <span className="seller">
+          賣家：<NavLink to="/seller">{data.sellerId}</NavLink>
+        </span>
         <p className="countdown">
           <AccessAlarmIcon />
           {handleTimer(data.orderDate)}
@@ -129,7 +141,7 @@ export default function ShoppingCart() {
   const myProduct = [
     {
       img: Ps5Pic,
-      productName: 'Sony PS5',
+      productName: 'Sony Playstation 5',
       price: 50000,
       sellerId: 'hi_weiyy',
       orderDate: '2021-04-27T04:57:13.000Z',
@@ -137,7 +149,7 @@ export default function ShoppingCart() {
     },
     {
       img: Ps5Pic,
-      productName: 'Sony PS5',
+      productName: 'Sony Playstation 5',
       price: 50000,
       sellerId: 'hi_weiyy',
       orderDate: '2021-04-26T04:57:13.000Z',
@@ -145,7 +157,23 @@ export default function ShoppingCart() {
     },
     {
       img: Ps5Pic,
-      productName: 'Sony PS5',
+      productName: 'Sony Playstation 5',
+      price: 50000,
+      sellerId: 'hi_weiyy',
+      orderDate: '2021-04-25T04:57:13.000Z',
+      time: '剩下6天6時59分59秒結束'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony Playstation 5',
+      price: 50000,
+      sellerId: 'hi_weiyy',
+      orderDate: '2021-04-25T04:57:13.000Z',
+      time: '剩下6天6時59分59秒結束'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony Playstation 5',
       price: 50000,
       sellerId: 'hi_weiyy',
       orderDate: '2021-04-25T04:57:13.000Z',
@@ -161,14 +189,22 @@ export default function ShoppingCart() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <h1 style={{ fontSize: '3rem' }}>
-          &nbsp;&nbsp;Shopping Cart&nbsp;&nbsp;
-          <ShoppingCartIcon style={{ fontSize: '3rem' }} />
+        <h1
+          style={{
+            fontSize: '3rem',
+            marginBottom: '10px',
+            textAlign: 'center'
+          }}
+        >
+          <ShoppingCartIcon style={{ fontSize: '3rem', position: 'relative', top: '4px' }} />
+          購物車
         </h1>
         <Divider />
-        {myProduct.map((item, index) => (
-          <ItemDiv key={index} data={item} />
-        ))}
+        <div style={{ height: '75vh', overflowY: 'scroll', padding: '10px 0' }}>
+          {myProduct.map((item, index) => (
+            <ItemDiv key={index} data={item} />
+          ))}
+        </div>
       </List>
     </div>
   )
@@ -201,10 +237,23 @@ export default function ShoppingCart() {
         onClose={toggleDrawer('right', false)}
       >
         {list('right')}
-        <Total>
-          &nbsp;Total:<div>$NT.{tot}</div>
-        </Total>
-        <Button style={{ fontSize: '3rem' }}>Check Out</Button>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#fff',
+            position: 'sticky',
+            bottom: '0',
+            boxShadow: '0 -5px 5px rgb(0 0 0 / 20%)'
+          }}
+        >
+          <Total>
+            Total:<div>NT$ {tot}</div>
+          </Total>
+          <Button style={{ fontSize: '2.5rem', borderRadius: '0' }}>
+            結帳
+          </Button>
+        </div>
       </Drawer>
     </React.Fragment>
   )
