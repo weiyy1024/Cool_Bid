@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550', // merge 的時候如果有衝突請改回 root
-  database: 'coolbidLatest',
-  port: 8889
+  password: 'root',
+  database: 'coolbidlatest',
+  port: 3306
 })
 // var conn2 = mysql.createConnection({
 //   host: 'localhost',
@@ -94,12 +94,12 @@ app.get('/category/:category', function (req, res) {
   )
 })
 
-// bidding history
+// 商品
 app.get('/product/:product_id', function (req, res) {
-  let test = req.params.product_id
+  let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE c.categoryName = ?',
-    [test],
+    'SELECT * FROM `product` WHERE productId = ?',
+    [para],
     function (err, result) {
       res.send(result)
     }
@@ -121,7 +121,7 @@ app.get('/brand/:brand', function (req, res) {
 app.get('/genders/:cat', function (req, res) {
   let test = req.params.cat
   conn.query(
-    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId   WHERE categoryName=? AND detailTitleDescription = 'Genders'`,
+    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId WHERE categoryName=? AND detailTitleDescription = 'Genders'`,
     [test],
     function (err, result) {
       res.send(result)
