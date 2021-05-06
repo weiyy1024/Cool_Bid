@@ -85,8 +85,7 @@ function SetStoreInfo() {
                           color="primary"
                         />
                       }
-                      label="宅配"
-                    />
+                    /><p>宅配</p>&emsp;
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -96,8 +95,7 @@ function SetStoreInfo() {
                           color="primary"
                         />
                       }
-                      label="全家"
-                    />
+                    /><p>全家</p>&emsp;&emsp;
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -107,8 +105,7 @@ function SetStoreInfo() {
                           color="primary"
                         />
                       }
-                      label="7-11"
-                    />
+                    /><p>7-11</p>
                   </FormGroup>
                 </label>
               </div>
@@ -126,8 +123,7 @@ function SetStoreInfo() {
                           color="primary"
                         />
                       }
-                      label="轉帳"
-                    />
+                    /><p>轉帳</p>&emsp;
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -137,8 +133,7 @@ function SetStoreInfo() {
                           color="primary"
                         />
                       }
-                      label="信用卡"
-                    />
+                    /><p>信用卡</p>&emsp;
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -146,14 +141,15 @@ function SetStoreInfo() {
                           onChange={handleChange}
                           name="COD"
                           color="primary"
+                          className="Mui-checked"
                         />
                       }
-                      label="貨到付款"
-                    />
+                    /><p>貨到付款</p>
                   </FormGroup>
                 </label>
               </div>
               <input type="submit" value="提交" className="button" />
+           <br/>
             </form>
           </div>
         </div>

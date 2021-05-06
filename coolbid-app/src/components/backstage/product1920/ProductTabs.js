@@ -7,9 +7,6 @@ function ProductTabs() {
     <nav className="tabs">
       <ul>
         <li>
-          <a href="#">全部</a>
-        </li>
-        <li>
           <a href="#">競標中</a>
         </li>
         <li>

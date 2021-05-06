@@ -3,6 +3,7 @@
 import React from 'react'
 import Breadcrumbs from './Main/Breadcrumbs'
 import SellerBackendList from './Main/SellerBackendList'
+import Sellerhomopage from './Sellerhomopage'
 import '../SASS/Main.scss'
 export default function Backstage() {
   return (
@@ -14,7 +15,9 @@ export default function Backstage() {
         <div className="List">
           <SellerBackendList />
         </div>
-        <div></div>
+        <div>
+          <Sellerhomopage />
+        </div>
       </div>
     </div>
   )

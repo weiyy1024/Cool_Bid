@@ -6,11 +6,26 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import ProductTabs from './ProductTabs'
+import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 
+const useStyles = makeStyles((theme) => ({
+  itemTitle: {
+    fontSize: 20
+  },
+  itemTxt: {
+    fontSize: 16
+  },
+  tableStyle: {
+    marginTop: 50,
+    border: 'double',
+    borderColor: 'grey'
+  }
+}))
+
 export default function OnTheMarket() {
+  const classes = useStyles()
   const list = [
     {
       id: 1,
@@ -27,23 +42,22 @@ export default function OnTheMarket() {
   ]
 
   return (
-    <div className="Table_wrap">
-      <ProductTabs />
+    <div className="Table_wrap" id='OnTheMarketId'>
       <TableContainer className="Table_container">
         <Table>
           <TableHead>
             <TableRow>
               {/* 遞減排序功能,截標倒數計時 */}
-              <TableCell align="center">圖片</TableCell>
-              <TableCell align="center">項目</TableCell>
-              <TableCell align="center">類別</TableCell>
-              <TableCell align="center">競標</TableCell>
-              <TableCell align="center">起標</TableCell>
-              <TableCell align="center">出價</TableCell>
-              <TableCell align="center">直購</TableCell>
-              <TableCell align="center">截標</TableCell>
-              <TableCell align="center">狀態</TableCell>
-              <TableCell align="center">操作</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>圖片</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>競標</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>起標</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>出價</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>直購</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>截標</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
+              <TableCell align="center" className={classes.itemTitle}>操作</TableCell>
             </TableRow>
           </TableHead>
 
@@ -51,17 +65,20 @@ export default function OnTheMarket() {
             {list.map((item) => {
               return (
                 <TableRow key={item.id}>
-                <TableCell align="center">{item.pic}</TableCell>
-                <TableCell align="center">{item.name}</TableCell>
-                <TableCell align="center">{item.kind}</TableCell>
-                <TableCell align="center">{item.bid}</TableCell>
-                <TableCell align="center">{item.basic}</TableCell>
-                <TableCell align="center">{item.per}</TableCell>
-                <TableCell align="center">{item.direct}</TableCell>
-                <TableCell align="center">{item.deadline}</TableCell>
-                <TableCell align="center">{item.status}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.pic}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.name}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.kind}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.basic}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.per}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.direct}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.deadline}</TableCell>
+                <TableCell align="center" className={classes.itemTxt}>{item.status}</TableCell>
                 <TableCell align="center">
-                  {/* <input type="submit" value="編輯" class="button SetStoreInfo_Submit" onClick={window.location.href="/edit/{row.id}"}/> */}
+                  <input
+                  type="submit"
+                  value="編輯"
+                  className="button SetStoreInfo_Submit"/>
+                  <br/>
                   <input
                     type="submit"
                     value="刪除"

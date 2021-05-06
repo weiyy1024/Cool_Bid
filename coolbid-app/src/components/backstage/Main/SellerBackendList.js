@@ -12,8 +12,8 @@ import { Link } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 150,
-    marginRight: 40,
-
+    marginLeft: 100,
+    marginRight: 50,
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper
   },

@@ -9,8 +9,8 @@ import Search from './components/Ahomepage/search/search'
 import Auction from './Auction'
 import Login from './components/member/login'
 import Logout from './components/member/logout'
-import AddProductEdit from './components/backstage/product1920/AddProductEdit'
-import AddProductTable from './components/backstage/product1920/AddProductTable'
+import Add from './components/backstage/product1920/Add'
+import productpage from './components/backstage/product1920/productpage'
 import SetStoreInfo from './components/backstage/SetStoreInfo21/SetStoreInfo'
 import OrderList from './components/backstage/Order22/OrderList'
 import EditMemberInfo from './components/member/account/editMemberInfo'
@@ -72,10 +72,13 @@ function App() {
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
-          <Route path="/BackStage/product" component={AddProductEdit} exact />
+          <Route path="/BackStage/product" component={productpage} exact />
+          {/* <Route path="/Shopping/product/:CloseAuction" component={CloseAuction} exact />
+          <Route path="/Shopping/product/:SoldOut" component={SoldOut} exact />
+          <Route path="/Shopping/product/:Biding" component={Biding} exact /> */}
           <Route
             path="/BackStage/editProduct"
-            component={AddProductTable}
+            component={Add}
             exact
           />
           <Route path="/BackStage/sellerInfo" component={SetStoreInfo} exact />
