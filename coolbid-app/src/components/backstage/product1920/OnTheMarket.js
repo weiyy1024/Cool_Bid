@@ -73,7 +73,7 @@ export default function OnTheMarket() {
                 <TableCell align="center" className={classes.itemTxt}>{item.direct}</TableCell>
                 <TableCell align="center" className={classes.itemTxt}>{item.deadline}</TableCell>
                 <TableCell align="center" className={classes.itemTxt}>{item.status}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" colSpan={2}>
                   <input
                   type="submit"
                   value="編輯"

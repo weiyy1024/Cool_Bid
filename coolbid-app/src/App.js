@@ -25,6 +25,8 @@ import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 import Address from './components/backstage/Member/info/Address'
 // import CloseAuction from './components/backstage/product1920/CloseAuction'
 import ShoppingCart from './components/member/carts/shoppingCart'
+//
+import SellerPageHero from './components/backstage/SellerPageHero23/SellerPageHero'
 
 function App() {
   return (
@@ -72,6 +74,9 @@ function App() {
           <Route path="/member/paymentInfo" component={Login} exact />
           <Route path="/member/coolCoin" component={Login} exact />
           <Route path="/member/purchase" component={BuyList} exact />
+
+{/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
+<Route path="/BackStage/SellerPageHero" component={SellerPageHero} exact />
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
