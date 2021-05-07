@@ -1,10 +1,10 @@
 /* eslint-disable space-before-function-paren */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import Drawer from '@material-ui/core/Drawer'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import Divider from '@material-ui/core/Divider'
-import Ps5Pic from '../images/product/Ps5.jpeg'
 import styled from '@emotion/styled'
 import Tooltip from '@material-ui/core/Tooltip'
 import GavelIcon from '@material-ui/icons/Gavel'
@@ -71,13 +71,13 @@ function ProductDiv1(props) {
     }, 1000)
     return time
   }
-  const bidAgain = () => (data.myPrice = newPrice)
+  const bidAgain = () => (data.directPrice = newPrice)
 
   return (
     <ProductDiv>
       <ProductImg>
         <img
-          src={data.img}
+          src={'/imgs/' + data.productId + '.jpg'}
           style={{ objectFit: 'scale-down', height: '100%', width: '100%' }}
         ></img>
       </ProductImg>
@@ -95,19 +95,19 @@ function ProductDiv1(props) {
         </p>
         <p>
           最高出價：<span>$NT.</span>
-          {data.highestPrice}
+          {data.directPrice}
         </p>
         <p>
           目前出價：<span>$NT.</span>
-          {data.myPrice}
+          {data.directPrice}
         </p>
         <TextField
           id="standard-number"
           label="再次出價"
           type="number"
-          defaultValue={data.highestPrice}
+          defaultValue={data.directPrice}
           onChange={(e) => setNewPrice(e.target.value)}
-          inputProps={{ min: `${data.highestPrice}` }}
+          inputProps={{ min: `${data.directPrice}` }}
           style={{ display: 'block' }}
         />
         <Button
@@ -129,84 +129,66 @@ function ProductDiv1(props) {
         </Button>
         <p id="countdown">
           <AccessAlarmIcon />
-          {getRestTime(data.deadline)}
+          {getRestTime(data.endTime)}
         </p>
       </ProductInfo>
     </ProductDiv>
   )
 }
 
-export default function Bidding() {
-  // Bidding Cart List
+export default function Bidding(props) {
+  const { userinfo } = props
+  const [biddingProduct, setBiddingProduct] = useState()
   const myProduct = [
     {
-      img: Ps5Pic,
+      productId: 1,
       productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 60000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/27'
-    },
-    {
-      img: Ps5Pic,
-      productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 70000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/4'
-    },
-    {
-      img: Ps5Pic,
-      productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 70000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/4'
-    },
-    {
-      img: Ps5Pic,
-      productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 70000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/4'
-    },
-    {
-      img: Ps5Pic,
-      productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 70000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/4'
-    },
-    {
-      img: Ps5Pic,
-      productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 70000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/4'
-    },
-    {
-      img: Ps5Pic,
-      productName: 'Sony PS5',
-      myPrice: 50000,
-      highestPrice: 70000,
-      sellerId: 'hi_weiyy',
-      time: '剩下6天6時59分59秒結束',
-      deadline: '2021/5/4'
+      directPrice: 18000,
+      shopId: 1,
+      endTime: '2021-06-29T18:00:00.000Z'
     }
   ]
+  const [product, setProduct] = useState(myProduct)
+  console.log(userinfo)
+
+  // 得有出過標的商品ID
+  useEffect(() => {
+    if (userinfo) {
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/bidding/' + userinfo.memberId,
+        'Content-Type': 'application/json'
+      }).then((res) => {
+        let bP = res.data.map((item) => item.productId)
+        bP = '(' + bP.toString() + ')'
+        console.log(bP)
+        setBiddingProduct(bP)
+      })
+    }
+    if (userinfo === null) {
+      setProduct(myProduct)
+    }
+  }, [userinfo])
+
+  // 篩選競標中商品
+  useEffect(() => {
+    axios({
+      method: 'get',
+      baseURL: 'http://localhost:3001',
+      url: '/confirmStatus/' + biddingProduct,
+      'Content-Type': 'application/json'
+    }).then((res) => {
+      console.log(res.data)
+      // setProduct(res.data)
+    })
+  }, [biddingProduct])
+  // console.log(product)
   // Bidding List--End
   // cart tot price--End
+
   let itemAmount = 0
-  myProduct.map((item) => (itemAmount += 1))
+  product.map((item) => (itemAmount += 1))
 
   const [state, setState] = React.useState({
     right: false
@@ -232,7 +214,7 @@ export default function Bidding() {
           競標中
         </h1>
         <Divider />
-        {myProduct.map((item, index) => (
+        {product.map((item, index) => (
           <ProductDiv1 key={index} data={item} />
         ))}
       </List>
