@@ -8,18 +8,16 @@ import {
   Button,
   IconButton,
   FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
+  // FormControlLabel,
+  // Radio,
   Typography
 } from '@material-ui/core'
 import PaymentIcon from '@material-ui/icons/Payment'
 
 import useStyles from '../../../styles/bidFuncStyle'
 
-let bidTimes = 0
-
-const BidFunc = props => {
+const BidFunc = (props, { bidNow, bidState }) => {
+  const { setBidState, nowBidPrice, bidTimes } = props
   const [productF, setProductF] = useState([])
   useEffect(() => {
     axios({
@@ -28,30 +26,31 @@ const BidFunc = props => {
       url: `/product/${props.pId}`,
       'Content-Type': 'application/json'
     }).then(res => setProductF(res.data))
-  }, [props.pId])
+  }, [bidState])
 
-  const directBuyPrice = productF.length === 0 ? '' : productF[0].directPrice
-  const bidPriceStep = productF.length === 0 ? '' : productF[0].perPrice
+  const directBuyPrice = productF.length === 0 ? '' : productF[0][0].directPrice
+  const bidPriceStep = productF.length === 0 ? '' : productF[0][0].perPrice
 
-  const [bidMethod, setBidMethod] = useState()
-  const [nowBidPrice, setNowBidPrice] = useState(0)
-  const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
-  const [directBidPrice, setDirectBidPrice] = useState(
-    nowBidPrice + bidPriceStep
-  )
+  // const [bidMethod, setBidMethod] = useState()
+  // const [nowBidPrice, setNowBidPrice] = useState(nowBidPrice)
+  // const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
+  const [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
 
   const handleNowPriceChange = e => {
-    setAutoBidPrice(e.target.value)
-    setDirectBidPrice(e.target.value)
+    // console.log(nowPrice)
+    console.log(e)
+    // setNowPrice(e.target.value)
+    // setAutoBidPrice(e.target.value)
+    setDirectBidPrice(e.target.defaultValue)
   }
 
-  const handleBidMethodChange = e => {
-    setBidMethod(e.target.value)
-  }
+  // const handleBidMethodChange = e => {
+  //   setBidMethod(e.target.value)
+  // }
 
-  const handleAutoBidPriceChange = e => {
-    setAutoBidPrice(e.target.value)
-  }
+  // const handleAutoBidPriceChange = e => {
+  //   setAutoBidPrice(e.target.value)
+  // }
 
   const handleDirectBidPriceChange = e => {
     setDirectBidPrice(e.target.value)
@@ -77,10 +76,72 @@ const BidFunc = props => {
       })
   }
 
-  const bidNow = () => {
-    if (bidMethod === 'autoBid' && autoBidPrice >= nowBidPrice + bidPriceStep) {
+  //   bidNow = () => {
+  //   if (bidMethod === 'autoBid' && autoBidPrice >= nowBidPrice + bidPriceStep) {
+  //     swal({
+  //       title: `自動出價成功，最高價 ${autoBidPrice}`,
+  //       icon: 'success',
+  //       button: '確認'
+  //     })
+
+  //     axios({
+  //       method: 'post',
+  //       url: `http://localhost:3001/product/${props.originPId}`,
+  //       'Content-Type': 'application/json',
+  //       data: {
+  //         autoBidPrice: autoBidPrice
+  //       }
+  //     }).then(res => console.log(res.data))
+  //     // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep)) & bidTimes++
+  //   } else if (bidMethod === 'directBid' && directBidPrice >= nowBidPrice + bidPriceStep) {
+  //     if (directBidPrice < directBuyPrice) {
+  //       // setNowBidPrice(parseInt(directBidPrice))
+
+  //       swal({
+  //         title: `直接出價成功，目前競標價 ${directBidPrice}元`,
+  //         icon: 'success',
+  //         button: '確認'
+  //       })
+
+  //       axios({
+  //         method: 'post',
+  //         url: `http://localhost:3001/product/${props.originPId}`,
+  //         'Content-Type': 'application/json',
+  //         data: {
+  //           directBidPrice: directBidPrice,
+  //           id: props.pId
+  //         }
+  //       }).then(res => console.log(res.data))
+  //     } else {
+  //       if (directBidPrice >= directBuyPrice) {
+  //         swal({
+  //           title: '確定要以直購價購買嗎？',
+  //           text: '購買後不可任意棄標喔！',
+  //           icon: 'warning',
+  //           buttons: true
+  //         })
+  //           .then((confirmPurchased) => {
+  //             if (confirmPurchased) {
+  //               // 將商品狀態設為結標
+  //               // 更改商品頁
+  //               swal('感謝您的購買：）', {
+  //                 icon: 'success'
+  //               })
+  //             } else {
+  //               swal('再想想也沒關係唷～')
+  //             }
+  //           })
+  //       }
+  //     }
+  //   }
+  // }
+
+  bidNow = () => {
+    if (directBidPrice < directBuyPrice && directBidPrice >= nowBidPrice + bidPriceStep) {
+      // setNowBidPrice(parseInt(directBidPrice))
+
       swal({
-        title: `自動出價成功，最高價 ${autoBidPrice}`,
+        title: `直接出價成功，目前競標價 ${directBidPrice}元`,
         icon: 'success',
         button: '確認'
       })
@@ -90,53 +151,36 @@ const BidFunc = props => {
         url: `http://localhost:3001/product/${props.originPId}`,
         'Content-Type': 'application/json',
         data: {
-          autoBidPrice: autoBidPrice
+          directBidPrice: directBidPrice,
+          id: props.pId
         }
       }).then(res => console.log(res.data))
-      // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep)) & bidTimes++
-    } else if (bidMethod === 'directBid' && directBidPrice >= nowBidPrice + bidPriceStep) {
-      if (directBidPrice < directBuyPrice) {
-        setNowBidPrice(parseInt(directBidPrice))
-
+    } else {
+      if (directBidPrice >= directBuyPrice) {
         swal({
-          title: `直接出價成功，目前競標價 ${directBidPrice}元`,
-          icon: 'success',
-          button: '確認'
+          title: '確定要以直購價購買嗎？',
+          text: '購買後不可任意棄標喔！',
+          icon: 'warning',
+          buttons: true
         })
-        bidTimes++
-
-        axios({
-          method: 'post',
-          url: `http://localhost:3001/product/${props.originPId}`,
-          'Content-Type': 'application/json',
-          data: {
-            directBidPrice: directBidPrice,
-            id: props.pId
-          }
-        }).then(res => console.log(res.data))
-      } else {
-        if (directBidPrice >= directBuyPrice) {
-          swal({
-            title: '確定要以直購價購買嗎？',
-            text: '購買後不可任意棄標喔！',
-            icon: 'warning',
-            buttons: true
+          .then((confirmPurchased) => {
+            if (confirmPurchased) {
+              // 將商品狀態設為結標
+              // 更改商品頁
+              swal('感謝您的購買：）', {
+                icon: 'success'
+              })
+            } else {
+              swal('再想想也沒關係唷～')
+            }
           })
-            .then((confirmPurchased) => {
-              if (confirmPurchased) {
-                // 將商品狀態設為結標
-                // 更改商品頁
-                swal('感謝您的購買：）', {
-                  icon: 'success'
-                })
-              } else {
-                swal('再想想也沒關係唷～')
-              }
-            })
-        }
       }
     }
   }
+
+  // historyData = {
+  //   directBidGroup: directBidPrice
+  // }
 
   const saveMoney = () => {
     const priceDiff = directBuyPrice - nowBidPrice
@@ -183,8 +227,8 @@ const BidFunc = props => {
       </div>
       <br />
       <FormControl component='fieldset' className={classes.bidFuncGroup}>
-        <RadioGroup onChange={handleBidMethodChange}>
-          <div className={classes.autoBidGroup}>
+        {/* <RadioGroup onChange={handleBidMethodChange}> */}
+          {/* <div className={classes.autoBidGroup}>
             <FormControlLabel
               control={<Radio />}
               value='autoBid'
@@ -199,14 +243,14 @@ const BidFunc = props => {
               step={bidPriceStep}
               defaultValue={nowBidPrice + bidPriceStep}
             />
-          </div>
+          </div> */}
           <div className={classes.directBidGroup}>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Radio />}
               value='directBid'
               label='直接出價'
               style={{ width: '14rem' }}
-            />
+            /> */}
             <input
               type='number'
               onChange={handleDirectBidPriceChange}
@@ -216,18 +260,21 @@ const BidFunc = props => {
               defaultValue={nowBidPrice + bidPriceStep}
             />
           </div>
-        </RadioGroup>
+        {/* </RadioGroup> */}
       </FormControl>
       <br />
       <div className={classes.bidNowGroup}>
         <Button
           className={classes.go}
-          onClick={bidNow}
+          onClick={() => {
+            bidNow()
+            setBidState(bidState + 1)
+          }}
           variant='contained'
           color='primary'
           disableElevation
         >
-          我要出價
+          直接出價
         </Button>
         <Typography variant='h4' color='primary' className={classes.save}>
           已省下 {saveMoney()}

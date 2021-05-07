@@ -10,9 +10,10 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'coolbidLatest',
-  port: 3306
+  password: 'UnicornglLen3550',
+  database: 'coolbidlatest',
+  port: 3306,
+  multipleStatements: true
 })
 // var conn2 = mysql.createConnection({
 //   host: 'localhost',
@@ -92,20 +93,32 @@ app.get('/category/:category', function (req, res) {
   )
 })
 
-// 商品
+// 讀取商品資料 & 出價紀錄
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId join categorydetail AS cd ON cd.categoryDetailId = p.bagColorId WHERE productId = ?',
-    [para],
+    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId join categorydetail AS cd ON cd.categoryDetailId = p.bagColorId WHERE productId = ?; SELECT `biddingHistoryId`, `memberId`, `bidprice`, `bidTime` FROM `biddinghistory` WHERE `productId` = ?',
+    [para, para],
     function (err, result) {
       res.send(result)
     }
   )
 })
 
-// 競標紀錄
-app.post('/product/:product_id', function (req, res) {
+// // 讀取商品資料
+// app.get('/product/:product_id', function (req, res) {
+//   let para = req.params.product_id
+//   conn.query(
+//     '',
+//     [para],
+//     function (err, result) {
+//       res.send(result)
+//     }
+//   )
+// })
+
+// 寫入目前價格
+app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
   let { id, autoBidPrice, directBidPrice } = req.body
 
@@ -122,10 +135,25 @@ app.post('/product/:product_id', function (req, res) {
       'UPDATE product SET nowPrice = ? WHERE productId = ?',
       [directBidPrice, id],
       function (err, result) {
-        res.send(result)
+        console.log(result)
       }
     )
   }
+  next()
+})
+
+// 寫入競標紀錄
+app.post('/product/:product_id', function (req, res, ) {
+  let para = req.params.product_id
+  let { id, directBidPrice } = req.body
+
+  conn.query(
+    'INSERT INTO `biddinghistory`(`productId`, `bidprice`) VALUES (?, ?)',
+    [id, directBidPrice],
+    function (err, result) {
+      console.log(result)
+    }
+  )
 })
 
 //品牌

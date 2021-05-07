@@ -24,27 +24,20 @@ import useStyles from '../../../styles/bidPageStyle'
 
 import BidFunc from './bidFunc'
 
-const createData = (name, ID, bid, time) => {
-  return { name, ID, bid, time }
-}
-
-const rows = [
-  createData('Len', 'LEN', '31,800元', '2021/05/04 21:34'),
-  createData('偶是瑋瑋~', 'WEIWEI', '30,000元', '2021/05/04 11:57'),
-  createData('慈慈', 'JOU', '28,500元', '2021/05/02 09:06'),
-  createData('叛逆a維婷', 'WEIYYY', '27,000元', '2021/05/01 15:03')
-]
-
 const BidPage = props => {
   const classes = useStyles()
 
   let [toggle, setToggle] = useState(true)
+  const [product, setProduct] = useState([])
+  const [bidState, setBidState] = useState(0)
+  const handleBidState = () => {
+    setBidState(bidState + 1)
+  }
 
   let pId = props.data.params.product_id
   pId = window.location.search
   pId = pId.substr(2, 1)
 
-  const [product, setProduct] = useState([])
   useEffect(() => {
     axios({
       method: 'get',
@@ -52,9 +45,9 @@ const BidPage = props => {
       url: `/product/${pId}`,
       'Content-Type': 'application/json'
     }).then(res => setProduct(res.data))
-  }, [pId])
+  }, [bidState])
 
-  console.log(product)
+  const rows = product.length === 0 ? [] : product[1]
 
   const handleToggleInfo = () => {
     setToggle((toggle = true))
@@ -64,6 +57,8 @@ const BidPage = props => {
     setToggle((toggle = false))
   }
 
+  const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
+
   return (
     <>
       <Container className={classes.root}>
@@ -72,14 +67,14 @@ const BidPage = props => {
             Home Page
           </Link>
           <Link color='inherit' href='../bag'>
-            {product.length === 0 ? '' : product[0].categoryName}
+            {product.length === 0 ? '' : product[0][0].categoryName}
           </Link>
           <Link
             color='textPrimary'
             href='/bidding/category/product'
             aria-current='page'
           >
-            {product.length === 0 ? '' : product[0].productName}
+            {product.length === 0 ? '' : product[0][0].productName}
           </Link>
         </Breadcrumbs>
         <Grid
@@ -99,7 +94,7 @@ const BidPage = props => {
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              {product.length === 0 ? '' : product[0].productName}
+              {product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               剩下 ***6天6小時*** 結束
@@ -108,23 +103,29 @@ const BidPage = props => {
               最高出價：***Len***
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品品牌：{product.length === 0 ? '' : product[0].brandName}
+              商品品牌：{product.length === 0 ? '' : product[0][0].brandName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               商品樣式：***男包 後背包***
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：{product.length === 0 ? '' : product[0].categoryDetailDescription}
+              商品顏色：{product.length === 0 ? '' : product[0][0].categoryDetailDescription}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品狀況：{product.length === 0 ? '' : product[0].productConditionDescription}
+              商品狀況：{product.length === 0 ? '' : product[0][0].productConditionDescription}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               付款方式：信用卡
             </Typography>
           </div>
           <Card className={classes.productBidWrapper}>
-            <BidFunc pId={pId} originPId={props.data.params.product_id} />
+            <BidFunc
+              pId={pId}
+              originPId={props.data.params.product_id}
+              setBidState={handleBidState}
+              bidTimes = {rows.length}
+              nowBidPrice = {nowBidPrice}
+            />
           </Card>
         </Grid>
         <Card component={Paper}>
@@ -236,13 +237,13 @@ const BidPage = props => {
               </TableHead>
               <TableBody>
                 {rows.map(row => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.biddingHistoryId}>
                     <TableCell component='th' scope='row'>
-                      {row.name}
+                      {row.biddingHistoryId}
                     </TableCell>
-                    <TableCell>{row.ID}</TableCell>
-                    <TableCell>{row.bid}</TableCell>
-                    <TableCell>{row.time}</TableCell>
+                    <TableCell>{row.memberId}</TableCell>
+                    <TableCell>{row.bidprice}</TableCell>
+                    <TableCell>{row.bidTime}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
