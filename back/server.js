@@ -97,7 +97,7 @@ app.get('/category/:category', function (req, res) {
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
+    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
     [para, para],
     function (err, result) {
       res.send(result)
