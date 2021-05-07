@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'UnicornglLen3550',
   database: 'coolbidLatest',
-  port: 8889,
+  port: 3306,
   multipleStatements: true
 })
 // var conn2 = mysql.createConnection({
@@ -97,25 +97,13 @@ app.get('/category/:category', function (req, res) {
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId join categorydetail AS cd ON cd.categoryDetailId = p.bagColorId WHERE productId = ?; SELECT `biddingHistoryId`, `memberId`, `bidprice`, `bidTime` FROM `biddinghistory` WHERE `productId` = ?',
+    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
     [para, para],
     function (err, result) {
       res.send(result)
     }
   )
 })
-
-// // 讀取商品資料
-// app.get('/product/:product_id', function (req, res) {
-//   let para = req.params.product_id
-//   conn.query(
-//     '',
-//     [para],
-//     function (err, result) {
-//       res.send(result)
-//     }
-//   )
-// })
 
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
@@ -143,13 +131,13 @@ app.post('/product/:product_id', function (req, res, next) {
 })
 
 // 寫入競標紀錄
-app.post('/product/:product_id', function (req, res, ) {
+app.post('/product/:product_id', function (req, res) {
   let para = req.params.product_id
-  let { id, directBidPrice } = req.body
+  let { id, directBidPrice, memberId } = req.body
 
   conn.query(
-    'INSERT INTO `biddinghistory`(`productId`, `bidprice`) VALUES (?, ?)',
-    [id, directBidPrice],
+    'INSERT INTO `biddinghistory`(`productId`, `memberId`, `bidprice`) VALUES (?, ?, ?)',
+    [id, memberId, directBidPrice],
     function (err, result) {
       console.log(result)
     }

@@ -27,6 +27,8 @@ import BidFunc from './bidFunc'
 const BidPage = props => {
   const classes = useStyles()
 
+  // const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
   let [toggle, setToggle] = useState(true)
   const [product, setProduct] = useState([])
   const [bidState, setBidState] = useState(0)
@@ -36,7 +38,7 @@ const BidPage = props => {
 
   let pId = props.data.params.product_id
   pId = window.location.search
-  pId = pId.substr(2, 1)
+  pId = pId.substr(2)
 
   useEffect(() => {
     axios({
@@ -239,9 +241,9 @@ const BidPage = props => {
                 {rows.map(row => (
                   <TableRow key={row.biddingHistoryId}>
                     <TableCell component='th' scope='row'>
-                      {row.biddingHistoryId}
+                      {row.nickname}
                     </TableCell>
-                    <TableCell>{row.memberId}</TableCell>
+                    <TableCell>{row.userId}</TableCell>
                     <TableCell>{row.bidprice}</TableCell>
                     <TableCell>{row.bidTime}</TableCell>
                   </TableRow>

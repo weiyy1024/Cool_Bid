@@ -16,7 +16,9 @@ import PaymentIcon from '@material-ui/icons/Payment'
 
 import useStyles from '../../../styles/bidFuncStyle'
 
-const BidFunc = (props, { bidNow, bidState }) => {
+const BidFunc = (props, { bidState }) => {
+  const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
   const { setBidState, nowBidPrice, bidTimes } = props
   const [productF, setProductF] = useState([])
   useEffect(() => {
@@ -28,6 +30,8 @@ const BidFunc = (props, { bidNow, bidState }) => {
     }).then(res => setProductF(res.data))
   }, [bidState])
 
+  console.log(productF)
+
   const directBuyPrice = productF.length === 0 ? '' : productF[0][0].directPrice
   const bidPriceStep = productF.length === 0 ? '' : productF[0][0].perPrice
 
@@ -38,10 +42,10 @@ const BidFunc = (props, { bidNow, bidState }) => {
 
   const handleNowPriceChange = e => {
     // console.log(nowPrice)
-    console.log(e)
     // setNowPrice(e.target.value)
     // setAutoBidPrice(e.target.value)
-    setDirectBidPrice(e.target.defaultValue)
+    setDirectBidPrice(e.target.value)
+    console.log(e.target)
   }
 
   // const handleBidMethodChange = e => {
@@ -136,10 +140,8 @@ const BidFunc = (props, { bidNow, bidState }) => {
   //   }
   // }
 
-  bidNow = () => {
+  const bidNow = () => {
     if (directBidPrice < directBuyPrice && directBidPrice >= nowBidPrice + bidPriceStep) {
-      // setNowBidPrice(parseInt(directBidPrice))
-
       swal({
         title: `直接出價成功，目前競標價 ${directBidPrice}元`,
         icon: 'success',
@@ -152,7 +154,8 @@ const BidFunc = (props, { bidNow, bidState }) => {
         'Content-Type': 'application/json',
         data: {
           directBidPrice: directBidPrice,
-          id: props.pId
+          id: props.pId,
+          memberId: userInfo.memberId
         }
       }).then(res => console.log(res.data))
     } else {
@@ -257,7 +260,7 @@ const BidFunc = (props, { bidNow, bidState }) => {
               min={nowBidPrice + bidPriceStep}
               max={directBuyPrice}
               step={bidPriceStep}
-              defaultValue={nowBidPrice + bidPriceStep}
+              defaultValue={nowBidPrice}
             />
           </div>
         {/* </RadioGroup> */}
