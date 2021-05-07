@@ -9,6 +9,8 @@ import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import '../style/product.css'
 
+const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
 const Products = styled.div`
   width: 110rem;
   display: flex;
@@ -57,39 +59,41 @@ export function ItemDiv(props) {
     countdown()
   }, [data])
 
-  // 登入後撈user的收藏清單 (memberId待改成session) 20210507 Jou
+  // 登入後撈user的收藏清單 done 20210507 Jou
   const [likeProduct, setLikeProduct] = useState([])
 
+  if (userinfo) {
   useEffect(() => {
     axios
       .post('http://localhost:3001/likeproduct', {
-        memberId: 3
+        memberId: userinfo.memberId
       }).then((e) => {
         setLikeProduct(e.data.map((item) => item.productId))
       })
-  }, [])
+  }, [likeProduct])
+  }
 
-  // 收藏與取消收藏 差強迫render 20210507 Jou
+  // 收藏與取消收藏 done 20210507 Jou
   const handlelike = (e) => {
-    console.log(e)
-    console.log(likeProduct)
-    if (likeProduct.includes(e)) {
-      // delete收藏
+    if (userinfo) {
+      if (likeProduct.includes(e)) {
+        // delete收藏
+        axios
+        .post('http://localhost:3001/collectproduct', {
+          memberId: userinfo.memberId,
+          productId: e,
+          collect: 'false'
+      }).then((res) => { alert(res.data) })
+      } else {
+      // insert into收藏
       axios
-      .post('http://localhost:3001/collectproduct', {
-        memberId: 3,
-        productId: e,
-        collect: 'false'
-    }).then((res) => { alert(res.data) })
-    } else {
-    // insert into收藏
-    axios
-      .post('http://localhost:3001/collectproduct', {
-        memberId: 3,
-        productId: e,
-        collect: 'true'
-    }).then((res) => { alert(res.data) })
-    }
+        .post('http://localhost:3001/collectproduct', {
+          memberId: userinfo.memberId,
+          productId: e,
+          collect: 'true'
+      }).then((res) => { alert(res.data) })
+      }
+    } else { alert('請先登入') }
   }
 
   return (

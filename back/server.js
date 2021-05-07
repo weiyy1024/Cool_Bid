@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
-  database: 'coolbidlatest',
-  port: 3306,
+  password: 'root',
+  database: 'coolbidLatest',
+  port: 8889,
   multipleStatements: true
 })
 // var conn2 = mysql.createConnection({
@@ -289,53 +289,71 @@ app.get('/search/:id', function (req, res) {
 })
 
 //夏
-app.get('/member/purchase',function(req,res){
-  let sql = 'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
-  conn.query(sql,function(err,result){
-    if (err) { console.log(err) }
+app.get('/member/purchase', function (req, res) {
+  let sql =
+    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
     res.send(result)
   })
 })
 
-app.get('/BackStage/orders',function(req,res){
-  let sql = 'SELECT o.orderId, userId, productName, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
-  conn.query(sql,function(err,result){
-    if (err) { console.log(err) }
+app.get('/BackStage/orders', function (req, res) {
+  let sql =
+    'SELECT o.orderId, userId, productName, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
     res.send(result)
   })
 })
 
-app.get('/BackStage/SellerPageHero',function(req,res){
-  let sql = 'SELECT shopName, shopLevelDescription, (SELECT COUNT(*) FROM `wishshop` WHERE shopId = 1) as shopFans, (SELECT COUNT(*) FROM `product` WHERE shopId = 1) as productNumber, registerDate, shopDescription FROM `member` as m join `shoplevel` as s on m.shoplevelId = s.shopLevelId where memberId = 1'
-  conn.query(sql,function(err,result){
-    if (err) { console.log(err) }
+app.get('/BackStage/SellerPageHero', function (req, res) {
+  let sql =
+    'SELECT shopName, shopLevelDescription, (SELECT COUNT(*) FROM `wishshop` WHERE shopId = 1) as shopFans, (SELECT COUNT(*) FROM `product` WHERE shopId = 1) as productNumber, registerDate, shopDescription FROM `member` as m join `shoplevel` as s on m.shoplevelId = s.shopLevelId where memberId = 1'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
     res.send(result)
   })
 })
 
 // 撈使用者的收藏清單 20200507 Jou
-app.post('/likeproduct', function (req, res){
-  conn.query('select productId from wishproduct where memberId = ?',
-  [req.body.memberId], function (err, result) {
-    if (err) console.log(err)
-    res.send(result)
-  })
+app.post('/likeproduct', function (req, res) {
+  conn.query(
+    'select productId from wishproduct where memberId = ?',
+    [req.body.memberId],
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+    }
+  )
 })
 
 // 收藏/取消收藏 20200507 Jou
-app.post('/collectproduct', function (req, res){
+app.post('/collectproduct', function (req, res) {
   if (req.body.collect == 'true') {
-    conn.query('insert into `wishproduct` (`memberId`, `productId`) values (?, ?)',
-    [req.body.memberId, req.body.productId], function (err, result){
-      if (err) console.log(err)
-      res.send('收藏成功')
-    })
-  } else{
-    conn.query('delete from `wishproduct` where `memberId` = ? and `productId` = ? '
-    ,[req.body.memberId, req.body.productId], function (err, result){
-      if (err) console.log(err)
-      res.send('取消收藏')
-    })
+    conn.query(
+      'insert into `wishproduct` (`memberId`, `productId`) values (?, ?)',
+      [req.body.memberId, req.body.productId],
+      function (err, result) {
+        if (err) console.log(err)
+        res.send('收藏成功')
+      }
+    )
+  } else {
+    conn.query(
+      'delete from `wishproduct` where `memberId` = ? and `productId` = ? ',
+      [req.body.memberId, req.body.productId],
+      function (err, result) {
+        if (err) console.log(err)
+        res.send('取消收藏')
+      }
+    )
   }
 })
 
