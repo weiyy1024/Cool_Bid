@@ -10,9 +10,10 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'UnicornglLen3550',
   database: 'coolbidLatest',
-  port: 8889
+  port: 3306,
+  multipleStatements: true
 })
 //-----------------------------------------------------
 // 設置session
@@ -85,20 +86,20 @@ app.get('/category/:category', function (req, res) {
   )
 })
 
-// 商品
+// 讀取商品資料 & 出價紀錄
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId join categorydetail AS cd ON cd.categoryDetailId = p.bagColorId WHERE productId = ?',
-    [para],
+    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
+    [para, para],
     function (err, result) {
       res.send(result)
     }
   )
 })
 
-// 競標紀錄
-app.post('/product/:product_id', function (req, res) {
+// 寫入目前價格
+app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
   let { id, autoBidPrice, directBidPrice } = req.body
 
@@ -115,10 +116,25 @@ app.post('/product/:product_id', function (req, res) {
       'UPDATE product SET nowPrice = ? WHERE productId = ?',
       [directBidPrice, id],
       function (err, result) {
-        res.send(result)
+        console.log(result)
       }
     )
   }
+  next()
+})
+
+// 寫入競標紀錄
+app.post('/product/:product_id', function (req, res) {
+  let para = req.params.product_id
+  let { id, directBidPrice, memberId } = req.body
+
+  conn.query(
+    'INSERT INTO `biddinghistory`(`productId`, `memberId`, `bidprice`) VALUES (?, ?, ?)',
+    [id, memberId, directBidPrice],
+    function (err, result) {
+      console.log(result)
+    }
+  )
 })
 
 //品牌
