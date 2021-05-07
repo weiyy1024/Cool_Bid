@@ -22,7 +22,7 @@ import {
 
 import useStyles from '../../../styles/bidPageStyle'
 
-import BidFunc from './bidFunc' // bidding function
+import BidFunc from './bidFunc'
 
 const createData = (name, ID, bid, time) => {
   return { name, ID, bid, time }
@@ -35,25 +35,26 @@ const rows = [
   createData('叛逆a維婷', 'WEIYYY', '27,000元', '2021/05/01 15:03')
 ]
 
-// const inputHistoryData = () => {
-//   rows.push(createData('test', 'TEST', '99,999元', '2021/05/05 15:30'))
-// }
-
 const BidPage = props => {
-  const pId = props.data.params.product_id
-
   const classes = useStyles()
 
   let [toggle, setToggle] = useState(true)
 
+  let pId = props.data.params.product_id
+  pId = window.location.search
+  pId = pId.substr(2, 1)
+
+  const [product, setProduct] = useState([])
   useEffect(() => {
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
-      url: `/Ahomepage/product/${props.data.params.product_id}`,
+      url: `/product/${pId}`,
       'Content-Type': 'application/json'
-    }).then(res => console.log(res.data))
+    }).then(res => setProduct(res.data))
   }, [pId])
+
+  console.log(product)
 
   const handleToggleInfo = () => {
     setToggle((toggle = true))
@@ -67,18 +68,18 @@ const BidPage = props => {
     <>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
-          <Link color='inherit' href='/bidding'>
+          <Link color='inherit' href='../'>
             Home Page
           </Link>
-          <Link color='inherit' href='/bidding/category'>
-            Bags
+          <Link color='inherit' href='../bag'>
+            {product.length === 0 ? '' : product[0].categoryName}
           </Link>
           <Link
             color='textPrimary'
             href='/bidding/category/product'
             aria-current='page'
           >
-            Supreme x Louis Vuitton Christopher Backpack
+            {product.length === 0 ? '' : product[0].productName}
           </Link>
         </Breadcrumbs>
         <Grid
@@ -91,58 +92,39 @@ const BidPage = props => {
               <div className={classes.mainMediaWrapper}>
                 <CardMedia
                   className={classes.mainMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/9f677276a14605b81ba77ceb40676368.jpg'
-                />
-              </div>
-              <div className={classes.smallMediaWrapper}>
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/9f677276a14605b81ba77ceb40676368.jpg'
-                />
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/f838499cabb02f038c3ca1a92b24c1fe.jpg'
-                />
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/f838499cabb02f038c3ca1a92b24c1fe.jpg'
-                />
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/49744594c9f4a427321924705497bd66.jpg'
+                  image={`/imgs/${pId}.jpg`}
                 />
               </div>
             </CardActionArea>
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              Supreme x Louis Vuitton <br />
-              Christopher Backpack
+              {product.length === 0 ? '' : product[0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              剩下 6天6小時 結束
+              剩下 ***6天6小時*** 結束
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              最高出價：Len
+              最高出價：***Len***
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品狀況：九成新
+              商品品牌：{product.length === 0 ? '' : product[0].brandName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：紅色
+              商品樣式：***男包 後背包***
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              運送方式：宅配 店到店
+              商品顏色：{product.length === 0 ? '' : product[0].categoryDetailDescription}
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              商品狀況：{product.length === 0 ? '' : product[0].productConditionDescription}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               付款方式：信用卡
             </Typography>
-            <Typography variant='h4' className={classes.productInfo}>
-              退貨方式：不接受退貨
-            </Typography>
           </div>
           <Card className={classes.productBidWrapper}>
-            <BidFunc />
+            <BidFunc pId={pId} originPId={props.data.params.product_id} />
           </Card>
         </Grid>
         <Card component={Paper}>

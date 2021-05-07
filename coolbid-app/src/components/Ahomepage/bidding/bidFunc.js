@@ -1,4 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+
+import swal from 'sweetalert'
+
 import {
   Container,
   Button,
@@ -13,17 +17,24 @@ import PaymentIcon from '@material-ui/icons/Payment'
 
 import useStyles from '../../../styles/bidFuncStyle'
 
-const bidPriceStep = 300
-let bidTimes = 3
-const directBuyPrice = 50000
-
-const directBuy = () => {
-  console.log(`直接購買，${directBuyPrice}元`)
-}
+let bidTimes = 0
 
 const BidFunc = props => {
+  const [productF, setProductF] = useState([])
+  useEffect(() => {
+    axios({
+      method: 'get',
+      baseURL: 'http://localhost:3001',
+      url: `/product/${props.pId}`,
+      'Content-Type': 'application/json'
+    }).then(res => setProductF(res.data))
+  }, [props.pId])
+
+  const directBuyPrice = productF.length === 0 ? '' : productF[0].directPrice
+  const bidPriceStep = productF.length === 0 ? '' : productF[0].perPrice
+
   const [bidMethod, setBidMethod] = useState()
-  const [nowBidPrice, setNowBidPrice] = useState(30000)
+  const [nowBidPrice, setNowBidPrice] = useState(0)
   const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
   const [directBidPrice, setDirectBidPrice] = useState(
     nowBidPrice + bidPriceStep
@@ -46,20 +57,83 @@ const BidFunc = props => {
     setDirectBidPrice(e.target.value)
   }
 
-  const bidNow = () => {
-    bidTimes++
+  const directBuy = () => {
+    swal({
+      title: '確定要購買嗎？',
+      text: '購買後不可任意棄標喔！',
+      icon: 'warning',
+      buttons: true
+    })
+      .then((confirmPurchased) => {
+        if (confirmPurchased) {
+          // 將商品狀態設為結標
+          // 更改商品頁
+          swal('感謝您的購買：）', {
+            icon: 'success'
+          })
+        } else {
+          swal('再想想也沒關係唷～')
+        }
+      })
+  }
 
-    if (bidMethod === 'autoBid') {
-      console.log(`自動出價，最高價 ${autoBidPrice}`)
-      // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep))
-      if (autoBidPrice > directBuyPrice) {
-        alert('直接買了啦，哪次不買？')
-      }
-    } else if (bidMethod === 'directBid') {
-      setNowBidPrice(parseInt(directBidPrice))
-      console.log(`直接出價，最高價 ${directBidPrice}`)
-      if (directBidPrice >= directBuyPrice) {
-        alert('直接買了啦，哪次不買？')
+  const bidNow = () => {
+    if (bidMethod === 'autoBid' && autoBidPrice >= nowBidPrice + bidPriceStep) {
+      swal({
+        title: `自動出價成功，最高價 ${autoBidPrice}`,
+        icon: 'success',
+        button: '確認'
+      })
+
+      axios({
+        method: 'post',
+        url: `http://localhost:3001/product/${props.originPId}`,
+        'Content-Type': 'application/json',
+        data: {
+          autoBidPrice: autoBidPrice
+        }
+      }).then(res => console.log(res.data))
+      // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep)) & bidTimes++
+    } else if (bidMethod === 'directBid' && directBidPrice >= nowBidPrice + bidPriceStep) {
+      if (directBidPrice < directBuyPrice) {
+        setNowBidPrice(parseInt(directBidPrice))
+
+        swal({
+          title: `直接出價成功，目前競標價 ${directBidPrice}元`,
+          icon: 'success',
+          button: '確認'
+        })
+        bidTimes++
+
+        axios({
+          method: 'post',
+          url: `http://localhost:3001/product/${props.originPId}`,
+          'Content-Type': 'application/json',
+          data: {
+            directBidPrice: directBidPrice,
+            id: props.pId
+          }
+        }).then(res => console.log(res.data))
+      } else {
+        if (directBidPrice >= directBuyPrice) {
+          swal({
+            title: '確定要以直購價購買嗎？',
+            text: '購買後不可任意棄標喔！',
+            icon: 'warning',
+            buttons: true
+          })
+            .then((confirmPurchased) => {
+              if (confirmPurchased) {
+                // 將商品狀態設為結標
+                // 更改商品頁
+                swal('感謝您的購買：）', {
+                  icon: 'success'
+                })
+              } else {
+                swal('再想想也沒關係唷～')
+              }
+            })
+        }
       }
     }
   }

@@ -8,10 +8,7 @@ function ProductTabs() {
     <nav className="tabs">
       <ul>
         <li>
-          <NavLink to="/BackStage/product/All">全部</NavLink>
-        </li>
-        <li>
-          <NavLink to="/BackStage/product/bidding">競標中</NavLink>
+          <a href="#">競標中</a>
         </li>
         <li>
           <NavLink to="/BackStage/product/closeAuction">已結標</NavLink>

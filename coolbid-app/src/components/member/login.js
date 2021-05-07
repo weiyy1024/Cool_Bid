@@ -37,10 +37,8 @@ export default function Login(props) {
 
   useEffect(() => {
     axios.get('http://localhost:3001/member/signin').then((response) => {
-      console.log(response)
       if (response.data.loggedIn == true) {
         setLoginStatus(response.data.user.id)
-        console.log(loginStatus)
       }
     })
   }, [])

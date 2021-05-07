@@ -50,8 +50,6 @@ app.use(
 
 // 在後端設session
 app.post('/member/signin', function (req, res) {
-  console.log(req.body.memberId)
-  console.log(req.body.password)
   let sql = 'select * from member where userId=? and password=?'
   conn.query(
     sql,
@@ -98,12 +96,36 @@ app.get('/category/:category', function (req, res) {
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` WHERE productId = ?',
+    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId join categorydetail AS cd ON cd.categoryDetailId = p.bagColorId WHERE productId = ?',
     [para],
     function (err, result) {
       res.send(result)
     }
   )
+})
+
+// 競標紀錄
+app.post('/product/:product_id', function (req, res) {
+  let para = req.params.product_id
+  let { id, autoBidPrice, directBidPrice } = req.body
+
+  if (autoBidPrice) {
+    conn.query(
+      'UPDATE product SET autoBidPrice = ? WHERE productId = ?',
+      [autoBidPrice, id],
+      function (err, result) {
+        res.send(result)
+      }
+    )
+  } else if (directBidPrice) {
+    conn.query(
+      'UPDATE product SET nowPrice = ? WHERE productId = ?',
+      [directBidPrice, id],
+      function (err, result) {
+        res.send(result)
+      }
+    )
+  }
 })
 
 //品牌
@@ -145,7 +167,7 @@ app.get('/types/:cat', function (req, res) {
 app.get('/sizes/:cat', function (req, res) {
   let test = req.params.cat
   conn.query(
-    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId   WHERE categoryName=? AND (detailTitleDescription = 'Sizes' OR detailTitleDescription = 'Colors')`,
+    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId WHERE categoryName=? AND (detailTitleDescription = 'Sizes' OR detailTitleDescription = 'Colors')`,
     [test],
     function (err, result) {
       res.send(result)
@@ -155,7 +177,7 @@ app.get('/sizes/:cat', function (req, res) {
 //filter
 app.get('/filter/:filter', function (req, res) {
   let test = req.params.filter
-  let sql = `SELECT * FROM product WHERE bagSexId IN ${test} OR bagTypeId IN ${test} OR bagColorId IN ${test} OR clothSexId IN ${test} OR clothSizeId IN ${test} OR clothSeasonId IN ${test} OR shoesSexId IN ${test} OR shoesSizeId IN ${test} OR  shoesYearId IN ${test} OR watchSexId IN ${test} OR watchTypeId IN ${test}`
+  let sql = `SELECT * FROM product WHERE bagSexId IN ${test} OR bagTypeId IN ${test} OR bagColorId IN ${test} OR clothSexId IN ${test} OR clothSizeId IN ${test} OR clothSeasonId IN ${test} OR shoesSexId IN ${test} OR shoesSizeId IN ${test} OR shoesYearId IN ${test} OR watchSexId IN ${test} OR watchTypeId IN ${test}`
 
   conn.query(sql, function (err, result) {
     res.send(result)
@@ -237,6 +259,76 @@ app.get('/search/:id', function (req, res) {
     // res.send('ok');
   })
 })
+
+//夏
+app.get('/member/purchase', function (req, res) {
+  let sql =
+    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    res.send(result)
+  })
+})
+
+app.get('/BackStage/orders', function (req, res) {
+  let sql =
+    'SELECT o.orderId, userId, productName, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    res.send(result)
+  })
+})
+
+app.get('/BackStage/SellerPageHero', function (req, res) {
+  let sql =
+    'SELECT shopName, shopLevelDescription, (SELECT COUNT(*) FROM `wishshop` WHERE shopId = 1) as shopFans, (SELECT COUNT(*) FROM `product` WHERE shopId = 1) as productNumber, registerDate, shopDescription FROM `member` as m join `shoplevel` as s on m.shoplevelId = s.shopLevelId where memberId = 1'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    res.send(result)
+  })
+})
+
+// 撈使用者的收藏清單 20200507 Jou
+app.post('/likeproduct', function (req, res) {
+  conn.query(
+    'select productId from wishproduct where memberId = ?',
+    [req.body.memberId],
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+    }
+  )
+})
+
+// 收藏/取消收藏 20200507 Jou
+app.post('/collectproduct', function (req, res) {
+  if (req.body.collect == 'true') {
+    conn.query(
+      'insert into `wishproduct` (`memberId`, `productId`) values (?, ?)',
+      [req.body.memberId, req.body.productId],
+      function (err, result) {
+        if (err) console.log(err)
+        res.send('收藏成功')
+      }
+    )
+  } else {
+    conn.query(
+      'delete from `wishproduct` where `memberId` = ? and `productId` = ? ',
+      [req.body.memberId, req.body.productId],
+      function (err, result) {
+        if (err) console.log(err)
+        res.send('取消收藏')
+      }
+    )
+  }
+})
+
 //-----------------------------post方法------------------------
 // app.post('/search',function(req,res){
 //     let test = req.body.test
