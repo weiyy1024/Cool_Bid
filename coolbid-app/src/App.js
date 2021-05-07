@@ -11,6 +11,7 @@ import Login from './components/member/login'
 import Logout from './components/member/logout'
 import Add from './components/backstage/product1920/Add'
 import productpage from './components/backstage/product1920/productpage'
+// import AddProductEdit from './components/backstage/product1920/AddProductEdit'
 import SetStoreInfo from './components/backstage/SetStoreInfo21/SetStoreInfo'
 import OrderList from './components/backstage/Order22/OrderList'
 import EditMemberInfo from './components/member/account/editMemberInfo'
@@ -22,6 +23,8 @@ import Backstage from './components/backstage/backStage'
 import AuctionCountdown from './AuctionCountdown'
 import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 import Address from './components/backstage/Member/info/Address'
+// import CloseAuction from './components/backstage/product1920/CloseAuction'
+import ShoppingCart from './components/member/carts/shoppingCart'
 
 function App() {
   return (
@@ -85,9 +88,9 @@ function App() {
           <Route path="/BackStage/orders" component={OrderList} exact />
 
           {/* Shopping */}
-          <Route path="/Shopping/Cart" component={Login} exact />
+          <Route path="/Shopping/Cart" component={ShoppingCart} exact />
           <Route path="/Shopping/Bidding" component={Login} exact />
-          <Route path="/Shopping/WishList" component={Login} exact />
+          <Route path="/Shopping/WishList" component={ShoppingCart} exact />
         </Switch>
       </div>
     </BrowserRouter>

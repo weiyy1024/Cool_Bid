@@ -79,12 +79,13 @@ function CloseAuction() {
                   <TableCell align="center" className={classes.itemTxt}>{item.deliveryTime}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.status}</TableCell>
                 </TableRow>
+
               )
             })}
           </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            </Table>
+          </TableContainer>
+        </div>
   )
 }
 

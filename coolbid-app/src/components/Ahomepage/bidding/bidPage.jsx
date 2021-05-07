@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 import {
   Container,
@@ -23,8 +24,6 @@ import useStyles from '../../../styles/bidPageStyle'
 
 import BidFunc from './bidFunc' // bidding function
 
-const handleClick = () => {}
-
 const createData = (name, ID, bid, time) => {
   return { name, ID, bid, time }
 }
@@ -40,10 +39,21 @@ const rows = [
 //   rows.push(createData('test', 'TEST', '99,999元', '2021/05/05 15:30'))
 // }
 
-const BidPage = () => {
+const BidPage = props => {
+  const pId = props.data.params.product_id
+
   const classes = useStyles()
 
   let [toggle, setToggle] = useState(true)
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      baseURL: 'http://localhost:3001',
+      url: `/Ahomepage/product/${props.data.params.product_id}`,
+      'Content-Type': 'application/json'
+    }).then(res => console.log(res.data))
+  }, [pId])
 
   const handleToggleInfo = () => {
     setToggle((toggle = true))
@@ -57,16 +67,15 @@ const BidPage = () => {
     <>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
-          <Link color='inherit' href='/bidding' onClick={handleClick}>
+          <Link color='inherit' href='/bidding'>
             Home Page
           </Link>
-          <Link color='inherit' href='/bidding/category' onClick={handleClick}>
+          <Link color='inherit' href='/bidding/category'>
             Bags
           </Link>
           <Link
             color='textPrimary'
             href='/bidding/category/product'
-            onClick={handleClick}
             aria-current='page'
           >
             Supreme x Louis Vuitton Christopher Backpack

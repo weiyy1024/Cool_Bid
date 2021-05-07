@@ -11,16 +11,27 @@
 .category{
     width: 100%;
     display:flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 .eachCat{
-    margin: 2rem 4rem;
-    height: 22rem;
-    width: 22rem;
-    border-radius: 50%;
-    border: solid .2rem rgba(202, 201, 201, 0.171);
-
+    height: 100%;
+    width: 100%;
+    /* border: solid .2rem rgba(202, 201, 201, 0.171); */
 } 
+
+img.eachCat:hover{
+    transform:scale(1.1);
+    transition:all .5s ease-in-out;
+}
+
+img.eachCat::after{
+    content:"";
+    display:block;
+    background-color: black;
+    width:100%;
+    height:100%;
+}
+
 .marquee {
     position: relative;
     width: 100vw;
