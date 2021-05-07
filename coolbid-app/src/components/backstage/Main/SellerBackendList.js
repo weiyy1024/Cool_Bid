@@ -52,7 +52,7 @@ export default function NestedList() {
             button
             className={classes.nested}
             component={Link}
-            to="/BackStage/product"
+            to="/BackStage/product/all"
           >
             <ListItemText primary="商品清單" />
           </ListItem>

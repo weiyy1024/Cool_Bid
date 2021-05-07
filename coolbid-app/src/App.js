@@ -80,7 +80,7 @@ function App() {
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
-          <Route path="/BackStage/product" component={productpage} exact />
+          <Route path="/BackStage/product/all" component={productpage} exact />
           {/* <Route path="/Shopping/product/:CloseAuction" component={CloseAuction} exact />
           <Route path="/Shopping/product/:SoldOut" component={SoldOut} exact />
           <Route path="/Shopping/product/:Biding" component={Biding} exact /> */}
