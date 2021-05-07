@@ -5,6 +5,8 @@ html,body {
   height: 100%;
   width: 100%;
   font-family: "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
+  background-color: #eeeeee;
+  overflow-x: hidden;
 }
 #root{
   height: 100%;

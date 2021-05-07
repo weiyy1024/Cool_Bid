@@ -39,7 +39,6 @@ const ProductInfo = styled.div`
   }
 `
 const Total = styled.div`
-  border-bottom: solid 1px grey;
   height: 5rem;
   font-size: 2.5rem;
   line-height: 5rem;
@@ -224,7 +223,7 @@ export default function ShoppingCart() {
           <ShoppingCartIcon
             onClick={toggleDrawer('right', true)}
             style={{
-              fontSize: '3rem',
+              fontSize: '3.5rem',
               paddingBottom: '.5rem',
               paddingRight: '2rem'
             }}
@@ -250,8 +249,8 @@ export default function ShoppingCart() {
           <Total>
             Total:<div>NT$ {tot}</div>
           </Total>
-          <Button style={{ fontSize: '2.5rem', borderRadius: '0' }}>
-            結帳
+          <Button style={{ fontSize: '2.2rem', borderRadius: '0', backgroundColor: '#edae10', color: '#fff' }}>
+            結  帳
           </Button>
         </div>
       </Drawer>

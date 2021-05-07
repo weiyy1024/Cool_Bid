@@ -190,7 +190,7 @@ export default function NavBar() {
   }
 
   const iconStye = {
-    fontSize: '3rem',
+    fontSize: '3.5rem',
     paddingBottom: '.5rem',
     paddingRight: '2rem'
   }
@@ -223,13 +223,15 @@ export default function NavBar() {
             onChange={(e) => {
               setSearch(e)
             }}
-            onRequestSearch={handleSearch}
+            onRequestSearch={() => {
+              if (search) handleSearch()
+            }}
             style={{ borderRadius: '30px' }}
           ></SearchBar>
         </SearchDiv>
         <ThreeIcons>
           <Note />
-          <Member className="Chomepage" to="/member/edit">
+          <Member className="Chomepage" to="/member/signin">
             <AccountCircleIcon style={iconStye} />
             <MemberDropDown />
           </Member>

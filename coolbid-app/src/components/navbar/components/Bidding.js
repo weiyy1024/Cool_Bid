@@ -16,16 +16,15 @@ const ProductDiv = styled.div`
   display: flex;
 `
 const ProductImg = styled.div`
-  width: 22rem;
-  height: 22rem;
+  width: 15rem;
+  height: 15rem;
+  margin-right: 1.5rem;
 `
 const ProductInfo = styled.div`
   padding: 1rem;
   .productName {
-    font-size: 2.2rem;
-    margin-top: 1rem;
+    font-size: 2.4rem;
     margin-bottom: 0rem;
-    font-weight: bold;
   }
 `
 const CartNum = styled.span`
@@ -77,10 +76,23 @@ function ProductDiv1(props) {
   return (
     <ProductDiv>
       <ProductImg>
-        <img src={data.img}></img>
+        <img
+          src={data.img}
+          style={{ objectFit: 'scale-down', height: '100%', width: '100%' }}
+        ></img>
       </ProductImg>
       <ProductInfo>
-        <p className="productName">{data.productName}</p>
+        <p
+          className="productName"
+          style={{
+            maxWidth: '200px',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'
+          }}
+        >
+          {data.productName}
+        </p>
         <p>
           最高出價：<span>$NT.</span>
           {data.highestPrice}
@@ -96,6 +108,7 @@ function ProductDiv1(props) {
           defaultValue={data.highestPrice}
           onChange={(e) => setNewPrice(e.target.value)}
           inputProps={{ min: `${data.highestPrice}` }}
+          style={{ display: 'block' }}
         />
         <Button
           style={{ margin: '1rem .5rem .5rem 0' }}
@@ -143,6 +156,51 @@ export default function Bidding() {
       sellerId: 'hi_weiyy',
       time: '剩下6天6時59分59秒結束',
       deadline: '2021/5/4'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony PS5',
+      myPrice: 50000,
+      highestPrice: 70000,
+      sellerId: 'hi_weiyy',
+      time: '剩下6天6時59分59秒結束',
+      deadline: '2021/5/4'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony PS5',
+      myPrice: 50000,
+      highestPrice: 70000,
+      sellerId: 'hi_weiyy',
+      time: '剩下6天6時59分59秒結束',
+      deadline: '2021/5/4'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony PS5',
+      myPrice: 50000,
+      highestPrice: 70000,
+      sellerId: 'hi_weiyy',
+      time: '剩下6天6時59分59秒結束',
+      deadline: '2021/5/4'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony PS5',
+      myPrice: 50000,
+      highestPrice: 70000,
+      sellerId: 'hi_weiyy',
+      time: '剩下6天6時59分59秒結束',
+      deadline: '2021/5/4'
+    },
+    {
+      img: Ps5Pic,
+      productName: 'Sony PS5',
+      myPrice: 50000,
+      highestPrice: 70000,
+      sellerId: 'hi_weiyy',
+      time: '剩下6天6時59分59秒結束',
+      deadline: '2021/5/4'
     }
   ]
   // Bidding List--End
@@ -161,9 +219,17 @@ export default function Bidding() {
   const list = (anchor) => (
     <div style={{ width: '40rem' }}>
       <List>
-        <h1 style={{ fontSize: '3rem' }}>
-          &nbsp;&nbsp;Bidding&nbsp;&nbsp;
-          <GavelIcon style={{ fontSize: '3rem' }} />
+        <h1
+          style={{
+            fontSize: '3rem',
+            marginBottom: '10px',
+            textAlign: 'center'
+          }}
+        >
+          <GavelIcon
+            style={{ fontSize: '3rem', position: 'relative', top: '4px' }}
+          />
+          競標中
         </h1>
         <Divider />
         {myProduct.map((item, index) => (
@@ -181,7 +247,7 @@ export default function Bidding() {
           <GavelIcon
             onClick={toggleDrawer('right', true)}
             style={{
-              fontSize: '3rem',
+              fontSize: '3.5rem',
               paddingBottom: '.5rem',
               paddingRight: '2rem'
             }}
