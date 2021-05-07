@@ -10,7 +10,7 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'UnicornglLen3550', // merge 的時候如果有衝突請改回 root
   database: 'coolbidlatest',
   port: 3306
 })
@@ -50,8 +50,6 @@ app.use(
 
 // 在後端設session
 app.post('/member/signin', function (req, res) {
-  console.log(req.body.memberId)
-  console.log(req.body.password)
   let sql = 'select * from member where userId=? and password=?'
   conn.query(
     sql,
@@ -98,12 +96,36 @@ app.get('/category/:category', function (req, res) {
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` WHERE productId = ?',
+    'SELECT * FROM `product` AS p join productcondition AS pc ON pc.productConditionId = p.productConditionId join brand AS b ON b.brandId = p.brandId join category AS c ON c.categoryId = p.categoryId join categorydetail AS cd ON cd.categoryDetailId = p.bagColorId WHERE productId = ?',
     [para],
     function (err, result) {
       res.send(result)
     }
   )
+})
+
+// 競標紀錄
+app.post('/product/:product_id', function (req, res) {
+  let para = req.params.product_id
+  let { id, autoBidPrice, directBidPrice } = req.body
+
+  if (autoBidPrice) {
+    conn.query(
+      'UPDATE product SET autoBidPrice = ? WHERE productId = ?',
+      [autoBidPrice, id],
+      function (err, result) {
+        res.send(result)
+      }
+    )
+  } else if (directBidPrice) {
+    conn.query(
+      'UPDATE product SET nowPrice = ? WHERE productId = ?',
+      [directBidPrice, id],
+      function (err, result) {
+        res.send(result)
+      }
+    )
+  }
 })
 
 //品牌
@@ -145,7 +167,7 @@ app.get('/types/:cat', function (req, res) {
 app.get('/sizes/:cat', function (req, res) {
   let test = req.params.cat
   conn.query(
-    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId   WHERE categoryName=? AND (detailTitleDescription = 'Sizes' OR detailTitleDescription = 'Colors')`,
+    `SELECT categoryName,detailTitleDescription,detailId,categoryDetailDescription,categorydetailId FROM categorydetail AS cd JOIN category AS c ON c.categoryId= cd.categoryId JOIN detailtitle AS dt ON dt.detailTitleId= cd.detailTitleId WHERE categoryName=? AND (detailTitleDescription = 'Sizes' OR detailTitleDescription = 'Colors')`,
     [test],
     function (err, result) {
       res.send(result)
@@ -155,7 +177,7 @@ app.get('/sizes/:cat', function (req, res) {
 //filter
 app.get('/filter/:filter', function (req, res) {
   let test = req.params.filter
-  let sql = `SELECT * FROM product WHERE bagSexId IN ${test} OR bagTypeId IN ${test} OR bagColorId IN ${test} OR clothSexId IN ${test} OR clothSizeId IN ${test} OR clothSeasonId IN ${test} OR shoesSexId IN ${test} OR shoesSizeId IN ${test} OR  shoesYearId IN ${test} OR watchSexId IN ${test} OR watchTypeId IN ${test}`
+  let sql = `SELECT * FROM product WHERE bagSexId IN ${test} OR bagTypeId IN ${test} OR bagColorId IN ${test} OR clothSexId IN ${test} OR clothSizeId IN ${test} OR clothSeasonId IN ${test} OR shoesSexId IN ${test} OR shoesSizeId IN ${test} OR shoesYearId IN ${test} OR watchSexId IN ${test} OR watchTypeId IN ${test}`
 
   conn.query(sql, function (err, result) {
     res.send(result)
