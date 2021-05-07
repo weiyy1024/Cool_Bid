@@ -15,13 +15,6 @@ var conn = mysql.createConnection({
   port: 3306,
   multipleStatements: true
 })
-// var conn2 = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'root',
-//   database: 'coolbid',
-//   port: 8889
-// })
 //-----------------------------------------------------
 // 設置session
 app.use(
@@ -250,6 +243,7 @@ app.get('/filter/:filter', function (req, res) {
 //   })
 // })
 
+//search bar
 app.get('/search/:id', function (req, res) {
   let test = req.params.id
   let productsql2 = `
@@ -343,6 +337,25 @@ app.post('/collectproduct', function (req, res) {
       }
     )
   }
+})
+//bidding cart 20200507 weiyy
+app.get('/bidding/:memberId', function (req, res) {
+  let test = req.params.memberId
+  let sql = `SELECT DISTINCT productId,memberId FROM biddinghistory WHERE memberId=${test}`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+//確認競標中商品 20200507 weiyy
+app.get('/confirmStatus/:productId', function (req, res) {
+  let test = req.params.productId
+  let sql = `SELECT * FROM product WHERE productId IN ${test} AND productStatusId=4`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
 })
 
 //-----------------------------post方法------------------------
