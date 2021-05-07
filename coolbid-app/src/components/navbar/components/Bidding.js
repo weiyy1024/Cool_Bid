@@ -1,6 +1,6 @@
 /* eslint-disable space-before-function-paren */
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
+// import axios from 'axios'
 import Drawer from '@material-ui/core/Drawer'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
@@ -138,7 +138,7 @@ function ProductDiv1(props) {
 
 export default function Bidding(props) {
   const { userinfo } = props
-  const [biddingProduct, setBiddingProduct] = useState()
+  // const [biddingProduct, setBiddingProduct] = useState()
   const myProduct = [
     {
       productId: 1,
@@ -148,47 +148,47 @@ export default function Bidding(props) {
       endTime: '2021-06-29T18:00:00.000Z'
     }
   ]
-  const [product, setProduct] = useState(myProduct)
+  // const [product, setProduct] = useState(myProduct)
   console.log(userinfo)
 
   // 得有出過標的商品ID
-  useEffect(() => {
-    if (userinfo) {
-      axios({
-        method: 'get',
-        baseURL: 'http://localhost:3001',
-        url: '/bidding/' + userinfo.memberId,
-        'Content-Type': 'application/json'
-      }).then((res) => {
-        let bP = res.data.map((item) => item.productId)
-        bP = '(' + bP.toString() + ')'
-        console.log(bP)
-        setBiddingProduct(bP)
-      })
-    }
-    if (userinfo === null) {
-      setProduct(myProduct)
-    }
-  }, [userinfo])
+  // useEffect(() => {
+  //   if (userinfo) {
+  //     axios({
+  //       method: 'get',
+  //       baseURL: 'http://localhost:3001',
+  //       url: '/bidding/' + userinfo.memberId,
+  //       'Content-Type': 'application/json'
+  //     }).then((res) => {
+  //       let bP = res.data.map((item) => item.productId)
+  //       bP = '(' + bP.toString() + ')'
+  //       console.log(bP)
+  //       setBiddingProduct(bP)
+  //     })
+  //   }
+  //   if (userinfo === null) {
+  //     setProduct(myProduct)
+  //   }
+  // }, [userinfo])
 
   // 篩選競標中商品
-  useEffect(() => {
-    axios({
-      method: 'get',
-      baseURL: 'http://localhost:3001',
-      url: '/confirmStatus/' + biddingProduct,
-      'Content-Type': 'application/json'
-    }).then((res) => {
-      console.log(res.data)
-      // setProduct(res.data)
-    })
-  }, [biddingProduct])
+  // useEffect(() => {
+  //   axios({
+  //     method: 'get',
+  //     baseURL: 'http://localhost:3001',
+  //     url: '/confirmStatus/' + biddingProduct,
+  //     'Content-Type': 'application/json'
+  //   }).then((res) => {
+  //     console.log(res.data)
+  //     // setProduct(res.data)
+  //   })
+  // }, [biddingProduct])
   // console.log(product)
   // Bidding List--End
   // cart tot price--End
 
   let itemAmount = 0
-  product.map((item) => (itemAmount += 1))
+  myProduct.map((item) => (itemAmount += 1))
 
   const [state, setState] = React.useState({
     right: false
@@ -214,7 +214,7 @@ export default function Bidding(props) {
           競標中
         </h1>
         <Divider />
-        {product.map((item, index) => (
+        {myProduct.map((item, index) => (
           <ProductDiv1 key={index} data={item} />
         ))}
       </List>
