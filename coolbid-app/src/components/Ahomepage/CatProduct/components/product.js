@@ -56,9 +56,42 @@ export function ItemDiv(props) {
     clearInterval(timer)
     countdown()
   }, [data])
+
+  // 登入後撈user的收藏清單 (memberId待改成session) 20210507 Jou
+  const [likeProduct, setLikeProduct] = useState([])
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:3001/likeproduct', {
+        memberId: 3
+      }).then((e) => {
+        setLikeProduct(e.data.map((item) => item.productId))
+      })
+  }, [])
+
+  // 收藏與取消收藏 差強迫render 20210507 Jou
   const handlelike = (e) => {
     console.log(e)
+    console.log(likeProduct)
+    if (likeProduct.includes(e)) {
+      // delete收藏
+      axios
+      .post('http://localhost:3001/collectproduct', {
+        memberId: 3,
+        productId: e,
+        collect: 'false'
+    }).then((res) => { alert(res.data) })
+    } else {
+    // insert into收藏
+    axios
+      .post('http://localhost:3001/collectproduct', {
+        memberId: 3,
+        productId: e,
+        collect: 'true'
+    }).then((res) => { alert(res.data) })
+    }
   }
+
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
@@ -74,7 +107,7 @@ export function ItemDiv(props) {
           style={{
             fontSize: '3.6rem'
           }}
-          color="disabled"
+          color={(likeProduct.includes(data.productId)) ? 'error' : 'disabled'}
         />
       </div>
       <div className={sort === 1 ? 'Information' : 'Information3'}>
