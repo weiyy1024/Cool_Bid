@@ -38,7 +38,7 @@ const theme = {
   dark: {
     backgroundColor: '#000',
     textColor: 'aliceblue',
-    searchBorder: 'none',
+    searchBorder: 'solid rgba(0,0,0,1) .3rem',
     ball: '3.5rem',
     bg: '#313235',
     toggle: '#ffc400',
@@ -178,9 +178,11 @@ export default function NavBar() {
     if (currentTheme === 'dark') {
       setCurrentTheme('light')
       document.body.style.backgroundColor = theme.light.bg
+      document.body.style.color = 'black'
     } else {
       setCurrentTheme('dark')
       document.body.style.backgroundColor = theme.dark.bg
+      document.body.style.color = 'white'
     }
   }
 

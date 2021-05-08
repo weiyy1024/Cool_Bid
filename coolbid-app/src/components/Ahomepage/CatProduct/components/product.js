@@ -17,6 +17,7 @@ const Products = styled.div`
   justify-content: flex-start;
   width: 80%;
   margin: 0 auto;
+  align-content: baseline;
 `
 
 export function ItemDiv(props) {
@@ -130,7 +131,7 @@ export function ItemDiv(props) {
           <span>直購價格：</span> NT.
           <span>{data.directPrice}</span>
         </p>
-        <div style={{ position: 'absolute', bottom: '0' }}>
+        <div style={{ position: 'absolute', bottom: '0', color: 'black' }}>
           <p className={sort === 1 ? 'infoEnd' : 'infoEnd3'}>即將結束</p>
           <div className="countDownContainer">
             <div className="flip-clock flip-clock-d">

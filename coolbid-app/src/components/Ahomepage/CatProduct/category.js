@@ -56,7 +56,7 @@ const Brands = styled.div`
       list-style: none;
       .brandtitle {
         margin-left: 2rem;
-        color: #123;
+        // color: #123;
         letter-spacing: 0.1rem;
         text-decoration: none;
         cursor: pointer;
@@ -65,7 +65,12 @@ const Brands = styled.div`
         }
       }
     }
-  }
+  };
+  h3 {
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+  };
 `
 const More = styled.div`
   font-size=2.2rem;
@@ -85,7 +90,7 @@ const Genders = styled.div`
   text-align: left;
   width: 100%;
   font-size: 2.2rem;
-  h2 {
+  h3 {
     text-align: center;
     margin: 0;
     padding: 1rem;
@@ -106,7 +111,7 @@ const Filter2 = styled.div`
   margin-top: 3rem;
   text-align: center;
   width: 100%;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   padding-bottom: 1rem;
   h3 {
     text-align: center;
@@ -309,7 +314,7 @@ export default function Category(props) {
         </ul>
       </nav>
       {/* Breadcrumbs */}
-      <Bread>首頁/競標區／包包類</Bread>
+      <Bread>首頁/競標區/包包類</Bread>
       {/* sort */}
       <SortList>
         <div onClick={() => changeSort(1)}>
@@ -347,12 +352,19 @@ export default function Category(props) {
       </Page> */}
 
       {/* filter */}
-      <div style={{ margin: '0 auto', display: 'flex', flexDirection: 'row', width: '95%', justifyContent: 'center' }}>
-        <div
-          style={{ display: 'flex', flexDirection: 'column', width: '20%' }}
-        >
+      <div
+        style={{
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'row',
+          width: '95%',
+          justifyContent: 'center'
+        }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', width: '20%' }}>
           {/* brands */}
           <Brands id="brand">
+            <h3>Brands</h3>
             <ul>
               {brandArray.map((item, index) => {
                 return (
@@ -367,7 +379,7 @@ export default function Category(props) {
             <More onClick={handleBrand}>see more</More>
           </Brands>
           <Genders>
-            <h2>Genders</h2>
+            <h3>Genders</h3>
             {genders.map((item, index) => {
               return (
                 <div key={index}>

@@ -22,7 +22,7 @@ const ProductImg = styled.div`
 `
 const ProductInfo = styled.div`
   .productName {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     margin-bottom: 0;
   }
   .productPrice {
@@ -34,6 +34,10 @@ const ProductInfo = styled.div`
     font-size: 1.5rem;
     margin-top: 1rem;
   }
+  .seller a{
+    color: #555;
+  }
+
   .countdown {
     margin-top: 0.5rem;
   }
