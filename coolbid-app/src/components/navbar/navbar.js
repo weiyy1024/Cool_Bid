@@ -172,7 +172,7 @@ const ThreeIcons = styled.div`
 
 export default function NavBar() {
   const [currentTheme, setCurrentTheme] = useState('light')
-
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
   // Dark Mode function
   const toggleTheme = () => {
     if (currentTheme === 'dark') {
@@ -238,11 +238,11 @@ export default function NavBar() {
         </SearchDiv>
         <ThreeIcons>
           <Note />
-          <Member className="Chomepage" to="/member/edit">
+          <Member className="Chomepage" to="/member/signin">
             <AccountCircleIcon style={iconStye} />
             <MemberDropDown />
           </Member>
-          <Bidding />
+          <Bidding userinfo={userinfo} />
           <ShoppingCart />
         </ThreeIcons>
       </Navbar>

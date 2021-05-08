@@ -22,38 +22,34 @@ import {
 
 import useStyles from '../../../styles/bidPageStyle'
 
-import BidFunc from './bidFunc' // bidding function
-
-const createData = (name, ID, bid, time) => {
-  return { name, ID, bid, time }
-}
-
-const rows = [
-  createData('Len', 'LEN', '31,800元', '2021/05/04 21:34'),
-  createData('偶是瑋瑋~', 'WEIWEI', '30,000元', '2021/05/04 11:57'),
-  createData('慈慈', 'JOU', '28,500元', '2021/05/02 09:06'),
-  createData('叛逆a維婷', 'WEIYYY', '27,000元', '2021/05/01 15:03')
-]
-
-// const inputHistoryData = () => {
-//   rows.push(createData('test', 'TEST', '99,999元', '2021/05/05 15:30'))
-// }
+import BidFunc from './bidFunc'
 
 const BidPage = props => {
-  const pId = props.data.params.product_id
-
   const classes = useStyles()
 
+  // const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
   let [toggle, setToggle] = useState(true)
+  const [product, setProduct] = useState([])
+  const [bidState, setBidState] = useState(0)
+  const handleBidState = () => {
+    setBidState(bidState + 1)
+  }
+
+  let pId = props.data.params.product_id
+  pId = window.location.search
+  pId = pId.substr(2)
 
   useEffect(() => {
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
-      url: `/Ahomepage/product/${props.data.params.product_id}`,
+      url: `/product/${pId}`,
       'Content-Type': 'application/json'
-    }).then(res => console.log(res.data))
-  }, [pId])
+    }).then(res => setProduct(res.data))
+  }, [bidState])
+
+  const rows = product.length === 0 ? [] : product[1]
 
   const handleToggleInfo = () => {
     setToggle((toggle = true))
@@ -63,22 +59,35 @@ const BidPage = props => {
     setToggle((toggle = false))
   }
 
+  const dateObject = Date.parse(product.length === 0 ? '' : product[0][0].endTime)
+
+  function getDuration (ms) {
+    const days = ms / 1000 / 60 / 60 / 24
+    const hours = ms / 1000 / 60 / 60 - (24 * Math.floor(days))
+    const minutes = ms / 1000 / 60 - (24 * 60 * Math.floor(days)) - (60 * Math.floor(hours))
+    const seconds = ms / 1000 - (24 * 60 * 60 * Math.floor(days)) - (60 * 60 * Math.floor(hours)) - (60 * Math.floor(minutes))
+
+    return (`${Math.floor(days)}天 ${Math.floor(hours)}時 ${Math.floor(minutes)}分 ${Math.floor(seconds)}秒`)
+  }
+
+  const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
+
   return (
     <>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
-          <Link color='inherit' href='/bidding'>
+          <Link color='inherit' href='../'>
             Home Page
           </Link>
-          <Link color='inherit' href='/bidding/category'>
-            Bags
+          <Link color='inherit' href='../bag'>
+            {product.length === 0 ? '' : product[0][0].categoryName}
           </Link>
           <Link
             color='textPrimary'
             href='/bidding/category/product'
             aria-current='page'
           >
-            Supreme x Louis Vuitton Christopher Backpack
+            {product.length === 0 ? '' : product[0][0].productName}
           </Link>
         </Breadcrumbs>
         <Grid
@@ -91,58 +100,45 @@ const BidPage = props => {
               <div className={classes.mainMediaWrapper}>
                 <CardMedia
                   className={classes.mainMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/9f677276a14605b81ba77ceb40676368.jpg'
-                />
-              </div>
-              <div className={classes.smallMediaWrapper}>
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/9f677276a14605b81ba77ceb40676368.jpg'
-                />
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/f838499cabb02f038c3ca1a92b24c1fe.jpg'
-                />
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/f838499cabb02f038c3ca1a92b24c1fe.jpg'
-                />
-                <CardMedia
-                  className={classes.smallMedia}
-                  image='https://www.supremetw.com.tw/goods/images/supreme-backpack/20180516/49744594c9f4a427321924705497bd66.jpg'
+                  image={`/imgs/${pId}.jpg`}
                 />
               </div>
             </CardActionArea>
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              Supreme x Louis Vuitton <br />
-              Christopher Backpack
+              {product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              剩下 6天6小時 結束
+              剩下 {getDuration(dateObject - Date.now())} 結束
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              最高出價：Len
+              最高出價：{product.length === 0 ? '' : product[1][0].nickname} ({product.length === 0 ? '' : product[1][0].userId})
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品狀況：九成新
+              商品品牌：{product.length === 0 ? '' : product[0][0].brandName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：紅色
+              商品樣式：***男包 後背包***
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              運送方式：宅配 店到店
+              商品顏色：{product.length === 0 ? '' : product[0][0].categoryDetailDescription}
+            </Typography>
+            <Typography variant='h4' className={classes.productInfo}>
+              商品狀況：{product.length === 0 ? '' : product[0][0].productConditionDescription}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               付款方式：信用卡
             </Typography>
-            <Typography variant='h4' className={classes.productInfo}>
-              退貨方式：不接受退貨
-            </Typography>
           </div>
           <Card className={classes.productBidWrapper}>
-            <BidFunc />
+            <BidFunc
+              pId={pId}
+              originPId={props.data.params.product_id}
+              setBidState={handleBidState}
+              bidTimes = {rows.length}
+              nowBidPrice = {nowBidPrice}
+            />
           </Card>
         </Grid>
         <Card component={Paper}>
@@ -159,7 +155,7 @@ const BidPage = props => {
             <div className={classes.storeInfo}>
               <div className={classes.storeNameGroup}>
                 <Typography variant='h3' className={classes.storeName}>
-                  LEN 的商店
+                  {product.length === 0 ? '' : product[0][0].shopDescription}
                 </Typography>
                 <Button
                   variant='outlined'
@@ -170,7 +166,7 @@ const BidPage = props => {
                 </Button>
               </div>
               <Typography variant='h4' className={classes.storeInfo}>
-                金槌賣家
+                {product.length === 0 ? '' : product[0][0].shopLevelDescription}
               </Typography>
               <Typography variant='h4' className={classes.storeInfo}>
                 粉絲：666
@@ -221,22 +217,7 @@ const BidPage = props => {
             className={classes.productDetail}
             style={toggle ? { display: 'block' } : { display: 'none' }}
           >
-            The Louis Vuitton x Supreme Christopher backpack in red is a
-            structured bag dripping in style. It comes with adjustable leather
-            shoulder straps, a leather top handle, flap opening, press stud and
-            drawstring closure as well as several pockets inside. It’s also made
-            of durable Epi leather, which debuted as Louis Vuitton’s first
-            permanent leather collection in 1985 and goes through a special
-            dying process which adds to the vibrancy of the color. Supreme
-            collaboration with Louis Vuitton has been highly anticipated and
-            combines the legacy of the LV brand with Supreme unique style of
-            cool. Their collaboration, which features a wide array of leather
-            goods, debuted at Louis Vuitton’s Fall 2017 menswear show in Paris.
-            The Christopher backpack conjures up the rugged spirit of a hiking
-            pack according to Louis Vuitton. This much coveted Louis Vuitton x
-            Supreme Christopher backpack features a white Supreme logo in Future
-            Heavy Oblique font and has an interior big enough to fit a variety
-            of items.
+          {product.length === 0 ? '' : product[0][0].productDescription}
           </Typography>
           <TableContainer
             style={toggle ? { display: 'none' } : { display: 'block' }}
@@ -254,13 +235,13 @@ const BidPage = props => {
               </TableHead>
               <TableBody>
                 {rows.map(row => (
-                  <TableRow key={row.name}>
+                  <TableRow key={row.biddingHistoryId}>
                     <TableCell component='th' scope='row'>
-                      {row.name}
+                      {row.nickname}
                     </TableCell>
-                    <TableCell>{row.ID}</TableCell>
-                    <TableCell>{row.bid}</TableCell>
-                    <TableCell>{row.time}</TableCell>
+                    <TableCell>{row.userId}</TableCell>
+                    <TableCell>{row.bidprice}</TableCell>
+                    <TableCell>{row.bidTime}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

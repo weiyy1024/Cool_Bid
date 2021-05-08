@@ -9,6 +9,8 @@ import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import '../style/product.css'
 
+const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
 const Products = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -57,9 +59,44 @@ export function ItemDiv(props) {
     clearInterval(timer)
     countdown()
   }, [data])
-  const handlelike = (e) => {
-    console.log(e)
+
+  // 登入後撈user的收藏清單 done 20210507 Jou
+  const [likeProduct, setLikeProduct] = useState([])
+
+  if (userinfo) {
+  useEffect(() => {
+    axios
+      .post('http://localhost:3001/likeproduct', {
+        memberId: userinfo.memberId
+      }).then((e) => {
+        setLikeProduct(e.data.map((item) => item.productId))
+      })
+  }, [likeProduct])
   }
+
+  // 收藏與取消收藏 done 20210507 Jou
+  const handlelike = (e) => {
+    if (userinfo) {
+      if (likeProduct.includes(e)) {
+        // delete收藏
+        axios
+        .post('http://localhost:3001/collectproduct', {
+          memberId: userinfo.memberId,
+          productId: e,
+          collect: 'false'
+      }).then((res) => { alert(res.data) })
+      } else {
+      // insert into收藏
+      axios
+        .post('http://localhost:3001/collectproduct', {
+          memberId: userinfo.memberId,
+          productId: e,
+          collect: 'true'
+      }).then((res) => { alert(res.data) })
+      }
+    } else { alert('請先登入') }
+  }
+
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
@@ -75,7 +112,7 @@ export function ItemDiv(props) {
           style={{
             fontSize: '3.6rem'
           }}
-          color="disabled"
+          color={(likeProduct.includes(data.productId)) ? 'error' : 'disabled'}
         />
       </div>
       <div className={sort === 1 ? 'Information' : 'Information3'}>

@@ -204,8 +204,9 @@ p.title {
 }
 p.title3 {
   font-size: 2.4rem;
-  padding: 1rem 2rem 0 0;
+  padding: 0 2rem 0 0;
   margin-bottom: 0;
+  color:#84929f;
 }
 p.price {
   font-size: 2rem;
