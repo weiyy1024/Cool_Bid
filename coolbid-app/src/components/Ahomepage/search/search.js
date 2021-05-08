@@ -81,7 +81,7 @@ export function ItemDiv(props) {
           <span>直購價格：</span> NT.
           <span>{data.directPrice}</span>
         </p>
-        <div style={{ position: 'absolute', bottom: '0' }}>
+        <div style={{ position: 'absolute', bottom: '0', color: 'black' }}>
           <p className={sort === 1 ? 'infoEnd' : 'infoEnd2'}>即將結束</p>
           <div className="countDownContainer">
             <div className="flip-clock flip-clock-d">
@@ -362,7 +362,7 @@ export default function Search(props) {
         </ul>
       </nav>
       {/* Breadcrumbs */}
-      <Bread>首頁/競標區／包包類</Bread>
+      <Bread>首頁/競標區/包包類</Bread>
       {/* sort */}
       <SortList>
         <div onClick={() => changeSort(1)}>

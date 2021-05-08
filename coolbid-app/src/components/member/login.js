@@ -76,8 +76,9 @@ export default function Login(props) {
           color="primary"
           onClick={handlelogin}
           type="submit"
+          style={{ width: '100%' }}
         >
-          submit
+          登入
         </Button>
         <br />
       </LoginContainer>
