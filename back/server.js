@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
+  password: 'root',
   database: 'coolbidLatest',
-  port: 3306,
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -352,6 +352,16 @@ app.get('/bidding/:memberId', function (req, res) {
 app.get('/confirmStatus/:productId', function (req, res) {
   let test = req.params.productId
   let sql = `SELECT * FROM product WHERE productId IN ${test} AND productStatusId=4`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+//
+app.get('/shopName/:productId', function (req, res) {
+  let test = req.params.productId
+  let sql = `SELECT DISTINCT p.shopId,shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productId IN ${test} AND productStatusId=4`
 
   conn.query(sql, function (err, result) {
     res.send(result)
