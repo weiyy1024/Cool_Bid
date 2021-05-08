@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import './log.css'
+import swal from 'sweetalert'
 
 const LoginContainer = styled.div`
   width: 25%;
@@ -39,12 +40,26 @@ export default function Login(props) {
       })
       .then((e) => {
         if (e.data) {
-          alert('登入成功')
+          // alert('登入成功')
           // 把member資訊存入session
           window.sessionStorage.setItem('userinfo', JSON.stringify(e.data))
-          window.location.href = 'http://localhost:3000/'
+          swal({
+            title: "登入成功",
+            // text: "You clicked the button!",
+            icon: "success",
+            button: "開始競標！"
+          }).then(() => {
+            window.location.href = 'http://localhost:3000/'
+          }
+          )
         } else {
-          alert('登入失敗')
+          // alert('登入失敗')
+          swal({
+            title: "登入失敗",
+            text: "請輸入正確的帳號密碼",
+            icon: "error",
+            button: "再試一次"
+          })
         }
       })
   }
