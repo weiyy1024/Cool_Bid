@@ -89,6 +89,7 @@ app.get('/category/:category', function (req, res) {
 // 讀取商品資料 & 出價紀錄
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
+
   conn.query(
     'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
     [para, para],
@@ -101,20 +102,20 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, autoBidPrice, directBidPrice } = req.body
+  let { id, isDirectBuy, directBidPrice, productStatusId } = req.body
 
-  if (autoBidPrice) {
+  if (isDirectBuy) {
     conn.query(
-      'UPDATE product SET autoBidPrice = ? WHERE productId = ?',
-      [autoBidPrice, id],
+      'UPDATE product SET nowPrice = ?, productStatusId = ? WHERE productId = ?',
+      [directBidPrice, productStatusId, id],
       function (err, result) {
         res.send(result)
       }
     )
   } else if (directBidPrice) {
     conn.query(
-      'UPDATE product SET nowPrice = ? WHERE productId = ?',
-      [directBidPrice, id],
+      'UPDATE product SET nowPrice = ?, productStatusId = ? WHERE productId = ?',
+      [directBidPrice, productStatusId, id],
       function (err, result) {
         console.log(result)
       }

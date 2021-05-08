@@ -30,15 +30,13 @@ const BidFunc = (props, { bidState }) => {
     }).then(res => setProductF(res.data))
   }, [bidState])
 
-  console.log(productF)
-
   const directBuyPrice = productF.length === 0 ? '' : productF[0][0].directPrice
   const bidPriceStep = productF.length === 0 ? '' : productF[0][0].perPrice
 
   // const [bidMethod, setBidMethod] = useState()
   // const [nowBidPrice, setNowBidPrice] = useState(nowBidPrice)
   // const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
-  const [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
+  let [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
 
   const handleNowPriceChange = e => {
     // console.log(nowPrice)
@@ -61,6 +59,8 @@ const BidFunc = (props, { bidState }) => {
   }
 
   const directBuy = () => {
+    directBidPrice = directBuyPrice
+
     swal({
       title: '確定要購買嗎？',
       text: '購買後不可任意棄標喔！',
@@ -78,67 +78,20 @@ const BidFunc = (props, { bidState }) => {
           swal('再想想也沒關係唷～')
         }
       })
+
+    axios({
+      method: 'post',
+      url: `http://localhost:3001/product/${props.originPId}`,
+      'Content-Type': 'application/json',
+      data: {
+        isDirectBuy: true,
+        directBidPrice: directBidPrice,
+        id: props.pId,
+        memberId: userInfo.memberId,
+        productStatusId: 5
+      }
+    }).then(res => console.log(res.data))
   }
-
-  //   bidNow = () => {
-  //   if (bidMethod === 'autoBid' && autoBidPrice >= nowBidPrice + bidPriceStep) {
-  //     swal({
-  //       title: `自動出價成功，最高價 ${autoBidPrice}`,
-  //       icon: 'success',
-  //       button: '確認'
-  //     })
-
-  //     axios({
-  //       method: 'post',
-  //       url: `http://localhost:3001/product/${props.originPId}`,
-  //       'Content-Type': 'application/json',
-  //       data: {
-  //         autoBidPrice: autoBidPrice
-  //       }
-  //     }).then(res => console.log(res.data))
-  //     // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep)) & bidTimes++
-  //   } else if (bidMethod === 'directBid' && directBidPrice >= nowBidPrice + bidPriceStep) {
-  //     if (directBidPrice < directBuyPrice) {
-  //       // setNowBidPrice(parseInt(directBidPrice))
-
-  //       swal({
-  //         title: `直接出價成功，目前競標價 ${directBidPrice}元`,
-  //         icon: 'success',
-  //         button: '確認'
-  //       })
-
-  //       axios({
-  //         method: 'post',
-  //         url: `http://localhost:3001/product/${props.originPId}`,
-  //         'Content-Type': 'application/json',
-  //         data: {
-  //           directBidPrice: directBidPrice,
-  //           id: props.pId
-  //         }
-  //       }).then(res => console.log(res.data))
-  //     } else {
-  //       if (directBidPrice >= directBuyPrice) {
-  //         swal({
-  //           title: '確定要以直購價購買嗎？',
-  //           text: '購買後不可任意棄標喔！',
-  //           icon: 'warning',
-  //           buttons: true
-  //         })
-  //           .then((confirmPurchased) => {
-  //             if (confirmPurchased) {
-  //               // 將商品狀態設為結標
-  //               // 更改商品頁
-  //               swal('感謝您的購買：）', {
-  //                 icon: 'success'
-  //               })
-  //             } else {
-  //               swal('再想想也沒關係唷～')
-  //             }
-  //           })
-  //       }
-  //     }
-  //   }
-  // }
 
   const bidNow = () => {
     if (directBidPrice < directBuyPrice && directBidPrice >= nowBidPrice + bidPriceStep) {
@@ -153,9 +106,11 @@ const BidFunc = (props, { bidState }) => {
         url: `http://localhost:3001/product/${props.originPId}`,
         'Content-Type': 'application/json',
         data: {
+          isDirectBuy: false,
           directBidPrice: directBidPrice,
           id: props.pId,
-          memberId: userInfo.memberId
+          memberId: userInfo.memberId,
+          productStatusId: 4
         }
       }).then(res => console.log(res.data))
     } else {
@@ -168,7 +123,6 @@ const BidFunc = (props, { bidState }) => {
         })
           .then((confirmPurchased) => {
             if (confirmPurchased) {
-              // 將商品狀態設為結標
               // 更改商品頁
               swal('感謝您的購買：）', {
                 icon: 'success'
@@ -177,13 +131,23 @@ const BidFunc = (props, { bidState }) => {
               swal('再想想也沒關係唷～')
             }
           })
+
+        axios({
+          method: 'post',
+          url: `http://localhost:3001/product/${props.originPId}`,
+          'Content-Type': 'application/json',
+          data: {
+            isDirectBuy: true,
+            directBidPrice: directBidPrice,
+            id: props.pId,
+            memberId: userInfo.memberId,
+            productStatusId: 5
+          }
+        })
+          .then(res => console.log(res.data))
       }
     }
   }
-
-  // historyData = {
-  //   directBidGroup: directBidPrice
-  // }
 
   const saveMoney = () => {
     const priceDiff = directBuyPrice - nowBidPrice
@@ -218,7 +182,10 @@ const BidFunc = (props, { bidState }) => {
         </Typography>
         <Button
           className={classes.buy}
-          onClick={directBuy}
+          onClick={() => {
+            directBuy()
+            setBidState(bidState + 1)
+          }}
           variant='outlined'
           color='secondary'
         >
@@ -288,3 +255,64 @@ const BidFunc = (props, { bidState }) => {
 }
 
 export default BidFunc
+
+// /////////////////////// with autobid /////////////////////////////////
+//   bidNow = () => {
+//   if (bidMethod === 'autoBid' && autoBidPrice >= nowBidPrice + bidPriceStep) {
+//     swal({
+//       title: `自動出價成功，最高價 ${autoBidPrice}`,
+//       icon: 'success',
+//       button: '確認'
+//     })
+
+//     axios({
+//       method: 'post',
+//       url: `http://localhost:3001/product/${props.originPId}`,
+//       'Content-Type': 'application/json',
+//       data: {
+//         autoBidPrice: autoBidPrice
+//       }
+//     }).then(res => console.log(res.data))
+//     // 當 autoBidPrice > nowBidPrice && nowBidPrice 的人 != 自己 => setNowBidPrice(parseInt(setNowBidPrice) + parseInt(bidPriceStep)) & bidTimes++
+//   } else if (bidMethod === 'directBid' && directBidPrice >= nowBidPrice + bidPriceStep) {
+//     if (directBidPrice < directBuyPrice) {
+//       // setNowBidPrice(parseInt(directBidPrice))
+
+//       swal({
+//         title: `直接出價成功，目前競標價 ${directBidPrice}元`,
+//         icon: 'success',
+//         button: '確認'
+//       })
+
+//       axios({
+//         method: 'post',
+//         url: `http://localhost:3001/product/${props.originPId}`,
+//         'Content-Type': 'application/json',
+//         data: {
+//           directBidPrice: directBidPrice,
+//           id: props.pId
+//         }
+//       }).then(res => console.log(res.data))
+//     } else {
+//       if (directBidPrice >= directBuyPrice) {
+//         swal({
+//           title: '確定要以直購價購買嗎？',
+//           text: '購買後不可任意棄標喔！',
+//           icon: 'warning',
+//           buttons: true
+//         })
+//           .then((confirmPurchased) => {
+//             if (confirmPurchased) {
+//               // 將商品狀態設為結標
+//               // 更改商品頁
+//               swal('感謝您的購買：）', {
+//                 icon: 'success'
+//               })
+//             } else {
+//               swal('再想想也沒關係唷～')
+//             }
+//           })
+//       }
+//     }
+//   }
+// }
