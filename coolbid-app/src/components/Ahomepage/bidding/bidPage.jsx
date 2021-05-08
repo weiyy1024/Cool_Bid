@@ -59,6 +59,17 @@ const BidPage = props => {
     setToggle((toggle = false))
   }
 
+  const dateObject = Date.parse(product.length === 0 ? '' : product[0][0].endTime)
+
+  function getDuration (ms) {
+    const days = ms / 1000 / 60 / 60 / 24
+    const hours = ms / 1000 / 60 / 60 - (24 * Math.floor(days))
+    const minutes = ms / 1000 / 60 - (24 * 60 * Math.floor(days)) - (60 * Math.floor(hours))
+    const seconds = ms / 1000 - (24 * 60 * 60 * Math.floor(days)) - (60 * 60 * Math.floor(hours)) - (60 * Math.floor(minutes))
+
+    return (`${Math.floor(days)}天 ${Math.floor(hours)}時 ${Math.floor(minutes)}分 ${Math.floor(seconds)}秒`)
+  }
+
   const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
 
   return (
@@ -99,10 +110,10 @@ const BidPage = props => {
               {product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              剩下 ***6天6小時*** 結束
+              剩下 {getDuration(dateObject - Date.now())} 結束
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              最高出價：***Len***
+              最高出價：{product.length === 0 ? '' : product[1][0].nickname} ({product.length === 0 ? '' : product[1][0].userId})
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               商品品牌：{product.length === 0 ? '' : product[0][0].brandName}
@@ -144,7 +155,7 @@ const BidPage = props => {
             <div className={classes.storeInfo}>
               <div className={classes.storeNameGroup}>
                 <Typography variant='h3' className={classes.storeName}>
-                  LEN 的商店
+                  {product.length === 0 ? '' : product[0][0].shopDescription}
                 </Typography>
                 <Button
                   variant='outlined'
@@ -155,7 +166,7 @@ const BidPage = props => {
                 </Button>
               </div>
               <Typography variant='h4' className={classes.storeInfo}>
-                金槌賣家
+                {product.length === 0 ? '' : product[0][0].shopLevelDescription}
               </Typography>
               <Typography variant='h4' className={classes.storeInfo}>
                 粉絲：666
@@ -206,22 +217,7 @@ const BidPage = props => {
             className={classes.productDetail}
             style={toggle ? { display: 'block' } : { display: 'none' }}
           >
-            The Louis Vuitton x Supreme Christopher backpack in red is a
-            structured bag dripping in style. It comes with adjustable leather
-            shoulder straps, a leather top handle, flap opening, press stud and
-            drawstring closure as well as several pockets inside. It’s also made
-            of durable Epi leather, which debuted as Louis Vuitton’s first
-            permanent leather collection in 1985 and goes through a special
-            dying process which adds to the vibrancy of the color. Supreme
-            collaboration with Louis Vuitton has been highly anticipated and
-            combines the legacy of the LV brand with Supreme unique style of
-            cool. Their collaboration, which features a wide array of leather
-            goods, debuted at Louis Vuitton’s Fall 2017 menswear show in Paris.
-            The Christopher backpack conjures up the rugged spirit of a hiking
-            pack according to Louis Vuitton. This much coveted Louis Vuitton x
-            Supreme Christopher backpack features a white Supreme logo in Future
-            Heavy Oblique font and has an interior big enough to fit a variety
-            of items.
+          {product.length === 0 ? '' : product[0][0].productDescription}
           </Typography>
           <TableContainer
             style={toggle ? { display: 'none' } : { display: 'block' }}

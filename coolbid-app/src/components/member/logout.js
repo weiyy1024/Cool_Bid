@@ -4,45 +4,19 @@
 /* eslint-disable react/prop-types */
 /* eslint curly: 2, quotes: ["error", "double"] */
 /* eslint eqeqeq: "off", curly: "error" */
+import swal from 'sweetalert'
 
-import React from 'react'
-import axios from 'axios'
-import Button from '@material-ui/core/Button'
-import './log.css'
-import styled from '@emotion/styled'
-
-const LoginContainer = styled.div`
-  width: 25%;
-  height: 30rem;
-  margin: 20rem auto;
-  color: grey;
-`
-export default function Logout(props) {
-  axios.defaults.withCredentials = true
-  const handlelogout = () => {
-    axios.get('http://localhost:3001/logout').then((e) => {
-      alert(e.data)
-      console.log(e)
-      // 清sessionstorage
-      window.sessionStorage.clear()
+export default function Logout() {
+  if (window.sessionStorage.getItem('userinfo')) {
+    // 清sessionstorage
+    window.sessionStorage.clear()
+    swal({
+      title: "登出成功",
+      // text: "You clicked the button!",
+      icon: "success",
+      button: "下次再來！"
+    }).then(() => {
       window.location.href = 'http://localhost:3000/'
     })
   }
-
-  axios.get('http://localhost:3001/member/signin').then((e) => {
-    console.log(e.data.loggedIn)
-  })
-
-  return (
-    <LoginContainer>
-      <Button
-        className="submitBtn"
-        variant="contained"
-        color="primary"
-        onClick={handlelogout}
-      >
-        登出
-      </Button>
-    </LoginContainer>
-  )
 }

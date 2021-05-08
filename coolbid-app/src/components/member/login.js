@@ -5,10 +5,11 @@
 /* eslint curly: 2, quotes: ["error", "double"] */
 /* eslint eqeqeq: "off", curly: "error" */
 import styled from '@emotion/styled'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import './log.css'
+import swal from 'sweetalert'
 
 const LoginContainer = styled.div`
   width: 25%;
@@ -31,18 +32,6 @@ const Myfooter = styled.footer`
 export default function Login(props) {
   const [account, setAccount] = useState('')
   const [pwd, setPwd] = useState('')
-  const [loginStatus, setLoginStatus] = useState('')
-  // session要跨域
-  axios.defaults.withCredentials = true
-
-  useEffect(() => {
-    axios.get('http://localhost:3001/member/signin').then((response) => {
-      if (response.data.loggedIn == true) {
-        setLoginStatus(response.data.user.id)
-      }
-    })
-  }, [])
-
   const handlelogin = () => {
     axios
       .post('http://localhost:3001/member/signin', {
@@ -51,19 +40,28 @@ export default function Login(props) {
       })
       .then((e) => {
         if (e.data) {
-          alert('登入成功')
+          // alert('登入成功')
           // 把member資訊存入session
           window.sessionStorage.setItem('userinfo', JSON.stringify(e.data))
-          window.location.href = 'http://localhost:3000/'
+          swal({
+            title: "登入成功",
+            // text: "You clicked the button!",
+            icon: "success",
+            button: "開始競標！"
+          }).then(() => {
+            window.location.href = 'http://localhost:3000/'
+          }
+          )
         } else {
-          alert('登入失敗')
+          // alert('登入失敗')
+          swal({
+            title: "登入失敗",
+            text: "請輸入正確的帳號密碼",
+            icon: "error",
+            button: "再試一次"
+          })
         }
       })
-  }
-  if (loginStatus) {
-    console.log(loginStatus)
-  } else {
-    console.log('logoutㄛ')
   }
   return (
     <>
@@ -93,8 +91,9 @@ export default function Login(props) {
           color="primary"
           onClick={handlelogin}
           type="submit"
+          style={{ width: '100%' }}
         >
-          submit
+          登入
         </Button>
         <br />
       </LoginContainer>

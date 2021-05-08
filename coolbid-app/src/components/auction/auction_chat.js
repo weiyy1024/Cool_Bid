@@ -17,7 +17,7 @@ import Card from '@material-ui/core/Card'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: '100%',
+    height: '90%',
     backgroundColor: '#f9f9f9',
     padding: '10px',
     overflow: 'scroll',
@@ -123,7 +123,6 @@ function Chat(props) {
           setIsMsgAtBottom(
             element.scrollTop + element.clientHeight === element.scrollHeight
           )
-          console.log('在底？', isMsgAtBottom)
         }}
       >
         {allMsg.map((item, index) => (
