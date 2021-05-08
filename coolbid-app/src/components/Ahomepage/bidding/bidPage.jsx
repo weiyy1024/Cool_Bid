@@ -24,6 +24,50 @@ import useStyles from '../../../styles/bidPageStyle'
 
 import BidFunc from './bidFunc'
 
+// const productDetail = () => {
+//   switch (product.length === 0 ? '' : product[0][0].categoryId) {
+//     case 'B':
+//       return (
+//         <>
+//           <Typography variant='h4' className={classes.productInfo}>
+//             商品樣式：***男包 後背包***
+//           </Typography>
+//           <Typography variant='h4' className={classes.productInfo}>
+//             商品顏色：{product.length === 0 ? '' : product[0][0].bagColorId}
+//           </Typography>
+//         </>
+//       )
+//       break;
+
+//     case 'C':
+//       return (
+//         <>
+
+//         </>
+//       )
+//       break;
+
+//     case 'S':
+//       return (
+//         <>
+
+//         </>
+//       )
+//       break;
+
+//     case 'W':
+//       return (
+//         <>
+
+//         </>
+//       )
+//       break;
+
+//     default:
+//       break;
+//   }
+// }
+
 const BidPage = props => {
   const classes = useStyles()
 
@@ -49,7 +93,24 @@ const BidPage = props => {
     }).then(res => setProduct(res.data))
   }, [bidState])
 
+  const productStatus = product.length === 0 ? '' : product[0][0].productStatusId
+  console.log(product)
+
   const rows = product.length === 0 ? [] : product[1]
+
+  // const formatDateTime = function (date) {
+  //   const y = date.getFullYear()
+  //   let m = date.getMonth() + 1
+  //   m = m < 10 ? ('0' + m) : m
+  //   let d = date.getDate()
+  //   d = d < 10 ? ('0' + d) : d
+  //   const h = date.getHours()
+  //   let minute = date.getMinutes()
+  //   minute = minute < 10 ? ('0' + minute) : minute
+  //   return `${y}-${m}-${d} ${h} : ${minute}`
+  // }
+
+  // console.log(formatDateTime(new Date(rows[0].bidTime)))
 
   const handleToggleInfo = () => {
     setToggle((toggle = true))
@@ -60,7 +121,6 @@ const BidPage = props => {
   }
 
   const dateObject = Date.parse(product.length === 0 ? '' : product[0][0].endTime)
-
   function getDuration (ms) {
     const days = ms / 1000 / 60 / 60 / 24
     const hours = ms / 1000 / 60 / 60 - (24 * Math.floor(days))
@@ -107,22 +167,22 @@ const BidPage = props => {
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              {product.length === 0 ? '' : product[0][0].productName}
+              {productStatus === 5 ? '(商品已下架) ' : ''}{product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              剩下 {getDuration(dateObject - Date.now())} 結束
+               {product.length === 0 ? '' : `剩下 ${getDuration(dateObject - Date.now())} 結束`}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              最高出價：{product.length === 0 ? '' : product[1][0].nickname} ({product.length === 0 ? '' : product[1][0].userId})
+              最高出價：{product.length === 0 ? '' : (product[1].length === 0 ? '無' : product[1][0].nickname)} {product.length === 0 ? '' : (product[1].length === 0 ? '' : `(${product[1][0].userId})`)}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               商品品牌：{product.length === 0 ? '' : product[0][0].brandName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品樣式：***男包 後背包***
+              商品樣式：男包 後背包
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：{product.length === 0 ? '' : product[0][0].categoryDetailDescription}
+              商品顏色：紅色
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               商品狀況：{product.length === 0 ? '' : product[0][0].productConditionDescription}
@@ -168,9 +228,6 @@ const BidPage = props => {
               <Typography variant='h4' className={classes.storeInfo}>
                 {product.length === 0 ? '' : product[0][0].shopLevelDescription}
               </Typography>
-              <Typography variant='h4' className={classes.storeInfo}>
-                粉絲：666
-              </Typography>
             </div>
             <Button
               variant='contained'
@@ -178,13 +235,6 @@ const BidPage = props => {
               className={classes.storeButton}
             >
               關於我
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-              className={classes.storeButton}
-            >
-              買家評價(3856)
             </Button>
             <Button
               variant='contained'
