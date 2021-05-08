@@ -65,14 +65,15 @@ export function ItemDiv(props) {
   const [likeProduct, setLikeProduct] = useState([])
 
   if (userinfo) {
-  useEffect(() => {
-    axios
-      .post('http://localhost:3001/likeproduct', {
-        memberId: userinfo.memberId
-      }).then((e) => {
-        setLikeProduct(e.data.map((item) => item.productId))
-      })
-  }, [likeProduct])
+    useEffect(() => {
+      axios
+        .post('http://localhost:3001/likeproduct', {
+          memberId: userinfo.memberId
+        })
+        .then((e) => {
+          setLikeProduct(e.data.map((item) => item.productId))
+        })
+    }, [likeProduct])
   }
 
   // 收藏與取消收藏 done 20210507 Jou
@@ -81,21 +82,29 @@ export function ItemDiv(props) {
       if (likeProduct.includes(e)) {
         // delete收藏
         axios
-        .post('http://localhost:3001/collectproduct', {
-          memberId: userinfo.memberId,
-          productId: e,
-          collect: 'false'
-      }).then((res) => { alert(res.data) })
+          .post('http://localhost:3001/collectproduct', {
+            memberId: userinfo.memberId,
+            productId: e,
+            collect: 'false'
+          })
+          .then((res) => {
+            alert(res.data)
+          })
       } else {
-      // insert into收藏
-      axios
-        .post('http://localhost:3001/collectproduct', {
-          memberId: userinfo.memberId,
-          productId: e,
-          collect: 'true'
-      }).then((res) => { alert(res.data) })
+        // insert into收藏
+        axios
+          .post('http://localhost:3001/collectproduct', {
+            memberId: userinfo.memberId,
+            productId: e,
+            collect: 'true'
+          })
+          .then((res) => {
+            alert(res.data)
+          })
       }
-    } else { alert('請先登入') }
+    } else {
+      alert('請先登入')
+    }
   }
 
   return (
@@ -113,7 +122,7 @@ export function ItemDiv(props) {
           style={{
             fontSize: '3.6rem'
           }}
-          color={(likeProduct.includes(data.productId)) ? 'error' : 'disabled'}
+          color={likeProduct.includes(data.productId) ? 'error' : 'disabled'}
         />
       </div>
       <div className={sort === 1 ? 'Information' : 'Information3'}>

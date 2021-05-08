@@ -4,22 +4,37 @@ import { NavLink } from 'react-router-dom'
 
 // eslint-disable-next-line space-before-function-paren
 export default function MemberDropDown() {
+  const userinfo = window.sessionStorage.getItem('userinfo')
+  let login, editto, backstageto, purchaseto, wishListto
+  if (userinfo) {
+    login = <NavLink to="/member/signout">登出</NavLink>
+    editto = '/member/edit'
+    backstageto = '/BackStage'
+    purchaseto = '/member/purchase'
+    wishListto = '/Shopping/WishList'
+  } else {
+    login = <NavLink to="/member/signin">登入</NavLink>
+    editto = '/member/signin'
+    backstageto = '/member/signin'
+    purchaseto = '/member/signin'
+    wishListto = '/member/signin'
+  }
   return (
     <dl className="memberList maki">
       <dd>
-        <NavLink to="/member/signin">登出/登入</NavLink>
+        {login}
       </dd>
       <dd>
-        <NavLink to="/member/edit">會員中心</NavLink>
+        <NavLink to={editto}>會員中心</NavLink>
       </dd>
       <dd>
-        <NavLink to="/BackStage">賣家後台</NavLink>
+        <NavLink to={backstageto}>賣家後台</NavLink>
       </dd>
       <dd>
-        <NavLink to="/member/purchase">購買紀錄</NavLink>
+        <NavLink to={purchaseto}>購買紀錄</NavLink>
       </dd>
       <dd>
-        <NavLink to="/Shopping/WishList">收藏清單</NavLink>
+        <NavLink to={wishListto}>收藏清單</NavLink>
       </dd>
     </dl>
   )

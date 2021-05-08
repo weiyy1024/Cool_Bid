@@ -198,6 +198,11 @@ export default function NavBar() {
     paddingRight: '2rem'
   }
 
+  let membericonto
+  if (window.sessionStorage.getItem('userinfo')) {
+    membericonto = '/member/edit'
+  } else { membericonto = '/member/signin' }
+
   return (
     <ThemeProvider theme={theme[currentTheme]}>
       <ToggleItem>
@@ -240,7 +245,7 @@ export default function NavBar() {
         </SearchDiv>
         <ThreeIcons>
           <Note />
-          <Member className="Chomepage" to="/member/signin">
+          <Member className="Chomepage" to={membericonto}>
             <AccountCircleIcon style={iconStye} />
             <MemberDropDown />
           </Member>
