@@ -26,6 +26,7 @@
     "react": "^17.0.2",
     "react-component-export-image": "^1.0.6",
     "react-dom": "^17.0.2",
+    "react-elastic-carousel": "^0.11.5",
     "react-jquery-plugin": "^1.1.7",
     "react-router": "^5.2.0",
     "react-router-config": "^5.1.1",

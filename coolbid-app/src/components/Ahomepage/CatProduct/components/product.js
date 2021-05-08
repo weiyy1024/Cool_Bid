@@ -110,7 +110,7 @@ export function ItemDiv(props) {
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
-        <NavLink x>
+        <NavLink to={'/Ahomepage/product/product?=' + data.productId}>
           <img
             className={sort === 1 ? 'productImg' : 'productImg3'}
             src={'/imgs/' + data.productId + '.jpg'}
