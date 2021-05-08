@@ -20,5 +20,6 @@
 }
 
 .sizeInput[type=checkbox]:checked+span {
-    color: rgb(236, 25, 10);
+    color: #fff;
+    background-color: #edae10;
 }

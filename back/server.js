@@ -367,6 +367,30 @@ app.get('/shopName/:productId', function (req, res) {
   })
 })
 
+// Bidding homepage get popular products by weiwei
+app.get('/getPopularProducts',function(req,res){
+  let sql = `SELECT productId, COUNT('productId') FROM biddinghistory GROUP BY productId ORDER BY COUNT('productId') DESC limit 8`
+
+  conn.query(sql,function(err,result){
+    res.send(result)
+  })
+})
+//-----------------------------post方法------------------------
+// app.post('/search',function(req,res){
+//     let test = req.body.test
+//     // console.log(test)
+//     // res.send(JSON.stringify(test))
+//     var mysql = require('mysql');
+//     var conn = mysql.createConnection({
+//         host: 'localhost',
+//         user: 'root',
+//         password: 'root',
+//         database:"coolbid",
+//         port: 8889
+//     });
+//     conn.query("select * from product where productId = ?",[test],function(err,result){
+//         res.send(result)
+//     })
 //得目前我出的最高金額
 // app.get('/myPrice/:productId', function (req, res) {
 //   let test = req.params.productId

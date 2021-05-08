@@ -9,6 +9,7 @@ import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import '../style/product.css'
 import swal from 'sweetalert'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
@@ -67,13 +68,13 @@ export function ItemDiv(props) {
 
   useEffect(() => {
     if (userinfo) {
-    axios
-      .post('http://localhost:3001/likeproduct', {
-        memberId: userinfo.memberId
-      })
-      .then((e) => {
-        setLikeProduct(e.data.map((item) => item.productId))
-      })
+      axios
+        .post('http://localhost:3001/likeproduct', {
+          memberId: userinfo.memberId
+        })
+        .then((e) => {
+          setLikeProduct(e.data.map((item) => item.productId))
+        })
     }
   }, [])
 
@@ -283,10 +284,10 @@ export function ItemDiv(props) {
             </div>
           </div>
           <div className={sort === 1 ? 'info' : 'info3'}>
-            <td className="infoTitle">days</td>
-            <td className="infoTitle1">hours</td>
-            <td className="infoTitle1">minutes</td>
-            <td className="infoTitle">seconds</td>
+            <span className="infoTitle">days</span>
+            <span className="infoTitle1">hours</span>
+            <span className="infoTitle1">minutes</span>
+            <span className="infoTitle">seconds</span>
           </div>
         </div>
       </div>
@@ -299,14 +300,16 @@ export default function Product(props) {
   const [productData, setProductData] = useState([])
   // eslint-disable-next-line no-unused-vars
   const [catProduct, setCatProduct] = useState()
-
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
+    setIsLoading(true)
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
       url: '/category/' + data,
       'Content-Type': 'application/json'
     }).then((res) => {
+      setIsLoading(false)
       setCatProduct(res.data)
       setProductData(res.data)
     })
@@ -360,8 +363,21 @@ export default function Product(props) {
   }, [sortTime])
   return (
     <Products>
-      {productData[0]
-        ? productData.map((item, index) => {
+      {isLoading
+        ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => (
+            <Skeleton
+              key={index}
+              variant="rect"
+              width={240}
+              height={460}
+              style={{
+                margin: '0 2rem 3rem 2rem',
+                borderRadius: '4px',
+                boxShadow: '0px 4px 20px #1b1b1b21'
+              }}
+            />
+          ))
+        : productData.map((item, index) => {
             return (
               <ItemDiv
                 key={index}
@@ -372,8 +388,7 @@ export default function Product(props) {
                 sortTime={sortTime}
               />
             )
-          })
-        : ''}
+          })}
     </Products>
   )
 }
