@@ -10,6 +10,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import WbSunnyIcon from '@material-ui/icons/WbSunny'
 import Brightness2Icon from '@material-ui/icons/Brightness2'
 import SearchBar1 from 'material-ui-search-bar'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 // import Tooltip from '@material-ui/core/Tooltip'
 // country
 import DialogSelect from './components/Country'
@@ -47,7 +48,7 @@ const theme = {
 const ToggleItem = styled.div`
   position: fixed;
   top: 0;
-  height: 30px;
+  height: 35px;
   width: 100%;
   background-color: #222327;
   z-index: 99;
@@ -68,7 +69,7 @@ const Toggle = styled.div`
   cursor: pointer;
   width: 5rem;
   height: 2rem;
-  top: 4px;
+  top: 6px;
   right: 60px;
   display: inline-block;
 `
@@ -102,7 +103,7 @@ const Navbar = styled.div`
   background-color: ${({ theme }) => {
     return theme.backgroundColor
   }};
-  top: 30px;
+  top: 35px;
   width: 100%;
   height: 90px;
   display: flex;
@@ -117,11 +118,11 @@ const LogoBox = styled(NavLink)`
   text-decoration: none;
 `
 const NavLeft = styled.div`
-  margin: 15px 0 60px 30px;
+  margin: 10px 0 60px 10px;
   display: flex;
 `
 const Title = styled(NavLink)`
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: ${({ theme }) => theme.textColor};
   padding: 1.5rem;
   text-decoration: none;
@@ -210,10 +211,16 @@ export default function NavBar() {
         <NavLeft>
           <Title className="Ahomepage" to="/Ahomepage">
             競標區
+            <ArrowDropDownIcon
+              style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
+            />
             <DropDown />
           </Title>
           <Title className="Chomepage" to="/Chomepage">
             拍賣會
+            <ArrowDropDownIcon
+              style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
+            />
             <AuctionDropDown />
           </Title>
         </NavLeft>

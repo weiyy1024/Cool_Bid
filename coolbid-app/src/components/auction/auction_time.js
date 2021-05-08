@@ -1,34 +1,37 @@
 /* eslint-disable space-before-function-paren */
 import React, { useState, useEffect } from 'react'
 import moment from 'moment'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import LinearProgress from '@material-ui/core/LinearProgress'
-import Card from '@material-ui/core/Card'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
+// import { makeStyles } from '@material-ui/core/styles'
+// import Card from '@material-ui/core/Card'
+// import CardActionArea from '@material-ui/core/CardActionArea'
+// import CardContent from '@material-ui/core/CardContent'
+// import CardMedia from '@material-ui/core/CardMedia'
+// import Typography from '@material-ui/core/Typography'
+import '../auction/countdown.css'
 
-const BorderLinearProgress = withStyles((theme) => ({
-  root: {
-    height: 10,
-    borderRadius: 5
-  },
-  colorPrimary: {
-    backgroundColor:
-      theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
-  },
-  bar: {
-    borderRadius: 5,
-    backgroundColor: '#1a90ff'
-  }
-}))(LinearProgress)
+const FULL_DASH_ARRAY = 283
+const WARNING_THRESHOLD = 5
+const ALERT_THRESHOLD = 3
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1
+const COLOR_CODES = {
+  info: {
+    color: 'green'
+  },
+  warning: {
+    color: 'orange',
+    threshold: WARNING_THRESHOLD
+  },
+  alert: {
+    color: 'red',
+    threshold: ALERT_THRESHOLD
   }
-})
+}
+
+// const useStyles = makeStyles({
+//   root: {
+//     flexGrow: 1
+//   }
+// })
 
 function AuctionTime(props) {
   const { ws } = props
@@ -36,13 +39,38 @@ function AuctionTime(props) {
   const [deadline, setDeadline] = useState(moment())
   const [time, setTime] = useState(initTime)
   const [timerId, setTimerId] = useState()
-  const classes = useStyles()
-  const [product, setProduct] = useState('')
+  // const classes = useStyles()
+  // const [product, setProduct] = useState('')
+  const [circle, setCircle] = useState(283)
+  const [color, setColor] = useState('green')
+
+  function setRemainingPathColor(timeLeft) {
+    const { alert, warning } = COLOR_CODES
+    if (timeLeft <= alert.threshold) {
+      setColor('red')
+    } else if (timeLeft <= warning.threshold) {
+      setColor('orange')
+    }
+  }
+
+  function calculateTimeFraction() {
+    const rawTimeFraction = time / initTime
+    return rawTimeFraction - (1 / initTime) * (1 - rawTimeFraction)
+  }
+
+  function setCircleDasharray() {
+    const circleDasharray = `${(
+      calculateTimeFraction() * FULL_DASH_ARRAY
+    ).toFixed(0)} 283`
+    setCircle(circleDasharray)
+    console.log(circle)
+  }
 
   const countdown = () => {
     const now = moment()
     const s = deadline.diff(now, 'seconds') % 60
     setTime(s)
+    setRemainingPathColor(s)
     if (s <= 0) {
       clearTimeout(timerId)
       setTime(0)
@@ -56,7 +84,9 @@ function AuctionTime(props) {
       )
     }
   }
-
+  useEffect(() => {
+    setCircleDasharray()
+  }, [time])
   // When New Bid Is In, Reset The Countdown Time
   useEffect(() => {
     if (ws) {
@@ -75,10 +105,11 @@ function AuctionTime(props) {
 
     const getBid = (obj) => {
       setDeadline(moment().add(initTime, 's'))
+      setColor('green')
     }
 
     const nowProduct = (product) => {
-      setProduct(product)
+      // setProduct(product)
     }
 
     if (ws) {
@@ -98,9 +129,46 @@ function AuctionTime(props) {
 
   return (
     <>
-      <h2 style={{ marginTop: '0' }}>結標倒數: {time}</h2>
-      <BorderLinearProgress variant="determinate" value={(time / 10) * 100} />
-      <Card
+      <div className="base-timer">
+        <svg
+          className="base-timer__svg"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g className="base-timer__circle">
+            <circle
+              className="base-timer__path-elapsed"
+              cx="50"
+              cy="50"
+              r="45"
+            ></circle>
+            <path
+              id="base-timer-path-remaining"
+              strokeDasharray={circle}
+              className={`base-timer__path-remaining ${color}`}
+              d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "
+            ></path>
+          </g>
+        </svg>
+        <span id="base-timer-label" className="base-timer__label">
+          {time}
+        </span>
+      </div>
+      <iframe
+        width="100%"
+        height="315px"
+        src="https://www.youtube.com/embed/FInIBCUin1c"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        style={{ marginTop: '20px' }}
+      ></iframe>
+      {/* <Card
         className={classes.root}
         style={{ position: 'absolute', bottom: '0' }}
       >
@@ -127,7 +195,7 @@ function AuctionTime(props) {
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Card>
+      </Card> */}
     </>
   )
 }

@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
+import gavel from '../../gavel.png'
 
 function BidHistory(props) {
   const { ws, user } = props
@@ -155,20 +156,20 @@ function BidHistory(props) {
             {bidMsg.length === 0 ? 0 : numberWithCommas(bidPrice)}
           </h4>
         </Card>
-        <div style={{ height: '80%', overflow: 'scroll' }}>
-          <ol reversed>
+        <div style={{ height: '80%', overflow: 'scroll', paddingLeft: '20px' }}>
+          <ol reversed style={{ listStyle: `square inside url(${gavel})` }}>
             {bidMsg
               .slice()
               .reverse()
               .map((item, index) => (
                 <li key={index}>
-                  {item.user} - {numberWithCommas(item.price)}元 -
+                  {item.user} - {numberWithCommas(item.price)}元
                   <Typography
                     component="span"
                     variant="body2"
                     color="textPrimary"
                   >
-                    {item.time}
+                    &nbsp;({item.time})
                   </Typography>
                 </li>
               ))}
