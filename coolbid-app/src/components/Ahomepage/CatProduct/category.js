@@ -61,16 +61,16 @@ const Brands = styled.div`
         text-decoration: none;
         cursor: pointer;
         &:hover {
-          color: red;
+          color: #edae10;
         }
       }
     }
-  };
+  }
   h3 {
     text-align: center;
     margin: 0;
     padding: 1rem;
-  };
+  }
 `
 const More = styled.div`
   font-size=2.2rem;

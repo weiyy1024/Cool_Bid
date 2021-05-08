@@ -212,10 +212,10 @@ export function ItemDiv(props) {
             </div>
           </div>
           <div className={sort === 1 ? 'info' : 'info2'}>
-            <td className="infoTitle">days</td>
-            <td className="infoTitle1">hours</td>
-            <td className="infoTitle1">minutes</td>
-            <td className="infoTitle">seconds</td>
+            <span className="infoTitle">days</span>
+            <span className="infoTitle1">hours</span>
+            <span className="infoTitle1">minutes</span>
+            <span className="infoTitle">seconds</span>
           </div>
         </div>
       </div>

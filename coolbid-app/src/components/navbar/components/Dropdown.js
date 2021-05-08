@@ -25,8 +25,8 @@ const category = [
 export default function DropDown() {
   return (
     <dl className="list maki">
-      {category.map((item) => (
-        <dd key="catDD">
+      {category.map((item, index) => (
+        <dd key={index}>
           <NavLink to={'/Ahomepage/' + item.categoryName}>
             {item.categoryName}
           </NavLink>
