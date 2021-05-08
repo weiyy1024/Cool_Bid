@@ -1,7 +1,6 @@
 var express = require('express')
 var app = express()
 const cors = require('cors')
-var session = require('express-session')
 
 app.use(express.json())
 app.listen(3001)
@@ -357,7 +356,6 @@ app.get('/confirmStatus/:productId', function (req, res) {
   })
 })
 
-//
 app.get('/shopName/:productId', function (req, res) {
   let test = req.params.productId
   let sql = `SELECT DISTINCT p.shopId,shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productId IN ${test} AND productStatusId=4`
