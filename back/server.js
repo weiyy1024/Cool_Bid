@@ -1,7 +1,6 @@
 var express = require('express')
 var app = express()
 const cors = require('cors')
-var session = require('express-session')
 
 app.use(express.json())
 app.listen(3001)
@@ -10,28 +9,28 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
+  password: 'root',
   database: 'coolbidLatest',
-  port: 3306,
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
 // 設置session
-app.use(
-  session({
-    key: 'user',
-    secret: 'secretKey',
-    // store: new FileStore(),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      path: '/',
-      httpOnly: true,
-      secure: false,
-      maxAge: 10 * 60 * 1000
-    }
-  })
-)
+// app.use(
+//   session({
+//     key: 'user',
+//     secret: 'secretKey',
+//     // store: new FileStore(),
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       path: '/',
+//       httpOnly: true,
+//       secure: false,
+//       maxAge: 10 * 60 * 1000
+//     }
+//   })
+// )
 
 // session要跨域
 app.use(
@@ -42,7 +41,7 @@ app.use(
   })
 )
 
-// 在後端設session
+// 送登入資料去前端
 app.post('/member/signin', function (req, res) {
   let sql = 'select * from member where userId=? and password=?'
   conn.query(
@@ -51,7 +50,7 @@ app.post('/member/signin', function (req, res) {
     function (err, result) {
       if (err) console.log(err)
       else if (result[0]) {
-        req.session.user = result
+        // req.session.user = result
         res.send(result[0])
       } else res.send('')
     }
@@ -59,20 +58,19 @@ app.post('/member/signin', function (req, res) {
 })
 
 // 把session送去前端
-app.get('/member/signin', (req, res) => {
-  // console.log(req.session)
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user })
-  } else {
-    res.send({ loggedIn: false })
-  }
-})
+// app.get('/member/signin', (req, res) => {
+//   // console.log(req.session)
+//   if (req.session.user) {
+//     res.send({ loggedIn: true, user: req.session.user })
+//   } else {
+//     res.send({ loggedIn: false })
+//   }
+// })
 
 // 登出
-app.get('/logout', function (req, res) {
-  req.session.destroy() //刪除session
-  res.send('登出成功')
-})
+// app.get('/logout', function (req, res) {
+//   res.send('登出成功')
+// })
 
 //商品類別
 app.get('/category/:category', function (req, res) {
@@ -359,20 +357,34 @@ app.get('/confirmStatus/:productId', function (req, res) {
   })
 })
 
-//-----------------------------post方法------------------------
-// app.post('/search',function(req,res){
-//     let test = req.body.test
-//     // console.log(test)
-//     // res.send(JSON.stringify(test))
-//     var mysql = require('mysql');
-//     var conn = mysql.createConnection({
-//         host: 'localhost',
-//         user: 'root',
-//         password: 'root',
-//         database:"coolbid",
-//         port: 8889
-//     });
-//     conn.query("select * from product where productId = ?",[test],function(err,result){
-//         res.send(result)
-//     })
+//得商店名稱
+app.get('/shopName/:productId', function (req, res) {
+  let test = req.params.productId
+  let sql = `SELECT DISTINCT p.shopId,shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productId IN ${test} AND productStatusId=4`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+//得目前我出的最高金額
+// app.get('/myPrice/:productId', function (req, res) {
+//   let test = req.params.productId
+//   let sql = `SELECT bidprice FROM biddinghistory where memberId=5 AND bidTime IN (SELECT max(bidTime) FROM biddinghistory WHERE productId=${test} AND memberId=5  )`
+
+//   conn.query(sql, function (err, result) {
+//     res.send(result)
+//   })
 // })
+
+//-----------------------------post方法------------------------
+app.post('/myPrice', function (req, res) {
+  let test1 = req.body.pId
+  let test2 = req.body.mId
+  // console.log(test1, test2)
+  // res.send(JSON.stringify(test))
+  let sql = `SELECT bidprice FROM biddinghistory where memberId=${test2} AND bidTime IN (SELECT max(bidTime) FROM biddinghistory WHERE productId=${test1} AND memberId=${test2}  )`
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})

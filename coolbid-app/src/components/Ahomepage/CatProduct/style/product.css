@@ -124,8 +124,9 @@
 /* for product sort */
 .ProductContainer {
   position: relative;
-  margin: 2rem;
+  margin: 0 2rem 3rem 2rem;
   width: 24rem;
+  height: 46rem;
   border-radius: 4px;
   background: #dbdbdb;
   box-shadow: 0px 4px 20px #1b1b1b21;
@@ -133,7 +134,7 @@
 .ProductContainer3 {
   margin: 2rem;
   width: 93%;
-  height: 100%;
+  /* height: 100%; */
   display: flex;
   border-radius: 2rem;
   box-shadow: 0px 4px 20px #1b1b1b21;
@@ -158,9 +159,10 @@
 
 .ProductImgDiv3 {
   position: relative;
-  /* height: 22.5rem; */
+  height: 22.5rem;
   width: 22.5rem;
   margin-left: 2rem;
+  background-color: white;
 }
 
 .Favorite {
@@ -172,7 +174,7 @@
 .Favorite3 {
   position: absolute;
   bottom: 1.5rem;
-  left: 95rem;
+  right: 0rem;
   cursor: pointer;
 }
 .Favorite:hover {
@@ -181,15 +183,16 @@
 .Favorite3:hover {
   color: rgb(254 63 29);
 }
-.Information {
+/* .Information {
   position: relative;
-}
+} */
 .Information3 {
   position: relative;
   padding: 2rem;
 }
 
 p.title {
+  height: 9 rem;
   font-size: 2rem;
   margin-bottom: 0;
   padding: 1rem 2rem 0 2rem;
@@ -201,8 +204,9 @@ p.title {
 }
 p.title3 {
   font-size: 2.4rem;
-  padding: 1rem 2rem 0 0;
+  padding: 0 2rem 0 0;
   margin-bottom: 0;
+  color:#84929f;
 }
 p.price {
   font-size: 2rem;
@@ -221,6 +225,7 @@ p.price3 {
   margin-bottom: 0;
 }
 .biddingPrice {
+  color: black;
   font-size: 1.8rem;
   text-align: left;
   margin-bottom: 0;
@@ -245,7 +250,7 @@ p.time {
 .infoEnd {
   font-size: 1rem;
   text-align: left;
-  margin: 2rem 0 0.4rem 1rem;
+  margin: 0 0 0.4rem 1rem;
 }
 .infoEnd3 {
   font-size: 1rem;

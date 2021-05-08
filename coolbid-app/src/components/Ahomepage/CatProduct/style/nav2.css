@@ -1,8 +1,8 @@
 
 .nav {
   width: 100%;
-  color: #bbb;
-  background: #2e2e2e;
+  color: #2e2e2e;
+  background: #bbb;
   letter-spacing: .1rem;
   font-size: 2rem;
 }
@@ -19,7 +19,7 @@
   cursor: pointer;
 }
 .nav ul li a{
-  color:#bbb;
+  color:#2e2e2e;
   text-decoration: none;
 }
 .nav ul li:hover {
@@ -27,7 +27,7 @@
 }
 
 .nav ul li:hover a {
-  color: #000;
+  color: #2e2e2e;
 }
 
 /*# sourceMappingURL=.nav2.css.map */

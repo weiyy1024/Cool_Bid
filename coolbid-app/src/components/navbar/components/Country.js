@@ -56,7 +56,7 @@ export default function DialogSelect () {
         display: 'inline-block',
         position: 'absolute',
         right: '2rem',
-        top: '4px'
+        top: '6px'
       }}
     >
       <Tooltip title="Language" arrow placement="left">

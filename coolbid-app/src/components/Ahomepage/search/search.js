@@ -6,7 +6,7 @@ import ListIcon from '@material-ui/icons/List'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms'
 import DashboardIcon from '@material-ui/icons/Dashboard'
-import Pagination from '@material-ui/lab/Pagination'
+// import Pagination from '@material-ui/lab/Pagination'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import axios from 'axios'
 import './search.css'
@@ -14,8 +14,8 @@ import './search.css'
 const SearchProducts = styled.div`
   width: 90%;
   display: flex;
-  float: right;
   flex-wrap: wrap;
+  margin: 0 auto;
 `
 
 export function ItemDiv(props) {
@@ -81,150 +81,150 @@ export function ItemDiv(props) {
           <span>直購價格：</span> NT.
           <span>{data.directPrice}</span>
         </p>
-        <p className={sort === 1 ? 'infoEnd' : 'infoEnd2'}>即將結束</p>
-        <div className="countDownContainer">
-          <div className="flip-clock flip-clock-d">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={days.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {days.toString().substr(0, 1)}
+        <div style={{ position: 'absolute', bottom: '0', color: 'black' }}>
+          <p className={sort === 1 ? 'infoEnd' : 'infoEnd2'}>即將結束</p>
+          <div className="countDownContainer">
+            <div className="flip-clock flip-clock-d">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={days.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {days.toString().substr(0, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
-            </div>
-            <div
-              className="digit digit-right"
-              data-digit-before="0"
-              data-digit-after={days.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {days.toString().substr(1, 1)}
+              <div
+                className="digit digit-right"
+                data-digit-before="0"
+                data-digit-after={days.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {days.toString().substr(1, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
             </div>
-          </div>
-          <div className="colon">:</div>
+            <div className="colon">:</div>
 
-          <div className="flip-clock flip-clock-h">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={hours.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {hours.toString().substr(0, 1)}
+            <div className="flip-clock flip-clock-h">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={hours.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {hours.toString().substr(0, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
+              <div
+                className="digit digit-right"
+                data-digit-before="0"
+                data-digit-after={hours.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {hours.toString().substr(1, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
             </div>
-            <div
-              className="digit digit-right"
-              data-digit-before="0"
-              data-digit-after={hours.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {hours.toString().substr(1, 1)}
+            <div className="colon">:</div>
+            <div className="flip-clock flip-clock-m">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={minutes.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {minutes.toString().substr(0, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
+              <div
+                className="digit digit-right"
+                data-digit-before="0"
+                data-digit-after={minutes.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {minutes.toString().substr(1, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
+            </div>
+            <div className="colon">:</div>
+            <div className="flip-clock flip-clock-s">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={seconds.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {seconds.toString().substr(0, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
+              <div
+                className="digit digit-right"
+                data-digit-before={(seconds - 1).toString().substr(1, 1)}
+                data-digit-after={seconds.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">
+                    {(seconds - 1).toString().substr(1, 1)}
+                  </div>
+                  <div className="card-face card-face-back">
+                    {seconds.toString().substr(1, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
             </div>
           </div>
-          <div className="colon">:</div>
-          <div className="flip-clock flip-clock-m">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={minutes.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {minutes.toString().substr(0, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
-            <div
-              className="digit digit-right"
-              data-digit-before="0"
-              data-digit-after={minutes.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {minutes.toString().substr(1, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
+          <div className={sort === 1 ? 'info' : 'info2'}>
+            <td className="infoTitle">days</td>
+            <td className="infoTitle1">hours</td>
+            <td className="infoTitle1">minutes</td>
+            <td className="infoTitle">seconds</td>
           </div>
-          <div className="colon">:</div>
-          <div className="flip-clock flip-clock-s">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={seconds.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {seconds.toString().substr(0, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
-            <div
-              className="digit digit-right"
-              data-digit-before={(seconds - 1).toString().substr(1, 1)}
-              data-digit-after={seconds.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">
-                  {(seconds - 1).toString().substr(1, 1)}
-                </div>
-                <div className="card-face card-face-back">
-                  {seconds.toString().substr(1, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
-          </div>
-        </div>
-        <div className={sort === 1 ? 'info' : 'info2'}>
-          <td className="infoTitle">days</td>
-          <td className="infoTitle1">hours</td>
-          <td className="infoTitle1">minutes</td>
-          <td className="infoTitle">seconds</td>
         </div>
       </div>
     </div>
   )
 }
 const CategoryContainer = styled.div`
-  margin-top: 16.5rem;
+  margin-top: 12.5rem;
   width: 100%;
-  margin: 10rem auto;
-  height: 240rem;
 `
 const SortList = styled.div`
   margin-top: 3rem;
@@ -247,23 +247,23 @@ const Bread = styled.div`
   width: 100%;
 `
 
-const Page = styled.div`
-  width: 35rem;
-  display: flex;
-  // float: right;
-  margin: 15rem auto;
-  height: 10rem;
-  button {
-    svg {
-      font-size: 3rem;
-    }
-    font-size: 2rem;
-  }
-`
+// const Page = styled.div`
+//   width: 35rem;
+//   display: flex;
+//   // float: right;
+//   margin: 15rem auto;
+//   height: 10rem;
+//   button {
+//     svg {
+//       font-size: 3rem;
+//     }
+//     font-size: 2rem;
+//   }
+// `
 export default function Search(props) {
   const [productData, setProductData] = useState([])
   const keyword = props.data.params.search
-  const [page, setPage] = React.useState(1)
+  // const [page, setPage] = React.useState(1)
   const [sort, setSort] = useState(1)
   const [sortTime, setSortTime] = useState(0)
   const [sortPrice, setSortPrice] = useState(0)
@@ -288,10 +288,10 @@ export default function Search(props) {
     //   setProductData(newData)
     // }
   }
-  // pages
-  const handleChange = (event, value) => {
-    setPage(value)
-  }
+  // // pages
+  // const handleChange = (event, value) => {
+  //   setPage(value)
+  // }
   const changeSort = (e) => {
     setSort(e)
   }
@@ -362,7 +362,7 @@ export default function Search(props) {
         </ul>
       </nav>
       {/* Breadcrumbs */}
-      <Bread>首頁/競標區／包包類</Bread>
+      <Bread>首頁/競標區/包包類</Bread>
       {/* sort */}
       <SortList>
         <div onClick={() => changeSort(1)}>
@@ -395,9 +395,9 @@ export default function Search(props) {
           )
         })}
       </SearchProducts>
-      <Page>
+      {/* <Page>
         <Pagination count={10} page={page} onChange={handleChange} />
-      </Page>
+      </Page> */}
     </CategoryContainer>
   )
 }

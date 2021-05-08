@@ -32,12 +32,27 @@ function Auction() {
   const classes = useStyles()
 
   useEffect(() => {
-    setUser(prompt('請輸入暱稱', 'Guest'))
+    let userInfo = window.sessionStorage.getItem('userinfo')
+    if (userInfo) {
+      userInfo = JSON.parse(userInfo)
+      setUser(userInfo.nickname)
+    } else {
+      setUser('Guest')
+    }
     setWs(webSocket(server))
   }, [])
 
   return (
-    <Grid container spacing={3} style={{ padding: '20px', maxWidth: '100vw', marginTop: '110px', fontSize: '1.5rem' }}>
+    <Grid
+      container
+      spacing={3}
+      style={{
+        padding: '20px',
+        maxWidth: '100vw',
+        marginTop: '110px',
+        fontSize: '1.5rem'
+      }}
+    >
       <Grid item xs style={{ height: '80vh' }}>
         <BidHistory ws={ws} user={user} />
       </Grid>

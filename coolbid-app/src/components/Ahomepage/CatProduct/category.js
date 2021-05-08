@@ -13,13 +13,12 @@ import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import axios from 'axios'
 import Chip from '@material-ui/core/Chip'
-import Pagination from '@material-ui/lab/Pagination'
+// import Pagination from '@material-ui/lab/Pagination'
 // import { Breadcrumbs } from '@material-ui/core'
 
 const CategoryContainer = styled.div`
-  margin-top: 12rem;
+  margin-top: 12.5rem;
   width: 100%;
-  height: 240rem;
 `
 const SortList = styled.div`
   margin-right: 5rem;
@@ -44,10 +43,8 @@ const Bread = styled.div`
 // brand
 const Brands = styled.div`
   border: 0.2rem solid grey;
-  margin-top: 13rem;
-  margin-left: 3rem;
   text-align: left;
-  width: 18%;
+  width: 100%;
   font-size: 2rem;
   ul {
     height: 50rem;
@@ -59,7 +56,7 @@ const Brands = styled.div`
       list-style: none;
       .brandtitle {
         margin-left: 2rem;
-        color: #123;
+        // color: #123;
         letter-spacing: 0.1rem;
         text-decoration: none;
         cursor: pointer;
@@ -68,7 +65,12 @@ const Brands = styled.div`
         }
       }
     }
-  }
+  };
+  h3 {
+    text-align: center;
+    margin: 0;
+    padding: 1rem;
+  };
 `
 const More = styled.div`
   font-size=2.2rem;
@@ -85,11 +87,10 @@ const More = styled.div`
 const Genders = styled.div`
   border: 0.2rem solid grey;
   margin-top: 3rem;
-  margin-left: 3rem;
   text-align: left;
-  width: 18%;
+  width: 100%;
   font-size: 2.2rem;
-  h2 {
+  h3 {
     text-align: center;
     margin: 0;
     padding: 1rem;
@@ -108,10 +109,9 @@ const Genders = styled.div`
 const Filter2 = styled.div`
   border: 0.2rem solid grey;
   margin-top: 3rem;
-  margin-left: 3rem;
   text-align: center;
-  width: 18%;
-  font-size: 1.8rem;
+  width: 100%;
+  font-size: 2.2rem;
   padding-bottom: 1rem;
   h3 {
     text-align: center;
@@ -124,8 +124,7 @@ const Filter2 = styled.div`
 const Filter3 = styled.div`
   border: 0.2rem solid grey;
   margin-top: 3rem;
-  margin-left: 3rem;
-  width: 18%;
+  width: 100%;
   font-size: 2.2rem;
   padding-bottom: 1rem;
   h3 {
@@ -156,14 +155,14 @@ const FilterInfo = styled.div`
     margin: 1rem;
   }
 `
-const Page = styled.div`
-  button {
-    svg {
-      font-size: 3rem;
-    }
-    font-size: 2rem;
-  }
-`
+// const Page = styled.div`
+//   button {
+//     svg {
+//       font-size: 3rem;
+//     }
+//     font-size: 2rem;
+//   }
+// `
 export default function Category(props) {
   const cat = props.data.params.category
   const [sort, setSort] = useState(1)
@@ -176,7 +175,7 @@ export default function Category(props) {
   const [sizes, setSizes] = useState([1, 2, 3])
   const [filterInfo, setFilterInfo] = useState([])
   const [filterValue, setFilterValue] = useState(['0'])
-  const [page, setPage] = React.useState(1)
+  // const [page, setPage] = React.useState(1)
   // badge delete
   const handleDelete = (e) => {
     const myFilter = filterInfo.map((item) => item)
@@ -188,10 +187,10 @@ export default function Category(props) {
     test[0].checked = ''
   }
 
-  // pages
-  const handleChange = (event, value) => {
-    setPage(value)
-  }
+  // // pages
+  // const handleChange = (event, value) => {
+  //   setPage(value)
+  // }
   // brands
   useEffect(() => {
     axios({
@@ -315,7 +314,7 @@ export default function Category(props) {
         </ul>
       </nav>
       {/* Breadcrumbs */}
-      <Bread>首頁/競標區／包包類</Bread>
+      <Bread>首頁/競標區/包包類</Bread>
       {/* sort */}
       <SortList>
         <div onClick={() => changeSort(1)}>
@@ -323,15 +322,15 @@ export default function Category(props) {
           圖像式瀏覽
         </div>
         <div onClick={() => changeSort(2)}>
-          <ListIcon style={{ position: 'relative', top: '4px' }}/>
+          <ListIcon style={{ position: 'relative', top: '4px' }} />
           條列式瀏覽
         </div>
         <div onClick={changeSortPrice}>
-          <MonetizationOnIcon style={{ position: 'relative', top: '4px' }}/>
+          <MonetizationOnIcon style={{ position: 'relative', top: '4px' }} />
           價格排列
         </div>
         <div onClick={changeSortTime}>
-          <AccessAlarmsIcon style={{ position: 'relative', top: '4px' }}/>
+          <AccessAlarmsIcon style={{ position: 'relative', top: '4px' }} />
           截止排列
         </div>
       </SortList>
@@ -347,90 +346,105 @@ export default function Category(props) {
           )
         })}
       </FilterInfo>
-      <Product
-        filterValue={filterValue}
-        data={cat}
-        sort={sort}
-        sortPrice={sortPrice}
-        sortTime={sortTime}
-      />
-      <Page className="page">
+
+      {/* <Page className="page">
         <Pagination count={10} page={page} onChange={handleChange} />
-      </Page>
-      {/* brands */}
-      <Brands id="brand">
-        <ul>
-          {brandArray.map((item, index) => {
-            return (
-              <li key={index} className="brandName">
-                <div onClick={filterBrand} className="brandtitle">
-                  {item.brandName}
-                </div>
-              </li>
-            )
-          })}
-        </ul>
-        <More onClick={handleBrand}>see more</More>
-      </Brands>
+      </Page> */}
+
       {/* filter */}
-      <Genders>
-        <h2>Genders</h2>
-        {genders.map((item, index) => {
-          return (
-            <div key={index}>
-              <input
-                onChange={handleChecked}
-                value={item.categorydetailId}
-                type="checkbox"
-                name={item.categoryDetailDescription}
-              />
-              <label>{item.categoryDetailDescription}</label>
-            </div>
-          )
-        })}
-      </Genders>
-      <Filter2
+      <div
         style={{
-          display: cat === 'Watch' ? 'none' : 'block'
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'row',
+          width: '95%',
+          justifyContent: 'center'
         }}
       >
-        <h3>
-          {cat !== 'Watch' && (cat === 'Shoes' || cat === 'Cloth')
-            ? 'Sizes'
-            : 'Colors'}
-        </h3>
-        {sizes.map((item, index) => {
-          return (
-            <label key={index} className="size">
-              <input
-                onChange={handleChecked}
-                className="sizeInput"
-                type="checkbox"
-                value={item.categorydetailId}
-                name={item.categoryDetailDescription}
-              />
-              <span>{item.categoryDetailDescription}</span>
-            </label>
-          )
-        })}
-      </Filter2>
-      <Filter3>
-        <h3>{typesTitle}</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '20%' }}>
+          {/* brands */}
+          <Brands id="brand">
+            <h3>Brands</h3>
+            <ul>
+              {brandArray.map((item, index) => {
+                return (
+                  <li key={index} className="brandName">
+                    <div onClick={filterBrand} className="brandtitle">
+                      {item.brandName}
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+            <More onClick={handleBrand}>see more</More>
+          </Brands>
+          <Genders>
+            <h3>Genders</h3>
+            {genders.map((item, index) => {
+              return (
+                <div key={index}>
+                  <input
+                    onChange={handleChecked}
+                    value={item.categorydetailId}
+                    type="checkbox"
+                    name={item.categoryDetailDescription}
+                  />
+                  <label>{item.categoryDetailDescription}</label>
+                </div>
+              )
+            })}
+          </Genders>
+          <Filter2
+            style={{
+              display: cat === 'Watch' ? 'none' : 'block'
+            }}
+          >
+            <h3>
+              {cat !== 'Watch' && (cat === 'Shoes' || cat === 'Cloth')
+                ? 'Sizes'
+                : 'Colors'}
+            </h3>
+            {sizes.map((item, index) => {
+              return (
+                <label key={index} className="size">
+                  <input
+                    onChange={handleChecked}
+                    className="sizeInput"
+                    type="checkbox"
+                    value={item.categorydetailId}
+                    name={item.categoryDetailDescription}
+                  />
+                  <span>{item.categoryDetailDescription}</span>
+                </label>
+              )
+            })}
+          </Filter2>
+          <Filter3>
+            <h3>{typesTitle}</h3>
 
-        {types.map((item, index) => {
-          return (
-            <div key={index}>
-              <input
-                onChange={handleChecked}
-                type="checkbox"
-                value={item.categorydetailId}
-                name={item.categoryDetailDescription}
-              />
-              <label>{item.categoryDetailDescription}</label>
-            </div>
-          )
-        })}
-      </Filter3>
+            {types.map((item, index) => {
+              return (
+                <div key={index}>
+                  <input
+                    onChange={handleChecked}
+                    type="checkbox"
+                    value={item.categorydetailId}
+                    name={item.categoryDetailDescription}
+                  />
+                  <label>{item.categoryDetailDescription}</label>
+                </div>
+              )
+            })}
+          </Filter3>
+        </div>
+        <Product
+          filterValue={filterValue}
+          data={cat}
+          sort={sort}
+          sortPrice={sortPrice}
+          sortTime={sortTime}
+        />
+      </div>
     </CategoryContainer>
   )
 }

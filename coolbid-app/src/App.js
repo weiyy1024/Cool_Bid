@@ -55,7 +55,6 @@ function App() {
           {/* Chomepage */}
           <Route path="/Chomepage" component={Auction} exact />
           <Route path="/Chomepage/coming" component={AuctionCountdown} exact />
-          <Route path="/Chomepage/coming" component={AuctionCountdown} exact />
           {/* Member */}
           <Route path="/member/signin" component={Login} exact />
           <Route path="/member/signout" component={Logout} exact />
@@ -75,8 +74,12 @@ function App() {
           <Route path="/member/coolCoin" component={Login} exact />
           <Route path="/member/purchase" component={BuyList} exact />
 
-{/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
-<Route path="/BackStage/SellerPageHero" component={SellerPageHero} exact />
+          {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
+          <Route
+            path="/BackStage/SellerPageHero"
+            component={SellerPageHero}
+            exact
+          />
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
@@ -84,11 +87,7 @@ function App() {
           {/* <Route path="/Shopping/product/:CloseAuction" component={CloseAuction} exact />
           <Route path="/Shopping/product/:SoldOut" component={SoldOut} exact />
           <Route path="/Shopping/product/:Biding" component={Biding} exact /> */}
-          <Route
-            path="/BackStage/editProduct"
-            component={Add}
-            exact
-          />
+          <Route path="/BackStage/editProduct" component={Add} exact />
           <Route path="/BackStage/sellerInfo" component={SetStoreInfo} exact />
           <Route path="/BackStage/orders" component={OrderList} exact />
 

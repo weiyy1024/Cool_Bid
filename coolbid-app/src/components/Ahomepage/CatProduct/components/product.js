@@ -8,14 +8,17 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import '../style/product.css'
+import swal from 'sweetalert'
 
 const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
 const Products = styled.div`
-  width: 110rem;
   display: flex;
-  float: right;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 80%;
+  margin: 0 auto;
+  align-content: baseline;
 `
 
 export function ItemDiv(props) {
@@ -62,16 +65,17 @@ export function ItemDiv(props) {
   // 登入後撈user的收藏清單 done 20210507 Jou
   const [likeProduct, setLikeProduct] = useState([])
 
-  if (userinfo) {
   useEffect(() => {
+    if (userinfo) {
     axios
       .post('http://localhost:3001/likeproduct', {
         memberId: userinfo.memberId
-      }).then((e) => {
+      })
+      .then((e) => {
         setLikeProduct(e.data.map((item) => item.productId))
       })
-  }, [likeProduct])
-  }
+    }
+  }, [])
 
   // 收藏與取消收藏 done 20210507 Jou
   const handlelike = (e) => {
@@ -79,21 +83,40 @@ export function ItemDiv(props) {
       if (likeProduct.includes(e)) {
         // delete收藏
         axios
-        .post('http://localhost:3001/collectproduct', {
-          memberId: userinfo.memberId,
-          productId: e,
-          collect: 'false'
-      }).then((res) => { alert(res.data) })
+          .post('http://localhost:3001/collectproduct', {
+            memberId: userinfo.memberId,
+            productId: e,
+            collect: 'false'
+          })
+          .then((res) => {
+            // 前端立刻變色
+            setLikeProduct((prev) => {
+              return prev.filter((item) => item !== e)
+            })
+            alert(res.data)
+          })
       } else {
-      // insert into收藏
-      axios
-        .post('http://localhost:3001/collectproduct', {
-          memberId: userinfo.memberId,
-          productId: e,
-          collect: 'true'
-      }).then((res) => { alert(res.data) })
+        // insert into收藏
+        axios
+          .post('http://localhost:3001/collectproduct', {
+            memberId: userinfo.memberId,
+            productId: e,
+            collect: 'true'
+          })
+          .then((res) => {
+            // 前端立刻變色
+            setLikeProduct((prev) => [...prev, e])
+            alert(res.data)
+          })
       }
-    } else { alert('請先登入') }
+    } else {
+      swal({
+        title: '請先登入',
+        text: '登入以啟用收藏功能',
+        icon: 'warning',
+        button: 'OK'
+      })
+    }
   }
 
   return (
@@ -111,13 +134,16 @@ export function ItemDiv(props) {
           style={{
             fontSize: '3.6rem'
           }}
-          color={(likeProduct.includes(data.productId)) ? 'error' : 'disabled'}
+          color={likeProduct.includes(data.productId) ? 'error' : 'disabled'}
         />
       </div>
       <div className={sort === 1 ? 'Information' : 'Information3'}>
         {/* 商品標題加超連結 條列式標題文字顏色待修改 Jou 20210506 */}
-        <NavLink style={{ textDecoration: 'none' }} to={'/Ahomepage/product/product?=' + data.productId}>
-        <p className={sort === 1 ? 'title' : 'title3'}>{data.productName}</p>
+        <NavLink
+          style={{ textDecoration: 'none' }}
+          to={'/Ahomepage/product/product?=' + data.productId}
+        >
+          <p className={sort === 1 ? 'title' : 'title3'}>{data.productName}</p>
         </NavLink>
         <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
           <span>最高出價：</span> NT.<span>{data.directPrice}</span>
@@ -126,140 +152,142 @@ export function ItemDiv(props) {
           <span>直購價格：</span> NT.
           <span>{data.directPrice}</span>
         </p>
-        <p className={sort === 1 ? 'infoEnd' : 'infoEnd3'}>即將結束</p>
-        <div className="countDownContainer">
-          <div className="flip-clock flip-clock-d">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={days.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {days.toString().substr(0, 1)}
+        <div style={{ position: 'absolute', bottom: '0', color: 'black' }}>
+          <p className={sort === 1 ? 'infoEnd' : 'infoEnd3'}>即將結束</p>
+          <div className="countDownContainer">
+            <div className="flip-clock flip-clock-d">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={days.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {days.toString().substr(0, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
-            </div>
-            <div
-              className="digit digit-right"
-              data-digit-before="0"
-              data-digit-after={days.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {days.toString().substr(1, 1)}
+              <div
+                className="digit digit-right"
+                data-digit-before="0"
+                data-digit-after={days.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {days.toString().substr(1, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
             </div>
-          </div>
-          <div className="colon">:</div>
+            <div className="colon">:</div>
 
-          <div className="flip-clock flip-clock-h">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={hours.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {hours.toString().substr(0, 1)}
+            <div className="flip-clock flip-clock-h">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={hours.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {hours.toString().substr(0, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
+              <div
+                className="digit digit-right"
+                data-digit-before="0"
+                data-digit-after={hours.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {hours.toString().substr(1, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
             </div>
-            <div
-              className="digit digit-right"
-              data-digit-before="0"
-              data-digit-after={hours.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {hours.toString().substr(1, 1)}
+            <div className="colon">:</div>
+            <div className="flip-clock flip-clock-m">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={minutes.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {minutes.toString().substr(0, 1)}
+                  </div>
                 </div>
+                {/* ::after */}
               </div>
-              {/* ::after */}
+              <div
+                className="digit digit-right"
+                data-digit-before="0"
+                data-digit-after={minutes.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {minutes.toString().substr(1, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
+            </div>
+            <div className="colon">:</div>
+            <div className="flip-clock flip-clock-s">
+              <div
+                className="digit digit-left"
+                data-digit-before="0"
+                data-digit-after={seconds.toString().substr(0, 1)}
+              >
+                {/* ::before */}
+                <div className="card flipped">
+                  <div className="card-face card-face-front">0</div>
+                  <div className="card-face card-face-back">
+                    {seconds.toString().substr(0, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
+              <div
+                className="digit digit-right"
+                data-digit-before={(seconds - 1).toString().substr(1, 1)}
+                data-digit-after={seconds.toString().substr(1, 1)}
+              >
+                {/* ::before */}
+                <div className={flag ? 'card flipped' : 'card flipped'}>
+                  <div className="card-face card-face-front">
+                    {(seconds - 1).toString().substr(1, 1)}
+                  </div>
+                  <div className="card-face card-face-back">
+                    {seconds.toString().substr(1, 1)}
+                  </div>
+                </div>
+                {/* ::after */}
+              </div>
             </div>
           </div>
-          <div className="colon">:</div>
-          <div className="flip-clock flip-clock-m">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={minutes.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {minutes.toString().substr(0, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
-            <div
-              className="digit digit-right"
-              data-digit-before="0"
-              data-digit-after={minutes.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {minutes.toString().substr(1, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
+          <div className={sort === 1 ? 'info' : 'info3'}>
+            <td className="infoTitle">days</td>
+            <td className="infoTitle1">hours</td>
+            <td className="infoTitle1">minutes</td>
+            <td className="infoTitle">seconds</td>
           </div>
-          <div className="colon">:</div>
-          <div className="flip-clock flip-clock-s">
-            <div
-              className="digit digit-left"
-              data-digit-before="0"
-              data-digit-after={seconds.toString().substr(0, 1)}
-            >
-              {/* ::before */}
-              <div className="card flipped">
-                <div className="card-face card-face-front">0</div>
-                <div className="card-face card-face-back">
-                  {seconds.toString().substr(0, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
-            <div
-              className="digit digit-right"
-              data-digit-before={(seconds - 1).toString().substr(1, 1)}
-              data-digit-after={seconds.toString().substr(1, 1)}
-            >
-              {/* ::before */}
-              <div className={flag ? 'card flipped' : 'card flipped'}>
-                <div className="card-face card-face-front">
-                  {(seconds - 1).toString().substr(1, 1)}
-                </div>
-                <div className="card-face card-face-back">
-                  {seconds.toString().substr(1, 1)}
-                </div>
-              </div>
-              {/* ::after */}
-            </div>
-          </div>
-        </div>
-        <div className={sort === 1 ? 'info' : 'info3'}>
-          <td className="infoTitle">days</td>
-          <td className="infoTitle1">hours</td>
-          <td className="infoTitle1">minutes</td>
-          <td className="infoTitle">seconds</td>
         </div>
       </div>
     </div>
