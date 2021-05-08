@@ -1,16 +1,24 @@
 import React from 'react'
 import Carousel from 'react-elastic-carousel'
-// import styled from 'styled-component'
+import '../carousel/carousel.css'
+// import { NavLink } from 'react-router-dom'
+// import FavoriteIcon from '@material-ui/icons/Favorite'
 
-function BiddingCarousel () {
+const BiddingCarousel = () => {
   return (
-    <Carousel itemsToScroll={1} itemsToShow={4} style={{ width: '60%', margin: '0 auto' }}>
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <div>4</div>
-      <div>5</div>
-      <div>6</div>
+    <Carousel
+      itemsToScroll={2}
+      itemsToShow={4}
+      pagination={false}
+      style={{ width: '90%', margin: '5rem auto 5rem' }}
+    >
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+        <div key={index} className="ProductContainer" style={{ width: '90%' }}>
+          <div className="ProductImgDiv" style={{ textAlign: 'center' }}>
+            <img className="productImg" src={'/imgs/1.jpg'} style={{}} />
+          </div>
+        </div>
+      ))}
     </Carousel>
   )
 }
