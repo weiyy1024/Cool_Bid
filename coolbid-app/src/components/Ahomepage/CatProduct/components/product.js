@@ -8,6 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import '../style/product.css'
+import swal from 'sweetalert'
 
 const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
@@ -64,17 +65,17 @@ export function ItemDiv(props) {
   // 登入後撈user的收藏清單 done 20210507 Jou
   const [likeProduct, setLikeProduct] = useState([])
 
-  if (userinfo) {
-    useEffect(() => {
-      axios
-        .post('http://localhost:3001/likeproduct', {
-          memberId: userinfo.memberId
-        })
-        .then((e) => {
-          setLikeProduct(e.data.map((item) => item.productId))
-        })
-    }, [likeProduct])
-  }
+  useEffect(() => {
+    if (userinfo) {
+    axios
+      .post('http://localhost:3001/likeproduct', {
+        memberId: userinfo.memberId
+      })
+      .then((e) => {
+        setLikeProduct(e.data.map((item) => item.productId))
+      })
+    }
+  }, [])
 
   // 收藏與取消收藏 done 20210507 Jou
   const handlelike = (e) => {
@@ -88,6 +89,10 @@ export function ItemDiv(props) {
             collect: 'false'
           })
           .then((res) => {
+            // 前端立刻變色
+            setLikeProduct((prev) => {
+              return prev.filter((item) => item !== e)
+            })
             alert(res.data)
           })
       } else {
@@ -99,18 +104,25 @@ export function ItemDiv(props) {
             collect: 'true'
           })
           .then((res) => {
+            // 前端立刻變色
+            setLikeProduct((prev) => [...prev, e])
             alert(res.data)
           })
       }
     } else {
-      alert('請先登入')
+      swal({
+        title: '請先登入',
+        text: '登入以啟用收藏功能',
+        icon: 'warning',
+        button: 'OK'
+      })
     }
   }
 
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
-        <NavLink x>
+        <NavLink to={'/Ahomepage/product/product?=' + data.productId}>
           <img
             className={sort === 1 ? 'productImg' : 'productImg3'}
             src={'/imgs/' + data.productId + '.jpg'}
