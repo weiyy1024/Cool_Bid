@@ -50,7 +50,7 @@ app.post('/member/signin', function (req, res) {
     function (err, result) {
       if (err) console.log(err)
       else if (result[0]) {
-        // req.session.user = result 
+        // req.session.user = result
         res.send(result[0])
       } else res.send('')
     }
@@ -356,6 +356,7 @@ app.get('/confirmStatus/:productId', function (req, res) {
   })
 })
 
+//得商店名稱
 app.get('/shopName/:productId', function (req, res) {
   let test = req.params.productId
   let sql = `SELECT DISTINCT p.shopId,shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productId IN ${test} AND productStatusId=4`
@@ -389,4 +390,24 @@ app.get('/getPopularProducts',function(req,res){
 //     conn.query("select * from product where productId = ?",[test],function(err,result){
 //         res.send(result)
 //     })
+//得目前我出的最高金額
+// app.get('/myPrice/:productId', function (req, res) {
+//   let test = req.params.productId
+//   let sql = `SELECT bidprice FROM biddinghistory where memberId=5 AND bidTime IN (SELECT max(bidTime) FROM biddinghistory WHERE productId=${test} AND memberId=5  )`
+
+//   conn.query(sql, function (err, result) {
+//     res.send(result)
+//   })
 // })
+
+//-----------------------------post方法------------------------
+app.post('/myPrice', function (req, res) {
+  let test1 = req.body.pId
+  let test2 = req.body.mId
+  // console.log(test1, test2)
+  // res.send(JSON.stringify(test))
+  let sql = `SELECT bidprice FROM biddinghistory where memberId=${test2} AND bidTime IN (SELECT max(bidTime) FROM biddinghistory WHERE productId=${test1} AND memberId=${test2}  )`
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})

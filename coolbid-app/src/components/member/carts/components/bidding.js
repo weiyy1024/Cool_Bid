@@ -4,6 +4,8 @@ import axios from 'axios'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 const Shop = styled.div`
   border: #d9d7d7 solid 0.3rem;
@@ -71,9 +73,36 @@ const Shop = styled.div`
         text-align: center;
         line-height: 9rem;
       }
+      .direct {
+        color: grey;
+        width: 33%;
+        font-size: 2rem;
+        text-align: center;
+        // line-height: 9rem;
+      }
     }
   }
 `
+function MyPrice(props) {
+  const { productId, userinfo } = props
+  const [price, setPrice] = useState()
+  useEffect(() => {
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/myPrice',
+      data: {
+        pId: productId,
+        mId: userinfo.memberId
+      }
+    }).then((res) => {
+      const myprice = res.data[0]
+      setPrice(myprice.bidprice)
+    })
+  }, [])
+
+  return <div className="info">{price}</div>
+}
 function Timer(props) {
   const { endTime } = props
   const [time, setTime] = useState('剩下0天0時0分0秒結束')
@@ -91,7 +120,6 @@ function Timer(props) {
       const hr = parseInt(offsetTime / 60 / 60 - day * 24)
       const min = parseInt((offsetTime / 60) % 60)
       const sec = parseInt(offsetTime % 60)
-      console.log(offsetTime)
       setTime(`剩下${day}天${hr}時${min}分${sec}秒`)
     }, 1000)
     return time
@@ -105,13 +133,14 @@ function Timer(props) {
   )
 }
 function Items(props) {
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
   const { product, shopId } = props
 
   // 依商店分類競標商品
   const newProduct = product.filter(function (el) {
     return el.shopId === shopId
   })
-
+  console.log(newProduct)
   return (
     <>
       {newProduct.map((item, index) => (
@@ -126,9 +155,30 @@ function Items(props) {
           </div>
           <Timer endTime={item.endTime} />
           <div className="info">{item.nowPrice}</div>
-          <div className="info">price</div>
-          <div className="info">price</div>
-          <div className="info">{item.directPrice}</div>
+          <MyPrice userinfo={userinfo} productId={item.productId} />
+          <div className="info">
+            <TextField
+              label="再次出價"
+              type="number"
+              defaultValue={item.nowPrice}
+              inputProps={{ min: `${item.nowPrice}`, step: `${item.perPrice}` }}
+            >
+              price
+            </TextField>
+          </div>
+          <div className="direct">
+            {item.directPrice}
+            <div>
+              <Button
+                style={{ width: '10rem' }}
+                variant="contained"
+                size="small"
+                color="primary"
+              >
+                直接購買
+              </Button>
+            </div>
+          </div>
         </div>
       ))}
     </>
