@@ -365,6 +365,14 @@ app.get('/shopName/:productId', function (req, res) {
   })
 })
 
+// Bidding homepage get popular products by weiwei
+app.get('/getPopularProducts',function(req,res){
+  let sql = `SELECT productId, COUNT('productId') FROM biddinghistory GROUP BY productId ORDER BY COUNT('productId') DESC limit 8`
+
+  conn.query(sql,function(err,result){
+    res.send(result)
+  })
+})
 //-----------------------------post方法------------------------
 // app.post('/search',function(req,res){
 //     let test = req.body.test
