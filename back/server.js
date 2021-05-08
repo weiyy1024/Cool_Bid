@@ -17,21 +17,21 @@ var conn = mysql.createConnection({
 })
 //-----------------------------------------------------
 // 設置session
-app.use(
-  session({
-    key: 'user',
-    secret: 'secretKey',
-    // store: new FileStore(),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      path: '/',
-      httpOnly: true,
-      secure: false,
-      maxAge: 10 * 60 * 1000
-    }
-  })
-)
+// app.use(
+//   session({
+//     key: 'user',
+//     secret: 'secretKey',
+//     // store: new FileStore(),
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       path: '/',
+//       httpOnly: true,
+//       secure: false,
+//       maxAge: 10 * 60 * 1000
+//     }
+//   })
+// )
 
 // session要跨域
 app.use(
@@ -42,7 +42,7 @@ app.use(
   })
 )
 
-// 在後端設session
+// 送登入資料去前端
 app.post('/member/signin', function (req, res) {
   let sql = 'select * from member where userId=? and password=?'
   conn.query(
@@ -51,7 +51,7 @@ app.post('/member/signin', function (req, res) {
     function (err, result) {
       if (err) console.log(err)
       else if (result[0]) {
-        req.session.user = result
+        // req.session.user = result 
         res.send(result[0])
       } else res.send('')
     }
@@ -59,20 +59,19 @@ app.post('/member/signin', function (req, res) {
 })
 
 // 把session送去前端
-app.get('/member/signin', (req, res) => {
-  // console.log(req.session)
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user })
-  } else {
-    res.send({ loggedIn: false })
-  }
-})
+// app.get('/member/signin', (req, res) => {
+//   // console.log(req.session)
+//   if (req.session.user) {
+//     res.send({ loggedIn: true, user: req.session.user })
+//   } else {
+//     res.send({ loggedIn: false })
+//   }
+// })
 
 // 登出
-app.get('/logout', function (req, res) {
-  req.session.destroy() //刪除session
-  res.send('登出成功')
-})
+// app.get('/logout', function (req, res) {
+//   res.send('登出成功')
+// })
 
 //商品類別
 app.get('/category/:category', function (req, res) {

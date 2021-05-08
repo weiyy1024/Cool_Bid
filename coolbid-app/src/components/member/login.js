@@ -5,7 +5,7 @@
 /* eslint curly: 2, quotes: ["error", "double"] */
 /* eslint eqeqeq: "off", curly: "error" */
 import styled from '@emotion/styled'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import './log.css'
@@ -31,18 +31,6 @@ const Myfooter = styled.footer`
 export default function Login(props) {
   const [account, setAccount] = useState('')
   const [pwd, setPwd] = useState('')
-  const [loginStatus, setLoginStatus] = useState('')
-  // session要跨域
-  axios.defaults.withCredentials = true
-
-  useEffect(() => {
-    axios.get('http://localhost:3001/member/signin').then((response) => {
-      if (response.data.loggedIn == true) {
-        setLoginStatus(response.data.user.id)
-      }
-    })
-  }, [])
-
   const handlelogin = () => {
     axios
       .post('http://localhost:3001/member/signin', {
@@ -59,11 +47,6 @@ export default function Login(props) {
           alert('登入失敗')
         }
       })
-  }
-  if (loginStatus) {
-    console.log(loginStatus)
-  } else {
-    console.log('logoutㄛ')
   }
   return (
     <>
