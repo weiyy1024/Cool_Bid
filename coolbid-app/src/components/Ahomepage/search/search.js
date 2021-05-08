@@ -10,6 +10,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import axios from 'axios'
 import './search.css'
+import Skeleton from '@material-ui/lab/Skeleton'
 
 const SearchProducts = styled.div`
   width: 90%;
@@ -267,14 +268,20 @@ export default function Search(props) {
   const [sort, setSort] = useState(1)
   const [sortTime, setSortTime] = useState(0)
   const [sortPrice, setSortPrice] = useState(0)
-  console.log(keyword)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // console.log(keyword)
   useEffect(() => {
+    setIsLoading(true)
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
       url: '/search/' + keyword,
       'Content-Type': 'application/json'
-    }).then((res) => setProductData(res.data))
+    }).then((res) => {
+      setIsLoading(false)
+      setProductData(res.data)
+    })
   }, [keyword])
   const handlelike = (e, index) => {
     console.log(e)
@@ -383,17 +390,31 @@ export default function Search(props) {
         </div>
       </SortList>
       <SearchProducts>
-        {productData.map((item, index) => {
-          return (
-            <ItemDiv
-              key={index}
-              index={index}
-              data={item}
-              handlelike={handlelike}
-              sort={sort}
-            />
-          )
-        })}
+        {isLoading
+          ? [1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) => (
+              <Skeleton
+                key={index}
+                variant="rect"
+                width={240}
+                height={460}
+                style={{
+                  margin: '0 2rem 3rem 2rem',
+                  borderRadius: '4px',
+                  boxShadow: '0px 4px 20px #1b1b1b21'
+                }}
+              />
+            ))
+          : productData.map((item, index) => {
+            return (
+                <ItemDiv
+                  key={index}
+                  index={index}
+                  data={item}
+                  handlelike={handlelike}
+                  sort={sort}
+                />
+            )
+          })}
       </SearchProducts>
       {/* <Page>
         <Pagination count={10} page={page} onChange={handleChange} />
