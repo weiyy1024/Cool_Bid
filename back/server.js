@@ -1,7 +1,6 @@
 var express = require('express')
 var app = express()
 const cors = require('cors')
-var session = require('express-session')
 
 app.use(express.json())
 app.listen(3001)

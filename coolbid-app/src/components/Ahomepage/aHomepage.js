@@ -7,6 +7,7 @@ import cloth from './images/P351白370.jpeg'
 import shoes from './images/shoes2.jpeg'
 import watch from './images/watch.jpeg'
 import './Ahomepage.css'
+import BiddingCarousel from './carousel/carousel'
 
 const category = [
   {
@@ -68,6 +69,7 @@ export default function Ahomepage() {
         </div>
       </div>
       {/* 熱門輪播 */}
+      <BiddingCarousel />
     </div>
   )
 }
