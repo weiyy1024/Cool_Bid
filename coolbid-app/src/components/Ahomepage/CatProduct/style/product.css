@@ -129,6 +129,7 @@
   height: 46rem;
   border-radius: 4px;
   background: #dbdbdb;
+  overflow: hidden;
   box-shadow: 0px 4px 20px #1b1b1b21;
 }
 .ProductContainer3 {

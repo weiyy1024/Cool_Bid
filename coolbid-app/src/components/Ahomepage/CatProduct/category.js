@@ -300,16 +300,16 @@ export default function Category(props) {
       {/* navbar2 */}
       <nav className="nav">
         <ul>
-          <NavLink to="/Ahomepage/Bag">
+          <NavLink to="/bidding/Bag">
             <li>Bag</li>
           </NavLink>
-          <NavLink to="/Ahomepage/Cloth">
+          <NavLink to="/bidding/Cloth">
             <li>Cloth</li>
           </NavLink>
-          <NavLink to="/Ahomepage/Shoes">
+          <NavLink to="/bidding/Shoes">
             <li>Shoes</li>
           </NavLink>
-          <NavLink to="/Ahomepage/Watch">
+          <NavLink to="/bidding/Watch">
             <li>Watch</li>
           </NavLink>
         </ul>

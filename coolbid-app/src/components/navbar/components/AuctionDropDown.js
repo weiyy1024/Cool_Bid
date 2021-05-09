@@ -7,13 +7,13 @@ export default function AuctionDropDown() {
   return (
     <dl className="auctionList maki">
       <dd>
-        <NavLink to="/Chomepage/歷史紀錄">歷史紀錄</NavLink>
+        <NavLink to="/auction/歷史紀錄">歷史紀錄</NavLink>
       </dd>
       <dd>
-        <NavLink to="/Chomepage/coming">即將舉行</NavLink>
+        <NavLink to="/auction/coming">即將舉行</NavLink>
       </dd>
       <dd>
-        <NavLink to="/Chomepage/about me">about me</NavLink>
+        <NavLink to="/auction/about me">about me</NavLink>
       </dd>
     </dl>
   )
