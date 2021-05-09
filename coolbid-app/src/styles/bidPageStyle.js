@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
   productInfoWrapper: {
     margin: '0 60px',
-    width: '49rem'
+    width: '44rem'
   },
   storeMedia: {
     height: '90px',
