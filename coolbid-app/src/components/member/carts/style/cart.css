@@ -6,7 +6,6 @@
 
 .active-tabs {
     width: 100%;
-    padding: 10px;
     position: relative;
 }
 
@@ -26,9 +25,8 @@
     font-size: 24px;
     height: 50px;
     line-height: 45px;
-    margin-right: 1px;
     text-align: center;
-    width: 33%;
+    width: 33.33333333%;
     opacity: 0.8;
     transition: all 0.4s;
 }
