@@ -52,7 +52,7 @@ export default function Ahomepage() {
               borderRadius: '50%'
             }}
           >
-            <NavLink to={'/Ahomepage/' + item.categoryName}>
+            <NavLink to={'/bidding/' + item.categoryName}>
               <img className="eachCat" src={item.src}></img>
             </NavLink>
           </div>

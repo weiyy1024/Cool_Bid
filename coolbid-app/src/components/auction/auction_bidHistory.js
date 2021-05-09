@@ -14,6 +14,9 @@ import Popper from '@material-ui/core/Popper'
 import MenuItem from '@material-ui/core/MenuItem'
 import MenuList from '@material-ui/core/MenuList'
 import gavel from '../../gavel.png'
+import swal from 'sweetalert'
+
+const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
 function BidHistory(props) {
   const { ws, user } = props
@@ -49,33 +52,41 @@ function BidHistory(props) {
   }
   // Bidding Button
   const handleBidding = (index) => {
-    let price = 0
-    switch (index) {
-      case 0:
-        price = bidStep
-        break
-      case 1:
-        price = bidStep * 3
-        break
-      case 2:
-        price = bidStep * 5
-        break
-      case 3:
-        price = bidStep * 10
-        break
-      default:
+    if (userinfo) {
+      let price = 0
+      switch (index) {
+        case 0:
+          price = bidStep
+          break
+        case 1:
+          price = bidStep * 3
+          break
+        case 2:
+          price = bidStep * 5
+          break
+        case 3:
+          price = bidStep * 10
+          break
+        default:
+      }
+      const newPrice = bidPrice + price
+
+      const np = {
+        user: user,
+        price: newPrice,
+        time: moment().format('LTS'),
+        deadline: moment().add(initTime, 's')
+      }
+
+      ws.emit('getBid', np)
+    } else {
+      swal({
+        title: '請先登入',
+        text: '請先登入才能參與拍賣哦',
+        icon: 'warning',
+        button: '確認'
+      })
     }
-
-    const newPrice = bidPrice + price
-
-    const np = {
-      user: user,
-      price: newPrice,
-      time: moment().format('LTS'),
-      deadline: moment().add(initTime, 's')
-    }
-
-    ws.emit('getBid', np)
   }
 
   // Add Comma In Price

@@ -37,24 +37,24 @@ function App() {
           {/* entry page */}
           <Route path="/" component={Homepage} exact />
           {/* Ahomepage */}
-          <Route path="/Ahomepage" component={Ahomepage} exact />
+          <Route path="/bidding" component={Ahomepage} exact />
           <Route
-            path="/Ahomepage/:category"
+            path="/bidding/:category"
             exact
             render={({ match }) => <Category data={match} />}
           />
           <Route
-            path="/Ahomepage/product/:product_id"
+            path="/bidding/product/:product_id"
             exact
             render={({ match }) => <BidPage data={match} />}
           />
           <Route
-            path="/Ahomepage/search/:search"
+            path="/bidding/search/:search"
             render={({ match }) => <Search data={match} />}
           />
           {/* Chomepage */}
-          <Route path="/Chomepage" component={Auction} exact />
-          <Route path="/Chomepage/coming" component={AuctionCountdown} exact />
+          <Route path="/auction" component={Auction} exact />
+          <Route path="/auction/coming" component={AuctionCountdown} exact />
           {/* Member */}
           <Route path="/member/signin" component={Login} exact />
           <Route path="/member/signout" component={Logout} exact />

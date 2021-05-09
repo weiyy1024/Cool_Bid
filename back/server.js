@@ -9,9 +9,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
+  password: 'root',
   database: 'coolbidLatest',
-  port: 3306,
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -369,7 +369,10 @@ app.get('/shopName/:productId', function (req, res) {
 
 // Bidding homepage get popular products by weiwei
 app.get('/getPopularProducts',function(req,res){
-  let sql = `SELECT productId, COUNT('productId') FROM biddinghistory GROUP BY productId ORDER BY COUNT('productId') DESC limit 8`
+  let sql = `SELECT b.productId, productName, nowPrice, endTime, directPrice, COUNT(b.productId) as bidCount FROM biddinghistory as b
+  JOIN product as p on b.productId = p.productId
+  GROUP BY productId
+  ORDER BY bidCount DESC limit 8`
 
   conn.query(sql,function(err,result){
     res.send(result)

@@ -183,7 +183,7 @@ function Items(props) {
             <img src={'/imgs/' + item.productId + '.jpg'} />
           </div>
           <div className="infoProductName">
-            <NavLink to={'/Ahomepage/product/product?=' + item.productId}>
+            <NavLink to={'/bidding/product/product?=' + item.productId}>
               {item.productName}
             </NavLink>
           </div>

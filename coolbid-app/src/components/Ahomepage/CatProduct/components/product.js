@@ -123,7 +123,7 @@ export function ItemDiv(props) {
   return (
     <div className={sort === 1 ? 'ProductContainer' : 'ProductContainer3'}>
       <div className={sort === 1 ? 'ProductImgDiv' : 'ProductImgDiv3'}>
-        <NavLink to={'/Ahomepage/product/product?=' + data.productId}>
+        <NavLink to={'/bidding/product/product?=' + data.productId}>
           <img
             className={sort === 1 ? 'productImg' : 'productImg3'}
             src={'/imgs/' + data.productId + '.jpg'}
@@ -142,12 +142,12 @@ export function ItemDiv(props) {
         {/* 商品標題加超連結 條列式標題文字顏色待修改 Jou 20210506 */}
         <NavLink
           style={{ textDecoration: 'none' }}
-          to={'/Ahomepage/product/product?=' + data.productId}
+          to={'/bidding/product/product?=' + data.productId}
         >
           <p className={sort === 1 ? 'title' : 'title3'}>{data.productName}</p>
         </NavLink>
         <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
-          <span>最高出價：</span> NT.<span>{data.directPrice}</span>
+          <span>最高出價：</span> NT.<span>{data.nowPrice}</span>
         </p>
         <p className={sort === 1 ? 'price' : 'price3'}>
           <span>直購價格：</span> NT.

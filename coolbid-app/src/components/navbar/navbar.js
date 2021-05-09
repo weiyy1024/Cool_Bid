@@ -51,7 +51,7 @@ const ToggleItem = styled.div`
   height: 35px;
   width: 100%;
   background-color: #222327;
-  z-index: 99;
+  z-index: 999;
   img {
     position: relative;
     width: 2.2rem;
@@ -189,7 +189,7 @@ export default function NavBar() {
   // search data
   const [search, setSearch] = useState('')
   const handleSearch = () => {
-    window.location.href = 'http://localhost:3000/Ahomepage/search/' + search
+    window.location.href = 'http://localhost:3000/bidding/search/' + search
   }
 
   const iconStye = {
@@ -216,14 +216,14 @@ export default function NavBar() {
       <Navbar style={{ zIndex: '1000' }}>
         <LogoBox to="/" className="logo" />
         <NavLeft>
-          <Title className="Ahomepage" to="/Ahomepage">
+          <Title className="Ahomepage" to="/bidding">
             競標區
             <ArrowDropDownIcon
               style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
             />
             <DropDown />
           </Title>
-          <Title className="Chomepage" to="/Chomepage">
+          <Title className="Chomepage" to="/auction">
             拍賣會
             <ArrowDropDownIcon
               style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
