@@ -29,6 +29,7 @@
 
 .slides {
   display: grid;
+  position: relative;
   > .slide {
     grid-area: 1 / 2;
   }
@@ -39,7 +40,7 @@
     border: none;
     color: white;
     position: absolute;
-    font-size: 5rem;
+    font-size: 8rem;
     width: 5rem;
     height: 5rem;
     top: 30%;
@@ -56,14 +57,14 @@
     }
 
     &:first-child {
-      left: 0%;
+      left: 5%;
       box-sizing: border-box;
-      position: relative;
+      position: absolute;
     }
     &:last-child {
-      right: 0%;
+      right: 5%;
       box-sizing: border-box;
-      position: relative;
+      position: absolute;
     }
   }
 }
@@ -106,11 +107,13 @@
 
   .slideSubtitle,
   .slideTitle {
-    font-size: 1rem;
+    font-family: "Helvetica";
+    font-size: 2rem;
     font-weight: bold;
     letter-spacing: 0.2ch;
     text-transform: uppercase;
     margin: 0;
+    color:#fff;
     text-shadow: 0 0 10px #000;
   }
 

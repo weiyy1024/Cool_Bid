@@ -46,9 +46,10 @@ const Brands = styled.div`
   text-align: left;
   width: 100%;
   font-size: 2rem;
+  padding-bottom: 2.5rem;
   ul {
-    height: 50rem;
-    overflow: hidden;
+    // height: 50rem;
+    // overflow: hidden;
     padding-left: 0;
     margin-bottom: 0;
     .brandName {
@@ -61,27 +62,27 @@ const Brands = styled.div`
         text-decoration: none;
         cursor: pointer;
         &:hover {
-          color: red;
+          color: #edae10;
         }
       }
     }
-  };
+  }
   h3 {
     text-align: center;
     margin: 0;
     padding: 1rem;
-  };
-`
-const More = styled.div`
-  font-size=2.2rem;
-  cursor:pointer;
-  text-align:center;
-  background:grey;
-  &:hover{
-    background:red;
-    color:white;
   }
 `
+// const More = styled.div`
+//   font-size=2.2rem;
+//   cursor:pointer;
+//   text-align:center;
+//   background:grey;
+//   &:hover{
+//     background:red;
+//     color:white;
+//   }
+// `
 // brand----End
 // filter gender
 const Genders = styled.div`
@@ -200,15 +201,15 @@ export default function Category(props) {
       'Content-Type': 'application/json'
     }).then((res) => setBrandArray(res.data))
   }, [cat])
-  // brand see more Btn
-  const handleBrand = () => {
-    const brand = document.getElementById('brand')
-    if (parseInt(brand.style.height) > 500) {
-      brand.style.height = '100%'
-    } else {
-      brand.style.height = '500'
-    }
-  }
+  // // brand see more Btn
+  // const handleBrand = () => {
+  //   const brand = document.getElementById('brand')
+  //   if (parseInt(brand.style.height) > 500) {
+  //     brand.style.height = '100%'
+  //   } else {
+  //     brand.style.height = '500'
+  //   }
+  // }
 
   // genders
   useEffect(() => {
@@ -299,18 +300,18 @@ export default function Category(props) {
       {/* navbar2 */}
       <nav className="nav">
         <ul>
-          <li>
-            <NavLink to="/Ahomepage/Bag">Bag</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Ahomepage/Cloth">Cloth</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Ahomepage/Shoes">Shoes</NavLink>
-          </li>
-          <li>
-            <NavLink to="/Ahomepage/Watch">Watch</NavLink>
-          </li>
+          <NavLink to="/Ahomepage/Bag">
+            <li>Bag</li>
+          </NavLink>
+          <NavLink to="/Ahomepage/Cloth">
+            <li>Cloth</li>
+          </NavLink>
+          <NavLink to="/Ahomepage/Shoes">
+            <li>Shoes</li>
+          </NavLink>
+          <NavLink to="/Ahomepage/Watch">
+            <li>Watch</li>
+          </NavLink>
         </ul>
       </nav>
       {/* Breadcrumbs */}
@@ -376,7 +377,7 @@ export default function Category(props) {
                 )
               })}
             </ul>
-            <More onClick={handleBrand}>see more</More>
+            {/* <More onClick={handleBrand}>see more</More> */}
           </Brands>
           <Genders>
             <h3>Genders</h3>

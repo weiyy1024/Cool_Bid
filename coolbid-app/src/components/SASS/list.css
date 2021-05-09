@@ -20,6 +20,7 @@
   color: #707070;
   position: relative;
   padding-bottom: 8px;
+  font-size: 20px;
 }
 
 .tabs > ul a:after {
@@ -40,12 +41,13 @@
 }
 
 .Table_wrap {
-  width: 960px;
+  width: 1100px;
   text-align: center;
   border: solid 1px #707070;
   padding: 10px 20px 50px 20px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  margin-bottom: 100px;
 }
 
 .Table_container {

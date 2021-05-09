@@ -9,9 +9,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'UnicornglLen3550',
   database: 'coolbidLatest',
-  port: 8889,
+  port: 3306,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -87,6 +87,7 @@ app.get('/category/:category', function (req, res) {
 // 讀取商品資料 & 出價紀錄
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
+
   conn.query(
     'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
     [para, para],
@@ -99,20 +100,20 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, autoBidPrice, directBidPrice } = req.body
+  let { id, isDirectBuy, directBidPrice, productStatusId } = req.body
 
-  if (autoBidPrice) {
+  if (isDirectBuy) {
     conn.query(
-      'UPDATE product SET autoBidPrice = ? WHERE productId = ?',
-      [autoBidPrice, id],
+      'UPDATE product SET nowPrice = ?, productStatusId = ? WHERE productId = ?',
+      [directBidPrice, productStatusId, id],
       function (err, result) {
         res.send(result)
       }
     )
   } else if (directBidPrice) {
     conn.query(
-      'UPDATE product SET nowPrice = ? WHERE productId = ?',
-      [directBidPrice, id],
+      'UPDATE product SET nowPrice = ?, productStatusId = ? WHERE productId = ?',
+      [directBidPrice, productStatusId, id],
       function (err, result) {
         console.log(result)
       }
@@ -366,6 +367,30 @@ app.get('/shopName/:productId', function (req, res) {
   })
 })
 
+// Bidding homepage get popular products by weiwei
+app.get('/getPopularProducts',function(req,res){
+  let sql = `SELECT productId, COUNT('productId') FROM biddinghistory GROUP BY productId ORDER BY COUNT('productId') DESC limit 8`
+
+  conn.query(sql,function(err,result){
+    res.send(result)
+  })
+})
+//-----------------------------post方法------------------------
+// app.post('/search',function(req,res){
+//     let test = req.body.test
+//     // console.log(test)
+//     // res.send(JSON.stringify(test))
+//     var mysql = require('mysql');
+//     var conn = mysql.createConnection({
+//         host: 'localhost',
+//         user: 'root',
+//         password: 'root',
+//         database:"coolbid",
+//         port: 8889
+//     });
+//     conn.query("select * from product where productId = ?",[test],function(err,result){
+//         res.send(result)
+//     })
 //得目前我出的最高金額
 // app.get('/myPrice/:productId', function (req, res) {
 //   let test = req.params.productId
