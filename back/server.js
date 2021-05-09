@@ -443,11 +443,18 @@ app.post('/membercollect', function (req, res) {
   )
 })
 
-//   sql = `select * from product where productId in ? AND productStatusId in ?`
-//   conn.query(sql,[ req.params.productId ,('1,4,5,6')], function (err, result) {
-//   res.send(result)
-//   })
-// })
+// 拿收藏車的收藏物品本人 20210509 Jou
+app.post('/membercollect', function (req, res) {
+  conn.query(
+    `select productId, productName, endTime, nowPrice, startPrice, p.productstatusId as productstatusId, productStatusDescription as productstatus from product as p
+    join productstatus as ps on p.productStatusId = ps.productStatusId where productId in ${req.body.data}`,
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+      // console.log(result)
+    }
+  )
+})
 
 //-----------------------------post方法------------------------
 // app.post('/search',function(req,res){
