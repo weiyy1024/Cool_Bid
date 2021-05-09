@@ -10,7 +10,7 @@ import {
   Button
 } from '@material-ui/core'
 
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import SaveIcon from '@material-ui/icons/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
 import useStyles from '../../../styles/editMemberInfoStyle'
 import styled from '@emotion/styled'
@@ -92,9 +92,9 @@ const EditMemberInfo = () => {
           variant="contained"
           color="primary"
           className={classes.button}
-          startIcon={<CloudUploadIcon />}
+          startIcon={<SaveIcon />}
         >
-          Upload
+          Save
         </Button>
         <Button
           variant="contained"
