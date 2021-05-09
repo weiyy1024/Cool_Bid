@@ -7,6 +7,8 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 import Text from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import '../style/cart.css'
+import swal from 'sweetalert'
+
 const TextField = styled(Text)`
   label {
     font-size: 2rem;
@@ -119,7 +121,7 @@ const Shop = styled.div`
   }
 `
 function MyPrice(props) {
-  const { productId, userinfo } = props
+  const { productId, userinfo, a } = props
   const [price, setPrice] = useState()
   useEffect(() => {
     axios({
@@ -134,7 +136,7 @@ function MyPrice(props) {
       const myprice = res.data[0]
       setPrice(myprice.bidprice)
     })
-  }, [])
+  }, [a])
 
   return <div className="info">{price}</div>
 }
@@ -167,10 +169,136 @@ function Timer(props) {
     </div>
   )
 }
-function Items(props) {
+function Prod(props) {
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
-  const { product, shopId } = props
+  const { item, setBidEvent, direct, setDirect } = props
+  const [bidPrice, setBidPrice] = useState(item.nowPrice + item.perPrice)
+  const [a, setA] = useState(true)
+  // 監聽競標加價金額
+  const handleBidPrice = (e) => {
+    setBidPrice(e.target.value)
+  }
+  // 確認加價
+  const handleSubmitPrice = () => {
+    setBidEvent(bidPrice)
+    setA(!a)
+    swal({
+      title: '出價成功',
+      text: '祝您成功得標',
+      icon: 'success',
+      button: '確認'
+    })
+    // 新增bidding的歷史紀錄
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/bidAgain',
+      data: {
+        bidAgainPrice: bidPrice,
+        memberId: userinfo.memberId,
+        productId: item.productId
+      }
+    })
+    // 更新product的最高出價
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/nowPrice',
+      data: {
+        bidAgainPrice: bidPrice,
+        productId: item.productId
+      }
+    })
+  }
+  // 直接購買
+  const handleDirect = () => {
+    setDirect(!direct)
+    // 新增bidding history
+    swal({
+      title: '恭喜你購買成功',
+      text: '提醒您七日內完成付款',
+      icon: 'success',
+      button: '確認'
+    })
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/directPrice',
+      data: {
+        bidPrice: item.directPrice,
+        productId: item.productId,
+        memberId: userinfo.memberId
+      }
+    })
+    // 更改 product 的狀態為結標
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/changeStatus',
+      data: {
+        bidPrice: item.directPrice,
+        productId: item.productId
+      }
+    })
+  }
+  return (
+    <div className="cartItems">
+      <div className="info">
+        <img src={'/imgs/' + item.productId + '.jpg'} />
+      </div>
+      <div className="infoProductName">
+        <NavLink to={'/Ahomepage/product/product?=' + item.productId}>
+          {item.productName}
+        </NavLink>
+      </div>
+      <Timer endTime={item.endTime} />
+      <div className="info">{item.nowPrice}</div>
+      <MyPrice a={a} userinfo={userinfo} productId={item.productId} />
+      <form className="bidinfo">
+        <TextField
+          label="再次出價"
+          type="number"
+          defaultValue={item.nowPrice + item.perPrice}
+          inputProps={{
+            min: `${item.nowPrice + item.perPrice}`,
+            step: `${item.perPrice}`,
+            className: 'bid'
+          }}
+          onChange={handleBidPrice}
+        >
+          price
+        </TextField>
+        <Button
+          style={{ width: '10rem' }}
+          variant="contained"
+          size="small"
+          color="primary"
+          onClick={handleSubmitPrice}
+        >
+          確定出價
+        </Button>
+      </form>
+      <div className="direct">
+        {item.directPrice}
+        <div>
+          <Button
+            style={{ width: '10rem' }}
+            variant="contained"
+            size="small"
+            color="primary"
+            type="submit"
+            onClick={handleDirect}
+          >
+            直接購買
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
+function Items(props) {
+  const { product, shopId, setBidEvent, direct, setDirect } = props
   // 依商店分類競標商品
   const newProduct = product.filter(function (el) {
     return el.shopId === shopId
@@ -178,55 +306,13 @@ function Items(props) {
   return (
     <>
       {newProduct.map((item, index) => (
-        <div key={index} className="cartItems">
-          <div className="info">
-            <img src={'/imgs/' + item.productId + '.jpg'} />
-          </div>
-          <div className="infoProductName">
-            <NavLink to={'/bidding/product/product?=' + item.productId}>
-              {item.productName}
-            </NavLink>
-          </div>
-          <Timer endTime={item.endTime} />
-          <div className="info">{item.nowPrice}</div>
-          <MyPrice userinfo={userinfo} productId={item.productId} />
-          <form className="bidinfo">
-            <TextField
-              label="再次出價"
-              type="number"
-              defaultValue={item.nowPrice}
-              inputProps={{
-                min: `${item.nowPrice}`,
-                step: `${item.perPrice}`,
-                className: 'bid'
-              }}
-            >
-              price
-            </TextField>
-            <Button
-              style={{ width: '10rem' }}
-              variant="contained"
-              size="small"
-              color="primary"
-            >
-              確定出價
-            </Button>
-          </form>
-          <div className="direct">
-            {item.directPrice}
-            <div>
-              <Button
-                style={{ width: '10rem' }}
-                variant="contained"
-                size="small"
-                color="primary"
-                type="submit"
-              >
-                直接購買
-              </Button>
-            </div>
-          </div>
-        </div>
+        <Prod
+          direct={direct}
+          setDirect={setDirect}
+          key={index}
+          item={item}
+          setBidEvent={setBidEvent}
+        />
       ))}
     </>
   )
@@ -236,6 +322,8 @@ export default function Bidding(props) {
   const [biddingProduct, setBiddingProduct] = useState()
   const [product, setProduct] = useState([1])
   const [shopId, setShopId] = useState([])
+  const [bidEvent, setBidEvent] = useState()
+  const [direct, setDirect] = useState(false)
 
   // 得有出過標的商品ID
   useEffect(() => {
@@ -277,7 +365,7 @@ export default function Bidding(props) {
             })
         }
       })
-  }, [userinfo, biddingProduct])
+  }, [userinfo, biddingProduct, bidEvent, direct])
   return (
     <>
       {shopId.map((item, index) => (
@@ -305,7 +393,13 @@ export default function Bidding(props) {
               <div className="info">競標</div>
               <div className="info">直購價</div>
             </div>
-            <Items shopId={item.shopId} product={product} />
+            <Items
+              setBidEvent={setBidEvent}
+              shopId={item.shopId}
+              product={product}
+              direct={direct}
+              setDirect={setDirect}
+            />
           </div>
         </Shop>
       ))}
