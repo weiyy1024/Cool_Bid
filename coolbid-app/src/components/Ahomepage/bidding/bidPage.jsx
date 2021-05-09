@@ -153,10 +153,10 @@ const BidPage = props => {
     <>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
-          <Link color='inherit' href='../'>
+          <Link color='inherit' href='http://localhost:3000/'>
             Home Page
           </Link>
-          <Link color='inherit' href='../bag'>
+          <Link color='inherit' href='http://localhost:3000/bidding/'>
             {product.length === 0 ? '' : product[0][0].categoryName}
           </Link>
           <Link

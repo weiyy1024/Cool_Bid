@@ -1,8 +1,56 @@
+var NodeRSA = require('node-rsa')
+var fs = require('fs')
+
+// const msg = '12345'
+const cryptoMsg = 'rtRVsT70wdqRMa1eSKJNqwJ6KYZ5MFiIcuEeTVl9qeNsyrozwr3hn0Me5kE/HFqc/MpFOv9IUhU3Jz3j0JdV5Q=='
+
+// Generate Key Pair
+function generator() {
+var key = new NodeRSA({ b: 512 })
+key.setOptions({ encryptionScheme: 'pkcs1' })
+
+var privatePem = key.exportKey('pkcs1-private-pem')
+var publicPem = key.exportKey('pkcs1-public-pem')
+
+fs.writeFile('./pem/public.pem', publicPem, (err) => {
+if (err) throw err
+console.log('Public Key Saved')
+})
+fs.writeFile('./pem/private.pem', privatePem, (err) => {
+if (err) throw err
+console.log('Private Key Saved')
+})
+}
+
+// Encrypt
+function encrypt(msg) {
+fs.readFile('./pem/private.pem', function (err, data) {
+var key = new NodeRSA(data)
+let cipherText = key.encryptPrivate(msg, 'base64')
+console.log(cipherText)
+})
+}
+
+// Decrypt
+function decrypt() {
+fs.readFile('./pem/public.pem', function (err, data) {
+var key = new NodeRSA(data)
+let rawText = key.decryptPublic(cryptoMsg, 'utf8')
+console.log(rawText)
+})
+}
+
+generator()
+encrypt('12345')
+decrypt()
+
+////////////////////////////////////////////////////////
+
 const crypto = require('crypto')
 const chalk = require('chalk')
 
-const priPassword = 'myPassword'
-const message = 'Testing Message'
+const priPassword = 'CoolBidRSA'
+const message = '12345'
 play2RSA(message, priPassword)
 
 async function play2RSA(message, priPassword) {
