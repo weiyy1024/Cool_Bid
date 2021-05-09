@@ -10,7 +10,7 @@ import Wish from './components/wish'
 import './style/cart.css'
 const ShoppingCartContainer = styled.div`
   width: 100%;
-  margin-top: 11rem;
+  margin-top: 12.5rem;
 `
 
 export default function ShoppingCart() {

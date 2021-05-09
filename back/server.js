@@ -9,7 +9,7 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
+  password: '',
   database: 'coolbidLatest',
   port: 3306,
   multipleStatements: true
@@ -375,6 +375,38 @@ app.get('/getPopularProducts',function(req,res){
     res.send(result)
   })
 })
+
+// 拿收藏車的收藏productId 20210509 Jou
+app.get('/collect/:memberId', function(req, res) {
+  conn.query(
+    'select productId from wishproduct where memberId = ?',
+    [req.params.memberId],
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+      // console.log(result)
+    }
+  )
+})
+
+// 拿收藏車的收藏物品本人 20210509 Jou
+app.post('/membercollect', function(req, res) {
+  conn.query(
+    `select * from product where productId in ${req.body.data} and productStatusId in (1,4,5,6)`,
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+      console.log(result)
+    }
+  )
+} )
+
+//   sql = `select * from product where productId in ? AND productStatusId in ?`
+//   conn.query(sql,[ req.params.productId ,('1,4,5,6')], function (err, result) {
+//   res.send(result)
+//   })
+// })
+
 //-----------------------------post方法------------------------
 // app.post('/search',function(req,res){
 //     let test = req.body.test

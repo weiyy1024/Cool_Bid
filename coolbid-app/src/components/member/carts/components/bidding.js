@@ -4,8 +4,30 @@ import axios from 'axios'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
-import TextField from '@material-ui/core/TextField'
+import Text from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import '../style/cart.css'
+const TextField = styled(Text)`
+  label {
+    font-size: 2rem;
+  }
+  label + .MuiInput-formControl {
+    margin-top: 0.6rem;
+  }
+
+  div {
+    margin-top: 0;
+    font-size: 1.8rem;
+    padding: 0;
+    div {
+      margin-top: 0;
+      padding: 0;
+    }
+    input {
+      padding: 0px;
+    }
+  }
+`
 
 const Shop = styled.div`
   border: #d9d7d7 solid 0.3rem;
@@ -72,13 +94,26 @@ const Shop = styled.div`
         font-size: 2rem;
         text-align: center;
         line-height: 9rem;
+        margin-left: 0;
       }
       .direct {
+        // margin-left: 2rem;
+        padding-right: 0;
         color: grey;
         width: 33%;
         font-size: 2rem;
         text-align: center;
-        // line-height: 9rem;
+      }
+      .bidinfo {
+        margin-top: 1rem;
+        margin-left: 2rem;
+        div {
+          padding: 0.6rem;
+        }
+        line-height: 0.1rem;
+        button {
+          margin: 0.2rem 0 0.2rem 1rem;
+        }
       }
     }
   }
@@ -140,7 +175,6 @@ function Items(props) {
   const newProduct = product.filter(function (el) {
     return el.shopId === shopId
   })
-  console.log(newProduct)
   return (
     <>
       {newProduct.map((item, index) => (
@@ -156,16 +190,28 @@ function Items(props) {
           <Timer endTime={item.endTime} />
           <div className="info">{item.nowPrice}</div>
           <MyPrice userinfo={userinfo} productId={item.productId} />
-          <div className="info">
+          <form className="bidinfo">
             <TextField
               label="再次出價"
               type="number"
               defaultValue={item.nowPrice}
-              inputProps={{ min: `${item.nowPrice}`, step: `${item.perPrice}` }}
+              inputProps={{
+                min: `${item.nowPrice}`,
+                step: `${item.perPrice}`,
+                className: 'bid'
+              }}
             >
               price
             </TextField>
-          </div>
+            <Button
+              style={{ width: '10rem' }}
+              variant="contained"
+              size="small"
+              color="primary"
+            >
+              確定出價
+            </Button>
+          </form>
           <div className="direct">
             {item.directPrice}
             <div>
@@ -174,6 +220,7 @@ function Items(props) {
                 variant="contained"
                 size="small"
                 color="primary"
+                type="submit"
               >
                 直接購買
               </Button>
@@ -231,14 +278,21 @@ export default function Bidding(props) {
         }
       })
   }, [userinfo, biddingProduct])
-
   return (
     <>
       {shopId.map((item, index) => (
         <Shop key={index}>
           <div className="top">
             <p>
-              {item.shopName}(<span>{product.length}</span>)
+              {item.shopName}(
+              <span>
+                {
+                  product.filter(function (el) {
+                    return el.shopId === item.shopId
+                  }).length
+                }
+              </span>
+              )
             </p>
           </div>
           <div className="items">
