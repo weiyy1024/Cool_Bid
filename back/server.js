@@ -5,6 +5,9 @@ const cors = require('cors')
 app.use(express.json())
 app.listen(3001)
 
+var NodeRSA = require('node-rsa')
+var fs = require('fs')
+
 var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
@@ -32,6 +35,41 @@ var conn = mysql.createConnection({
 //   })
 // )
 
+//////////////////// RSA Crypto - Len 2021/5/9 ////////////////////
+var NodeRSA = require('node-rsa')
+var fs = require('fs')
+
+// Generate Key Pair
+function generator() {
+  const key = new NodeRSA({ b: 512 })
+  key.setOptions({ encryptionScheme: 'pkcs1' })
+
+  const privatePem = key.exportKey('pkcs1-private-pem')
+  const publicPem = key.exportKey('pkcs1-public-pem')
+
+  fs.writeFile('./pem/public.pem', publicPem, err => {if (err) throw err})
+  fs.writeFile('./pem/private.pem', privatePem, err => {if (err) throw err})
+}
+
+// Encrypt
+function encrypt(msg) {
+  const data = fs.readFileSync('./pem/private.pem')
+  const key = new NodeRSA(data)
+  var cipherText = key.encryptPrivate(msg, 'base64')
+  return cipherText
+}
+
+// Decrypt
+function decrypt() {
+  fs.readFile('./pem/public.pem', function (err, data) {
+    const key = new NodeRSA(data)
+    let rawText = key.decryptPublic(cryptoMsg, 'utf8')
+
+    return rawText
+  })
+}
+///////////////////////////////////////////////////////////////////
+
 // session要跨域
 app.use(
   cors({
@@ -46,7 +84,7 @@ app.post('/member/signin', function (req, res) {
   let sql = 'select * from member where userId=? and password=?'
   conn.query(
     sql,
-    [req.body.memberId, req.body.password],
+    [req.body.memberId, encrypt(req.body.password)],
     function (err, result) {
       if (err) console.log(err)
       else if (result[0]) {

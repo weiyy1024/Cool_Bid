@@ -163,7 +163,12 @@ const Prods = (props) => {
           <span>直購價：</span> NT.<span>{prod.directPrice}</span>
         </p>
       </div>
-      <div style={gotobid}>前往商品頁</div>
+      <NavLink
+        style={{ textDecoration: 'none' }}
+        to={`/bidding/product/product?=${prod.productId}`}
+      >
+        <div style={gotobid}>前往商品頁</div>
+      </NavLink>
     </div>
   )
 }
@@ -195,11 +200,7 @@ const BiddingCarousel = () => {
         ? popular.map((item, index) => <Prods key={index} prod={item} />)
         : [1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => {
             return (
-              <Skeleton
-                key={index}
-                variant="rect"
-                style={ProductContainer}
-              />
+              <Skeleton key={index} variant="rect" style={ProductContainer} />
             )
           })}
     </Carousel>

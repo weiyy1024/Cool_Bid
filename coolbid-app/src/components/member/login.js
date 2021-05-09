@@ -32,6 +32,7 @@ const Myfooter = styled.footer`
 export default function Login(props) {
   const [account, setAccount] = useState('')
   const [pwd, setPwd] = useState('')
+
   const handlelogin = () => {
     axios
       .post('http://localhost:3001/member/signin', {
@@ -79,7 +80,7 @@ export default function Login(props) {
         <span className="title2"> 密碼 </span>
         <br />
         <input
-          type="text"
+          type="password" // Len 2021/5/9
           value={pwd}
           onChange={(e) => setPwd(e.target.value)}
         />
