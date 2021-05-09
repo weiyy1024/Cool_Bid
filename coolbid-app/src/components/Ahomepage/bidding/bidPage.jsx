@@ -71,7 +71,7 @@ import BidFunc from './bidFunc'
 const BidPage = props => {
   const classes = useStyles()
 
-  // const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
   let [toggle, setToggle] = useState(true)
   const [product, setProduct] = useState([])
@@ -94,7 +94,7 @@ const BidPage = props => {
   }, [bidState])
 
   const productStatus = product.length === 0 ? '' : product[0][0].productStatusId
-  console.log(product)
+  const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
 
   const rows = product.length === 0 ? [] : product[1]
 
@@ -130,7 +130,21 @@ const BidPage = props => {
     return (`${Math.floor(days)}天 ${Math.floor(hours)}時 ${Math.floor(minutes)}分 ${Math.floor(seconds)}秒`)
   }
 
-  const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
+  const lastTime = dateObject - Date.now()
+  if (lastTime <= 0) {
+    axios({
+      method: 'post',
+      url: `http://localhost:3001/product/${props.originPId}`,
+      'Content-Type': 'application/json',
+      data: {
+        isDirectBuy: false,
+        directBidPrice: nowBidPrice,
+        id: props.pId,
+        memberId: userInfo.memberId,
+        productStatusId: 5
+      }
+    }).then(res => console.log(res.data))
+  }
 
   return (
     <>
@@ -170,7 +184,7 @@ const BidPage = props => {
               {productStatus === 5 ? '(商品已下架) ' : ''}{product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-               {product.length === 0 ? '' : `剩下 ${getDuration(dateObject - Date.now())} 結束`}
+               {product.length === 0 ? '' : `剩下 ${getDuration(lastTime)} 結束`}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               最高出價：{product.length === 0 ? '' : (product[1].length === 0 ? '無' : product[1][0].nickname)} {product.length === 0 ? '' : (product[1].length === 0 ? '' : `(${product[1][0].userId})`)}
