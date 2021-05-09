@@ -42,6 +42,10 @@ const BidFunc = (props, { bidState }) => {
   // const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
   let [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
 
+  let isBidDisable = false
+  if (productF.length === 0 ? '' : productF[0][0].nowPrice === directBuyPrice || Date.parse(productF.length === 0 ? '' : productF[0][0].endTime) <= Date.now()) isBidDisable = true
+  console.log(isBidDisable)
+
   const handleNowPriceChange = e => {
     // console.log(nowPrice)
     // setNowPrice(e.target.value)
@@ -253,6 +257,7 @@ const BidFunc = (props, { bidState }) => {
       <br />
       <div className={classes.bidNowGroup}>
         <Button
+          style={!isBidDisable ? { display: 'block' } : { display: 'none' }}
           className={classes.go}
           onClick={() => {
             bidNow()
@@ -261,6 +266,20 @@ const BidFunc = (props, { bidState }) => {
           variant='contained'
           color='primary'
           disableElevation
+        >
+          直接出價
+        </Button>
+        <Button
+          style={isBidDisable ? { display: 'block' } : { display: 'none' }}
+          className={classes.go}
+          onClick={() => {
+            bidNow()
+            setBidState(bidState + 1)
+          }}
+          variant='contained'
+          color='primary'
+          disableElevation
+          disabled
         >
           直接出價
         </Button>

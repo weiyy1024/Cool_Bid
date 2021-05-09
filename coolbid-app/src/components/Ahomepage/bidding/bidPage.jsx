@@ -96,6 +96,9 @@ const BidPage = props => {
   const productStatus = product.length === 0 ? '' : product[0][0].productStatusId
   const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
 
+  let isBidDisable = false
+  if (nowBidPrice === (product.length === 0 ? '' : product[0][0].directPrice) || Date.parse(product.length === 0 ? '' : product[0][0].endTime) <= Date.now()) isBidDisable = true
+
   const rows = product.length === 0 ? [] : product[1]
 
   // const formatDateTime = function (date) {
@@ -181,10 +184,10 @@ const BidPage = props => {
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              {productStatus === 5 ? '(商品已下架) ' : ''}{product.length === 0 ? '' : product[0][0].productName}
+              {productStatus === 5 ? '(商品已結標) ' : ''}{product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-               {product.length === 0 ? '' : `剩下 ${getDuration(lastTime)} 結束`}
+               {isBidDisable ? '剩下 0天 0時 0分 0秒 結束' : (product.length === 0 ? '' : `剩下 ${getDuration(lastTime)} 結束`)}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               最高出價：{product.length === 0 ? '' : (product[1].length === 0 ? '無' : product[1][0].nickname)} {product.length === 0 ? '' : (product[1].length === 0 ? '' : `(${product[1][0].userId})`)}
