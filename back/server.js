@@ -9,9 +9,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
+  password: 'root',
   database: 'coolbidLatest',
-  port: 3306,
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -357,7 +357,7 @@ app.get('/confirmStatus/:productId', function (req, res) {
   })
 })
 
-//得商店名稱
+//得商店名稱 20200508 weiyy
 app.get('/shopName/:productId', function (req, res) {
   let test = req.params.productId
   let sql = `SELECT DISTINCT p.shopId,shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productId IN ${test} AND productStatusId=4`
@@ -368,16 +368,20 @@ app.get('/shopName/:productId', function (req, res) {
 })
 
 // Bidding homepage get popular products by weiwei
-app.get('/getPopularProducts',function(req,res){
-  let sql = `SELECT productId, COUNT('productId') FROM biddinghistory GROUP BY productId ORDER BY COUNT('productId') DESC limit 8`
 
-  conn.query(sql,function(err,result){
+app.get('/getPopularProducts', function (req, res) {
+  let sql = `SELECT b.productId, productName, nowPrice, endTime, directPrice, COUNT(b.productId) as bidCount FROM biddinghistory as b
+  JOIN product as p on b.productId = p.productId
+  GROUP BY productId
+  ORDER BY bidCount DESC limit 8`
+
+  conn.query(sql, function (err, result) {
     res.send(result)
   })
 })
 
 // 拿收藏車的收藏productId 20210509 Jou
-app.get('/collect/:memberId', function(req, res) {
+app.get('/collect/:memberId', function (req, res) {
   conn.query(
     'select productId from wishproduct where memberId = ?',
     [req.params.memberId],
@@ -390,7 +394,7 @@ app.get('/collect/:memberId', function(req, res) {
 })
 
 // 拿收藏車的收藏物品本人 20210509 Jou
-app.post('/membercollect', function(req, res) {
+app.post('/membercollect', function (req, res) {
   conn.query(
     `select * from product where productId in ${req.body.data} and productStatusId in (1,4,5,6)`,
     function (err, result) {
@@ -399,7 +403,7 @@ app.post('/membercollect', function(req, res) {
       console.log(result)
     }
   )
-} )
+})
 
 //   sql = `select * from product where productId in ? AND productStatusId in ?`
 //   conn.query(sql,[ req.params.productId ,('1,4,5,6')], function (err, result) {
@@ -434,13 +438,45 @@ app.post('/membercollect', function(req, res) {
 // })
 
 //-----------------------------post方法------------------------
+//取出自己再買件商品裡最高的進標價格 20200508 weiyy
 app.post('/myPrice', function (req, res) {
   let test1 = req.body.pId
   let test2 = req.body.mId
-  // console.log(test1, test2)
-  // res.send(JSON.stringify(test))
   let sql = `SELECT bidprice FROM biddinghistory where memberId=${test2} AND bidTime IN (SELECT max(bidTime) FROM biddinghistory WHERE productId=${test1} AND memberId=${test2}  )`
   conn.query(sql, function (err, result) {
     res.send(result)
   })
+})
+//bid again in "bidding cart" 20200509 weiyy
+app.post('/bidAgain', function (req, res) {
+  //增加bidding history
+  let price = req.body.bidAgainPrice
+  let member = req.body.memberId
+  let product = req.body.productId
+  let sql = `INSERT INTO biddinghistory (productId,memberId,bidprice) VALUES (${product},${member},${price})`
+  conn.query(sql, function (err, result) {})
+})
+app.post('/nowPrice', function (req, res) {
+  // 更新product的最高出價
+  let price = req.body.bidAgainPrice
+  let product = req.body.productId
+  let sql = `UPDATE product SET nowPrice=${price} WHERE productId=${product}`
+  conn.query(sql, function (err, result) {})
+})
+
+//direct buy in "bidding cart" 20200509 weiyy
+app.post('/directPrice', function (req, res) {
+  //增加bidding history
+  let price = req.body.bidPrice
+  let member = req.body.memberId
+  let product = req.body.productId
+  let sql = `INSERT INTO biddinghistory (productId,memberId,bidprice) VALUES (${product},${member},${price})`
+  conn.query(sql, function (err, result) {})
+})
+app.post('/changeStatus', function (req, res) {
+  // 更改 product 的狀態為結標
+  let product = req.body.productId
+  let price = req.body.bidPrice
+  let sql = `UPDATE product SET productStatusId=5,nowPrice=${price} WHERE productId=${product}`
+  conn.query(sql, function (err, result) {})
 })

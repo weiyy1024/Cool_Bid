@@ -27,7 +27,7 @@ export default function DropDown() {
     <dl className="list maki">
       {category.map((item, index) => (
         <dd key={index}>
-          <NavLink to={'/Ahomepage/' + item.categoryName}>
+          <NavLink to={'/bidding/' + item.categoryName}>
             {item.categoryName}
           </NavLink>
         </dd>

@@ -355,16 +355,16 @@ export default function Search(props) {
       <nav className="nav">
         <ul>
           <li>
-            <NavLink to="/Ahomepage/Bag">Bag</NavLink>
+            <NavLink to="/bidding/Bag">Bag</NavLink>
           </li>
           <li>
-            <NavLink to="/Ahomepage/Cloth">Cloth</NavLink>
+            <NavLink to="/bidding/Cloth">Cloth</NavLink>
           </li>
           <li>
-            <NavLink to="/Ahomepage/Shoes">Shoes</NavLink>
+            <NavLink to="/bidding/Shoes">Shoes</NavLink>
           </li>
           <li>
-            <NavLink to="/Ahomepage/Watch">Watch</NavLink>
+            <NavLink to="/bidding/Watch">Watch</NavLink>
           </li>
         </ul>
       </nav>
