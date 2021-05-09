@@ -9,15 +9,7 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-<<<<<<< HEAD
   password: 'root',
-=======
-<<<<<<< HEAD
-  password: 'root',
-=======
-  password: '',
->>>>>>> 70a2ee872dbb9199e9f7d2c922037dda17b820bc
->>>>>>> 8a4a71b57122abc1918dd51b86dcc76d97a64ddd
   database: 'coolbidLatest',
   port: 8889,
   multipleStatements: true
@@ -377,7 +369,7 @@ app.get('/shopName/:productId', function (req, res) {
 
 // Bidding homepage get popular products by weiwei
 
-app.get('/getPopularProducts',function(req,res){
+app.get('/getPopularProducts', function (req, res) {
   let sql = `SELECT b.productId, productName, nowPrice, endTime, directPrice, COUNT(b.productId) as bidCount FROM biddinghistory as b
   JOIN product as p on b.productId = p.productId
   GROUP BY productId
@@ -389,7 +381,7 @@ app.get('/getPopularProducts',function(req,res){
 })
 
 // 拿收藏車的收藏productId 20210509 Jou
-app.get('/collect/:memberId', function(req, res) {
+app.get('/collect/:memberId', function (req, res) {
   conn.query(
     'select productId from wishproduct where memberId = ?',
     [req.params.memberId],
@@ -402,7 +394,7 @@ app.get('/collect/:memberId', function(req, res) {
 })
 
 // 拿收藏車的收藏物品本人 20210509 Jou
-app.post('/membercollect', function(req, res) {
+app.post('/membercollect', function (req, res) {
   conn.query(
     `select * from product where productId in ${req.body.data} and productStatusId in (1,4,5,6)`,
     function (err, result) {
@@ -411,7 +403,7 @@ app.post('/membercollect', function(req, res) {
       console.log(result)
     }
   )
-} )
+})
 
 //   sql = `select * from product where productId in ? AND productStatusId in ?`
 //   conn.query(sql,[ req.params.productId ,('1,4,5,6')], function (err, result) {
