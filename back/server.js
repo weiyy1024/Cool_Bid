@@ -60,13 +60,11 @@ function encrypt(msg) {
 }
 
 // Decrypt
-function decrypt() {
-  fs.readFile('./pem/public.pem', function (err, data) {
-    const key = new NodeRSA(data)
-    let rawText = key.decryptPublic(cryptoMsg, 'utf8')
-
-    return rawText
-  })
+function decrypt(cryptoMsg) {
+  const data = fs.readFileSync('./pem/public.pem')
+  const key = new NodeRSA(data)
+  var rawText = key.decryptPublic(cryptoMsg, 'utf8')
+  return rawText
 }
 ///////////////////////////////////////////////////////////////////
 
@@ -93,6 +91,15 @@ app.post('/member/signin', function (req, res) {
       } else res.send('')
     }
   )
+})
+
+// memberInfo
+app.post('/member/edit', function (req, res) {
+  conn.query('SELECT * FROM `member` WHERE memberId = ?',
+  [req.body.memberId],
+  function(err, result) {
+    res.send(result)
+  })
 })
 
 // 把session送去前端
@@ -138,12 +145,12 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, isDirectBuy, directBidPrice, productStatusId } = req.body
+  let { id, isDirectBuy, directBidPrice, productStatusId, memberId } = req.body
 
   if (isDirectBuy) {
     conn.query(
-      'UPDATE product SET nowPrice = ?, productStatusId = ? WHERE productId = ?',
-      [directBidPrice, productStatusId, id],
+      'UPDATE product SET nowPrice = ?, productStatusId = ?, finalBidderId = ? WHERE productId = ?',
+      [directBidPrice, productStatusId, memberId, id],
       function (err, result) {
         res.send(result)
       }
@@ -220,6 +227,7 @@ app.get('/sizes/:cat', function (req, res) {
     }
   )
 })
+
 //filter
 app.get('/filter/:filter', function (req, res) {
   let test = req.params.filter
@@ -229,6 +237,7 @@ app.get('/filter/:filter', function (req, res) {
     res.send(result)
   })
 })
+
 //搜尋
 // app.get('/search/:keyword', function (req, res) {
 //   let test = req.params.keyword
