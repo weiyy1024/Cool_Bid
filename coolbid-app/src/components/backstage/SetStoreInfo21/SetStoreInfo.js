@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import FormGroup from '@material-ui/core/FormGroup'
@@ -29,6 +28,7 @@ function SetStoreInfo() {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked })
   }
+  // 文字預設空字串
 
   const [descWord, setDescWord] = useState('')
   console.log(descWord)
