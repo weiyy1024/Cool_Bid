@@ -129,10 +129,10 @@ function BidingList() {
             {data.map((item, index) => {
               return (
                 <TableRow key={index}>
-                  <TableCell align="center" className={classes.itemTxt}>null</TableCell>
+                  <TableCell align="center" className={classes.itemTxt}>{item.productId}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}> {item.categoryName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>null</TableCell>
+                  <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
+                  <TableCell align="center" className={classes.itemTxt}>{item.nowPrice}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}> {item.productstatusDescription}</TableCell>
                 </TableRow>

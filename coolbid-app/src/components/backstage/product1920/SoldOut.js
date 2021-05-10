@@ -220,7 +220,7 @@ function SoldOut() {
                   <TableCell align="center" className={classes.itemTxt}>{item.perPrice}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.directPrice}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}> {item.productstatusDescription}</TableCell>
+                  <TableCell align="center" className={classes.itemTxt}>{item.productstatusDescription}</TableCell>
                 </TableRow>
               )
             })}
