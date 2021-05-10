@@ -341,6 +341,68 @@ app.get('/BackStage/SellerPageHero', function (req, res) {
   })
 })
 
+//全部
+app.get('/BackStage/product/all',function(req,res){
+  let sql = 'SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })
+
+//上架
+app.get('/BackStage/product/OnTheMarket',function(req,res){
+  let sql = 'SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 1)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })
+
+//結標 少撈競標價格與買家
+app.get('/BackStage/product/closeAuction',function(req,res){
+  let sql =
+  'SELECT p.productId productName, categoryName, nowPrice, userId, endTime, productstatusDescription FROM product as p JOIN category as c on p.categoryId = c.categoryId JOIN productstatus as ps on p.productStatusId = ps.productStatusId JOIN biddinghistory as b on p.nowPrice = b.bidPrice JOIN member as m on b.memberId = m.memberId WHERE (shopId = 1 and p.productStatusId = 5)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })  
+
+//競標
+app.get('/BackStage/product/Biding',function(req,res){
+  let sql ='SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 4)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })    
+
+//已售出 少撈競標價格
+app.get('/BackStage/product/soldout',function(req,res){
+  let sql ='SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 6)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })   
+
+
+
+
+// 撈使用者的收藏清單 20200507 Jou
+app.post('/likeproduct', function (req, res) {
+  conn.query(
+    'select productId from wishproduct where memberId = ?',
+    [req.body.memberId],
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+    }
+  )
+})
+
+
 // 撈使用者的收藏清單 20200507 Jou
 app.post('/likeproduct', function (req, res) {
   conn.query(
