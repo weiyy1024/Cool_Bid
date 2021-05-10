@@ -79,7 +79,7 @@ function App() {
 
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
           <Route
-            path="/BackStage/SellerPageHero"
+            path="/:sellerpage"
             component={SellerPageHero}
             exact
           />
