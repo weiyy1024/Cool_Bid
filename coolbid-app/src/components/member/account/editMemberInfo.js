@@ -35,6 +35,8 @@ const EditMemberInfo = () => {
   const [phone, setPhone] = useState()
   const [email, setEmail] = useState()
 
+  console.log(userInfo)
+
   useEffect(() => {
     axios
       .post('http://localhost:3001/member/edit', {
