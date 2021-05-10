@@ -21,52 +21,9 @@ import {
 } from '@material-ui/core'
 
 import useStyles from '../../../styles/bidPageStyle'
+import '../../../styles/bidPage.css'
 
 import BidFunc from './bidFunc'
-
-// const productDetail = () => {
-//   switch (product.length === 0 ? '' : product[0][0].categoryId) {
-//     case 'B':
-//       return (
-//         <>
-//           <Typography variant='h4' className={classes.productInfo}>
-//             商品樣式：***男包 後背包***
-//           </Typography>
-//           <Typography variant='h4' className={classes.productInfo}>
-//             商品顏色：{product.length === 0 ? '' : product[0][0].bagColorId}
-//           </Typography>
-//         </>
-//       )
-//       break;
-
-//     case 'C':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     case 'S':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     case 'W':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     default:
-//       break;
-//   }
-// }
 
 const BidPage = props => {
   const classes = useStyles()
@@ -84,6 +41,7 @@ const BidPage = props => {
   pId = window.location.search
   pId = pId.substr(2)
 
+  // 頁面載入撈資料
   useEffect(() => {
     axios({
       method: 'get',
@@ -95,7 +53,9 @@ const BidPage = props => {
 
   const productStatus = product.length === 0 ? '' : product[0][0].productStatusId
   const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
+  const catId = product.length === 0 ? '' : product[0][0].categoryId
 
+  // 結標判斷
   let isBidDisable = false
   if (nowBidPrice === (product.length === 0 ? '' : product[0][0].directPrice) || Date.parse(product.length === 0 ? '' : product[0][0].endTime) <= Date.now()) isBidDisable = true
 
@@ -123,6 +83,7 @@ const BidPage = props => {
     setToggle((toggle = false))
   }
 
+  // 剩餘時間
   const dateObject = Date.parse(product.length === 0 ? '' : product[0][0].endTime)
   function getDuration (ms) {
     const days = ms / 1000 / 60 / 60 / 24
@@ -133,6 +94,7 @@ const BidPage = props => {
     return (`${Math.floor(days)}天 ${Math.floor(hours)}時 ${Math.floor(minutes)}分 ${Math.floor(seconds)}秒`)
   }
 
+  // 時間截止
   const lastTime = dateObject - Date.now()
   if (lastTime <= 0) {
     axios({
@@ -149,19 +111,37 @@ const BidPage = props => {
     }).then(res => console.log(res.data))
   }
 
+  // let timeCount = 0
+
+  // setInterval(() => {
+  //   timeCount++
+  // }, 1000)
+  // console.log(timeCount)
+
+  // useEffect(() => {
+  //   console.log(lastTime)
+  // }, [timeCount])
+
+  const toCatPage = () => {
+    window.location.href = `http://localhost:3000/bidding/${product.length === 0 ? '' : product[0][0].categoryName}`
+  }
+
   return (
     <>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
           <Link color='inherit' href='http://localhost:3000/'>
-            Home Page
+            首頁
           </Link>
           <Link color='inherit' href='http://localhost:3000/bidding/'>
+            競標區
+          </Link>
+          <Link color='inherit' onClick={toCatPage}>
             {product.length === 0 ? '' : product[0][0].categoryName}
           </Link>
           <Link
             color='textPrimary'
-            href='/bidding/category/product'
+            href='http://localhost:3000/bidding/category/product'
             aria-current='page'
           >
             {product.length === 0 ? '' : product[0][0].productName}
@@ -195,12 +175,87 @@ const BidPage = props => {
             <Typography variant='h4' className={classes.productInfo}>
               商品品牌：{product.length === 0 ? '' : product[0][0].brandName}
             </Typography>
-            <Typography variant='h4' className={classes.productInfo}>
-              商品樣式：男包 後背包
+
+            {/* ---------- 各類商品資訊 START ---------- */}
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'B' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[2][0].bagSex}
             </Typography>
-            <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：紅色
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'B' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品類別：{product.length === 0 ? '' : product[2][0].bagType}
             </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'B' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品顏色：{product.length === 0 ? '' : product[2][0].bagColor}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'C' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[3][0].clothSex}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'C' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品季度：{product.length === 0 ? '' : product[3][0].clothSeason}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'C' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品尺寸：{product.length === 0 ? '' : product[3][0].clothSize}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'S' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[4][0].shoesSex}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'S' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品年份：{product.length === 0 ? '' : product[4][0].shoesYear}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'S' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品尺寸：{product.length === 0 ? '' : product[4][0].shoesSize}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'W' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[5][0].watchSex}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'W' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品類別：{product.length === 0 ? '' : product[5][0].watchType}
+            </Typography>
+            {/* ---------- 各類商品資訊 END ---------- */}
+
             <Typography variant='h4' className={classes.productInfo}>
               商品狀況：{product.length === 0 ? '' : product[0][0].productConditionDescription}
             </Typography>
