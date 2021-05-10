@@ -12,9 +12,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'UnicornglLen3550',
   database: 'coolbidLatest',
-  port: 8889,
+  port: 3306,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -60,13 +60,11 @@ function encrypt(msg) {
 }
 
 // Decrypt
-function decrypt() {
-  fs.readFile('./pem/public.pem', function (err, data) {
-    const key = new NodeRSA(data)
-    let rawText = key.decryptPublic(cryptoMsg, 'utf8')
-
-    return rawText
-  })
+function decrypt(cryptoMsg) {
+  const data = fs.readFileSync('./pem/public.pem')
+  const key = new NodeRSA(data)
+  var rawText = key.decryptPublic(cryptoMsg, 'utf8')
+  return rawText
 }
 ///////////////////////////////////////////////////////////////////
 
@@ -93,6 +91,44 @@ app.post('/member/signin', function (req, res) {
       } else res.send('')
     }
   )
+})
+
+// read and overwrite memberInfo
+app.post('/member/edit', function (req, res) {
+  const { isOverwrite, memberId, lastName, firstName, nickname, gender, birthday, phone, email } = req.body
+
+  if (!isOverwrite) {
+    conn.query('SELECT * FROM `member` WHERE memberId = ?',
+    [memberId],
+    function(err, result) {
+      res.send(result)
+    })
+  } else {
+    conn.query('UPDATE `member` SET `firstName`= ?, `lastName`= ?, `nickname`= ?, `gender`= ?, `birthday`= ?, `phone`= ?, `email`= ? WHERE memberId = ?',
+    [firstName, lastName, nickname, gender, birthday, phone, email, memberId],
+    function(err, result) {
+      console.log(result)
+    })
+  }
+})
+
+// read and overwrite password
+app.post('/member/renewMemberPwd', function (req, res) {
+  const { isOverwrite, memberId, password, newPassword } = req.body
+
+  if (!isOverwrite) {
+    conn.query('SELECT password FROM `member` WHERE memberId = ?',
+    [memberId],
+    function(err, result) {
+      res.send(decrypt(result[0].password))
+    })
+  } else {
+    conn.query('UPDATE `member` SET `password`= ? WHERE memberId = ?',
+    [encrypt(newPassword), memberId],
+    function(err, result) {
+      console.log(result)
+    })
+  }
 })
 
 // 把session送去前端
@@ -125,10 +161,9 @@ app.get('/category/:category', function (req, res) {
 // 讀取商品資料 & 出價紀錄
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
-
   conn.query(
-    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC',
-    [para, para],
+    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.bagSexId = n.newcategoryDetailId WHERE productId = ?) as bagSex, (SELECT description from product as p join newcategorydetail as n on p.bagTypeId = n.newcategoryDetailId WHERE productId = ?) as bagType, (SELECT description from product as p join newcategorydetail as n on p.bagColorId = n.newcategoryDetailId WHERE productId = ?) as bagColor FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.clothSexId = n.newcategoryDetailId WHERE productId = ?) as clothSex, (SELECT description from product as p join newcategorydetail as n on p.clothSizeId = n.newcategoryDetailId WHERE productId = ?) as clothSize, (SELECT description from product as p join newcategorydetail as n on p.clothSeasonId = n.newcategoryDetailId WHERE productId = ?) as clothSeason FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.shoesSexId = n.newcategoryDetailId WHERE productId = ?) as shoesSex, (SELECT description from product as p join newcategorydetail as n on p.shoesSizeId = n.newcategoryDetailId WHERE productId = ?) as shoesSize, (SELECT description from product as p join newcategorydetail as n on p.shoesYearId = n.newcategoryDetailId WHERE productId = ?) as shoesYear FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.watchSexId = n.newcategoryDetailId WHERE productId = ?) as watchSex, (SELECT description from product as p join newcategorydetail as n on p.watchTypeId = n.newcategoryDetailId WHERE productId = ?) as watchType FROM product WHERE productId = ?',
+    [para, para, para, para, para, para, para, para, para, para, para, para, para, para, para, para, para],
     function (err, result) {
       res.send(result)
     }
@@ -138,12 +173,12 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, isDirectBuy, directBidPrice, productStatusId } = req.body
+  let { id, isDirectBuy, directBidPrice, productStatusId, memberId } = req.body
 
   if (isDirectBuy) {
     conn.query(
-      'UPDATE product SET nowPrice = ?, productStatusId = ? WHERE productId = ?',
-      [directBidPrice, productStatusId, id],
+      'UPDATE product SET nowPrice = ?, productStatusId = ?, finalBidderId = ? WHERE productId = ?',
+      [directBidPrice, productStatusId, memberId, id],
       function (err, result) {
         res.send(result)
       }
@@ -185,6 +220,7 @@ app.get('/brand/:brand', function (req, res) {
     }
   )
 })
+
 //genders
 app.get('/genders/:cat', function (req, res) {
   let test = req.params.cat
@@ -220,6 +256,7 @@ app.get('/sizes/:cat', function (req, res) {
     }
   )
 })
+
 //filter
 app.get('/filter/:filter', function (req, res) {
   let test = req.params.filter
@@ -229,6 +266,7 @@ app.get('/filter/:filter', function (req, res) {
     res.send(result)
   })
 })
+
 //搜尋
 // app.get('/search/:keyword', function (req, res) {
 //   let test = req.params.keyword
@@ -340,6 +378,68 @@ app.get('/BackStage/SellerPageHero', function (req, res) {
     res.send(result)
   })
 })
+
+//全部
+app.get('/BackStage/product/all',function(req,res){
+  let sql = 'SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })
+
+//上架
+app.get('/BackStage/product/OnTheMarket',function(req,res){
+  let sql = 'SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 1)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })
+
+//結標 少撈競標價格與買家
+app.get('/BackStage/product/closeAuction',function(req,res){
+  let sql =
+  'SELECT p.productId productName, categoryName, nowPrice, userId, endTime, productstatusDescription FROM product as p JOIN category as c on p.categoryId = c.categoryId JOIN productstatus as ps on p.productStatusId = ps.productStatusId JOIN biddinghistory as b on p.nowPrice = b.bidPrice JOIN member as m on b.memberId = m.memberId WHERE (shopId = 1 and p.productStatusId = 5)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })  
+
+//競標
+app.get('/BackStage/product/Biding',function(req,res){
+  let sql ='SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 4)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })    
+
+//已售出 少撈競標價格
+app.get('/BackStage/product/soldout',function(req,res){
+  let sql ='SELECT p.productId productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 6)'
+  conn.query(sql,function(err,result){
+  if (err) { console.log(err) }
+  res.send(result)
+  })
+  })   
+
+
+
+
+// 撈使用者的收藏清單 20200507 Jou
+app.post('/likeproduct', function (req, res) {
+  conn.query(
+    'select productId from wishproduct where memberId = ?',
+    [req.body.memberId],
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+    }
+  )
+})
+
 
 // 撈使用者的收藏清單 20200507 Jou
 app.post('/likeproduct', function (req, res) {

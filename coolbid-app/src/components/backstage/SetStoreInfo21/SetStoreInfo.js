@@ -1,12 +1,15 @@
 /* eslint-disable space-before-function-paren */
-import React from 'react'
+import React, { useState } from 'react'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import '../../SASS/from.scss'
 import '../../SASS/Components.scss'
-import Breadcrumbs from '../Main/Breadcrumbs'
+// import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 
 function SetStoreInfo() {
@@ -25,11 +28,15 @@ function SetStoreInfo() {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked })
   }
+  // 文字預設空字串
+
+  const [descWord, setDescWord] = useState('')
+  console.log(descWord)
 
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">
-        <Breadcrumbs />
+      <div className="breadcrumbsArea">賣家專區/賣場設定
+        {/* <Breadcrumbs /> */}
       </div>
       <div className="sellerBackend_Member_Container">
         <div className="List">
@@ -59,9 +66,17 @@ function SetStoreInfo() {
               </div>
 
               <div className="form_row">
-                <label>
-                  賣場描述:&emsp;&emsp;
-                  <TextField
+                <Typography
+                  variant="h4"
+                  style={ { fontWeight: 'bold', margin: '2rem 0 1rem' } }
+                >賣場描述：</Typography>
+                  <CKEditor
+                    editor={ ClassicEditor }
+                    onChange={(event, editor) => {
+                      setDescWord(editor.getData())
+                    } }
+                  />
+                  {/* <TextField
                     label="賣場描述"
                     value={data.description}
                     name="description"
@@ -69,8 +84,7 @@ function SetStoreInfo() {
                     className="txtinput"
                     multiline={true}
                     rows="6"
-                  />
-                </label>
+                  /> */}
               </div>
               <div className="form_row">
                 <label>

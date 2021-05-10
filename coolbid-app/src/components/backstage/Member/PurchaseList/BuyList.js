@@ -1,99 +1,3 @@
-// /* eslint-disable space-before-function-paren */
-// import React, { useEffect } from 'react'
-// import TableContainer from '@material-ui/core/TableContainer'
-// import OrderTabs from '../../Order22/OrderTabs'
-// import BuyListItem from './BuyListItem'
-// import '../../../SASS/list.scss'
-// import '../../../SASS/Components.scss'
-// import styled from '@emotion/styled'
-// import NestedList from '../../Main/MemberList'
-// import axios from 'axios'
-
-// const BuyListContainer = styled.div`
-//   width: 70%;
-//   margin: 20rem auto;
-//   display: flex;
-//   .shipList {
-//     width: 20%;
-//   }
-// `
-
-// function BuyList() {
-//   // const [list, setList] = useState(
-//   const list = [
-//     {
-//       buyer: 'xia yi zhen',
-//       orderId: '202105201233',
-//       product: [
-//         {
-//           id: 1,
-//           pic: 'null',
-//           name: 'coolbid1',
-//           orderData: '2021-05-20T10:30',
-//           status: '',
-//           price: 3000
-//         },
-//         {
-//           id: 2,
-//           pic: 'null',
-//           name: 'coolbid2',
-//           orderData: '2021-05-20T10:30',
-//           status: '',
-//           price: 4000
-//         }
-//       ]
-//     },
-//     {
-//       buyer: 'weiwei',
-//       orderId: '202105201233',
-//       product: [
-//         {
-//           id: 3,
-//           pic: 'null',
-//           name: 'coolbid1',
-//           orderData: '2021-05-20T10:30',
-//           status: '',
-//           price: 3000
-//         },
-//         {
-//           id: 4,
-//           pic: 'null',
-//           name: 'coolbid4',
-//           orderData: '2021-05-20T10:30',
-//           deliveryTime: '2021-05-27T10:30',
-//           price: 4000
-//         }
-//       ]
-//     }
-//   ]
-//   useEffect(() => {
-//     console.log('hi')
-//     axios({
-//       method: 'get',
-//       baseURL: 'http://localhost:3001',
-//       url: '/member/purchase',
-//       'Content-Type': 'application/json'
-//     }).then((a) => console.log(a.data))
-//   }, [])
-
-//   return (
-//     <BuyListContainer>
-//       <NestedList />
-//       <div className="Table_wrap">
-//         <OrderTabs />
-//         <TableContainer className="Table_container">
-//           {list.map((item) => {
-//             return <BuyListItem key={item.orderId} detail={item} />
-//           })}
-//         </TableContainer>
-//       </div>
-//     </BuyListContainer>
-//   )
-// }
-
-// export default BuyList
-
-/* eslint-disable space-before-function-paren */
 import React, { useState, useEffect } from 'react'
 import TableContainer from '@material-ui/core/TableContainer'
 import OrderTabs from '../../Order22/OrderTabs'
@@ -107,22 +11,59 @@ import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
-// import styled from '@emotion/styled'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
-import Breadcrumbs from '../../Main/Breadcrumbs'
-// eslint-disable-next-line no-undef
+import { makeStyles } from '@material-ui/core/styles'
+// import Breadcrumbs from '../../Main/Breadcrumbs'
+import Modal from '@material-ui/core/Modal'
+import Backdrop from '@material-ui/core/Backdrop'
+import Fade from '@material-ui/core/Fade'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
 
-// eslint-disable-next-line no-undef
-// const BuyListContainer = styled.div`
-//   width: 70%;
-//   margin: 20rem auto;
-//   display: flex;
-//   .shipList {
-//     width: 20%;
-//   }
-// `
-function BuyList() {
+const useStyles = makeStyles((theme) => ({
+  itemTitle: {
+    fontSize: 20
+  },
+  itemTxt: {
+    fontSize: 16
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    width: 800,
+    height: 300,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  spacing: {
+    width: 150
+  }
+}))
+
+function getSteps () {
+  return ['訂單成立', '撿貨中', '運送中', '已送達']
+}
+
+function BuyList () {
+  const steps = getSteps()
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+  const classes = useStyles()
   const [data, setData] = useState([])
   useEffect(() => {
     console.log('hiiiiii')
@@ -136,8 +77,8 @@ function BuyList() {
 
   return (
       <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">
-        <Breadcrumbs />
+      <div className="breadcrumbsArea">買家專區/購買清單
+        {/* <Breadcrumbs /> */}
       </div>
       <div className="sellerBackend_Member_Container">
         <div className="Member_List">
@@ -153,33 +94,35 @@ function BuyList() {
                 <>
                   <TableHead key={index}>
                     <TableRow>
-                      <TableCell colSpan={4}>
+                      <TableCell colSpan={4} className={classes.itemTxt}>
                         買家:{item.shopName}
                         <FontAwesomeIcon icon={faCommentDots} />
                       </TableCell>
-                      <TableCell>訂單編號:{item.orderId}</TableCell>
+                      <TableCell className={classes.itemTxt}>訂單編號:{item.orderId}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="center">圖片</TableCell>
-                      <TableCell align="center">項目</TableCell>
-                      <TableCell align="center">日期</TableCell>
-                      <TableCell align="center">狀態</TableCell>
-                      <TableCell align="center">價錢</TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>圖片</TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>日期</TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>價錢</TableCell>
                     </TableRow>
                   </TableHead>
 
                   <TableBody>
                     <TableRow>
-                      <TableCell align="center">null</TableCell>
-                      <TableCell align="center">{item.productName}</TableCell>
-                      <TableCell align="center">{item.orderTime}</TableCell>
-                      <TableCell align="center">訂單成立</TableCell>
-                      <TableCell align="center">{item.nowPrice}</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>null</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>{item.orderTime}</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>訂單成立</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>{item.nowPrice}</TableCell>
                     </TableRow>
 
                     <TableRow>
-                      <TableCell colSpan={4}>狀態:{item.orderStatusBuyer}&emsp;{item.orderStatusDate}</TableCell>
-                      <TableCell align="center">總計:</TableCell>
+                      <TableCell colSpan={4} className={classes.itemTxt}>狀態:
+                      <a onClick={handleOpen} style={{ cursor: 'pointer', color: 'rgb(11, 96, 175)' }}>{item.orderStatusBuyer}</a>
+                      &emsp;{item.orderStatusDate}</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>總計:</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={5}>
@@ -207,6 +150,30 @@ function BuyList() {
             })}
           </Table>
         </TableContainer>
+        <>
+        <Modal
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+          <Stepper alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label} className={classes.spacing}>
+            <StepLabel><h1>{label}</h1></StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+          </div>
+        </Fade>
+      </Modal>
+      </>
         </div>
       </div>
     </div>

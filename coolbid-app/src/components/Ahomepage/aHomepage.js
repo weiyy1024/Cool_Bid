@@ -59,7 +59,7 @@ export default function Ahomepage() {
         ))}
       </div>
       {/* 跑馬燈 */}
-      <div className="marquee">
+      {/* <div className="marquee">
         <div className="track">
           <div className="content">
             &nbsp;Infinite Marquee with long sentence Infinite Marquee with long
@@ -67,8 +67,9 @@ export default function Ahomepage() {
             long sentence Infinite Marquee with long sentence
           </div>
         </div>
-      </div>
+      </div> */}
       {/* 熱門輪播 */}
+      <h1 className="poptitle">熱門競標商品</h1>
       <BiddingCarousel />
     </div>
   )

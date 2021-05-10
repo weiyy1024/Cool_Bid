@@ -12,7 +12,10 @@ import Signup from './components/member/signup'
 import Logout from './components/member/logout'
 import Add from './components/backstage/product1920/Add'
 import productpage from './components/backstage/product1920/productpage'
-// import AddProductEdit from './components/backstage/product1920/AddProductEdit'
+import Biding from './components/backstage/product1920/Biding'
+import SoldOut from './components/backstage/product1920/SoldOut'
+import CloseAuction from './components/backstage/product1920/CloseAuction'
+import OnTheMarket from './components/backstage/product1920/OnTheMarket'
 import SetStoreInfo from './components/backstage/SetStoreInfo21/SetStoreInfo'
 import OrderList from './components/backstage/Order22/OrderList'
 import EditMemberInfo from './components/member/account/editMemberInfo'
@@ -78,17 +81,18 @@ function App() {
 
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
           <Route
-            path="/BackStage/SellerPageHero"
+            path="/:sellerpage"
             component={SellerPageHero}
             exact
           />
 
-          {/* Seller */}
-          <Route path="/BackStage" component={Backstage} exact />
+         {/* Seller */}
+         <Route path="/BackStage" component={Backstage} exact />
           <Route path="/BackStage/product/all" component={productpage} exact />
-          {/* <Route path="/Shopping/product/:CloseAuction" component={CloseAuction} exact />
-          <Route path="/Shopping/product/:SoldOut" component={SoldOut} exact />
-          <Route path="/Shopping/product/:Biding" component={Biding} exact /> */}
+          <Route path="/BackStage/product/OnTheMarket" component={OnTheMarket} exact />
+          <Route path="/BackStage/product/CloseAuction" component={CloseAuction} exact />
+          <Route path="/BackStage/product/SoldOut" component={SoldOut} exact />
+          <Route path="/BackStage/product/Biding" component={Biding} exact />
           <Route path="/BackStage/editProduct" component={Add} exact />
           <Route path="/BackStage/sellerInfo" component={SetStoreInfo} exact />
           <Route path="/BackStage/orders" component={OrderList} exact />

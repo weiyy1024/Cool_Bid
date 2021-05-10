@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import OrderTabs from './OrderTabs'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
-import Breadcrumbs from '../Main/Breadcrumbs'
+// import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 import axios from 'axios'
 import Table from '@material-ui/core/Table'
@@ -11,29 +11,63 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableBody from '@material-ui/core/TableBody'
 import TableContainer from '@material-ui/core/TableContainer'
+import Modal from '@material-ui/core/Modal'
+import Backdrop from '@material-ui/core/Backdrop'
+import Fade from '@material-ui/core/Fade'
 import { makeStyles } from '@material-ui/core/styles'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
 
 const useStyles = makeStyles((theme) => ({
   itemTitle: {
     fontSize: 20
   },
-  itemTxt: {
-    fontSize: 16
+  itemTxt: { fontSize: 16 },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    width: 800,
+    height: 300,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  spacing: {
+    width: 150
+  },
+  imgStyle: {
+    width: 80
   }
-  // tableStyle: {
-  //   marginTop: 50,
-  //   border: 'double'
-  //   // borderColor: 'grey'
-  // }
+
 }))
 
+function getSteps () {
+  return ['訂單成立', '撿貨中', '運送中', '已送達']
+}
+
 function OrderList () {
+  const steps = getSteps()
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   const [data, setData] = useState([])
   const classes = useStyles()
   useEffect(() => {
-    console.log('hi')
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
@@ -42,10 +76,24 @@ function OrderList () {
     }).then((a) => setData(a.data))
   }, [])
 
+  function OrderDate ({ ordertime }) {
+    const time = new Date(ordertime)
+    const year = time.getFullYear()
+    const month = time.getMonth()
+    const date = time.getDate()
+    return (
+      <div>
+        <span>{year}</span>
+        <span>-{month + 1}</span>
+        <span>-{date + 7}</span>
+      </div>
+    )
+  }
+
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">
-        <Breadcrumbs />
+      <div className="breadcrumbsArea">賣家專區/商品訂單
+        {/* <Breadcrumbs /> */}
       </div>
       <div className="sellerBackend_Member_Container">
         <div className="List">
@@ -91,7 +139,7 @@ function OrderList () {
                     <TableBody>
                       <TableRow>
                         <TableCell align="center" className={classes.itemTxt}>
-                          null
+                        <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
                         </TableCell>
                         <TableCell align="center" className={classes.itemTxt}>
                           {item.productName}
@@ -102,7 +150,7 @@ function OrderList () {
                         <TableCell
                           align="center"
                           className={classes.itemTxt}
-                        ></TableCell>
+                        >    <OrderDate ordertime={item.orderTime} /> </TableCell>
                         <TableCell align="center" className={classes.itemTxt}>
                           {item.nowPrice}
                         </TableCell>
@@ -110,11 +158,11 @@ function OrderList () {
 
                       <TableRow>
                         <TableCell colSpan={4} className={classes.itemTxt}>
-                          狀態:{item.orderStatusSeller}
+                          狀態:<a onClick={handleOpen} style={{ cursor: 'pointer', color: 'rgb(11, 96, 175)' }}>{item.orderStatusSeller}</a>
                         </TableCell>
                         <TableCell align="center" className={classes.itemTxt}>
                           總計:
-                        </TableCell>
+                           </TableCell>
                       </TableRow>
 
                       <TableRow>
@@ -133,9 +181,34 @@ function OrderList () {
             </>
           </Table>
           </TableContainer>
+          <>
+        <Modal
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+          <Stepper alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label} className={classes.spacing}>
+            <StepLabel><h1>{label}</h1></StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+          </div>
+        </Fade>
+      </Modal>
+      </>
         </div>
       </div>
     </div>
+
   )
 }
 

@@ -24,11 +24,20 @@ const category = {
   padding: '20px',
   borderRight: '1px solid lightgray'
 }
-
+const category2 = {
+  fontSize: '1.6rem',
+  fontFamily: 'Helvetica',
+  fontWeight: 'bold',
+  letterSpacing: '2px',
+  width: '50%',
+  padding: '20px',
+  borderRight: '1px solid lightgray'
+}
 const subtitle = {
   borderBottom: '2px solid black',
   color: 'black'
 }
+
 const handleHover = (e) => {
   const cat = e.target.getAttribute('cat')
   document.getElementById('bagBrand').style.display = 'none'
@@ -244,22 +253,41 @@ export default function DropDown(props) {
             </div>
           </div>
         </div>
-        <div style={category}>
+        <div style={category2}>
           <span style={subtitle}>Popular Product</span>
-          <div style={{ width: '60%', marginTop: '2rem' }}>
+          <div style={{ width: '100%', marginTop: '2rem' }}>
             <NavLink
               to={
                 pop.length ? `bidding/product/product?=${pop[0].productId}` : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '100%' }}
+                style={{ objectFit: 'scale-down', width: '30%' }}
                 src={pop.length ? `/imgs/${pop[0].productId}.jpg` : ''}
+              ></img>
+            </NavLink>
+            <NavLink
+              to={
+                pop.length ? `bidding/product/product?=${pop[1].productId}` : ''
+              }
+            >
+              <img
+                style={{ objectFit: 'scale-down', width: '30%' }}
+                src={pop.length ? `/imgs/${pop[1].productId}.jpg` : ''}
+              ></img>
+            </NavLink>
+            <NavLink
+              to={
+                pop.length ? `bidding/product/product?=${pop[2].productId}` : ''
+              }
+            >
+              <img
+                style={{ objectFit: 'scale-down', width: '30%' }}
+                src={pop.length ? `/imgs/${pop[2].productId}.jpg` : ''}
               ></img>
             </NavLink>
           </div>
         </div>
-        <div style={category}>Watch</div>
       </div>
       {/* <dl className="list maki">
       {category.map((item, index) => (

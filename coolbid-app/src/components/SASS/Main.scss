@@ -10,15 +10,43 @@
     
     .breadcrumbsArea {
         width: 1000px;
-        margin: auto;
+        //margin: auto;
+        margin-left:200px;
         margin-bottom: 100px;
+        font-size: 18px;
     }
 
     .sellerBackend_Member_Container {
-        margin: auto;
+        margin:auto;
         display: flex;
     }
 }
 
-.Member_List{margin-left: 100px;}
+
+.side-menu {
+    width:200px;
+    display: flex;
+    flex-direction: column;
+text-align: center;
+margin:0px 100px 0px 100px;
+}
+
+.nav .link {
+    display: block;
+    padding: 10px;
+    color: #707070;
+    text-decoration: none;
+
+}
+
+.nav li+li {
+    border-top: 1px dashed #707070;
+}
+
+.nav li {
+    list-style: none;
+}
+
+
+
 
