@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import '../../SASS/from.scss'
 import '../../SASS/Components.scss'
-import Breadcrumbs from '../Main/Breadcrumbs'
+// import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 
 function SetStoreInfo() {
@@ -28,8 +28,8 @@ function SetStoreInfo() {
 
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">
-        <Breadcrumbs />
+      <div className="breadcrumbsArea">賣家專區/賣場設定
+        {/* <Breadcrumbs /> */}
       </div>
       <div className="sellerBackend_Member_Container">
         <div className="List">

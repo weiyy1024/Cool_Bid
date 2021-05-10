@@ -9,14 +9,14 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import '../../SASS/from.scss'
 import '../../SASS/Components.scss'
-import Breadcrumbs from '../Main/Breadcrumbs'
+// import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 
 function AddProduct () {
   return (
     <div className="sellerBackend_Member_Wrap">
-     <div className="breadcrumbsArea">
-        <Breadcrumbs />
+     <div className="breadcrumbsArea">賣家專區/新增商品
+        {/* <Breadcrumbs /> */}
       </div>
       <div className="sellerBackend_Member_Container">
       <div className="List">
