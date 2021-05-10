@@ -1,6 +1,7 @@
 /* eslint-disable space-before-function-paren */
 import React from 'react'
 import './homepage.css'
+// import { NavLink } from 'react-router-dom'
 // import styled from '@emotion/styled'
 
 // const TitleBtn = styled.div`
@@ -49,11 +50,29 @@ import './homepage.css'
 //   window.location.href = `http://localhost:3000/${page}`
 // }
 
+const handleLink = (e) => {
+  if (e.target.className === 'second') {
+    window.location.href = '/auction/coming'
+  } else {
+    window.location.href = '/bidding'
+  }
+}
+
 export default function Homepage() {
   return (
     <div className="loader">
-      <div className="second"></div>
-      <div className="image"></div>
+      <div
+        className="second"
+        onClick={(e) => {
+          handleLink(e)
+        }}
+      ></div>
+      <div
+        className="image"
+        onClick={(e) => {
+          handleLink(e)
+        }}
+      ></div>
       <div className="first-loader"></div>
       <div className="second-loader"></div>
       <div className="image-loader">

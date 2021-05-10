@@ -22,7 +22,7 @@ import ShoppingCart from './components/Cart'
 import Note from './components/Note'
 // dorp down
 import DropDown from './components/Dropdown'
-import AuctionDropDown from './components/AuctionDropDown'
+// import AuctionDropDown from './components/AuctionDropDown'
 import MemberDropDown from './components/member'
 import axios from 'axios'
 
@@ -219,7 +219,9 @@ export default function NavBar() {
   let membericonto
   if (window.sessionStorage.getItem('userinfo')) {
     membericonto = '/member/edit'
-  } else { membericonto = '/member/signin' }
+  } else {
+    membericonto = '/member/signin'
+  }
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>
@@ -239,14 +241,14 @@ export default function NavBar() {
             <ArrowDropDownIcon
               style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
             />
-            <DropDown pop={popular}/>
+            <DropDown pop={popular} />
           </Title>
-          <Title className="Chomepage" to="/auction">
+          <Title
+            className="Chomepage"
+            to="/auction/coming"
+            style={{ marginTop: '4px' }}
+          >
             拍賣會
-            <ArrowDropDownIcon
-              style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
-            />
-            <AuctionDropDown />
           </Title>
         </NavLeft>
         <SearchDiv>
