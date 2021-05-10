@@ -1,5 +1,5 @@
 /* eslint-disable space-before-function-paren */
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
@@ -24,6 +24,8 @@ import Note from './components/Note'
 import DropDown from './components/Dropdown'
 import AuctionDropDown from './components/AuctionDropDown'
 import MemberDropDown from './components/member'
+import axios from 'axios'
+
 // Theme switch
 const theme = {
   light: {
@@ -118,17 +120,17 @@ const LogoBox = styled(NavLink)`
   text-decoration: none;
 `
 const NavLeft = styled.div`
-  margin: 10px 0 60px 10px;
   display: flex;
+  padding-top: 20px;
 `
 const Title = styled(NavLink)`
   font-size: 2.2rem;
   color: ${({ theme }) => theme.textColor};
-  padding: 1.5rem;
   text-decoration: none;
+  padding-left: 30px;
   &:hover {
     color: #ffae19;
-    dl {
+    .dropList {
       visibility: visible;
     }
   }
@@ -145,8 +147,9 @@ const Member = styled(NavLink)`
 
 // SearchBar
 const SearchDiv = styled.div`
-  margin: 22px auto;
+  margin: 0 auto;
   width: 40rem;
+  padding-top: 15px;
   transform: translateX(-20rem);
 `
 const SearchBar = styled(SearchBar1)`
@@ -172,7 +175,22 @@ const ThreeIcons = styled.div`
 
 export default function NavBar() {
   const [currentTheme, setCurrentTheme] = useState('light')
+  const [popular, setPopular] = useState([])
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
+  // get popular products
+  useEffect(() => {
+    axios({
+      method: 'get',
+      baseURL: 'http://localhost:3001',
+      url: '/getPopularProducts',
+      'Content-Type': 'application/json'
+    }).then((res) => {
+      console.log(res.data)
+      setPopular(res.data)
+    })
+  }, [])
+
   // Dark Mode function
   const toggleTheme = () => {
     if (currentTheme === 'dark') {
@@ -221,7 +239,7 @@ export default function NavBar() {
             <ArrowDropDownIcon
               style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
             />
-            <DropDown />
+            <DropDown pop={popular}/>
           </Title>
           <Title className="Chomepage" to="/auction">
             拍賣會
