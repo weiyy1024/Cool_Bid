@@ -66,7 +66,10 @@ function SetStoreInfo() {
               </div>
 
               <div className="form_row">
-                <Typography variant="h4" style={ { fontWeight: 'bold', margin: '2rem 0 1rem' } }>賣場描述：</Typography>
+                <Typography
+                  variant="h4"
+                  style={ { fontWeight: 'bold', margin: '2rem 0 1rem' } }
+                >賣場描述：</Typography>
                   <CKEditor
                     editor={ ClassicEditor }
                     onChange={(event, editor) => {
