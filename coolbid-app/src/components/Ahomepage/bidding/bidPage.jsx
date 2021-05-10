@@ -24,50 +24,6 @@ import useStyles from '../../../styles/bidPageStyle'
 
 import BidFunc from './bidFunc'
 
-// const productDetail = () => {
-//   switch (product.length === 0 ? '' : product[0][0].categoryId) {
-//     case 'B':
-//       return (
-//         <>
-//           <Typography variant='h4' className={classes.productInfo}>
-//             商品樣式：***男包 後背包***
-//           </Typography>
-//           <Typography variant='h4' className={classes.productInfo}>
-//             商品顏色：{product.length === 0 ? '' : product[0][0].bagColorId}
-//           </Typography>
-//         </>
-//       )
-//       break;
-
-//     case 'C':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     case 'S':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     case 'W':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     default:
-//       break;
-//   }
-// }
-
 const BidPage = props => {
   const classes = useStyles()
 
