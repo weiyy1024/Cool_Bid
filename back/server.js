@@ -93,13 +93,42 @@ app.post('/member/signin', function (req, res) {
   )
 })
 
-// memberInfo
+// read and overwrite memberInfo
 app.post('/member/edit', function (req, res) {
-  conn.query('SELECT * FROM `member` WHERE memberId = ?',
-  [req.body.memberId],
-  function(err, result) {
-    res.send(result)
-  })
+  const { isOverwrite, memberId, lastName, firstName, nickname, gender, birthday, phone, email } = req.body
+
+  if (!isOverwrite) {
+    conn.query('SELECT * FROM `member` WHERE memberId = ?',
+    [memberId],
+    function(err, result) {
+      res.send(result)
+    })
+  } else {
+    conn.query('UPDATE `member` SET `firstName`= ?, `lastName`= ?, `nickname`= ?, `gender`= ?, `birthday`= ?, `phone`= ?, `email`= ? WHERE memberId = ?',
+    [firstName, lastName, nickname, gender, birthday, phone, email, memberId],
+    function(err, result) {
+      console.log(result)
+    })
+  }
+})
+
+// read and overwrite password
+app.post('/member/renewMemberPwd', function (req, res) {
+  const { isOverwrite, memberId, password, newPassword } = req.body
+
+  if (!isOverwrite) {
+    conn.query('SELECT password FROM `member` WHERE memberId = ?',
+    [memberId],
+    function(err, result) {
+      res.send(decrypt(result[0].password))
+    })
+  } else {
+    conn.query('UPDATE `member` SET `password`= ? WHERE memberId = ?',
+    [encrypt(newPassword), memberId],
+    function(err, result) {
+      console.log(result)
+    })
+  }
 })
 
 // 把session送去前端
