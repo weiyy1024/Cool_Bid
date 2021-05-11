@@ -9,8 +9,8 @@ import TableRow from '@material-ui/core/TableRow'
 import ProductTabs from '../product1920/ProductTabs'
 // import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
+
 import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
@@ -168,15 +168,15 @@ function productpage () {
               <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
               <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
               <TableCell align="center" className={classes.itemTitle} onClick={changebidPrice} style={{ cursor: 'pointer' }}>
-              競標<FontAwesomeIcon icon={faArrowsAltV} /></TableCell>
+              競標<UnfoldMoreIcon/></TableCell>
               <TableCell align="center" className={classes.itemTitle} onClick={changestartPrice} style={{ cursor: 'pointer' }}>
-              起標<FontAwesomeIcon icon={faArrowsAltV} />
+              起標<UnfoldMoreIcon/>
               </TableCell>
               <TableCell align="center" className={classes.itemTitle} onClick={changePerPrice} style={{ cursor: 'pointer' }}>
-              出價<FontAwesomeIcon icon={faArrowsAltV} />
+              出價<UnfoldMoreIcon/>
               </TableCell>
               <TableCell align="center" className={classes.itemTitle} onClick={changedirectPrice} style={{ cursor: 'pointer' }}>
-                直購<FontAwesomeIcon icon={faArrowsAltV} />
+                直購<UnfoldMoreIcon/>
               </TableCell>
               <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
                 結標

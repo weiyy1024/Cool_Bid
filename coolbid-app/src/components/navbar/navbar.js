@@ -139,8 +139,8 @@ const Member = styled(NavLink)`
   text-decoration: none;
   color: ${({ theme }) => theme.textColor};
   &:hover {
-    dl {
-      visibility: visible;
+    .memberList {
+      display: block;
     }
   }
 `
