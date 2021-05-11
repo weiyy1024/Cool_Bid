@@ -125,7 +125,7 @@ const Clear = styled.div`
 `
 export default function Shopping(props) {
   const { userinfo } = props
-  const [product, setProduct] = useState([1])
+  const [product, setProduct] = useState([])
   const [shopId, setShopId] = useState([])
   // 點選結帳商品個數
   const [totalArray, setTotalArray] = useState([])
