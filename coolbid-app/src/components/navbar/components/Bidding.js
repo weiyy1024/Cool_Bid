@@ -212,6 +212,7 @@ export default function Bidding(props) {
         </h1>
         <Divider />
         {userinfo ? (
+          product.length > 0 &&
           product.map((item, index) => <ProductDiv1 key={index} data={item} />)
         ) : (
           <SignIn>請先登入</SignIn>
