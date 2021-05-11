@@ -32,6 +32,7 @@ const BidPage = props => {
   let [toggle, setToggle] = useState(true)
   const [product, setProduct] = useState([])
   const [bidState, setBidState] = useState(0)
+  const [timer, SetTimer] = useState()
   const handleBidState = () => {
     setBidState(bidState + 1)
   }
@@ -47,7 +48,13 @@ const BidPage = props => {
       baseURL: 'http://localhost:3001',
       url: `/product/${pId}`,
       'Content-Type': 'application/json'
-    }).then(res => setProduct(res.data))
+    }).then(res => {
+      setProduct(res.data)
+      SetTimer(Date.parse(res.data[0][0].endTime) - Date.now())
+      setInterval(() => {
+        SetTimer(Date.parse(res.data[0][0].endTime) - Date.now())
+      }, 1000)
+    })
   }, [bidState])
 
   const productStatus = product.length === 0 ? '' : product[0][0].productStatusId
@@ -138,7 +145,7 @@ const BidPage = props => {
               className={classes.productInfo}
               style={productStatus === 1 ? { display: 'none' } : { display: 'block' } }
             >
-               {isBidDisable ? '剩下 0天 0時 0分 0秒 結束' : (product.length === 0 ? '' : `剩下 ${getDuration(lastTime)} 結束`)} {productStatus === 5 ? '(商品已結標) ' : ''}
+               {isBidDisable ? '剩下 0天 0時 0分 0秒 結束' : `剩下 ${getDuration(timer)} 結束`} {productStatus === 5 ? '(商品已結標) ' : ''}
             </Typography>
             <Typography className={classes.productInfo}>
               最高出價：{product.length === 0 ? '' : (product[1].length === 0 ? '無' : product[1][0].nickname)} {product.length === 0 ? '' : (product[1].length === 0 ? '' : `(${product[1][0].userId})`)}
@@ -275,7 +282,7 @@ const BidPage = props => {
               color='primary'
               className={classes.storeButton}
             >
-              所有商品(287)
+              所有商品({product.length === 0 ? '' : product[6][0].itemNum})
             </Button>
           </Grid>
           <Typography

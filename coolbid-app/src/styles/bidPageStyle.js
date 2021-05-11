@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
   storeMedia: {
     height: '12rem',
     width: '12rem',
-    borderRadius: '50%'
+    borderRadius: '50%',
+    border: '6px solid #ccc'
   },
   productTitle: {
     fontSize: '2.8rem',
