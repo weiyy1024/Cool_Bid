@@ -12,7 +12,7 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'UnicornglLen3550',
   database: 'coolbidLatest',
   port: 3306,
   multipleStatements: true
