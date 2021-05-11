@@ -81,7 +81,11 @@ function App() {
           <Route path="/member/coolCoin" component={Login} exact />
           <Route path="/member/purchase" component={BuyList} exact />
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
-          <Route path="/:sellerpage" component={SellerPageHero} exact />
+          <Route
+            path="/sellerpage/:memberId"
+            component={SellerPageHero}
+            exact
+          />
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
@@ -106,7 +110,7 @@ function App() {
           <Route path="/Shopping/Bidding" component={Login} exact />
           <Route path="/Shopping/WishList" component={ShoppingCart} exact />
           <Route path="/Shopping/Cart/checkout" component={Checkout} exact />
-          <Route path="/completeOrder" component={CompleteOrder} />
+          <Route path="/completeOrder" component={CompleteOrder} exact />
         </Switch>
       </div>
     </BrowserRouter>

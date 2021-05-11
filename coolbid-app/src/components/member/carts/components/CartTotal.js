@@ -2,7 +2,7 @@
 /* eslint-disable space-before-function-paren */
 import React from 'react'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import swal from 'sweetalert'
 
 const TotalContainer = styled.div`
   border: #d9d7d7 solid 0.3rem;
@@ -33,6 +33,7 @@ const TotalContainer = styled.div`
     border-radius: 0.5rem;
     text-decoration: none;
     color: #edaf11;
+    cursor: pointer;
   }
   .checkOutBtn:hover {
     background-color: #edaf11;
@@ -44,10 +45,18 @@ export default function CartTotal(props) {
   const { totPrice, totalArray, productArray } = props
   function handleCheckoutProuduct() {
     if (productArray[0]) {
+      window.location.href = ' http://localhost:3000/Shopping/Cart/checkout'
       window.sessionStorage.setItem(
         'orderProduct',
         JSON.stringify(productArray)
       )
+    } else {
+      swal({
+        title: '沒有點選任何商品',
+        text: '請確認結帳商品數量',
+        icon: 'error',
+        button: '再試一次'
+      })
     }
   }
   return (
@@ -60,13 +69,9 @@ export default function CartTotal(props) {
         總金額（<span>{totalArray.length}</span>個商品）：$
         <span>{totPrice}</span>
       </div>
-      <NavLink
-        onClick={handleCheckoutProuduct}
-        className="checkOutBtn"
-        to="/Shopping/Cart/checkout"
-      >
-        <div>去買單</div>
-      </NavLink>
+      <div className="checkOutBtn" onClick={handleCheckoutProuduct}>
+        去買單
+      </div>
     </TotalContainer>
   )
 }

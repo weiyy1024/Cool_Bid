@@ -268,6 +268,16 @@ function Prod(props) {
         productId: item.productId
       }
     })
+    // 更新得標者
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/directBuy',
+      data: {
+        memberId: userinfo.memberId,
+        productId: item.productId
+      }
+    })
   }
   return (
     <div className="cartItems">
