@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../../SASS/SellerPageHero.scss'
-import TextField from '@material-ui/core/TextField'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faGem } from '@fortawesome/free-solid-svg-icons'
 import styled from '@emotion/styled'
@@ -58,18 +57,7 @@ function SellerPageHero() {
       </div>
       </div>
        <div className="sellerDescription">
-       <TextField
-         id="description"
-         type="text"
-         name="description"
-         label="賣場描述"
-         variant="outlined"
-         multiline={true}
-         rows={6}
-         className="biginput"
-         value={item.shopDescription}
-         InputLabelProps={{ shrink: true }}
-       />
+       {item.shopDescription}
      </div>
      </>
         )

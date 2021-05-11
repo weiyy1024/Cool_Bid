@@ -8,10 +8,14 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Search from './components/Ahomepage/search/search'
 import Auction from './Auction'
 import Login from './components/member/login'
+import Signup from './components/member/signup'
 import Logout from './components/member/logout'
 import Add from './components/backstage/product1920/Add'
 import productpage from './components/backstage/product1920/productpage'
-// import AddProductEdit from './components/backstage/product1920/AddProductEdit'
+import Biding from './components/backstage/product1920/Biding'
+import SoldOut from './components/backstage/product1920/SoldOut'
+import CloseAuction from './components/backstage/product1920/CloseAuction'
+import OnTheMarket from './components/backstage/product1920/OnTheMarket'
 import SetStoreInfo from './components/backstage/SetStoreInfo21/SetStoreInfo'
 import OrderList from './components/backstage/Order22/OrderList'
 import EditMemberInfo from './components/member/account/editMemberInfo'
@@ -59,6 +63,7 @@ function App() {
           <Route path="/auction/coming" component={AuctionCountdown} exact />
           {/* Member */}
           <Route path="/member/signin" component={Login} exact />
+          <Route path="/member/signup" component={Signup} exact />
           <Route path="/member/signout" component={Logout} exact />
           <Route path="/member/edit" component={EditMemberInfo} exact />
           <Route
@@ -76,17 +81,23 @@ function App() {
           <Route path="/member/coolCoin" component={Login} exact />
           <Route path="/member/purchase" component={BuyList} exact />
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
-          <Route
-            path="/BackStage/SellerPageHero"
-            component={SellerPageHero}
-            exact
-          />
+          <Route path="/:sellerpage" component={SellerPageHero} exact />
+
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
           <Route path="/BackStage/product/all" component={productpage} exact />
-          {/* <Route path="/Shopping/product/:CloseAuction" component={CloseAuction} exact />
-          <Route path="/Shopping/product/:SoldOut" component={SoldOut} exact />
-          <Route path="/Shopping/product/:Biding" component={Biding} exact /> */}
+          <Route
+            path="/BackStage/product/OnTheMarket"
+            component={OnTheMarket}
+            exact
+          />
+          <Route
+            path="/BackStage/product/CloseAuction"
+            component={CloseAuction}
+            exact
+          />
+          <Route path="/BackStage/product/SoldOut" component={SoldOut} exact />
+          <Route path="/BackStage/product/Biding" component={Biding} exact />
           <Route path="/BackStage/editProduct" component={Add} exact />
           <Route path="/BackStage/sellerInfo" component={SetStoreInfo} exact />
           <Route path="/BackStage/orders" component={OrderList} exact />

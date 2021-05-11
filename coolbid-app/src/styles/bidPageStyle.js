@@ -24,11 +24,12 @@ const useStyles = makeStyles(theme => ({
   },
   productInfoWrapper: {
     margin: '0 60px',
-    width: '49rem'
+    width: '44rem'
   },
   storeMedia: {
-    height: '90px',
-    width: '90px'
+    height: '120px',
+    width: '120px',
+    borderRadius: '50%'
   },
   productTitle: {
     fontWeight: 'bold',

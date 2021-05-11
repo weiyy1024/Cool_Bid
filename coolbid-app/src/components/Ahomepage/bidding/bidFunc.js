@@ -21,6 +21,8 @@ const BidFunc = (props, { bidState }) => {
 
   const { setBidState, nowBidPrice, bidTimes } = props
   const [productF, setProductF] = useState([])
+
+  // 頁面載入撈資料
   useEffect(() => {
     axios({
       method: 'get',
@@ -30,38 +32,28 @@ const BidFunc = (props, { bidState }) => {
     })
       .then(res => {
         setProductF(res.data)
-        // setUserInfo(!isButtonDisable)
       })
   }, [bidState])
 
   const directBuyPrice = productF.length === 0 ? '' : productF[0][0].directPrice
   const bidPriceStep = productF.length === 0 ? '' : productF[0][0].perPrice
 
-  // const [bidMethod, setBidMethod] = useState()
-  // const [nowBidPrice, setNowBidPrice] = useState(nowBidPrice)
-  // const [autoBidPrice, setAutoBidPrice] = useState(nowBidPrice + bidPriceStep)
   let [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
 
+  // 結標判斷
+  let isBidDisable = false
+  if (productF.length === 0 ? '' : productF[0][0].nowPrice === directBuyPrice || Date.parse(productF.length === 0 ? '' : productF[0][0].endTime) <= Date.now()) isBidDisable = true
+
   const handleNowPriceChange = e => {
-    // console.log(nowPrice)
-    // setNowPrice(e.target.value)
-    // setAutoBidPrice(e.target.value)
     setDirectBidPrice(e.target.value)
     console.log(e.target)
   }
-
-  // const handleBidMethodChange = e => {
-  //   setBidMethod(e.target.value)
-  // }
-
-  // const handleAutoBidPriceChange = e => {
-  //   setAutoBidPrice(e.target.value)
-  // }
 
   const handleDirectBidPriceChange = e => {
     setDirectBidPrice(e.target.value)
   }
 
+  // 直購
   const directBuy = () => {
     if (!userInfo) {
       swal('需登入才能使用競標功能喔')
@@ -103,6 +95,7 @@ const BidFunc = (props, { bidState }) => {
     }
   }
 
+  // 下標
   const bidNow = () => {
     if (!userInfo) {
       swal('需登入才能使用競標功能喔')
@@ -167,6 +160,7 @@ const BidFunc = (props, { bidState }) => {
     }
   }
 
+  // 省下多少錢
   const saveMoney = () => {
     const priceDiff = directBuyPrice - nowBidPrice
     return priceDiff <= 5000
@@ -261,6 +255,7 @@ const BidFunc = (props, { bidState }) => {
           variant='contained'
           color='primary'
           disableElevation
+          disabled={isBidDisable}
         >
           直接出價
         </Button>

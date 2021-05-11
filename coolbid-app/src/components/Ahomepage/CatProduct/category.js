@@ -45,11 +45,12 @@ const Brands = styled.div`
   border: 0.2rem solid grey;
   text-align: left;
   width: 100%;
+  height: 405px;
+  overflow: hidden;
   font-size: 2rem;
-  padding-bottom: 2.5rem;
+  // padding-bottom: 2.5rem;
+  position: relative;
   ul {
-    // height: 50rem;
-    // overflow: hidden;
     padding-left: 0;
     margin-bottom: 0;
     .brandName {
@@ -73,16 +74,20 @@ const Brands = styled.div`
     padding: 1rem;
   }
 `
-// const More = styled.div`
-//   font-size=2.2rem;
-//   cursor:pointer;
-//   text-align:center;
-//   background:grey;
-//   &:hover{
-//     background:red;
-//     color:white;
-//   }
-// `
+const More = styled.div`
+  font-size=2.2rem;
+  cursor:pointer;
+  text-align:center;
+  background:grey;
+  position: sticky;
+  bottom: 0;
+  height:30px;
+  width: 100%;
+  &:hover{
+    background:#edae10;
+    color:white;
+  }
+`
 // brand----End
 // filter gender
 const Genders = styled.div`
@@ -201,15 +206,16 @@ export default function Category(props) {
       'Content-Type': 'application/json'
     }).then((res) => setBrandArray(res.data))
   }, [cat])
-  // // brand see more Btn
-  // const handleBrand = () => {
-  //   const brand = document.getElementById('brand')
-  //   if (parseInt(brand.style.height) > 500) {
-  //     brand.style.height = '100%'
-  //   } else {
-  //     brand.style.height = '500'
-  //   }
-  // }
+
+  // brand see more Btn
+  const handleBrand = () => {
+    const brand = document.getElementById('brand')
+    if (brand.clientHeight !== 405) {
+      brand.style.height = '405px'
+    } else {
+      brand.style.height = 'auto'
+    }
+  }
 
   // genders
   useEffect(() => {
@@ -375,7 +381,9 @@ export default function Category(props) {
                 )
               })}
             </ul>
-            {/* <More onClick={handleBrand}>see more</More> */}
+            <More id="moreBtn" onClick={handleBrand}>
+              see more
+            </More>
           </Brands>
           <Genders>
             <h3>Genders</h3>

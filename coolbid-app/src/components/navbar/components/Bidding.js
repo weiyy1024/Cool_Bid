@@ -61,7 +61,7 @@ const SignIn = styled.div`
 function ProductDiv1(props) {
   const [time, setTime] = useState('剩下0天0時0分0秒結束')
   const { data } = props
-  const [newPrice, setNewPrice] = useState()
+  const [newPrice, setNewPrice] = useState([])
 
   const getRestTime = (deadline) => {
     setInterval(function () {

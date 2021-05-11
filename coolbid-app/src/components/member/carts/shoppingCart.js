@@ -1,5 +1,5 @@
 /* eslint-disable space-before-function-paren */
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import StepContainer from './components/stepContainer'
 import Shopping from './components/shopping'
@@ -12,6 +12,7 @@ const ShoppingCartContainer = styled.div`
 `
 
 export default function ShoppingCart() {
+  const [checked, setChecked] = useState(true)
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
   return (
     <ShoppingCartContainer>
@@ -21,6 +22,10 @@ export default function ShoppingCart() {
           name="active_tabs"
           id="btn-1"
           className="input btn-1"
+          defaultChecked={checked}
+          onChange={() => {
+            setChecked(!checked)
+          }}
         />
         <label htmlFor="btn-1" className="btn">
           <i className="fa fa-shopping-cart"></i>

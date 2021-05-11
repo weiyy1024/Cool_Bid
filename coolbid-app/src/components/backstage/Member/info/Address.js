@@ -4,6 +4,7 @@ import '../../../SASS/list.scss'
 import '../../../SASS/Components.scss'
 import styled from '@emotion/styled'
 import NestedList from '../../Main/MemberList'
+import Model from '../info/Model'
 
 const AddressContainer = styled.div`
   width: 70%;
@@ -54,9 +55,11 @@ function Address() {
               </div>
             )
           })}
+           <Model />
         </div>
       </div>
     </AddressContainer>
+
   )
 }
 

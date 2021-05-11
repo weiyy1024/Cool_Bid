@@ -24,50 +24,6 @@ import useStyles from '../../../styles/bidPageStyle'
 
 import BidFunc from './bidFunc'
 
-// const productDetail = () => {
-//   switch (product.length === 0 ? '' : product[0][0].categoryId) {
-//     case 'B':
-//       return (
-//         <>
-//           <Typography variant='h4' className={classes.productInfo}>
-//             商品樣式：***男包 後背包***
-//           </Typography>
-//           <Typography variant='h4' className={classes.productInfo}>
-//             商品顏色：{product.length === 0 ? '' : product[0][0].bagColorId}
-//           </Typography>
-//         </>
-//       )
-//       break;
-
-//     case 'C':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     case 'S':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     case 'W':
-//       return (
-//         <>
-
-//         </>
-//       )
-//       break;
-
-//     default:
-//       break;
-//   }
-// }
-
 const BidPage = props => {
   const classes = useStyles()
 
@@ -84,6 +40,7 @@ const BidPage = props => {
   pId = window.location.search
   pId = pId.substr(2)
 
+  // 頁面載入撈資料
   useEffect(() => {
     axios({
       method: 'get',
@@ -95,22 +52,13 @@ const BidPage = props => {
 
   const productStatus = product.length === 0 ? '' : product[0][0].productStatusId
   const nowBidPrice = product.length === 0 ? '' : product[0][0].nowPrice
+  const catId = product.length === 0 ? '' : product[0][0].categoryId
+
+  // 結標判斷
+  let isBidDisable = false
+  if (nowBidPrice === (product.length === 0 ? '' : product[0][0].directPrice) || Date.parse(product.length === 0 ? '' : product[0][0].endTime) <= Date.now()) isBidDisable = true
 
   const rows = product.length === 0 ? [] : product[1]
-
-  // const formatDateTime = function (date) {
-  //   const y = date.getFullYear()
-  //   let m = date.getMonth() + 1
-  //   m = m < 10 ? ('0' + m) : m
-  //   let d = date.getDate()
-  //   d = d < 10 ? ('0' + d) : d
-  //   const h = date.getHours()
-  //   let minute = date.getMinutes()
-  //   minute = minute < 10 ? ('0' + minute) : minute
-  //   return `${y}-${m}-${d} ${h} : ${minute}`
-  // }
-
-  // console.log(formatDateTime(new Date(rows[0].bidTime)))
 
   const handleToggleInfo = () => {
     setToggle((toggle = true))
@@ -120,6 +68,7 @@ const BidPage = props => {
     setToggle((toggle = false))
   }
 
+  // 剩餘時間
   const dateObject = Date.parse(product.length === 0 ? '' : product[0][0].endTime)
   function getDuration (ms) {
     const days = ms / 1000 / 60 / 60 / 24
@@ -130,6 +79,7 @@ const BidPage = props => {
     return (`${Math.floor(days)}天 ${Math.floor(hours)}時 ${Math.floor(minutes)}分 ${Math.floor(seconds)}秒`)
   }
 
+  // 時間截止
   const lastTime = dateObject - Date.now()
   if (lastTime <= 0) {
     axios({
@@ -146,19 +96,33 @@ const BidPage = props => {
     }).then(res => console.log(res.data))
   }
 
+  // let timeCount = 0
+
+  // setInterval(() => {
+  //   timeCount++
+  // }, 1000)
+  // console.log(timeCount)
+
+  // useEffect(() => {
+  //   console.log(lastTime)
+  // }, [timeCount])
+
   return (
     <>
       <Container className={classes.root}>
         <Breadcrumbs aria-label='breadcrumb'>
-          <Link color='inherit' href='../'>
-            Home Page
+          <Link color='inherit' href='http://localhost:3000/'>
+            首頁
           </Link>
-          <Link color='inherit' href='../bag'>
+          <Link color='inherit' href='http://localhost:3000/bidding/'>
+            競標區
+          </Link>
+          <Link color='inherit' href={`http://localhost:3000/bidding/${product.length === 0 ? '' : product[0][0].categoryName}`}>
             {product.length === 0 ? '' : product[0][0].categoryName}
           </Link>
           <Link
             color='textPrimary'
-            href='/bidding/category/product'
+            href='http://localhost:3000/bidding/category/product'
             aria-current='page'
           >
             {product.length === 0 ? '' : product[0][0].productName}
@@ -181,10 +145,10 @@ const BidPage = props => {
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography variant='h2' className={classes.productTitle}>
-              {productStatus === 5 ? '(商品已下架) ' : ''}{product.length === 0 ? '' : product[0][0].productName}
+              {productStatus === 5 ? '(商品已結標) ' : ''}{product.length === 0 ? '' : product[0][0].productName}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
-               {product.length === 0 ? '' : `剩下 ${getDuration(lastTime)} 結束`}
+               {isBidDisable ? '剩下 0天 0時 0分 0秒 結束' : (product.length === 0 ? '' : `剩下 ${getDuration(lastTime)} 結束`)}
             </Typography>
             <Typography variant='h4' className={classes.productInfo}>
               最高出價：{product.length === 0 ? '' : (product[1].length === 0 ? '無' : product[1][0].nickname)} {product.length === 0 ? '' : (product[1].length === 0 ? '' : `(${product[1][0].userId})`)}
@@ -192,12 +156,87 @@ const BidPage = props => {
             <Typography variant='h4' className={classes.productInfo}>
               商品品牌：{product.length === 0 ? '' : product[0][0].brandName}
             </Typography>
-            <Typography variant='h4' className={classes.productInfo}>
-              商品樣式：男包 後背包
+
+            {/* ---------- 各類商品資訊 START ---------- */}
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'B' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[2][0].bagSex}
             </Typography>
-            <Typography variant='h4' className={classes.productInfo}>
-              商品顏色：紅色
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'B' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品類別：{product.length === 0 ? '' : product[2][0].bagType}
             </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'B' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品顏色：{product.length === 0 ? '' : product[2][0].bagColor}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'C' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[3][0].clothSex}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'C' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品季度：{product.length === 0 ? '' : product[3][0].clothSeason}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'C' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品尺寸：{product.length === 0 ? '' : product[3][0].clothSize}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'S' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[4][0].shoesSex}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'S' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品年份：{product.length === 0 ? '' : product[4][0].shoesYear}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'S' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品尺寸：{product.length === 0 ? '' : product[4][0].shoesSize}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'W' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品調性：{product.length === 0 ? '' : product[5][0].watchSex}
+            </Typography>
+            <Typography
+              variant='h4'
+              className={classes.productInfo}
+              style={catId === 'W' ? { display: 'block' } : { display: 'none' }}
+            >
+              商品類別：{product.length === 0 ? '' : product[5][0].watchType}
+            </Typography>
+            {/* ---------- 各類商品資訊 END ---------- */}
+
             <Typography variant='h4' className={classes.productInfo}>
               商品狀況：{product.length === 0 ? '' : product[0][0].productConditionDescription}
             </Typography>
@@ -222,22 +261,25 @@ const BidPage = props => {
             justify='space-around'
             className={classes.store}
           >
-            <img
+            <CardMedia
               className={classes.storeMedia}
-              src='https://crazypetter.com.tw/wp-content/uploads/2019/07/BLOW-%E6%88%90%E9%95%B7%E5%8F%B2_190413_0911.jpg'
+              image={`/imgs/sellerPic/${product.length === 0 ? '' : product[0][0].memberId}.jpg`}
             />
             <div className={classes.storeInfo}>
               <div className={classes.storeNameGroup}>
-                <Typography variant='h3' className={classes.storeName}>
-                  {product.length === 0 ? '' : product[0][0].shopDescription}
-                </Typography>
-                <Button
+                <Link
+                  className={classes.storeName}
+                  href={`http://localhost:3000/${product.length === 0 ? '' : product[0][0].memberId}`}
+                >
+                  {product.length === 0 ? '' : product[0][0].shopName} 的賣場
+                </Link>
+                {/* <Button
                   variant='outlined'
                   color='primary'
                   className={classes.follow}
                 >
                   Follow
-                </Button>
+                </Button> */}
               </div>
               <Typography variant='h4' className={classes.storeInfo}>
                 {product.length === 0 ? '' : product[0][0].shopLevelDescription}
@@ -305,7 +347,7 @@ const BidPage = props => {
                     </TableCell>
                     <TableCell>{row.userId}</TableCell>
                     <TableCell>{row.bidprice}</TableCell>
-                    <TableCell>{row.bidTime}</TableCell>
+                    <TableCell>{new Date(Date.parse(row.bidTime)).toLocaleString()}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
