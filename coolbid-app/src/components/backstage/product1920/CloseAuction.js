@@ -12,8 +12,7 @@ import ProductTabs from '../product1920/ProductTabs'
 import SellerBackendList from '../Main/SellerBackendList'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -97,7 +96,7 @@ function CloseAuction() {
               <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
               <TableCell align="center" className={classes.itemTitle}>買家</TableCell>
               <TableCell align="center" className={classes.itemTitle} onClick={changebidPrice} style={{ cursor: 'pointer' }}>
-              競標<FontAwesomeIcon icon={faArrowsAltV} /></TableCell>
+              競標<UnfoldMoreIcon/></TableCell>
               <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
                 結標
               </TableCell>
