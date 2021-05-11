@@ -12,9 +12,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'coolbidLatest',
-  port: 8889,
+  port: 3306,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -348,7 +348,7 @@ app.get('/search/:id', function (req, res) {
 //夏
 app.get('/member/purchase', function (req, res) {
   let sql =
-    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+    'SELECT o.orderId, shopName, productName, p.productId, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err)
@@ -359,7 +359,7 @@ app.get('/member/purchase', function (req, res) {
 
 app.get('/BackStage/orders', function (req, res) {
   let sql =
-    'SELECT o.orderId, userId, productName, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+    'SELECT o.orderId, userId, p.productId, productName, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err)

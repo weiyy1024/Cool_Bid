@@ -87,7 +87,7 @@ function App() {
           />
 
          {/* Seller */}
-         <Route path="/BackStage" component={Backstage} exact />
+          <Route path="/BackStage" component={Backstage} exact />
           <Route path="/BackStage/product/all" component={productpage} exact />
           <Route path="/BackStage/product/OnTheMarket" component={OnTheMarket} exact />
           <Route path="/BackStage/product/CloseAuction" component={CloseAuction} exact />
