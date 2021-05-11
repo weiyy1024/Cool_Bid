@@ -14,8 +14,8 @@ import { Link } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   width: 25%;
-  height: 30rem;
-  margin: 20rem auto;
+  min-height:calc(100vh - 125px);
+  margin: 20rem auto 0;
   color: grey;
 `
 

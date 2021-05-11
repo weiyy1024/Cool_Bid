@@ -7,9 +7,10 @@ html,body {
   font-family: "Noto Sans TC", "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
   background-color: #eeeeee;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 #root{
-  min-height:calc(100% - 125px);
+  height:100%;
   width: 100%;
   /* background-color:#686a7a */
 }

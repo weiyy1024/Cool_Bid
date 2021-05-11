@@ -10,7 +10,7 @@
 .active-tabs .input {
   opacity: 0;
   display: none;
-  visibility: hidden;
+  display: none;
 }
 
 .btn {
@@ -45,37 +45,32 @@
 .tabs-container {
   width: 100%;
   position: relative;
-  float: left;
-  top: -5px;
+  min-height: calc(100vh - 125px);
+  top: 44px;
   height: 100%;
-  overflow: scroll;
+  /* overflow: scroll; */
   background: #fff;
 }
 
 .tab-1,
 .tab-2,
 .tab-3 {
-  min-height: 100rem;
+  /* min-height: 100rem; */
   width: 100%;
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   opacity: 0;
-  visibility: hidden;
+  display: none;
   transition: all 0.4s;
-}
-
-.tab-1,
-.tab-2,
-.tab-3 {
-  height: 300px;
+  padding-bottom:2rem;
 }
 
 .btn-1:checked ~ .tabs-container .tab-1,
 .btn-2:checked ~ .tabs-container .tab-2,
 .btn-3:checked ~ .tabs-container .tab-3 {
   position: relative;
-  visibility: visible;
+  display: block;
   top: 0;
   left: 0;
   opacity: 1;
