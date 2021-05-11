@@ -39,7 +39,6 @@ function productpage () {
   const [perPrice, setPerPrice] = useState(0)
   const [directPrice, setdirectPrice] = useState(0)
   const [bidPrice, setbidPrice] = useState(0)
-  const [endTime, setEndTime] = useState(0)
 
   useEffect(() => {
     console.log('hi')
@@ -79,14 +78,6 @@ function productpage () {
       setdirectPrice(1)
     } else {
       setdirectPrice(0)
-    }
-  }
-
-  const changeEndTime = () => {
-    if (endTime === 0) {
-      setEndTime(1)
-    } else {
-      setEndTime(0)
     }
   }
 
@@ -154,23 +145,7 @@ function productpage () {
     }
   }, [directPrice])
 
-  useEffect(() => {
-    if (endTime === 0) {
-      const endTimeAfter = data.map((item) => item)
-      endTimeAfter.sort(function (a, b) {
-        return new Date(a.endTime) - new Date(b.endTime)
-      })
-      setEndTime(endTimeAfter)
-    } else {
-      const endTimeAfter = data.map((item) => item)
-      endTimeAfter.sort(function (a, b) {
-        return new Date(b.endTime) - new Date(a.endTime)
-      })
-      setEndTime(endTimeAfter)
-    }
-  }, [endTime])
-
-  useEffect(() => {}, [endTime, directPrice, perPrice, startPrice, bidPrice])
+  useEffect(() => {}, [directPrice, perPrice, startPrice, bidPrice])
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -203,8 +178,8 @@ function productpage () {
               <TableCell align="center" className={classes.itemTitle} onClick={changedirectPrice} style={{ cursor: 'pointer' }}>
                 直購<FontAwesomeIcon icon={faArrowsAltV} />
               </TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changeEndTime} style={{ cursor: 'pointer' }}>
-                結標<FontAwesomeIcon icon={faArrowsAltV} />
+              <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
+                結標
               </TableCell>
               <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
             </TableRow>

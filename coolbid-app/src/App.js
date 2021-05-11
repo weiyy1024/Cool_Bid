@@ -32,7 +32,9 @@ import Address from './components/backstage/Member/info/Address'
 import ShoppingCart from './components/member/carts/shoppingCart'
 //
 import SellerPageHero from './components/backstage/SellerPageHero23/SellerPageHero'
-
+// cart checkout
+import Checkout from './components/member/carts/components/checkout'
+import CompleteOrder from './components/member/carts/components/completeOrder'
 function App() {
   return (
     <BrowserRouter>
@@ -79,7 +81,6 @@ function App() {
           <Route path="/member/paymentInfo" component={Login} exact />
           <Route path="/member/coolCoin" component={Login} exact />
           <Route path="/member/purchase" component={BuyList} exact />
-
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
           <Route path="/:sellerpage" component={SellerPageHero} exact />
 
@@ -101,12 +102,12 @@ function App() {
           <Route path="/BackStage/editProduct" component={Add} exact />
           <Route path="/BackStage/sellerInfo" component={SetStoreInfo} exact />
           <Route path="/BackStage/orders" component={OrderList} exact />
-
           {/* Shopping */}
           <Route path="/Shopping/Cart" component={ShoppingCart} exact />
           <Route path="/Shopping/Bidding" component={Login} exact />
           <Route path="/Shopping/WishList" component={ShoppingCart} exact />
-          {/* Footer */}
+          <Route path="/Shopping/Cart/checkout" component={Checkout} exact />
+          <Route path="/completeOrder" component={CompleteOrder} />
         </Switch>
         <Footer />
       </div>

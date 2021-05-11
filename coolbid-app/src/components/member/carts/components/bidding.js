@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable space-before-function-paren */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -121,9 +122,35 @@ const Shop = styled.div`
     }
   }
 `
+const Clear = styled.div`
+  margin-top: 20rem;
+  p {
+    font-size: 3.5rem;
+    width: 30%;
+    padding: 2rem;
+    margin: 3rem auto;
+    text-align: center;
+  }
+  div {
+    font-size: 2.5rem;
+    width: 8%;
+    margin: 1rem auto;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border: 0.35rem solid grey;
+    border-radius: 0.3rem;
+    color: grey;
+    cursor: pointer;
+  }
+  div:hover {
+    color: white;
+    border: 0.35rem solid #edaf11;
+    background-color: #edaf11;
+  }
+`
 function MyPrice(props) {
   const { productId, userinfo, a } = props
-  const [price, setPrice] = useState()
+  const [price, setPrice] = useState([])
   useEffect(() => {
     axios({
       method: 'post',
@@ -245,10 +272,12 @@ function Prod(props) {
   return (
     <div className="cartItems">
       <div className="info">
-        <img src={'/imgs/' + item.productId + '.jpg'} />
+        <NavLink to={'/bidding/product/product?=' + item.productId}>
+          <img src={'/imgs/' + item.productId + '.jpg'} />
+        </NavLink>
       </div>
-      <div className="infoProductName">
-        <NavLink to={'/Ahomepage/product/product?=' + item.productId}>
+      <div className="infoProductName title">
+        <NavLink to={'/bidding/product/product?=' + item.productId}>
           {item.productName}
         </NavLink>
       </div>
@@ -320,7 +349,7 @@ function Items(props) {
 }
 export default function Bidding(props) {
   const { userinfo } = props
-  const [biddingProduct, setBiddingProduct] = useState()
+  const [biddingProduct, setBiddingProduct] = useState([])
   const [product, setProduct] = useState([1])
   const [shopId, setShopId] = useState([])
   const [bidEvent, setBidEvent] = useState()
@@ -337,7 +366,6 @@ export default function Bidding(props) {
       .then((res) => {
         let bP = res.data.map((item) => item.productId)
         bP = '(' + bP.toString() + ')'
-        console.log(bP)
         setBiddingProduct(bP)
       })
       .then(() => {
@@ -350,7 +378,6 @@ export default function Bidding(props) {
             'Content-Type': 'application/json'
           })
             .then((res) => {
-              console.log(res.data)
               setProduct(res.data)
             })
             .then(() => {
@@ -360,50 +387,61 @@ export default function Bidding(props) {
                 url: '/shopName/' + biddingProduct,
                 'Content-Type': 'application/json'
               }).then((res) => {
-                console.log(res.data)
                 setShopId(res.data)
               })
             })
         }
       })
   }, [userinfo, biddingProduct, bidEvent, direct])
+  // 往競標頁跳轉的Btn
+  const handleBackHome = () => {
+    window.location.href = 'http://localhost:3000/bidding'
+  }
+
   return (
     <>
-      {shopId.map((item, index) => (
-        <Shop key={index}>
-          <div className="top">
-            <p>
-              {item.shopName}(
-              <span>
-                {
-                  product.filter(function (el) {
-                    return el.shopId === item.shopId
-                  }).length
-                }
-              </span>
-              )
-            </p>
-          </div>
-          <div className="items">
-            <div className="cartTitle">
-              <div className="info">商品</div>
-              <div className="info">商品名稱</div>
-              <div className="info">結標倒數</div>
-              <div className="info">最高出價</div>
-              <div className="info">我的出價</div>
-              <div className="info">競標</div>
-              <div className="info">直購價</div>
+      {product.length ? (
+        shopId.map((item, index) => (
+          <Shop key={index}>
+            <div className="top">
+              <p>
+                {item.shopName}(
+                <span>
+                  {
+                    product.filter(function (el) {
+                      return el.shopId === item.shopId
+                    }).length
+                  }
+                </span>
+                )
+              </p>
             </div>
-            <Items
-              setBidEvent={setBidEvent}
-              shopId={item.shopId}
-              product={product}
-              direct={direct}
-              setDirect={setDirect}
-            />
-          </div>
-        </Shop>
-      ))}
+            <div className="items">
+              <div className="cartTitle">
+                <div className="info">商品</div>
+                <div className="info">商品名稱</div>
+                <div className="info">結標倒數</div>
+                <div className="info">最高出價</div>
+                <div className="info">我的出價</div>
+                <div className="info">競標</div>
+                <div className="info">直購價</div>
+              </div>
+              <Items
+                setBidEvent={setBidEvent}
+                shopId={item.shopId}
+                product={product}
+                direct={direct}
+                setDirect={setDirect}
+              />
+            </div>
+          </Shop>
+        ))
+      ) : (
+        <Clear>
+          <p>目前沒有競標中的商品</p>
+          <div onClick={handleBackHome}>開始競標</div>
+        </Clear>
+      )}
     </>
   )
 }

@@ -85,7 +85,7 @@ const Shop = styled.div`
         text-align: center;
         line-height: 10rem;
       }
-      .submitBtn{
+      .submitBtn {
         font-size: 1.8rem;
       }
     }
@@ -164,191 +164,214 @@ export default function Wish() {
       baseURL: 'http://localhost:3001',
       url: '/collect/' + userinfo.memberId
     }).then((e) => {
-      const collected = '(' + e.data.map((item) => item.productId).toString() + ')'
-      axios.post(
-        'http://localhost:3001/membercollect', {
-          data: collected
-        }
-      // 這邊拿的到收藏的商品們
-      ).then((e) => { setCollectProduct(e.data) })
+      const collected =
+        '(' + e.data.map((item) => item.productId).toString() + ')'
+      axios
+        .post(
+          'http://localhost:3001/membercollect',
+          {
+            data: collected
+          }
+          // 這邊拿的到收藏的商品們
+        )
+        .then((e) => {
+          setCollectProduct(e.data)
+        })
     })
   }, [])
 
-  collectProduct.forEach((item) => {
-    switch (item.productstatusId) {
-      case 1:
-        // 上架
-        unbidproduct.push(item)
-        break
-      case 4:
-        // 競標中
-        bidproduct.push(item)
-        break
-      case 5:
-        // 結標
-        sold.push(item)
-        break
-      case 2:
-      case 3:
-      case 6:
-        // 下架 刪除 售出
-        deleted.push(item)
-        break
-    }
-  })
+  collectProduct.length > 0 &&
+    collectProduct.forEach((item) => {
+      switch (item.productstatusId) {
+        case 1:
+          // 上架
+          unbidproduct.push(item)
+          break
+        case 4:
+          // 競標中
+          bidproduct.push(item)
+          break
+        case 5:
+          // 結標
+          sold.push(item)
+          break
+        case 2:
+        case 3:
+        case 6:
+          // 下架 刪除 售出
+          deleted.push(item)
+          break
+      }
+    })
 
   return (
     <>
-    <Shop>
-      <div className="top">
-        <p>
-          尚未有人競標(<span>{unbidproduct.length}</span>)
-        </p>
-      </div>
-      <div className="items">
-        <div className="cartTitle">
-          <div className="info">圖片</div>
-          <div className="info">商品名稱</div>
-          <div className="info">截標時間</div>
-          <div className="info">起標價</div>
-          <div className="info">取消收藏</div>
+      <Shop>
+        <div className="top">
+          <p>
+            尚未有人競標(<span>{unbidproduct.length}</span>)
+          </p>
         </div>
-        {unbidproduct.map((item, index) => (
-        <div className="cartItems" key={index}>
-          <div className="info">
-            <img src={'/imgs/' + item.productId + '.jpg'} />
+        <div className="items">
+          <div className="cartTitle">
+            <div className="info">圖片</div>
+            <div className="info">商品名稱</div>
+            <div className="info">截標時間</div>
+            <div className="info">起標價</div>
+            <div className="info">取消收藏</div>
           </div>
-          <div className="infoProductName">
-            <NavLink to={'/bidding/product/product?=' + item.productId}>
-              {item.productName}
-            </NavLink>
-          </div>
-          <Timer endTime={item.endTime} />
-          <div className="info">{item.startPrice}</div>
-          <div className="info">
-          <Button
-          className="submitBtn"
-          variant="outlined"
-          onClick={() => { handleUncollect(item.productId) }}
-          type="submit"
-          style={{ width: '45%' }}
-          >取消收藏</Button>
-          </div>
+          {unbidproduct.map((item, index) => (
+            <div className="cartItems" key={index}>
+              <div className="info">
+                <img src={'/imgs/' + item.productId + '.jpg'} />
+              </div>
+              <div className="infoProductName">
+                <NavLink to={'/bidding/product/product?=' + item.productId}>
+                  {item.productName}
+                </NavLink>
+              </div>
+              <Timer endTime={item.endTime} />
+              <div className="info">{item.startPrice}</div>
+              <div className="info">
+                <Button
+                  className="submitBtn"
+                  variant="outlined"
+                  onClick={() => {
+                    handleUncollect(item.productId)
+                  }}
+                  type="submit"
+                  style={{ width: '45%' }}
+                >
+                  取消收藏
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
-        ))}
-      </div>
-    </Shop>
-    <Shop>
-      <div className="top">
-        <p>
-          競標中(<span>{bidproduct.length}</span>)
-        </p>
-      </div>
-      <div className="items">
-        <div className="cartTitle">
-          <div className="info">圖片</div>
-          <div className="info">商品名稱</div>
-          <div className="info">截標時間</div>
-          <div className="info">目前價格</div>
-          <div className="info">取消收藏</div>
+      </Shop>
+      <Shop>
+        <div className="top">
+          <p>
+            競標中(<span>{bidproduct.length}</span>)
+          </p>
         </div>
-        {bidproduct.map((item, index) => (
-        <div className="cartItems" key={index}>
-          <div className="info">
-            <img src={'/imgs/' + item.productId + '.jpg'} />
+        <div className="items">
+          <div className="cartTitle">
+            <div className="info">圖片</div>
+            <div className="info">商品名稱</div>
+            <div className="info">截標時間</div>
+            <div className="info">目前價格</div>
+            <div className="info">取消收藏</div>
           </div>
-          <div className="infoProductName">
-            <NavLink to={'/bidding/product/product?=' + item.productId}>
-              {item.productName}
-            </NavLink>
-          </div>
-          <Timer endTime={item.endTime} />
-          <div className="info">{item.nowPrice}</div>
-          <div className="info">
-          <Button
-          className="submitBtn"
-          variant="outlined"
-          onClick={() => { handleUncollect(item.productId) }}
-          type="submit"
-          style={{ width: '45%' }}
-          >取消收藏</Button>
-          </div>
+          {bidproduct.map((item, index) => (
+            <div className="cartItems" key={index}>
+              <div className="info">
+                <img src={'/imgs/' + item.productId + '.jpg'} />
+              </div>
+              <div className="infoProductName">
+                <NavLink to={'/bidding/product/product?=' + item.productId}>
+                  {item.productName}
+                </NavLink>
+              </div>
+              <Timer endTime={item.endTime} />
+              <div className="info">{item.nowPrice}</div>
+              <div className="info">
+                <Button
+                  className="submitBtn"
+                  variant="outlined"
+                  onClick={() => {
+                    handleUncollect(item.productId)
+                  }}
+                  type="submit"
+                  style={{ width: '45%' }}
+                >
+                  取消收藏
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
-        ))}
-      </div>
-    </Shop>
-    <Shop>
-      <div className="top">
-        <p>
-          已結標(<span>{sold.length}</span>)
-        </p>
-      </div>
-      <div className="items">
-        <div className="cartTitle">
-          <div className="info">圖片</div>
-          <div className="info">商品名稱</div>
-          <div className="info">結標價格</div>
-          <div className="info">取消收藏</div>
+      </Shop>
+      <Shop>
+        <div className="top">
+          <p>
+            已結標(<span>{sold.length}</span>)
+          </p>
         </div>
-        {sold.map((item, index) => (
-        <div className="cartItems" key={index}>
-          <div className="info">
-            <img src={'/imgs/' + item.productId + '.jpg'} />
+        <div className="items">
+          <div className="cartTitle">
+            <div className="info">圖片</div>
+            <div className="info">商品名稱</div>
+            <div className="info">結標價格</div>
+            <div className="info">取消收藏</div>
           </div>
-          <div className="infoProductName">
-            <NavLink to={'/bidding/product/product?=' + item.productId}>
-              {item.productName}
-            </NavLink>
-          </div>
-          <div className="info">{item.nowPrice}</div>
-          <div className="info">
-          <Button
-          className="submitBtn"
-          variant="outlined"
-          onClick={() => { handleUncollect(item.productId) }}
-          type="submit"
-          style={{ width: '45%' }}
-          >取消收藏</Button>
-          </div>
+          {sold.map((item, index) => (
+            <div className="cartItems" key={index}>
+              <div className="info">
+                <img src={'/imgs/' + item.productId + '.jpg'} />
+              </div>
+              <div className="infoProductName">
+                <NavLink to={'/bidding/product/product?=' + item.productId}>
+                  {item.productName}
+                </NavLink>
+              </div>
+              <div className="info">{item.nowPrice}</div>
+              <div className="info">
+                <Button
+                  className="submitBtn"
+                  variant="outlined"
+                  onClick={() => {
+                    handleUncollect(item.productId)
+                  }}
+                  type="submit"
+                  style={{ width: '45%' }}
+                >
+                  取消收藏
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
-        ))}
-      </div>
-    </Shop>
-    <Shop>
-      <div className="top">
-        <p>
-          下架／售出商品(<span>{deleted.length}</span>)
-        </p>
-      </div>
-      <div className="items">
-        <div className="cartTitle">
-          <div className="info">圖片</div>
-          <div className="info">商品名稱</div>
-          <div className="info">取消收藏</div>
+      </Shop>
+      <Shop>
+        <div className="top">
+          <p>
+            下架／售出商品(<span>{deleted.length}</span>)
+          </p>
         </div>
-        {deleted.map((item, index) => (
-        <div className="cartItems" key={index}>
-          <div className="info">
-            <img src={'/imgs/' + item.productId + '.jpg'} />
+        <div className="items">
+          <div className="cartTitle">
+            <div className="info">圖片</div>
+            <div className="info">商品名稱</div>
+            <div className="info">取消收藏</div>
           </div>
-          <div className="infoProductName">
-            <NavLink to={'/bidding/product/product?=' + item.productId}>
-              {item.productName}
-            </NavLink>
-          </div>
-          <div className="info">
-          <Button
-          className="submitBtn"
-          variant="outlined"
-          onClick={() => { handleUncollect(item.productId) }}
-          type="submit"
-          style={{ width: '45%' }}
-          >取消收藏</Button>
-          </div>
+          {deleted.map((item, index) => (
+            <div className="cartItems" key={index}>
+              <div className="info">
+                <img src={'/imgs/' + item.productId + '.jpg'} />
+              </div>
+              <div className="infoProductName">
+                <NavLink to={'/bidding/product/product?=' + item.productId}>
+                  {item.productName}
+                </NavLink>
+              </div>
+              <div className="info">
+                <Button
+                  className="submitBtn"
+                  variant="outlined"
+                  onClick={() => {
+                    handleUncollect(item.productId)
+                  }}
+                  type="submit"
+                  style={{ width: '45%' }}
+                >
+                  取消收藏
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
-        ))}
-      </div>
-    </Shop>
+      </Shop>
     </>
   )
 }

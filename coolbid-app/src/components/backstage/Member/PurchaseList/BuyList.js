@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
   spacing: {
     width: 150
+  },
+  imgStyle: {
+    width: 80
   }
 }))
 
@@ -111,7 +114,9 @@ function BuyList () {
 
                   <TableBody>
                     <TableRow>
-                      <TableCell align="center" className={classes.itemTxt}>null</TableCell>
+                      <TableCell align="center" className={classes.itemTxt}>
+                      <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
+                      </TableCell>
                       <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
                       <TableCell align="center" className={classes.itemTxt}>{item.orderTime}</TableCell>
                       <TableCell align="center" className={classes.itemTxt}>訂單成立</TableCell>
