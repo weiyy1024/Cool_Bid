@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-// import React, { useState } from 'react'
 import axios from 'axios'
 import swal from 'sweetalert'
 
@@ -9,7 +8,9 @@ import {
   FormControl,
   Input,
   FormHelperText,
-  Button
+  Button,
+  Select,
+  MenuItem
 } from '@material-ui/core'
 
 import SaveIcon from '@material-ui/icons/Save'
@@ -30,12 +31,10 @@ const EditMemberInfo = () => {
   const [lastName, setLastName] = useState()
   const [firstName, setFirstName] = useState()
   const [nickname, setNickname] = useState()
-  const [gender, setGender] = useState()
+  const [gender, setGender] = useState('')
   const [birthday, setBirthday] = useState()
   const [phone, setPhone] = useState()
   const [email, setEmail] = useState()
-
-  console.log(userInfo)
 
   useEffect(() => {
     axios
@@ -43,7 +42,6 @@ const EditMemberInfo = () => {
         memberId: userInfo.memberId
       })
       .then(res => {
-        // console.log(res.data[0])
         setLastName(res.data[0].lastName)
         setFirstName(res.data[0].firstName)
         setNickname(res.data[0].nickname)
@@ -53,6 +51,11 @@ const EditMemberInfo = () => {
         setEmail(res.data[0].email)
       })
   }, [])
+
+  const dateFormat = date => {
+    const d = new Date(birthday)
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+  }
 
   const handleLastNameChange = e => {
     setLastName(e.target.value)
@@ -165,13 +168,16 @@ const EditMemberInfo = () => {
 
           {/* 性別 */}
           <Typography>性別</Typography>
-          <FormControl className={classes.inline}>
-            <Input
-              id="gender"
-              aria-describedby="my-helper-text"
-              onChange={handleGenderChange}
+          <FormControl className={classes.formControl}>
+            <Select
+              id="gender-select"
               value={gender}
-            />
+              onChange={handleGenderChange}
+            >
+              <MenuItem value={'男'}>男</MenuItem>
+              <MenuItem value={'女'}>女</MenuItem>
+              <MenuItem value={'其他'}>其他</MenuItem>
+            </Select>
           </FormControl>
           <br />
 
@@ -179,10 +185,10 @@ const EditMemberInfo = () => {
           <Typography variant="h5">生日</Typography>
           <FormControl className={classes.inline}>
             <Input
-              id="birthday"
-              aria-describedby="my-helper-text"
+             id="birthday"
+              type="date"
+              value={dateFormat(birthday)}
               onChange={handleBirthdayChange}
-              value={birthday}
             />
           </FormControl>
           <br />
