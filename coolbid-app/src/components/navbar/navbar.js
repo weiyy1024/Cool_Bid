@@ -270,7 +270,7 @@ export default function NavBar() {
             <MemberDropDown />
           </Member>
           <Bidding userinfo={userinfo} />
-          <ShoppingCart />
+          <ShoppingCart userinfo={userinfo} />
         </ThreeIcons>
       </Navbar>
     </ThemeProvider>
