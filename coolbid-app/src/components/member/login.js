@@ -10,6 +10,7 @@ import axios from 'axios'
 import Button from '@material-ui/core/Button'
 import './log.css'
 import swal from 'sweetalert'
+import { Link } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   width: 25%;
@@ -45,10 +46,10 @@ export default function Login(props) {
           // 把member資訊存入session
           window.sessionStorage.setItem('userinfo', JSON.stringify(e.data))
           swal({
-            title: "登入成功",
+            title: '登入成功',
             // text: "You clicked the button!",
-            icon: "success",
-            button: "開始競標！"
+            icon: 'success',
+            button: '開始競標！'
           }).then(() => {
             window.location.href = 'http://localhost:3000/'
           }
@@ -56,14 +57,15 @@ export default function Login(props) {
         } else {
           // alert('登入失敗')
           swal({
-            title: "登入失敗",
-            text: "請輸入正確的帳號密碼",
-            icon: "error",
-            button: "再試一次"
+            title: '登入失敗',
+            text: '請輸入正確的帳號密碼',
+            icon: 'error',
+            button: '再試一次'
           })
         }
       })
   }
+
   return (
     <>
       <LoginContainer>
@@ -92,12 +94,15 @@ export default function Login(props) {
           color="primary"
           onClick={handlelogin}
           type="submit"
-          style={{ width: '100%' }}
+          style={{ width: '100%', fontSize: '2rem' }}
         >
           登入
         </Button>
-        <br />
+        <br /><br />
+        <span className="title2">還沒有會員？<Link to="/member/signup">註冊</Link></span>
+
       </LoginContainer>
+
       <Myfooter className="text-center">
         <div className="row">
           <div className="col">

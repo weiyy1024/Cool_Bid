@@ -12,9 +12,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'root',
   database: 'coolbidLatest',
-  port: 3306,
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -425,9 +425,6 @@ app.get('/BackStage/product/soldout',function(req,res){
   })
   })   
 
-
-
-
 // 撈使用者的收藏清單 20200507 Jou
 app.post('/likeproduct', function (req, res) {
   conn.query(
@@ -439,7 +436,6 @@ app.post('/likeproduct', function (req, res) {
     }
   )
 })
-
 
 // 撈使用者的收藏清單 20200507 Jou
 app.post('/likeproduct', function (req, res) {
@@ -536,6 +532,33 @@ app.post('/membercollect', function (req, res) {
   conn.query(
     `select productId, productName, endTime, nowPrice, startPrice, p.productstatusId as productstatusId, productStatusDescription as productstatus from product as p
     join productstatus as ps on p.productStatusId = ps.productStatusId where productId in ${req.body.data}`,
+    function (err, result) {
+      if (err) console.log(err)
+      res.send(result)
+      console.log(result)
+    }
+  )
+})
+
+// 註冊 20210510 Jou
+app.post('/signup', function (req, res) {
+  let r = req.body
+  conn.query(
+    `INSERT INTO member (userId, firstName, lastName, nickname, birthday, phone, email, password, shopName)
+    values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [r.userId, r.name, r.last, r.nickname, r.bday, r.phone, r.email, encrypt(r.password), r.userId],
+    function (err, result) {
+      if (err) console.log(err)
+      res.send('註冊成功')
+      console.log(result)
+    }
+  )
+})
+
+// 拿目前所有註冊的Id 20200510 Jou
+app.get('/getuserid',function(req,res){
+  conn.query(
+    `select userId from member`,
     function (err, result) {
       if (err) console.log(err)
       res.send(result)
