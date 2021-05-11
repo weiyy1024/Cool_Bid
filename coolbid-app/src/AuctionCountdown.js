@@ -65,7 +65,7 @@ const slides = [
   }
 ]
 
-function useTilt (active) {
+const useTilt = (active) => {
   const ref = React.useRef(null)
 
   React.useEffect(() => {
@@ -127,7 +127,7 @@ const slidesReducer = (state, event) => {
   }
 }
 
-function Slide ({ slide, offset }) {
+const Slide = ({ slide, offset }) => {
   const active = offset === 0 ? true : null
   const ref = useTilt(active)
 
@@ -163,12 +163,12 @@ function Slide ({ slide, offset }) {
   )
 }
 
-function AuctionCountdown () {
+const AuctionCountdown = () => {
   const classes = useStyles()
   const [time, setTime] = useState(false)
   const [timer, setTimer] = useState()
   const [state, dispatch] = React.useReducer(slidesReducer, initialState)
-  const auctionDay = moment('2021-5-20 13:00:00')
+  const auctionDay = moment('2021-5-11 19:16:00')
   const countdown = () => {
     const now = moment()
     const difference = auctionDay.diff(now)
@@ -177,14 +177,25 @@ function AuctionCountdown () {
     const hour = minute * 60
     const day = hour * 24
 
-    setTime({
-      days: Math.floor(difference / day),
-      hours: Math.floor((difference % day) / hour),
-      minutes: Math.floor((difference % hour) / minute),
-      seconds: Math.floor((difference % minute) / second)
-    })
-
-    setTimer(setTimeout(countdown, 1000))
+    if (difference < 1000) {
+      setTime({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      })
+      setTimeout(() => {
+        window.location.href = '/auction'
+      }, 1000)
+    } else {
+      setTime({
+        days: Math.floor(difference / day),
+        hours: Math.floor((difference % day) / hour),
+        minutes: Math.floor((difference % hour) / minute),
+        seconds: Math.floor((difference % minute) / second)
+      })
+      setTimer(setTimeout(countdown, 1000))
+    }
   }
 
   useEffect(() => {
@@ -193,7 +204,15 @@ function AuctionCountdown () {
   }, [])
 
   return (
-    <div style={{ height: '80vh', marginTop: '120px', background: '#151515', overflowY: 'scroll', overflowX: 'hidden' }}>
+    <div
+      style={{
+        height: '80vh',
+        marginTop: '120px',
+        background: '#151515',
+        overflowY: 'scroll',
+        overflowX: 'hidden'
+      }}
+    >
       <div className={classes.container}>
         <div id="countdown" style={{}}>
           <ul style={{ margin: '0' }}>

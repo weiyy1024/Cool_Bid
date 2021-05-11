@@ -17,6 +17,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 // styled Components
 const ProductDiv = styled.div`
   display: flex;
+  justify-content:center;
 `
 const ProductImg = styled.div`
   width: 12rem;
