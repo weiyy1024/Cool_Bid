@@ -122,7 +122,7 @@ const Shop = styled.div`
 `
 function MyPrice(props) {
   const { productId, userinfo, a } = props
-  const [price, setPrice] = useState()
+  const [price, setPrice] = useState([])
   useEffect(() => {
     axios({
       method: 'post',
@@ -319,7 +319,7 @@ function Items(props) {
 }
 export default function Bidding(props) {
   const { userinfo } = props
-  const [biddingProduct, setBiddingProduct] = useState()
+  const [biddingProduct, setBiddingProduct] = useState([])
   const [product, setProduct] = useState([1])
   const [shopId, setShopId] = useState([])
   const [bidEvent, setBidEvent] = useState()
@@ -368,7 +368,7 @@ export default function Bidding(props) {
   }, [userinfo, biddingProduct, bidEvent, direct])
   return (
     <>
-      {shopId.map((item, index) => (
+      {shopId.length > 0 && shopId.map((item, index) => (
         <Shop key={index}>
           <div className="top">
             <p>

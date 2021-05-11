@@ -247,7 +247,6 @@ const BidFunc = (props, { bidState }) => {
       <br />
       <div className={classes.bidNowGroup}>
         <Button
-          style={!isBidDisable ? { display: 'block' } : { display: 'none' }}
           className={classes.go}
           onClick={() => {
             bidNow()
@@ -256,20 +255,7 @@ const BidFunc = (props, { bidState }) => {
           variant='contained'
           color='primary'
           disableElevation
-        >
-          直接出價
-        </Button>
-        <Button
-          style={isBidDisable ? { display: 'block' } : { display: 'none' }}
-          className={classes.go}
-          onClick={() => {
-            bidNow()
-            setBidState(bidState + 1)
-          }}
-          variant='contained'
-          color='primary'
-          disableElevation
-          disabled
+          disabled={isBidDisable}
         >
           直接出價
         </Button>

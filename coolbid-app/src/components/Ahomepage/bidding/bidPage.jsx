@@ -60,20 +60,6 @@ const BidPage = props => {
 
   const rows = product.length === 0 ? [] : product[1]
 
-  // const formatDateTime = function (date) {
-  //   const y = date.getFullYear()
-  //   let m = date.getMonth() + 1
-  //   m = m < 10 ? ('0' + m) : m
-  //   let d = date.getDate()
-  //   d = d < 10 ? ('0' + d) : d
-  //   const h = date.getHours()
-  //   let minute = date.getMinutes()
-  //   minute = minute < 10 ? ('0' + minute) : minute
-  //   return `${y}-${m}-${d} ${h} : ${minute}`
-  // }
-
-  // console.log(formatDateTime(new Date(rows[0].bidTime)))
-
   const handleToggleInfo = () => {
     setToggle((toggle = true))
   }
@@ -281,16 +267,19 @@ const BidPage = props => {
             />
             <div className={classes.storeInfo}>
               <div className={classes.storeNameGroup}>
-                <Typography variant='h3' className={classes.storeName}>
-                  {product.length === 0 ? '' : product[0][0].shopDescription}
-                </Typography>
-                <Button
+                <Link
+                  className={classes.storeName}
+                  href={`http://localhost:3000/${product.length === 0 ? '' : product[0][0].memberId}`}
+                >
+                  {product.length === 0 ? '' : product[0][0].shopName} 的賣場
+                </Link>
+                {/* <Button
                   variant='outlined'
                   color='primary'
                   className={classes.follow}
                 >
                   Follow
-                </Button>
+                </Button> */}
               </div>
               <Typography variant='h4' className={classes.storeInfo}>
                 {product.length === 0 ? '' : product[0][0].shopLevelDescription}
@@ -358,7 +347,7 @@ const BidPage = props => {
                     </TableCell>
                     <TableCell>{row.userId}</TableCell>
                     <TableCell>{row.bidprice}</TableCell>
-                    <TableCell>{row.bidTime}</TableCell>
+                    <TableCell>{new Date(Date.parse(row.bidTime)).toLocaleString()}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
