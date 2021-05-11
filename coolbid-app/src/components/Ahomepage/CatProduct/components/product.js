@@ -94,7 +94,7 @@ export function ItemDiv(props) {
             setLikeProduct((prev) => {
               return prev.filter((item) => item !== e)
             })
-            alert(res.data)
+            // alert(res.data)
           })
       } else {
         // insert into收藏
@@ -107,7 +107,7 @@ export function ItemDiv(props) {
           .then((res) => {
             // 前端立刻變色
             setLikeProduct((prev) => [...prev, e])
-            alert(res.data)
+            // alert(res.data)
           })
       }
     } else {

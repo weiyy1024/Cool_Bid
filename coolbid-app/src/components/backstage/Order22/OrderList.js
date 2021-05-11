@@ -42,7 +42,11 @@ const useStyles = makeStyles((theme) => ({
   },
   spacing: {
     width: 150
+  },
+  imgStyle: {
+    width: 80
   }
+
 }))
 
 function getSteps () {
@@ -135,7 +139,7 @@ function OrderList () {
                     <TableBody>
                       <TableRow>
                         <TableCell align="center" className={classes.itemTxt}>
-                          null
+                        <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
                         </TableCell>
                         <TableCell align="center" className={classes.itemTxt}>
                           {item.productName}

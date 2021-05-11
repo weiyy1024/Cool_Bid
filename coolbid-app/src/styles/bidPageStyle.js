@@ -27,8 +27,9 @@ const useStyles = makeStyles(theme => ({
     width: '44rem'
   },
   storeMedia: {
-    height: '90px',
-    width: '90px'
+    height: '120px',
+    width: '120px',
+    borderRadius: '50%'
   },
   productTitle: {
     fontWeight: 'bold',

@@ -8,6 +8,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Search from './components/Ahomepage/search/search'
 import Auction from './Auction'
 import Login from './components/member/login'
+import Signup from './components/member/signup'
 import Logout from './components/member/logout'
 import Add from './components/backstage/product1920/Add'
 import productpage from './components/backstage/product1920/productpage'
@@ -60,6 +61,7 @@ function App() {
           <Route path="/auction/coming" component={AuctionCountdown} exact />
           {/* Member */}
           <Route path="/member/signin" component={Login} exact />
+          <Route path="/member/signup" component={Signup} exact />
           <Route path="/member/signout" component={Logout} exact />
           <Route path="/member/edit" component={EditMemberInfo} exact />
           <Route
@@ -79,7 +81,7 @@ function App() {
 
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
           <Route
-            path="/BackStage/SellerPageHero"
+            path="/:sellerpage"
             component={SellerPageHero}
             exact
           />

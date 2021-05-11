@@ -21,7 +21,6 @@ import {
 } from '@material-ui/core'
 
 import useStyles from '../../../styles/bidPageStyle'
-import '../../../styles/bidPage.css'
 
 import BidFunc from './bidFunc'
 
@@ -122,10 +121,6 @@ const BidPage = props => {
   //   console.log(lastTime)
   // }, [timeCount])
 
-  const toCatPage = () => {
-    window.location.href = `http://localhost:3000/bidding/${product.length === 0 ? '' : product[0][0].categoryName}`
-  }
-
   return (
     <>
       <Container className={classes.root}>
@@ -136,7 +131,7 @@ const BidPage = props => {
           <Link color='inherit' href='http://localhost:3000/bidding/'>
             競標區
           </Link>
-          <Link color='inherit' onClick={toCatPage}>
+          <Link color='inherit' href={`http://localhost:3000/bidding/${product.length === 0 ? '' : product[0][0].categoryName}`}>
             {product.length === 0 ? '' : product[0][0].categoryName}
           </Link>
           <Link
@@ -280,9 +275,9 @@ const BidPage = props => {
             justify='space-around'
             className={classes.store}
           >
-            <img
+            <CardMedia
               className={classes.storeMedia}
-              src='https://crazypetter.com.tw/wp-content/uploads/2019/07/BLOW-%E6%88%90%E9%95%B7%E5%8F%B2_190413_0911.jpg'
+              image={`/imgs/sellerPic/${product.length === 0 ? '' : product[0][0].memberId}.jpg`}
             />
             <div className={classes.storeInfo}>
               <div className={classes.storeNameGroup}>

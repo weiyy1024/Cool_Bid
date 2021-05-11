@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 50,
     border: 'double',
     borderColor: 'grey'
+  },
+  imgStyle: {
+    width: 80
   }
 }))
 
@@ -211,7 +214,7 @@ function productpage () {
           {data.map((item, index) => {
             return (
                 <TableRow key={index}>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productId}</TableCell>
+                  <TableCell align="center" className={classes.itemTxt}> <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/></TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.perPrice}</TableCell>
