@@ -25,6 +25,7 @@ import BidPage from './components/Ahomepage/bidding/bidPage'
 import NavBar from './components/navbar/navbar'
 import Backstage from './components/backstage/backStage'
 import AuctionCountdown from './AuctionCountdown'
+import Footer from './Footer'
 import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 import Address from './components/backstage/Member/info/Address'
 // import CloseAuction from './components/backstage/product1920/CloseAuction'
@@ -80,17 +81,21 @@ function App() {
           <Route path="/member/purchase" component={BuyList} exact />
 
           {/* 2021/05/07測試賣場首頁,放入資料庫連線 */}
+          <Route path="/:sellerpage" component={SellerPageHero} exact />
+
+          {/* Seller */}
+          <Route path="/BackStage" component={Backstage} exact />
+          <Route path="/BackStage/product/all" component={productpage} exact />
           <Route
-            path="/:sellerpage"
-            component={SellerPageHero}
+            path="/BackStage/product/OnTheMarket"
+            component={OnTheMarket}
             exact
           />
-
-         {/* Seller */}
-         <Route path="/BackStage" component={Backstage} exact />
-          <Route path="/BackStage/product/all" component={productpage} exact />
-          <Route path="/BackStage/product/OnTheMarket" component={OnTheMarket} exact />
-          <Route path="/BackStage/product/CloseAuction" component={CloseAuction} exact />
+          <Route
+            path="/BackStage/product/CloseAuction"
+            component={CloseAuction}
+            exact
+          />
           <Route path="/BackStage/product/SoldOut" component={SoldOut} exact />
           <Route path="/BackStage/product/Biding" component={Biding} exact />
           <Route path="/BackStage/editProduct" component={Add} exact />
@@ -101,7 +106,9 @@ function App() {
           <Route path="/Shopping/Cart" component={ShoppingCart} exact />
           <Route path="/Shopping/Bidding" component={Login} exact />
           <Route path="/Shopping/WishList" component={ShoppingCart} exact />
+          {/* Footer */}
         </Switch>
+        <Footer />
       </div>
     </BrowserRouter>
   )

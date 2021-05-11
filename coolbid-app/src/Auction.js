@@ -59,7 +59,7 @@ function Auction() {
       <Grid
         item
         xs={6}
-        style={{ position: 'relative', textAlign: 'center', height: '79vh' }}
+        style={{ position: 'relative', textAlign: 'center', height: '79vh', display: 'flex', flexDirection: 'column' }}
       >
         <AuctionTime ws={ws} />
       </Grid>
