@@ -2,7 +2,11 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   bidFuncWrapper: {
-    padding: theme.spacing(4, 3)
+    padding: theme.spacing(5, 4)
+  },
+  bidInfo: {
+    lineHeight: '3.5rem',
+    fontWeight: '500'
   },
   directBuy: {
     display: 'inline-block',
@@ -18,13 +22,8 @@ const useStyles = makeStyles(theme => ({
   bidFuncGroup: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  autoBidGroup: {
-    display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: '1rem'
+    flexDirection: 'row'
   },
   directBidGroup: {
     display: 'flex',
@@ -38,13 +37,28 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  go: {
-    fontSize: '2rem',
-    margin: '.5rem 0 2.5rem'
+  priceInput: {
+    width: '8rem',
+    padding: '.3rem 0 .3rem 1rem',
+    fontSize: '1.8rem',
+    marginLeft: '1rem',
+    border: 'none',
+    borderBottom: '2px solid #888',
+    color: '#666'
+  },
+  buyBtn: {
+    fontSize: '1.5rem'
+  },
+  bidBtn: {
+    fontSize: '1.5rem',
+    margin: '0 1rem'
   },
   save: {
+    margin: '4rem 0 0',
     padding: '2rem 5rem',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
+    fontWeight: '600',
+    fontSize: '2.5rem'
   }
 }))
 
