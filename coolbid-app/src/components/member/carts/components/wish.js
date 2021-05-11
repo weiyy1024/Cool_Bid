@@ -12,8 +12,9 @@ const Shop = styled.div`
   padding: 2rem;
   width: 75%;
   margin: 2rem auto;
+  border-radius: 1rem;
   .top {
-    display: flex;
+    display: block;
     font-size: 2.2rem;
     margin-bottom: 1rem;
   }

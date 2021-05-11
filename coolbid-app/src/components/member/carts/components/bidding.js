@@ -39,7 +39,7 @@ const Shop = styled.div`
   margin: 5rem auto;
   border-radius: 1rem;
   .top {
-    display: flex;
+    display: block;
     font-size: 2.2rem;
     margin-bottom: 1rem;
   }
