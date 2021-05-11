@@ -39,7 +39,7 @@ const Shop = styled.div`
   border-radius: 1rem;
   .top {
     display: flex;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     margin-bottom: 1rem;
   }
   .items {
@@ -48,7 +48,7 @@ const Shop = styled.div`
       background-color: #d9d7d7;
       .info {
         width: 33%;
-        font-size: 2.4rem;
+        font-size: 2rem;
         text-align: center;
         padding: 1rem;
       }
@@ -67,7 +67,7 @@ const Shop = styled.div`
       }
       .infoTitle {
         width: 33%;
-        font-size: 2rem;
+        font-size: 1.8rem;
         text-align: center;
         line-height: 3.2rem;
         color: grey;
@@ -81,7 +81,7 @@ const Shop = styled.div`
           color: #edaf11;
         }
         width: 33%;
-        font-size: 2rem;
+        font-size: 1.8rem;
         text-align: center;
         line-height: 3.2rem;
         overflow: hidden;
@@ -102,6 +102,7 @@ const Shop = styled.div`
         // margin-left: 2rem;
         padding-right: 0;
         color: grey;
+        margin-top: 11px;
         width: 33%;
         font-size: 2rem;
         text-align: center;

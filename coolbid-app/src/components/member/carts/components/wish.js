@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import axios from 'axios'
 import { NavLink } from 'react-router-dom'
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
+import swal from 'sweetalert'
 
 const Shop = styled.div`
   border: #d9d7d7 solid 0.3rem;
@@ -13,7 +14,7 @@ const Shop = styled.div`
   margin: 2rem auto;
   .top {
     display: flex;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     margin-bottom: 1rem;
   }
   .items {
@@ -32,7 +33,7 @@ const Shop = styled.div`
       }
       .info {
         width: 33%;
-        font-size: 2.4rem;
+        font-size: 2rem;
         text-align: center;
         padding: 1rem;
       }
@@ -58,7 +59,7 @@ const Shop = styled.div`
           color: #edaf11;
         }
         width: 33%;
-        font-size: 2rem;
+        font-size: 1.8rem;
         text-align: center;
         line-height: 3.2rem;
         overflow: hidden;
@@ -129,18 +130,32 @@ export default function Wish() {
   const deleted = []
 
   const handleUncollect = (e) => {
-    axios
-      .post('http://localhost:3001/collectproduct', {
-        memberId: userinfo.memberId,
-        productId: e,
-        collect: 'false'
-      })
-      .then((res) => {
-        setCollectProduct((prev) => {
-          return prev.filter((item) => item.productId !== e)
-        })
-        alert(res.data)
-      })
+    swal({
+      title: '真的要刪除？',
+      // text: 'Once deleted, you will not be able to recover this imaginary file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios
+          .post('http://localhost:3001/collectproduct', {
+            memberId: userinfo.memberId,
+            productId: e,
+            collect: 'false'
+          })
+          .then(() => {
+            setCollectProduct((prev) => {
+              return prev.filter((item) => item.productId !== e)
+            })
+            swal('刪除收藏成功', {
+              icon: 'success'
+            })
+          })
+      } else {
+        swal('已保留收藏')
+      }
+    })
   }
 
   useEffect(() => {
