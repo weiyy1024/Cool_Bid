@@ -237,6 +237,8 @@ const SortList = styled.div`
     cursor: pointer;
     padding: 1rem;
     svg {
+      position:relative;
+      top:4px;
       font-size: 2.3rem;
       padding-right: 0.2rem;
     }

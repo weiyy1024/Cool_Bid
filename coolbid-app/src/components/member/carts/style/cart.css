@@ -49,6 +49,8 @@
     position: relative;
     float: left;
     top: -5px;
+    height:100%;
+    overflow:scroll;
     background: #fff;
 }
 

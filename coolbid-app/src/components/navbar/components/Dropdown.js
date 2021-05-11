@@ -258,31 +258,31 @@ export default function DropDown(props) {
           <div style={{ width: '100%', marginTop: '2rem' }}>
             <NavLink
               to={
-                pop.length ? `bidding/product/product?=${pop[0].productId}` : ''
+                pop.length ? `/bidding/product/product?=${pop[0].productId}` : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '30%' }}
+                style={{ objectFit: 'scale-down', width: '30%', height: '15rem' }}
                 src={pop.length ? `/imgs/${pop[0].productId}.jpg` : ''}
               ></img>
             </NavLink>
             <NavLink
               to={
-                pop.length ? `bidding/product/product?=${pop[1].productId}` : ''
+                pop.length ? `/bidding/product/product?=${pop[1].productId}` : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '30%' }}
+                style={{ objectFit: 'scale-down', width: '30%', height: '15rem' }}
                 src={pop.length ? `/imgs/${pop[1].productId}.jpg` : ''}
               ></img>
             </NavLink>
             <NavLink
               to={
-                pop.length ? `bidding/product/product?=${pop[2].productId}` : ''
+                pop.length ? `/bidding/product/product?=${pop[2].productId}` : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '30%' }}
+                style={{ objectFit: 'scale-down', width: '30%', height: '15rem' }}
                 src={pop.length ? `/imgs/${pop[2].productId}.jpg` : ''}
               ></img>
             </NavLink>

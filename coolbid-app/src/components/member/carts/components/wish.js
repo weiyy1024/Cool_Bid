@@ -13,7 +13,7 @@ const Shop = styled.div`
   margin: 2rem auto;
   .top {
     display: flex;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     margin-bottom: 1rem;
   }
   .items {
@@ -32,7 +32,7 @@ const Shop = styled.div`
       }
       .info {
         width: 33%;
-        font-size: 2.4rem;
+        font-size: 2rem;
         text-align: center;
         padding: 1rem;
       }
@@ -58,7 +58,7 @@ const Shop = styled.div`
           color: #edaf11;
         }
         width: 33%;
-        font-size: 2rem;
+        font-size: 1.8rem;
         text-align: center;
         line-height: 3.2rem;
         overflow: hidden;
