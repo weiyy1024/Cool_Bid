@@ -13,6 +13,7 @@ const Shop = styled.div`
   padding: 2rem;
   width: 75%;
   margin: 2rem auto;
+  border-radius: 1rem;
   .top {
     display: flex;
     font-size: 2.4rem;

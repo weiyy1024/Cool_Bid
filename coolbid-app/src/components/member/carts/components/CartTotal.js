@@ -12,6 +12,7 @@ const TotalContainer = styled.div`
   display: flex;
   font-size: 2.4rem;
   position: relative;
+  border-radius: 1rem;
   .allCheck {
     display: flex;
     input {
