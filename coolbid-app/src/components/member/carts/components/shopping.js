@@ -97,7 +97,7 @@ const Shop = styled.div`
   }
 `
 const Clear = styled.div`
-  margin-top: 20rem;
+  margin-top: 10rem;
   p {
     font-size: 3.5rem;
     width: 30%;
@@ -108,6 +108,7 @@ const Clear = styled.div`
   div {
     font-size: 2.5rem;
     width: 8%;
+    min-width:150px;
     margin: 1rem auto;
     text-align: center;
     padding: 0.5rem 1rem;
@@ -124,7 +125,7 @@ const Clear = styled.div`
 `
 export default function Shopping(props) {
   const { userinfo } = props
-  const [product, setProduct] = useState([1])
+  const [product, setProduct] = useState([])
   const [shopId, setShopId] = useState([])
   // 點選結帳商品個數
   const [totalArray, setTotalArray] = useState([])

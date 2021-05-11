@@ -123,7 +123,7 @@ const Shop = styled.div`
   }
 `
 const Clear = styled.div`
-  margin-top: 20rem;
+  margin-top: 10rem;
   p {
     font-size: 3.5rem;
     width: 30%;
@@ -134,6 +134,7 @@ const Clear = styled.div`
   div {
     font-size: 2.5rem;
     width: 8%;
+    min-width:150px;
     margin: 1rem auto;
     text-align: center;
     padding: 0.5rem 1rem;
@@ -265,6 +266,16 @@ function Prod(props) {
       url: '/changeStatus',
       data: {
         bidPrice: item.directPrice,
+        productId: item.productId
+      }
+    })
+    // 更新得標者
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/directBuy',
+      data: {
+        memberId: userinfo.memberId,
         productId: item.productId
       }
     })

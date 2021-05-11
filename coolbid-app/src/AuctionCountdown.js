@@ -193,7 +193,7 @@ function AuctionCountdown () {
   }, [])
 
   return (
-    <div style={{ height: '100vh', marginTop: '120px', background: '#151515', overflowY: 'scroll', overflowX: 'hidden' }}>
+    <div style={{ height: '80vh', marginTop: '120px', background: '#151515', overflowY: 'scroll', overflowX: 'hidden' }}>
       <div className={classes.container}>
         <div id="countdown" style={{}}>
           <ul style={{ margin: '0' }}>
@@ -233,13 +233,6 @@ function AuctionCountdown () {
         })}
         <button onClick={() => dispatch({ type: 'PREV' })}>›</button>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   )
 }

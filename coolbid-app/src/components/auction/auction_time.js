@@ -161,12 +161,11 @@ function AuctionTime(props) {
       </div>
       <iframe
         width="100%"
-        height="315px"
         src="https://www.youtube.com/embed/FInIBCUin1c"
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        style={{ marginTop: '20px' }}
+        style={{ marginTop: '20px', height: '100%' }}
       ></iframe>
       {/* <Card
         className={classes.root}

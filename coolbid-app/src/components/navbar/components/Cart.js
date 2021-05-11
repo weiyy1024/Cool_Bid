@@ -213,6 +213,7 @@ export default function ShoppingCart(props) {
         <Divider />
         <div style={{ height: '75vh', overflowY: 'scroll', padding: '10px 0' }}>
           {userinfo ? (
+            product.length > 0 &&
             product.map((item, index) => <ItemDiv key={index} data={item} />)
           ) : (
             <SignIn>請先登入</SignIn>

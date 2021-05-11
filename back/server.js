@@ -697,6 +697,13 @@ app.post('/changeStatus', function (req, res) {
   let sql = `UPDATE product SET productStatusId=5,nowPrice=${price} WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
 })
+//bidding car 更新得標者 20200511 weiyy
+app.post('/directBuy', function (req, res) {
+  let product = req.body.productId
+  let member = req.body.memberId
+  let sql = `UPDATE product SET finalBidderId=${member} WHERE productId=${product}`
+  conn.query(sql, function (err, result) {})
+})
 
 // shopping Cart 確認下標過且結標的商品 20200509 weiyy
 app.get('/shoppingStatus/:productId', function (req, res) {
