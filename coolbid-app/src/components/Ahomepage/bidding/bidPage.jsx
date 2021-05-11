@@ -275,7 +275,7 @@ const BidPage = props => {
               color='primary'
               className={classes.storeButton}
             >
-              所有商品(287)
+              所有商品({product.length === 0 ? '' : product[6][0].itemNum})
             </Button>
           </Grid>
           <Typography
