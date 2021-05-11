@@ -405,40 +405,14 @@ app.post('/membercollect', function (req, res) {
   )
 })
 
-//   sql = `select * from product where productId in ? AND productStatusId in ?`
-//   conn.query(sql,[ req.params.productId ,('1,4,5,6')], function (err, result) {
+// sql = `select * from product where productId in ? AND productStatusId in ?`
+// conn.query(sql, [req.params.productId, '1,4,5,6'], function (err, result) {
 //   res.send(result)
-//   })
+// })
 // })
 
 //-----------------------------post方法------------------------
-// app.post('/search',function(req,res){
-//     let test = req.body.test
-//     // console.log(test)
-//     // res.send(JSON.stringify(test))
-//     var mysql = require('mysql');
-//     var conn = mysql.createConnection({
-//         host: 'localhost',
-//         user: 'root',
-//         password: 'root',
-//         database:"coolbid",
-//         port: 8889
-//     });
-//     conn.query("select * from product where productId = ?",[test],function(err,result){
-//         res.send(result)
-//     })
-//得目前我出的最高金額
-// app.get('/myPrice/:productId', function (req, res) {
-//   let test = req.params.productId
-//   let sql = `SELECT bidprice FROM biddinghistory where memberId=5 AND bidTime IN (SELECT max(bidTime) FROM biddinghistory WHERE productId=${test} AND memberId=5  )`
-
-//   conn.query(sql, function (err, result) {
-//     res.send(result)
-//   })
-// })
-
-//-----------------------------post方法------------------------
-//取出自己再買件商品裡最高的進標價格 20200508 weiyy
+//取出自己再每件商品裡最高的進標價格 20200508 weiyy
 app.post('/myPrice', function (req, res) {
   let test1 = req.body.pId
   let test2 = req.body.mId
@@ -449,7 +423,7 @@ app.post('/myPrice', function (req, res) {
 })
 //bid again in "bidding cart" 20200509 weiyy
 app.post('/bidAgain', function (req, res) {
-  //增加bidding history
+  //增加bidding history 20200509 weiyy
   let price = req.body.bidAgainPrice
   let member = req.body.memberId
   let product = req.body.productId
@@ -457,7 +431,7 @@ app.post('/bidAgain', function (req, res) {
   conn.query(sql, function (err, result) {})
 })
 app.post('/nowPrice', function (req, res) {
-  // 更新product的最高出價
+  // 更新product的最高出價 20200509 weiyy
   let price = req.body.bidAgainPrice
   let product = req.body.productId
   let sql = `UPDATE product SET nowPrice=${price} WHERE productId=${product}`
@@ -474,9 +448,56 @@ app.post('/directPrice', function (req, res) {
   conn.query(sql, function (err, result) {})
 })
 app.post('/changeStatus', function (req, res) {
-  // 更改 product 的狀態為結標
+  // 更改 product 的狀態為結標 20200509 weiyy
   let product = req.body.productId
   let price = req.body.bidPrice
   let sql = `UPDATE product SET productStatusId=5,nowPrice=${price} WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
+})
+
+// shopping Cart 確認下標過且結標的商品 20200509 weiyy
+app.get('/shoppingStatus/:productId', function (req, res) {
+  let test = req.params.productId
+  let sql = `SELECT * FROM product WHERE productId IN ${test} AND productStatusId=5`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+//shopping cart 取得得標商品 20200509 weiyy
+app.get('/shopping/:memberId', function (req, res) {
+  let test = req.params.memberId
+  let sql = `SELECT * FROM product WHERE productStatusId=5 AND finalBidderId=${test}`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+// shopping cart 取得商家名稱 20200509 weiyy
+app.get('/shop/:memberId', function (req, res) {
+  let test = req.params.memberId
+  let sql = `
+  SELECT DISTINCT p.shopId , shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productStatusId=5 AND finalBidderId=${test}`
+
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+// shopping cart 取得商家名稱 20200510 weiyy
+app.get('/shop/:memberId', function (req, res) {
+  let test = req.params.memberId
+  let sql = `
+  SELECT DISTINCT p.shopId , shopName FROM product AS p JOIN member AS m ON p.shopId=m.memberId WHERE productStatusId=5 AND finalBidderId=${test}`
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+// shopping cart 取得商家名稱 20200509 weiyy
+app.get('/address/:memberId', function (req, res) {
+  let test = req.params.memberId
+  let sql = `SELECT address FROM address WHERE memberId=${test}`
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
 })

@@ -201,7 +201,9 @@ export default function NavBar() {
   let membericonto
   if (window.sessionStorage.getItem('userinfo')) {
     membericonto = '/member/edit'
-  } else { membericonto = '/member/signin' }
+  } else {
+    membericonto = '/member/signin'
+  }
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>
@@ -250,7 +252,7 @@ export default function NavBar() {
             <MemberDropDown />
           </Member>
           <Bidding userinfo={userinfo} />
-          <ShoppingCart />
+          <ShoppingCart userinfo={userinfo} />
         </ThreeIcons>
       </Navbar>
     </ThemeProvider>

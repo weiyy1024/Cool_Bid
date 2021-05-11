@@ -13,6 +13,8 @@ const iconStyle = {
 }
 
 export default () => {
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
   const myData = [
     {
       id: 1,
@@ -52,10 +54,11 @@ export default () => {
   }
 
   let num = 0
-  notificationData.forEach((item) => {
-    const s = item.status
-    num += s
-  })
+  userinfo &&
+    notificationData.forEach((item) => {
+      const s = item.status
+      num += s
+    })
 
   // icon click toggle
   const handlerNotification = () => {

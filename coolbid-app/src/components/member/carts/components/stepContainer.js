@@ -5,6 +5,12 @@ const StepOutter = styled.div`
   width: 80%;
   display: flex;
   margin: 2rem auto;
+  .step1 {
+    background-color: #ffb802e6;
+    color: white;
+    border: #f4ab0a 0.3rem solid;
+    border-radius: 1rem;
+  }
 `
 const Step = styled.div`
   display: flex;
@@ -25,7 +31,7 @@ const Step = styled.div`
 export default function StepContainer() {
   return (
     <StepOutter>
-      <Step>
+      <Step className="step1">
         <div className="number">
           <span className="stepNum">01</span>
         </div>
@@ -34,7 +40,7 @@ export default function StepContainer() {
           <p className="line">Cart &amp; Check out</p>
         </div>
       </Step>
-      <Step>
+      <Step className="step2">
         <div className="number">
           <span className="stepNum">02</span>
         </div>
@@ -43,7 +49,7 @@ export default function StepContainer() {
           <p className="line">Shipping &amp; Biling info</p>
         </div>
       </Step>
-      <Step>
+      <Step className="step3">
         <div className="number">
           <span className="stepNum">03</span>
         </div>

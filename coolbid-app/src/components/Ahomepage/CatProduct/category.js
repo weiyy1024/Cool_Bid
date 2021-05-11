@@ -257,12 +257,10 @@ export default function Category(props) {
     // for filter value array
     const myFilter = filterValue.map((item) => item)
     const addFilter = e.target.value
-    // const find2 = myFilter.find((item) => item === addFilter)
 
     // for filter badge array
     const badgeArray = filterInfo.map((item) => item)
     const addbadge = e.target.name
-    // const find = badgeArray.find((item) => item === addbadge)
 
     if (e.target.checked) {
       badgeArray.push(addbadge)

@@ -1,6 +1,8 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable space-before-function-paren */
-import React, { useState } from 'react'
-// import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { NavLink } from 'react-router-dom'
 import Drawer from '@material-ui/core/Drawer'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
@@ -36,6 +38,23 @@ const CartNum = styled.span`
   bottom: 3.2rem;
   color: white;
 `
+const SignIn = styled.div`
+  font-size: 3rem;
+  padding: 1rem 1.5rem;
+  color: grey;
+  border: 0.5rem solid grey;
+  width: 18rem;
+  text-align: center;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  hight: auto;
+  margin: 30rem auto;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffc400;
+    color: white;
+  }
+`
 
 // styled Components--End
 
@@ -45,23 +64,14 @@ function ProductDiv1(props) {
   const [newPrice, setNewPrice] = useState()
 
   const getRestTime = (deadline) => {
-    let item = deadline
-    item = item.split('/')
     setInterval(function () {
       // nowTime
-      const time = new Date()
-      const nowTime = time.getTime() // 獲取當前毫秒數
-
-      // nedTime
-      time.setMonth(parseInt(item[1]) - 1) // 月份 (從 '0' 開始算)
-      time.setDate(parseInt(item[2]))
-      time.setHours(0)
-      time.setMinutes(0)
-      time.setSeconds(0)
-      const nedTime = time.getTime()
+      const nowTime = new Date()
+      // endTime
+      const endTime = new Date(deadline)
 
       // 倒數計時: 差值
-      const offsetTime = (nedTime - nowTime) / 1000 // ** 以秒為單位
+      const offsetTime = (endTime - nowTime) / 1000 // ** 以秒為單位
       const day = parseInt(offsetTime / 60 / 60 / 24)
       const hr = parseInt(offsetTime / 60 / 60 - day * 24)
       const min = parseInt((offsetTime / 60) % 60)
@@ -76,26 +86,30 @@ function ProductDiv1(props) {
   return (
     <ProductDiv>
       <ProductImg>
-        <img
-          src={'/imgs/' + data.productId + '.jpg'}
-          style={{ objectFit: 'scale-down', height: '100%', width: '100%' }}
-        ></img>
+        <NavLink to={'/bidding/product/product?=' + data.productId}>
+          <img
+            src={'/imgs/' + data.productId + '.jpg'}
+            style={{ objectFit: 'scale-down', height: '100%', width: '100%' }}
+          />
+        </NavLink>
       </ProductImg>
       <ProductInfo>
-        <p
-          className="productName"
-          style={{
-            maxWidth: '200px',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis'
-          }}
-        >
-          {data.productName}
-        </p>
+        <NavLink to={'/bidding/product/product?=' + data.productId}>
+          <p
+            className="productName"
+            style={{
+              maxWidth: '200px',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis'
+            }}
+          >
+            {data.productName}
+          </p>
+        </NavLink>
         <p>
           最高出價：<span>$NT.</span>
-          {data.directPrice}
+          {data.nowPrice}
         </p>
         <p>
           目前出價：<span>$NT.</span>
@@ -105,9 +119,9 @@ function ProductDiv1(props) {
           id="standard-number"
           label="再次出價"
           type="number"
-          defaultValue={data.directPrice}
+          defaultValue={data.nowPrice + data.perPrice}
           onChange={(e) => setNewPrice(e.target.value)}
-          inputProps={{ min: `${data.directPrice}` }}
+          inputProps={{ min: `${data.nowPrice + data.perPrice}` }}
           style={{ display: 'block' }}
         />
         <Button
@@ -138,57 +152,40 @@ function ProductDiv1(props) {
 
 export default function Bidding(props) {
   const { userinfo } = props
-  // const [biddingProduct, setBiddingProduct] = useState()
-  const myProduct = [
-    {
-      productId: 1,
-      productName: 'Sony PS5',
-      directPrice: 18000,
-      shopId: 1,
-      endTime: '2021-06-29T18:00:00.000Z'
+  const [biddingProduct, setBiddingProduct] = useState()
+  const [product, setProduct] = useState([])
+  useEffect(() => {
+    if (userinfo) {
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/bidding/' + userinfo.memberId,
+        'Content-Type': 'application/json'
+      })
+        .then((res) => {
+          let bP = res.data.map((item) => item.productId)
+          bP = '(' + bP.toString() + ')'
+          setBiddingProduct(bP)
+        })
+        .then(() => {
+          // 篩選競標中商品
+          if (biddingProduct) {
+            axios({
+              method: 'get',
+              baseURL: 'http://localhost:3001',
+              url: '/confirmStatus/' + biddingProduct,
+              'Content-Type': 'application/json'
+            }).then((res) => {
+              setProduct(res.data)
+            })
+          }
+        })
     }
-  ]
-  // const [product, setProduct] = useState(myProduct)
-  console.log(userinfo)
+  }, [userinfo, biddingProduct])
 
-  // 得有出過標的商品ID
-  // useEffect(() => {
-  //   if (userinfo) {
-  //     axios({
-  //       method: 'get',
-  //       baseURL: 'http://localhost:3001',
-  //       url: '/bidding/' + userinfo.memberId,
-  //       'Content-Type': 'application/json'
-  //     }).then((res) => {
-  //       let bP = res.data.map((item) => item.productId)
-  //       bP = '(' + bP.toString() + ')'
-  //       console.log(bP)
-  //       setBiddingProduct(bP)
-  //     })
-  //   }
-  //   if (userinfo === null) {
-  //     setProduct(myProduct)
-  //   }
-  // }, [userinfo])
-
-  // 篩選競標中商品
-  // useEffect(() => {
-  //   axios({
-  //     method: 'get',
-  //     baseURL: 'http://localhost:3001',
-  //     url: '/confirmStatus/' + biddingProduct,
-  //     'Content-Type': 'application/json'
-  //   }).then((res) => {
-  //     console.log(res.data)
-  //     // setProduct(res.data)
-  //   })
-  // }, [biddingProduct])
-  // console.log(product)
-  // Bidding List--End
-  // cart tot price--End
-
+  // 購物車商品數量
   let itemAmount = 0
-  myProduct.map((item) => (itemAmount += 1))
+  product.length > 0 && product.map((item) => (itemAmount += 1))
 
   const [state, setState] = React.useState({
     right: false
@@ -214,9 +211,11 @@ export default function Bidding(props) {
           競標中
         </h1>
         <Divider />
-        {myProduct.map((item, index) => (
-          <ProductDiv1 key={index} data={item} />
-        ))}
+        {userinfo ? (
+          product.map((item, index) => <ProductDiv1 key={index} data={item} />)
+        ) : (
+          <SignIn>請先登入</SignIn>
+        )}
       </List>
     </div>
   )
@@ -224,7 +223,7 @@ export default function Bidding(props) {
   return (
     <React.Fragment key="right">
       <div>
-        <CartNum>{itemAmount}</CartNum>
+        {itemAmount !== 0 ? <CartNum>{itemAmount}</CartNum> : ''}
         <Tooltip title="Bidding" arrow>
           <GavelIcon
             onClick={toggleDrawer('right', true)}

@@ -1,8 +1,6 @@
 /* eslint-disable space-before-function-paren */
 import React from 'react'
 import styled from '@emotion/styled'
-// import CarContainer from './components/CarContainer'
-// import CarTotal from './components/CarTotal'
 import StepContainer from './components/stepContainer'
 import Shopping from './components/shopping'
 import Bidding from './components/bidding'
@@ -23,9 +21,9 @@ export default function ShoppingCart() {
           name="active_tabs"
           id="btn-1"
           className="input btn-1"
-          checked
         />
         <label htmlFor="btn-1" className="btn">
+          <i className="fa fa-shopping-cart"></i>
           購物車
         </label>
 
@@ -55,7 +53,6 @@ export default function ShoppingCart() {
             <StepContainer />
             <Shopping userinfo={userinfo} />
           </div>
-
           <div className="tab-2">
             <p>
               <Bidding userinfo={userinfo} />
@@ -66,7 +63,6 @@ export default function ShoppingCart() {
           </div>
         </div>
       </div>
-      {/* <CarTotal /> */}
     </ShoppingCartContainer>
   )
 }
