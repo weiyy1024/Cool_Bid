@@ -8,6 +8,9 @@ html,body {
   background-color: #eeeeee;
   overflow-x: hidden;
   overflow-y: scroll;
+  /* Len 5/11 */
+  outline: none; /*去除預設點擊外框*/
+  user-select: none; /*禁止反白*/
 }
 #root{
   height:100%;
