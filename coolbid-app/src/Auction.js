@@ -28,14 +28,14 @@ function Auction() {
   const [user, setUser] = useState()
 
   const [ws, setWs] = useState()
-  const server = 'http://10.0.104.32:3002/'
+  const server = 'http://localhost:3002/'
   const classes = useStyles()
 
   useEffect(() => {
     let userInfo = window.sessionStorage.getItem('userinfo')
     if (userInfo) {
       userInfo = JSON.parse(userInfo)
-      setUser(userInfo.nickname)
+      setUser(userInfo)
     } else {
       setUser('Guest')
     }

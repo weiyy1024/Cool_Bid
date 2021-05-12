@@ -37,7 +37,7 @@ const ProductInfo = styled.div`
     color: rgb(237, 174, 16);
   }
   p {
-    font-size:1.4rem;
+    font-size: 1.4rem;
   }
 `
 const CartNum = styled.span`
@@ -105,9 +105,11 @@ function ProductDiv1(props) {
         </NavLink>
       </ProductImg>
       <ProductInfo>
-        <NavLink to={'/bidding/product/product?=' + data.productId}>
+        <NavLink
+          className="productName"
+          to={'/bidding/product/product?=' + data.productId}
+        >
           <p
-            className="productName"
             style={{
               maxWidth: '200px',
               overflow: 'hidden',
@@ -205,7 +207,9 @@ export default function Bidding(props) {
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ [anchor]: open })
   }
-
+  const handleSignin = () => {
+    window.location.href = 'http://localhost:3000/member/signin'
+  }
   const list = (anchor) => (
     <div style={{ width: '40rem' }}>
       <List>
@@ -226,7 +230,7 @@ export default function Bidding(props) {
           product.length > 0 &&
           product.map((item, index) => <ProductDiv1 key={index} data={item} />)
         ) : (
-          <SignIn>請先登入</SignIn>
+          <SignIn onClick={handleSignin}>請先登入</SignIn>
         )}
       </List>
     </div>

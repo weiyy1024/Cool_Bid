@@ -72,7 +72,7 @@ function BidHistory(props) {
       const newPrice = bidPrice + price
 
       const np = {
-        user: user,
+        user: user.userId,
         price: newPrice,
         time: moment().format('LTS'),
         deadline: moment().add(initTime, 's')

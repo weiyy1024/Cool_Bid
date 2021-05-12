@@ -35,7 +35,7 @@ function Chat(props) {
   const classes = useStyles()
   const [msgFlag, setMsgFlag] = useState('none')
   const [isMsgAtBottom, setIsMsgAtBottom] = useState(true)
-
+  console.log(user)
   // Hint For Message Is In, When Client's MsgBox Isn't At Bottom, Click Can To Bottom
   const handleMsgToBottom = () => {
     const element = document.getElementById('msgBox')
@@ -60,7 +60,7 @@ function Chat(props) {
       return
     }
     const msg = {
-      user: user,
+      user: user.nickname,
       text: text,
       time: moment().format('LTS')
     }
@@ -131,7 +131,7 @@ function Chat(props) {
               <ListItemAvatar>
                 <Avatar
                   alt={item.user + 'Sharp'}
-                  src="/static/images/avatar/1.jpg"
+                  src={`/imgs/sellerPic/${user.memberId}.jpg`}
                 />
               </ListItemAvatar>
               <ListItemText

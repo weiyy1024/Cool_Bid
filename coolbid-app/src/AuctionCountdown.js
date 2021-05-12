@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 import './components/auction/carousel.css'
+import styled from '@emotion/styled'
 
 const useStyles = makeStyles({
   container: {
     color: '#fff',
     margin: '0 auto',
-    textAlign: 'center',
-    marginBottom: '50px'
+    textAlign: 'center'
   },
   h1: {
     fontWeight: 'normal',
@@ -27,6 +27,32 @@ const useStyles = makeStyles({
     fontSize: '5rem'
   }
 })
+
+const AuctionDay = styled.div`
+  text-align: center;
+  font-size:2rem;
+  color: #fff;
+  margin-bottom:4rem;
+  letter-spacing:10px;
+  &::after{
+    content:"";
+    width:100px;
+    border-bottom:1px solid #fff;
+    display:inline-block;
+    position:relative;
+    top:-6px;
+    margin-left:1rem;
+  }
+  &::before{
+    content:"";
+    width:100px;
+    border-bottom:1px solid #fff;
+    display:inline-block;
+    position:relative;
+    top:-6px;
+    margin-right:1rem;
+  }
+`
 
 const slides = [
   {
@@ -243,6 +269,7 @@ const AuctionCountdown = () => {
           </ul>
         </div>
       </div>
+      <AuctionDay>2021/05/20 (四) 09:00AM</AuctionDay>
       <div className="slides">
         <button onClick={() => dispatch({ type: 'NEXT' })}>‹</button>
 
