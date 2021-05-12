@@ -90,22 +90,15 @@ function App() {
 
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
-          <Route path="/BackStage/product/all" component={productpage} exact />
-          <Route
-            path="/BackStage/product/OnTheMarket"
-            component={OnTheMarket}
-            exact
-          />
-          <Route
-            path="/BackStage/product/CloseAuction"
-            component={CloseAuction}
-            exact
-          />
+          <Route path="/BackStage/product" component={productpage} exact />
+          <Route path="/BackStage/product/OnTheMarket" component={OnTheMarket} exact />
+          <Route path="/BackStage/product/CloseAuction" component={CloseAuction} exact />
           <Route path="/BackStage/product/SoldOut" component={SoldOut} exact />
           <Route path="/BackStage/product/Biding" component={Biding} exact />
-          <Route path="/BackStage/editProduct" component={Add} exact />
+          <Route path="/BackStage/product/:id" component={Add} exact />
           <Route path="/BackStage/sellerInfo" component={SetStoreInfo} exact />
           <Route path="/BackStage/orders" component={OrderList} exact />
+
           {/* Shopping */}
           <Route path="/Shopping/Cart" component={ShoppingCart} exact />
           <Route path="/Shopping/Bidding" component={Login} exact />

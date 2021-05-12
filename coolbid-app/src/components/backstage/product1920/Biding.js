@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function BidingList() {
-  const classes = useStyles()
   const [data, setData] = useState([])
+  const classes = useStyles()
   const [bidPrice, setbidPrice] = useState(0)
 
   useEffect(() => {
@@ -59,13 +59,13 @@ function BidingList() {
   useEffect(() => {
     if (bidPrice === 0) {
       const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function(a, b) {
+      bidPriceAfter.sort(function (a, b) {
         return a.bidPrice - b.bidPrice
       })
       setData(bidPriceAfter)
     } else {
       const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function(a, b) {
+      bidPriceAfter.sort(function (a, b) {
         return b.bidPrice - a.bidPrice
       })
       setData(bidPriceAfter)
@@ -114,7 +114,7 @@ function BidingList() {
                   <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.nowPrice}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productstatusDescription}</TableCell>
+                  <TableCell align="center" className={classes.itemTxt}> {item.productstatusDescription}</TableCell>
                 </TableRow>
               )
             })}

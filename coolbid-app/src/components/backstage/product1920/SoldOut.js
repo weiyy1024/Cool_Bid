@@ -151,7 +151,6 @@ function SoldOut() {
   return (
     <div className="sellerBackend_Member_Wrap">
     <div className="breadcrumbsArea">賣家專區/商品清單/已售完
-      {/* <Breadcrumbs /> */}
     </div>
     <div className="sellerBackend_Member_Container">
     <div className="List">

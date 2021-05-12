@@ -37,6 +37,7 @@ function OnTheMarket() {
   const [startPrice, setstartPrice] = useState(0)
   const [perPrice, setPerPrice] = useState(0)
   const [directPrice, setdirectPrice] = useState(0)
+  // const [endTime, setEndTime] = useState(0)
 
   useEffect(() => {
     console.log('hi')
@@ -70,6 +71,14 @@ function OnTheMarket() {
       setdirectPrice(0)
     }
   }
+
+  // const changeEndTime = () => {
+  //   if (endTime === 0) {
+  //     setEndTime(1)
+  //   } else {
+  //     setEndTime(0)
+  //   }
+  // }
 
   useEffect(() => {
     if (startPrice === 0) {
@@ -119,6 +128,22 @@ function OnTheMarket() {
     }
   }, [directPrice])
 
+  // useEffect(() => {
+  //   if (endTime === 0) {
+  //     const endTimeAfter = data.map((item) => item)
+  //     endTimeAfter.sort(function (a, b) {
+  //       return new Date(a.endTime) - new Date(b.endTime)
+  //     })
+  //     setEndTime(endTimeAfter)
+  //   } else {
+  //     const endTimeAfter = data.map((item) => item)
+  //     endTimeAfter.sort(function (a, b) {
+  //       return new Date(b.endTime) - new Date(a.endTime)
+  //     })
+  //     setEndTime(endTimeAfter)
+  //   }
+  // }, [endTime])
+
   useEffect(() => {}, [directPrice, perPrice, startPrice])
 
   const classes = useStyles()
@@ -164,9 +189,9 @@ function OnTheMarket() {
               <TableCell align="center" className={classes.itemTitle}>
                 狀態
               </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>
+              {/* <TableCell align="center" className={classes.itemTitle}>
                 操作
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -193,7 +218,7 @@ function OnTheMarket() {
                   <TableCell align="center" className={classes.itemTxt}>
                     {item.productstatusDescription}
                   </TableCell>
-                  <TableCell align="center" colSpan={2}>
+                  {/* <TableCell align="center" colSpan={2}>
                     <input
                       type="submit"
                       value="編輯"
@@ -206,7 +231,7 @@ function OnTheMarket() {
                       className="button SetStoreInfo_Submit"
                       id={item.id}
                     />
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               )
             })}
