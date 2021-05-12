@@ -97,8 +97,25 @@ app.post('/member/signin', function (req, res) {
   )
 })
 
-// read and overwrite memberInfo
-app.post('/member/edit', function (req, res) {
+// read memberInfo
+app.post('/member/edit', function (req, res, next) {
+  const zipData = fs.readFileSync('./addr/taiwan_districts.json')
+  const { memberId } = req.body
+
+  conn.query(
+    'SELECT * FROM `member` WHERE memberId = ?; SELECT * FROM `address` AS a join zipcode AS z ON z.zipcodeId = a.zipcodeId WHERE memberId = ?',
+    [memberId, memberId],
+    function (err, result) {
+      result.push(JSON.parse(zipData))
+      res.send(result)
+    }
+  )
+  next()
+})
+
+// overwrite memberInfo
+app.post('/member/edit', function (req, res, next) {
+
   const {
     isOverwrite,
     memberId,
@@ -111,18 +128,33 @@ app.post('/member/edit', function (req, res) {
     email
   } = req.body
 
-  if (!isOverwrite) {
-    conn.query(
-      'SELECT * FROM `member` WHERE memberId = ?',
-      [memberId],
-      function (err, result) {
-        res.send(result)
-      }
-    )
-  } else {
+  if (isOverwrite) {
     conn.query(
       'UPDATE `member` SET `firstName`= ?, `lastName`= ?, `nickname`= ?, `gender`= ?, `birthday`= ?, `phone`= ?, `email`= ? WHERE memberId = ?',
       [firstName, lastName, nickname, gender, birthday, phone, email, memberId],
+      function (err, result) {
+        console.log(result)
+      }
+    )
+  }
+  next()
+})
+
+// overwrite address
+app.post('/member/edit', function (req, res) {
+  console.log(req.body)
+
+  const {
+    isOverwrite,
+    memberId,
+    address,
+    zipCode
+  } = req.body
+
+  if (isOverwrite) {
+    conn.query(
+      'UPDATE `address` SET `zipcodeId`= ? ,`address`= ? WHERE `memberId` = ?',
+      [zipCode, address, memberId],
       function (err, result) {
         console.log(result)
       }

@@ -6,7 +6,7 @@ import {
   Breadcrumbs,
   Link,
   Card,
-  CardActionArea,
+  // CardActionArea,
   CardMedia,
   Typography,
   Grid,
@@ -130,12 +130,16 @@ const BidPage = props => {
           direction='row'
         >
           <Card>
-            <CardActionArea>
+            {/* <CardActionArea>
               <CardMedia
                 className={classes.mainMedia}
                 image={`/imgs/${pId}.jpg`}
               />
-            </CardActionArea>
+            </CardActionArea> */}
+            <img
+              className={classes.mainMedia}
+              src={`/imgs/${pId}.jpg`}
+            />
           </Card>
           <div className={classes.productInfoWrapper}>
             <Typography className={classes.productTitle}>
@@ -148,7 +152,11 @@ const BidPage = props => {
                {isBidDisable ? '剩下 0天 0時 0分 0秒 結束' : `剩下 ${getDuration(timer)} 結束`} {productStatus === 5 ? '(商品已結標) ' : ''}
             </Typography>
             <Typography className={classes.productInfo}>
+              起標價格：{product.length === 0 ? '' : `${product[0][0].startPrice}元`}
+            </Typography>
+            <Typography className={classes.productInfo}>
               最高出價：{product.length === 0 ? '' : (product[1].length === 0 ? '無' : product[1][0].nickname)} {product.length === 0 ? '' : (product[1].length === 0 ? '' : `(${product[1][0].userId})`)}
+              {product.length === 0 ? '' : (product[1].length === 0 ? '' : ` / ${product[1][0].bidprice}元`)}
             </Typography>
             <Typography className={classes.productInfo}>
               商品品牌：{product.length === 0 ? '' : product[0][0].brandName}

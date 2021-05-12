@@ -33,7 +33,7 @@ const BidFunc = (props, { bidState }) => {
 
   const directBuyPrice = productF.length === 0 ? '' : productF[0][0].directPrice
   const bidPriceStep = productF.length === 0 ? '' : productF[0][0].perPrice
-
+  const startBidPrice = productF.length === 0 ? '' : productF[0][0].startPrice
   let [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
 
   // 結標判斷
@@ -42,7 +42,6 @@ const BidFunc = (props, { bidState }) => {
 
   const handleNowPriceChange = e => {
     setDirectBidPrice(e.target.value)
-    console.log(e.target)
   }
 
   const handleDirectBidPriceChange = e => {
@@ -54,7 +53,6 @@ const BidFunc = (props, { bidState }) => {
     if (!userInfo) {
       swal('需登入才能使用競標功能喔')
         .then((value) => {
-          console.log(123)
           window.location.href = '/member/signin'
         })
     } else {
@@ -219,10 +217,10 @@ const BidFunc = (props, { bidState }) => {
           className={classes.priceInput}
           type='number'
           onChange={handleDirectBidPriceChange}
-          min={nowBidPrice + bidPriceStep}
+          min={nowBidPrice <= startBidPrice ? startBidPrice + bidPriceStep : nowBidPrice + bidPriceStep}
           max={directBuyPrice}
           step={bidPriceStep}
-          defaultValue={nowBidPrice}
+          defaultValue={startBidPrice}
         />
         <Button
           className={classes.bidBtn}

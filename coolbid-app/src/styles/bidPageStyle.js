@@ -6,11 +6,12 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 0, 2)
   },
   productWrapper: {
-    margin: '4rem 1rem'
+    margin: '4rem 1rem 6rem'
   },
   mainMedia: {
     height: '40rem',
-    width: '40rem'
+    width: '40rem',
+    objectFit: 'contain'
   },
   productInfoWrapper: {
     margin: '0 6rem',
