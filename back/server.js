@@ -424,7 +424,8 @@ app.get('/BackStage/SellerPageHero', function (req, res) {
 //全部
 app.get('/BackStage/product',function(req,res) {
   console.log(req)
-  let sql = 'SELECT p.productId, productDescription, nowPrice, productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId)'
+  let sql = 
+  'SELECT p.productId, p.brandId, productDescription, nowPrice, productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription, brandName, c.categoryId  FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId JOIN `brand` as b on p.brandId = b.brandId WHERE (p.productStatusId)'
   conn.query(sql,function(err,result){
   if (err) { console.log(err) }
   res.send(result)
@@ -853,6 +854,16 @@ app.get('/orderProduct/:info', function (req, res) {
   let sql = `SELECT orderId,shopId, productName,nowPrice,productId FROM product WHERE productId IN ${test}`
   // let sql = `SELECT  p.orderId,shopId, productName,nowPrice,productId,orderStatusBuyer FROM product AS p JOIN orderstatusdetail AS od ON p.orderId=od.orderId JOIN orderstatus AS os ON od.orderStatusId=os.orderStatusId WHERE productId IN ${test}`
   conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+// 編輯商品
+app.get('/selectBrand/:cat',function(req,res){
+  let cat = req.params.cat
+  let sql =`SELECT brand.brandId, brandName FROM brandcat JOIN brand on brandcat.brandId = brand.brandId WHERE categoryId = '${cat}'`
+  conn.query(sql, function (err, result) {
+    if (err) {console.log(err)}
     res.send(result)
   })
 })
