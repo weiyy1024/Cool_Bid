@@ -8,15 +8,16 @@ import '../SASS/Main.scss'
 export default function Backstage() {
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">賣家專區
-        {/* <Breadcrumbs /> */}
-      </div>
       <div className="sellerBackend_Member_Container">
-        <div className="List">
+        <div className="backendLeft">
           <SellerBackendList />
         </div>
-        <div>
-          <Sellerhomopage />
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            {/* <Breadcrumbs /> */}
+            <div className="breadcrumbsArea">賣家專區</div>
+            <Sellerhomopage />
+          </div>
         </div>
       </div>
     </div>

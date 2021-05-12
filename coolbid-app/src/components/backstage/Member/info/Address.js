@@ -2,18 +2,18 @@
 import React from 'react'
 import '../../../SASS/list.scss'
 import '../../../SASS/Components.scss'
-import styled from '@emotion/styled'
+// import styled from '@emotion/styled'
 import NestedList from '../../Main/MemberList'
 import Model from '../info/Model'
 
-const AddressContainer = styled.div`
-  width: 70%;
-  margin: 20rem auto;
-  display: flex;
-  .shipList {
-    width: 20%;
-  }
-`
+// const AddressContainer = styled.div`
+//   width: 70%;
+//   margin: 20rem auto;
+//   display: flex;
+//   .shipList {
+//     width: 20%;
+//   }
+// `
 
 function Address() {
   // const [data, setDate] = useState(
@@ -35,31 +35,36 @@ function Address() {
   ]
 
   return (
-    <AddressContainer>
-      <NestedList className="shipList" />
-      <div>
-        <div className="Address_wrap">
-          <div className="btnArea">
-            <button className="button">新增地址</button>
+    <div className="sellerBackend_Member_Wrap">
+      <div className="sellerBackend_Member_Container">
+        <div className="backendLeft">
+          <NestedList />
+        </div>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div className="Address_wrap">
+              <Model />
+              {/* <div className="btnArea">
+                <button className="button">新增地址</button>
+              </div> */}
+              {data.map((item, index) => {
+                return (
+                  <div key={index} className="Address_list">
+                    <button className="button">刪除</button>
+                    <div className="dataArea">
+                      <p>姓名：{item.name}</p>
+                      <p>手機：{item.phone}</p>
+                      <p>超商：{item.convenience}</p>
+                      <p>地址：{item.address}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-          {data.map((item, index) => {
-            return (
-              <div key={index} className="Address_list">
-                <button className="button">刪除</button>
-                <div className="dataArea">
-                  <p>姓名：{item.name}</p>
-                  <p>手機：{item.phone}</p>
-                  <p>超商：{item.convenience}</p>
-                  <p>地址：{item.address}</p>
-                </div>
-              </div>
-            )
-          })}
-           <Model />
         </div>
       </div>
-    </AddressContainer>
-
+    </div>
   )
 }
 

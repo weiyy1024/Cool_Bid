@@ -83,13 +83,13 @@ function OnTheMarket() {
   useEffect(() => {
     if (startPrice === 0) {
       const startPriceAfter = data.map((item) => item)
-      startPriceAfter.sort(function(a, b) {
+      startPriceAfter.sort(function (a, b) {
         return a.startPrice - b.startPrice
       })
       setData(startPriceAfter)
     } else {
       const startPriceAfter = data.map((item) => item)
-      startPriceAfter.sort(function(a, b) {
+      startPriceAfter.sort(function (a, b) {
         return b.startPrice - a.startPrice
       })
       setData(startPriceAfter)
@@ -99,13 +99,13 @@ function OnTheMarket() {
   useEffect(() => {
     if (perPrice === 0) {
       const perPriceAfter = data.map((item) => item)
-      perPriceAfter.sort(function(a, b) {
+      perPriceAfter.sort(function (a, b) {
         return a.perPrice - b.perPrice
       })
       setData(perPriceAfter)
     } else {
       const perPriceAfter = data.map((item) => item)
-      perPriceAfter.sort(function(a, b) {
+      perPriceAfter.sort(function (a, b) {
         return b.perPrice - a.perPrice
       })
       setData(perPriceAfter)
@@ -115,13 +115,13 @@ function OnTheMarket() {
   useEffect(() => {
     if (directPrice === 0) {
       const directPriceAfter = data.map((item) => item)
-      directPriceAfter.sort(function(a, b) {
+      directPriceAfter.sort(function (a, b) {
         return a.directPrice - b.directPrice
       })
       setData(directPriceAfter)
     } else {
       const directPriceAfter = data.map((item) => item)
-      directPriceAfter.sort(function(a, b) {
+      directPriceAfter.sort(function (a, b) {
         return b.directPrice - a.directPrice
       })
       setData(directPriceAfter)
@@ -149,76 +149,108 @@ function OnTheMarket() {
   const classes = useStyles()
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">賣家專區/商品清單/上架中
-        {/* <Breadcrumbs /> */}
-      </div>
       <div className="sellerBackend_Member_Container">
-      <div className="List">
+        <div className="backendLeft">
           <SellerBackendList />
         </div>
-    <div className="Table_wrap" id="OnTheMarketId">
-    <div>
-        <ProductTabs />
-        </div>
-      <TableContainer className="Table_container">
-        <Table>
-          <TableHead>
-            <TableRow>
-              {/* 遞減排序功能,截標倒數計時 */}
-              <TableCell align="center" className={classes.itemTitle}>
-                圖片
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>
-                項目
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>
-                類別
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changestartPrice} style={{ cursor: 'pointer' }}>
-              起標<UnfoldMoreIcon/>
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changePerPrice} style={{ cursor: 'pointer' }}>
-              出價<UnfoldMoreIcon/>
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changedirectPrice} style={{ cursor: 'pointer' }}>
-                直購<UnfoldMoreIcon/>
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
-                結標
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>
-                狀態
-              </TableCell>
-              {/* <TableCell align="center" className={classes.itemTitle}>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div className="breadcrumbsArea">
+              賣家專區/商品清單/上架中
+              {/* <Breadcrumbs /> */}
+            </div>
+            <div id="OnTheMarketId">
+              <div>
+                <ProductTabs />
+              </div>
+              <TableContainer className="Table_container">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      {/* 遞減排序功能,截標倒數計時 */}
+                      <TableCell align="center" className={classes.itemTitle}>
+                        圖片
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        項目
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        類別
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changestartPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        起標
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changePerPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        出價
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changedirectPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        直購
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        結標
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        狀態
+                      </TableCell>
+                      {/* <TableCell align="center" className={classes.itemTitle}>
                 操作
               </TableCell> */}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => {
-              return (
-                <TableRow key={index}>
-                  <TableCell align="center" className={classes.itemTxt}>
-                  <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
-                  </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>
-                    {item.startPrice}
-                  </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>
-                    {item.perPrice}
-                  </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>
-                    {item.directPrice}
-                  </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>
-                 {item.endTime}
-                  </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>
-                    {item.productstatusDescription}
-                  </TableCell>
-                  {/* <TableCell align="center" colSpan={2}>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {data.map((item, index) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            <img
+                              src={'/imgs/' + item.productId + '.jpg'}
+                              className={classes.imgStyle}
+                            />
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.categoryName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.startPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.perPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.directPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.endTime}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productstatusDescription}
+                          </TableCell>
+                          {/* <TableCell align="center" colSpan={2}>
                     <input
                       type="submit"
                       value="編輯"
@@ -232,14 +264,16 @@ function OnTheMarket() {
                       id={item.id}
                     />
                   </TableCell> */}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-    </div>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

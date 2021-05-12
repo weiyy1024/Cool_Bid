@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function getSteps () {
+const getSteps = () => {
   return ['訂單成立', '撿貨中', '運送中', '已送達']
 }
 
-function BuyList () {
+const BuyList = () => {
   const steps = getSteps()
   const [open, setOpen] = React.useState(false)
 
@@ -79,110 +79,183 @@ function BuyList () {
   }, [])
 
   return (
-      <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">買家專區/購買清單
-        {/* <Breadcrumbs /> */}
-      </div>
+    <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
-        <div className="Member_List">
-          <NestedList/>
+        <div className="backendLeft">
+          <NestedList />
         </div>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div className="breadcrumbsArea">
+              買家專區/購買清單
+              {/* <Breadcrumbs /> */}
+            </div>
+            <div>
+              <OrderTabs />
+              <TableContainer className="Table_container">
+                <Table>
+                  {data.map((item, index) => {
+                    return (
+                      <>
+                        <TableHead key={index}>
+                          <TableRow>
+                            <TableCell colSpan={4} className={classes.itemTxt}>
+                              買家:{item.shopName}
+                              <FontAwesomeIcon icon={faCommentDots} />
+                            </TableCell>
+                            <TableCell className={classes.itemTxt}>
+                              訂單編號:{item.orderId}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTitle}
+                            >
+                              圖片
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTitle}
+                            >
+                              項目
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTitle}
+                            >
+                              日期
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTitle}
+                            >
+                              狀態
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTitle}
+                            >
+                              價錢
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
 
-      <div className="Table_wrap">
-        <OrderTabs />
-        <TableContainer className="Table_container">
-          <Table>
-            {data.map((item, index) => {
-              return (
-                <>
-                  <TableHead key={index}>
-                    <TableRow>
-                      <TableCell colSpan={4} className={classes.itemTxt}>
-                        買家:{item.shopName}
-                        <FontAwesomeIcon icon={faCommentDots} />
-                      </TableCell>
-                      <TableCell className={classes.itemTxt}>訂單編號:{item.orderId}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell align="center" className={classes.itemTitle}>圖片</TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>日期</TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>價錢</TableCell>
-                    </TableRow>
-                  </TableHead>
+                        <TableBody>
+                          <TableRow>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTxt}
+                            >
+                              <img
+                                src={'/imgs/' + item.productId + '.jpg'}
+                                className={classes.imgStyle}
+                              />
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTxt}
+                            >
+                              {item.productName}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTxt}
+                            >
+                              {item.orderTime}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTxt}
+                            >
+                              訂單成立
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTxt}
+                            >
+                              {item.nowPrice}
+                            </TableCell>
+                          </TableRow>
 
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" className={classes.itemTxt}>
-                      <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
-                      </TableCell>
-                      <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
-                      <TableCell align="center" className={classes.itemTxt}>{item.orderTime}</TableCell>
-                      <TableCell align="center" className={classes.itemTxt}>訂單成立</TableCell>
-                      <TableCell align="center" className={classes.itemTxt}>{item.nowPrice}</TableCell>
-                    </TableRow>
+                          <TableRow>
+                            <TableCell colSpan={4} className={classes.itemTxt}>
+                              狀態:
+                              <a
+                                onClick={handleOpen}
+                                style={{
+                                  cursor: 'pointer',
+                                  color: 'rgb(11, 96, 175)'
+                                }}
+                              >
+                                {item.orderStatusBuyer}
+                              </a>
+                              &emsp;{item.orderStatusDate}
+                            </TableCell>
+                            <TableCell
+                              align="center"
+                              className={classes.itemTxt}
+                            >
+                              總計:
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell colSpan={5}>
+                              <input
+                                type="submit"
+                                value="完成訂單"
+                                className="button SetStoreInfo_Submit"
+                              />
+                              <input
+                                type="submit"
+                                value="評價"
+                                className="button SetStoreInfo_Submit"
+                              />
 
-                    <TableRow>
-                      <TableCell colSpan={4} className={classes.itemTxt}>狀態:
-                      <a onClick={handleOpen} style={{ cursor: 'pointer', color: 'rgb(11, 96, 175)' }}>{item.orderStatusBuyer}</a>
-                      &emsp;{item.orderStatusDate}</TableCell>
-                      <TableCell align="center" className={classes.itemTxt}>總計:</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell colSpan={5}>
-                        <input
-                          type="submit"
-                          value="完成訂單"
-                          className="button SetStoreInfo_Submit"
-                        />
-                        <input
-                          type="submit"
-                          value="評價"
-                          className="button SetStoreInfo_Submit"
-                        />
-
-                        <input
-                          type="submit"
-                          value="退貨/退款"
-                          className="button SetStoreInfo_Submit"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </>
-              )
-            })}
-          </Table>
-        </TableContainer>
-        <>
-        <Modal
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-          <Stepper alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label} className={classes.spacing}>
-            <StepLabel><h1>{label}</h1></StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+                              <input
+                                type="submit"
+                                value="退貨/退款"
+                                className="button SetStoreInfo_Submit"
+                              />
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </>
+                    )
+                  })}
+                </Table>
+              </TableContainer>
+              <>
+                <Modal
+                  className={classes.modal}
+                  open={open}
+                  onClose={handleClose}
+                  closeAfterTransition
+                  BackdropComponent={Backdrop}
+                  BackdropProps={{
+                    timeout: 500
+                  }}
+                >
+                  <Fade in={open}>
+                    <div className={classes.paper}>
+                      <Stepper alternativeLabel>
+                        {steps.map((label) => (
+                          <Step key={label} className={classes.spacing}>
+                            <StepLabel>
+                              <h1>{label}</h1>
+                            </StepLabel>
+                          </Step>
+                        ))}
+                      </Stepper>
+                    </div>
+                  </Fade>
+                </Modal>
+              </>
+            </div>
           </div>
-        </Fade>
-      </Modal>
-      </>
         </div>
       </div>
     </div>
-
   )
 }
 
