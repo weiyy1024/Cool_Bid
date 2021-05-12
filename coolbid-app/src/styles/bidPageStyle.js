@@ -2,48 +2,44 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: '18rem auto 0',
-    padding: theme.spacing(2, 0)
+    margin: '17rem auto 3rem',
+    padding: theme.spacing(0, 0, 2)
   },
   productWrapper: {
-    margin: '40px 10px'
+    margin: '4rem 1rem'
   },
   mainMedia: {
-    height: '400px',
-    width: '400px'
-  },
-  smallMediaWrapper: {
-    backgroundColor: '#ddd',
-    width: '400px'
-  },
-  smallMedia: {
-    display: 'inline-block',
-    height: '90px',
-    width: '90px',
-    margin: '5px'
+    height: '40rem',
+    width: '40rem'
   },
   productInfoWrapper: {
-    margin: '0 60px',
-    width: '44rem'
+    margin: '0 6rem',
+    width: '40rem'
   },
   storeMedia: {
-    height: '120px',
-    width: '120px',
-    borderRadius: '50%'
+    height: '12rem',
+    width: '12rem',
+    borderRadius: '50%',
+    border: '6px solid #ccc'
   },
   productTitle: {
+    fontSize: '2.8rem',
     fontWeight: 'bold',
-    margin: '2.5rem 0 3.5rem'
+    margin: '1.5rem 0 2rem'
   },
   productInfo: {
+    fontSize: '1.8rem',
     color: '#555',
     fontWeight: '500',
-    lineHeight: '5rem'
+    lineHeight: '4rem',
+    display: 'flex',
+    alignItems: 'center'
   },
   store: {
     display: 'flex',
     alignItems: 'center',
-    margin: '3rem 2rem 4rem'
+    margin: '3rem 2rem 4rem',
+    padding: '1rem 7rem 0 3rem'
   },
   storeNameGroup: {
     display: 'flex',
@@ -54,9 +50,6 @@ const useStyles = makeStyles(theme => ({
     display: 'inline-block',
     fontSize: '4.5rem',
     margin: '2rem 1rem 1.5rem 0'
-  },
-  follow: {
-    fontSize: '.2rem'
   },
   storeInfo: {
     color: '#555',
@@ -82,17 +75,20 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer'
   },
   productDetail: {
-    padding: '1rem 5rem',
+    padding: '1rem 10rem',
     lineHeight: '3.5rem',
-    fontSize: '1.7rem'
+    fontSize: '2rem'
   },
   table: {
     padding: '1rem 6.5rem',
     width: '150rem'
   },
   th: {
-    fontSize: '1.5rem',
+    fontSize: '2rem',
     fontWeight: 'bold'
+  },
+  td: {
+    fontSize: '1.5rem'
   }
 }))
 

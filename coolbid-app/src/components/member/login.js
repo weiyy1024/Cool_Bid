@@ -14,20 +14,9 @@ import { Link } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   width: 25%;
-  height: 30rem;
-  margin: 20rem auto;
+  min-height:calc(100vh - 125px);
+  margin: 20rem auto 0;
   color: grey;
-`
-const Myfooter = styled.footer`
-  width: 100%;
-  text-align: center;
-  position: fixed;
-  bottom: 0;
-  background-color: #123;
-  color: white;
-  a {
-    text-decoration: none;
-  }
 `
 
 export default function Login(props) {
@@ -102,38 +91,6 @@ export default function Login(props) {
         <span className="title2">還沒有會員？<Link to="/member/signup">註冊</Link></span>
 
       </LoginContainer>
-
-      <Myfooter className="text-center">
-        <div className="row">
-          <div className="col">
-            <p className="tit">Information</p>
-            <a className="m2 text-secondary" href="./footer/購物說明.html">
-              購物說明
-            </a>
-            <a className="m2 text-secondary" href="./footer/退換貨政策.html">
-              退換貨政策
-            </a>
-            <br />
-            <a className="m2" href="./footer/問題Ｑ＆Ａ.html">
-              問題Ｑ＆Ａ
-            </a>
-            <a className="m2" href="./footer/關於我們.html">
-              關於我們
-            </a>
-            <br />
-            <a className="m2" href="./footer/隱私權政策.html">
-              隱私權政策
-            </a>
-          </div>
-          <div className="col">
-            <p className="tit">Contact Us</p>
-            <p className="m2">營業時間：週一至週五 10-18</p>
-            <p className="m2">客服信箱：weiyyy1024@gmail.com</p>
-          </div>
-        </div>
-        <hr />
-        <small>©2021 www.hiweiyyy.com.tw All Rights Reserved.</small>
-      </Myfooter>
     </>
   )
 }

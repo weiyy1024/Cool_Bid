@@ -1,7 +1,10 @@
 import React from 'react'
 import '../style/dropdown.css'
 import { NavLink } from 'react-router-dom'
-
+import PermIdentityIcon from '@material-ui/icons/PermIdentity'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined'
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined'
 // eslint-disable-next-line space-before-function-paren
 export default function MemberDropDown() {
   const userinfo = window.sessionStorage.getItem('userinfo')
@@ -20,22 +23,60 @@ export default function MemberDropDown() {
     wishListto = '/member/signin'
   }
   return (
-    <dl className="memberList maki">
-      <dd>
-        {login}
-      </dd>
-      <dd>
-        <NavLink to={editto}>會員中心</NavLink>
-      </dd>
-      <dd>
-        <NavLink to={backstageto}>賣家後台</NavLink>
-      </dd>
-      <dd>
-        <NavLink to={purchaseto}>購買紀錄</NavLink>
-      </dd>
-      <dd>
-        <NavLink to={wishListto}>收藏清單</NavLink>
-      </dd>
-    </dl>
+    <div className="memberList">
+      <div>{login}</div>
+      <div>
+        <NavLink to={editto}>
+          <PermIdentityIcon
+            style={{
+              fontSize: '3rem',
+              position: 'relative',
+              top: '8px',
+              marginRight: '4px'
+            }}
+          />
+          會員中心
+        </NavLink>
+      </div>
+      <div>
+        <NavLink to={backstageto}>
+          <StorefrontIcon
+            style={{
+              fontSize: '3rem',
+              position: 'relative',
+              top: '8px',
+              marginRight: '4px'
+            }}
+          />
+          賣家後台
+        </NavLink>
+      </div>
+      <div>
+        <NavLink to={purchaseto}>
+          <LocalMallOutlinedIcon
+            style={{
+              fontSize: '3rem',
+              position: 'relative',
+              top: '8px',
+              marginRight: '4px'
+            }}
+          />
+          購買紀錄
+        </NavLink>
+      </div>
+      <div>
+        <NavLink to={wishListto}>
+          <FavoriteBorderOutlinedIcon
+            style={{
+              fontSize: '3rem',
+              position: 'relative',
+              top: '8px',
+              marginRight: '4px'
+            }}
+          />
+          收藏清單
+        </NavLink>
+      </div>
+    </div>
   )
 }

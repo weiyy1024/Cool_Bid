@@ -17,6 +17,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 // styled Components
 const ProductDiv = styled.div`
   display: flex;
+  justify-content:center;
 `
 const ProductImg = styled.div`
   width: 12rem;
@@ -215,6 +216,7 @@ export default function ShoppingCart(props) {
         <Divider />
         <div style={{ height: '75vh', overflowY: 'scroll', padding: '10px 0' }}>
           {userinfo ? (
+            product.length > 0 &&
             product.map((item, index) => <ItemDiv key={index} data={item} />)
           ) : (
             <SignIn onClick={handleSignin}>請先登入</SignIn>

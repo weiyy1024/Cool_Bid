@@ -9,9 +9,9 @@
 }
 
 .sellerBackend_Member_Wrap .breadcrumbsArea {
-  width: 1000px;
-  margin: auto;
-  margin-bottom: 100px;
+  margin-left: 200px;
+  margin-bottom: 50px;
+  font-size: 18px;
 }
 
 .sellerBackend_Member_Wrap .sellerBackend_Member_Container {
@@ -19,9 +19,36 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: 90%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-.Member_List {
-  margin-left: 100px;
+.side-menu {
+  width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+.nav .link {
+  display: block;
+  padding: 10px;
+  color: #707070;
+  text-decoration: none;
+}
+
+.nav li + li {
+  border-top: 1px dashed #707070;
+}
+
+.nav li {
+  list-style: none;
 }
 /*# sourceMappingURL=Main.css.map */

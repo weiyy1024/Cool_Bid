@@ -188,6 +188,7 @@ export default function Checkout() {
     url: '/address/' + userinfo.memberId,
     'Content-Type': 'application/json'
   }).then((res) => {
+    // console.log(res)
     if (res.data.length) {
       setAddress(res.data[0].address)
     } else {

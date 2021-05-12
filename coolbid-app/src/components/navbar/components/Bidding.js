@@ -16,6 +16,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 // styled Components
 const ProductDiv = styled.div`
   display: flex;
+  justify-content: center;
 `
 const ProductImg = styled.div`
   width: 15rem;
@@ -25,13 +26,18 @@ const ProductImg = styled.div`
 const ProductInfo = styled.div`
   padding: 1rem;
   .productName {
-    text-decoration: none;
-    color: grey;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     margin-bottom: 0rem;
   }
-  .productName:hover {
-    color: #ffc400;
+  a {
+    color: grey;
+    text-decoration: none;
+  }
+  a:hover {
+    color: rgb(237, 174, 16);
+  }
+  p {
+    font-size: 1.4rem;
   }
 `
 const CartNum = styled.span`

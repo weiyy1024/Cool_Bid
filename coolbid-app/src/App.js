@@ -25,6 +25,7 @@ import BidPage from './components/Ahomepage/bidding/bidPage'
 import NavBar from './components/navbar/navbar'
 import Backstage from './components/backstage/backStage'
 import AuctionCountdown from './AuctionCountdown'
+import Footer from './Footer'
 import BuyList from './components/backstage/Member/PurchaseList/BuyList'
 import Address from './components/backstage/Member/info/Address'
 // import CloseAuction from './components/backstage/product1920/CloseAuction'
@@ -34,6 +35,7 @@ import SellerPageHero from './components/backstage/SellerPageHero23/SellerPageHe
 // cart checkout
 import Checkout from './components/member/carts/components/checkout'
 import CompleteOrder from './components/member/carts/components/completeOrder'
+
 function App() {
   return (
     <BrowserRouter>
@@ -112,6 +114,7 @@ function App() {
           <Route path="/Shopping/Cart/checkout" component={Checkout} exact />
           <Route path="/completeOrder" component={CompleteOrder} exact />
         </Switch>
+        <Footer />
       </div>
     </BrowserRouter>
   )

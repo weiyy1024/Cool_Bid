@@ -3,16 +3,7 @@ import axios from 'axios'
 
 import swal from 'sweetalert'
 
-import {
-  Container,
-  Button,
-  IconButton,
-  FormControl,
-  // FormControlLabel,
-  // Radio,
-  Typography
-} from '@material-ui/core'
-import PaymentIcon from '@material-ui/icons/Payment'
+import { Container, Button, FormControl, Typography } from '@material-ui/core'
 
 import useStyles from '../../../styles/bidFuncStyle'
 
@@ -182,17 +173,19 @@ const BidFunc = (props, { bidState }) => {
 
   return (
     <Container className={classes.bidFuncWrapper}>
-      <Typography variant="h4" color="primary" onChange={handleNowPriceChange}>
-        {/* 新增幣別切換 20200511 weiyy */}
-        目前出價：{currency === 'US' ? 'USD$' : 'NTD$'}{' '}
-        {currency === 'US' ? Math.floor(nowBidPrice / 30) : nowBidPrice}元
+      <Typography
+        variant="h4"
+        color="primary"
+        onChange={handleNowPriceChange}
+        className={classes.bidInfo}
+      >
+        目前出價：{nowBidPrice}元
       </Typography>
-      <Typography variant="h4" color="primary">
+      <Typography variant="h4" color="primary" className={classes.bidInfo}>
         出價次數：{bidTimes}次
       </Typography>
-      <Typography variant="h4" color="primary">
-        出價增額：{currency === 'US' ? 'USD$' : 'NTD$'}{' '}
-        {currency === 'US' ? Math.floor(bidPriceStep / 30) : bidPriceStep}元
+      <Typography variant="h4" color="primary" className={classes.bidInfo}>
+        出價增額：{bidPriceStep}元
       </Typography>
       <br />
       <hr />
@@ -208,7 +201,7 @@ const BidFunc = (props, { bidState }) => {
           元{' '}
         </Typography>
         <Button
-          className={classes.buy}
+          className={classes.buyBtn}
           onClick={() => {
             directBuy()
             setBidState(bidState + 1)
@@ -216,86 +209,37 @@ const BidFunc = (props, { bidState }) => {
           variant="outlined"
           color="secondary"
         >
-          <IconButton color="secondary" size="small">
-            <PaymentIcon />
-          </IconButton>
           直接購買
         </Button>
       </div>
       <br />
       <FormControl component="fieldset" className={classes.bidFuncGroup}>
-        {/* <RadioGroup onChange={handleBidMethodChange}> */}
-        {/* <div className={classes.autoBidGroup}>
-            <FormControlLabel
-              control={<Radio />}
-              value='autoBid'
-              label='自動出價'
-              style={{ width: '14rem' }}
-            />
-            <input
-              type='number'
-              onChange={handleAutoBidPriceChange}
-              min={nowBidPrice + bidPriceStep}
-              max={directBuyPrice}
-              step={bidPriceStep}
-              defaultValue={nowBidPrice + bidPriceStep}
-            />
-          </div> */}
-        <div className={classes.directBidGroup}>
-          {/* <FormControlLabel
-              control={<Radio />}
-              value='directBid'
-              label='直接出價'
-              style={{ width: '14rem' }}
-            /> */}
-          <input
-            type="number"
-            onChange={handleDirectBidPriceChange}
-            min={
-              currency === 'US'
-                ? Math.floor((nowBidPrice + bidPriceStep) / 30)
-                : nowBidPrice + bidPriceStep
-            }
-            max={
-              currency === 'US'
-                ? Math.floor(directBuyPrice / 30)
-                : directBuyPrice
-            }
-            step={
-              currency === 'US' ? Math.floor(bidPriceStep / 30) : bidPriceStep
-            }
-            // 修改競標預設值 20200511 weiyy
-            defaultValue={
-              currency === 'US'
-                ? Math.floor((nowBidPrice + bidPriceStep) / 30)
-                : nowBidPrice + bidPriceStep
-            }
-          />
-        </div>
-        {/* </RadioGroup> */}
-      </FormControl>
-      <br />
-      <div className={classes.bidNowGroup}>
+        <input
+          className={classes.priceInput}
+          type="number"
+          onChange={handleDirectBidPriceChange}
+          min={nowBidPrice + bidPriceStep}
+          max={directBuyPrice}
+          step={bidPriceStep}
+          defaultValue={nowBidPrice}
+        />
         <Button
-          className={classes.go}
+          className={classes.bidBtn}
           onClick={() => {
             bidNow()
             setBidState(bidState + 1)
           }}
-          variant="contained"
+          variant="outlined"
           color="primary"
           disableElevation
           disabled={isBidDisable}
         >
           直接出價
         </Button>
-        <Typography variant="h4" color="primary" className={classes.save}>
-          已省下 {currency === 'US' ? 'USD$' : 'NTD$'}
-          {currency === 'US'
-            ? Math.floor(parseInt(saveMoney()) / 30)
-            : saveMoney()}
-        </Typography>
-      </div>
+      </FormControl>
+      <Typography variant="h4" color="primary" className={classes.save}>
+        已省下 {saveMoney()}
+      </Typography>
     </Container>
   )
 }

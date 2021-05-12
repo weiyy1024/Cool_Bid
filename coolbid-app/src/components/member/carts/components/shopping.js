@@ -13,6 +13,7 @@ const Shop = styled.div`
   padding: 2rem;
   width: 75%;
   margin: 2rem auto;
+  border-radius: 1rem;
   .top {
     display: flex;
     font-size: 2.4rem;
@@ -97,7 +98,7 @@ const Shop = styled.div`
   }
 `
 const Clear = styled.div`
-  margin-top: 20rem;
+  margin-top: 10rem;
   p {
     font-size: 3.5rem;
     width: 30%;
@@ -108,6 +109,7 @@ const Clear = styled.div`
   div {
     font-size: 2.5rem;
     width: 8%;
+    min-width:150px;
     margin: 1rem auto;
     text-align: center;
     padding: 0.5rem 1rem;
