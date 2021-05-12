@@ -1,27 +1,61 @@
 /* eslint-disable space-before-function-paren */
 import React from 'react'
+
+import {
+  Link
+} from '@material-ui/core'
+
 import '../../SASS/list.scss'
 function OrderTabs() {
+  const handleAllChange = () => {
+    console.log(123)
+  }
+
   return (
     <nav className="tabs">
       <ul>
         <li>
-          <a href="#">全部</a>
+          <Link
+            href="#"
+            onClick={handleAllChange}
+          >
+          全部
+          </Link>
         </li>
         <li>
-          <a href="#">待出貨</a>
+          <Link
+            href="#"
+          >
+          待出貨
+          </Link>
         </li>
         <li>
-          <a href="#">運送中</a>
+          <Link
+            href="#"
+          >
+          運送中
+          </Link>
         </li>
         <li>
-          <a href="#">已完成</a>
+          <Link
+            href="#"
+          >
+          已完成
+          </Link>
         </li>
         <li>
-          <a href="#">棄標</a>
+          <Link
+            href="#"
+          >
+          棄標
+          </Link>
         </li>
         <li>
-          <a href="#">退款/貨</a>
+          <Link
+            href="#"
+          >
+          退款/貨
+          </Link>
         </li>
       </ul>
     </nav>

@@ -15,6 +15,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 
+function goEdit (id) {
+  window.location.href = 'product/' + id
+}
+
 const useStyles = makeStyles((theme) => ({
   itemTitle: {
     fontSize: 20
@@ -41,11 +45,10 @@ function productpage () {
   const [bidPrice, setbidPrice] = useState(0)
 
   useEffect(() => {
-    console.log('hi')
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
-      url: '/BackStage/product/all',
+      url: '/BackStage/product',
       'Content-Type': 'application/json'
     }).then((a) => setData(a.data))
   }, [])
@@ -80,6 +83,14 @@ function productpage () {
       setdirectPrice(0)
     }
   }
+
+  // const changeEndTime = () => {
+  //   if (endTime === 0) {
+  //     setEndTime(1)
+  //   } else {
+  //     setEndTime(0)
+  //   }
+  // }
 
   useEffect(() => {
     if (bidPrice === 0) {
@@ -145,6 +156,22 @@ function productpage () {
     }
   }, [directPrice])
 
+  // useEffect(() => {
+  //   if (endTime === 0) {
+  //     const endTimeAfter = data.map((item) => item)
+  //     endTimeAfter.sort(function (a, b) {
+  //       return new Date(a.endTime) - new Date(b.endTime)
+  //     })
+  //     setEndTime(endTimeAfter)
+  //   } else {
+  //     const endTimeAfter = data.map((item) => item)
+  //     endTimeAfter.sort(function (a, b) {
+  //       return new Date(b.endTime) - new Date(a.endTime)
+  //     })
+  //     setEndTime(endTimeAfter)
+  //   }
+  // }, [endTime])
+
   useEffect(() => {}, [directPrice, perPrice, startPrice, bidPrice])
 
   return (
@@ -182,6 +209,8 @@ function productpage () {
                 結標
               </TableCell>
               <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
+              <TableCell align="center" colSpan={2}>
+              </TableCell>
             </TableRow>
           </TableHead>
 
@@ -198,6 +227,19 @@ function productpage () {
                   <TableCell align="center" className={classes.itemTxt}>{item.directPrice}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
                   <TableCell align="center" className={classes.itemTxt}>{item.productstatusDescription}</TableCell>
+                  <TableCell align="center" colSpan={2}>
+                    <input
+                      type="submit"
+                      value="編輯"
+                      className="button SetStoreInfo_Submit"
+                      onClick={() => goEdit(item.productId)}/>
+                    <br />
+                    <input
+                      type="submit"
+                      value="刪除"
+                      className="button SetStoreInfo_Submit"
+                      id={item.id}/>
+                  </TableCell>
                 </TableRow>
             )
           })}

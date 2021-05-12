@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 function CloseAuction() {
   // eslint-disable-next-line no-unused-vars
-  const classes = useStyles()
   const [data, setData] = useState([])
+  const classes = useStyles()
   const [bidPrice, setbidPrice] = useState(0)
 
   useEffect(() => {
@@ -71,8 +71,6 @@ function CloseAuction() {
       setData(bidPriceAfter)
     }
   }, [bidPrice])
-
-  useEffect(() => {}, [bidPrice])
 
   return (
     <div className="sellerBackend_Member_Wrap">

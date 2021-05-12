@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+// import moment from 'moment'
+import axios from 'axios'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -7,17 +9,91 @@ import Select from '@material-ui/core/Select'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import Typography from '@material-ui/core/Typography'
+// import { CKEditor } from '@ckeditor/ckeditor5-react'
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+// import Typography from '@material-ui/core/Typography'
 import '../../SASS/from.scss'
 import '../../SASS/Components.scss'
-// import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
+import { useParams } from 'react-router'
 
 function AddProduct () {
-  const [descWord, setDescWord] = useState('')
-  console.log(descWord)
+  const [data, setData] = useState([])
+  const { id } = useParams()
+  // const [descWord, setDescWord] = useState('')
+  // console.log(descWord)
+  // 綁定change事件
+  const [productName, setProductName] = useState('')
+  const [endTime, setEndTime] = useState('')
+  const [categoryName, setCategoryName] = useState('')
+  // const [brandId, setBrandId] = useState('')
+  const [brandName, setBrandName] = useState('')
+  const [productConditionId, setProductConditionId] = useState(1)
+  const [nowPrice, setNowPrice] = useState(0)
+  const [startPrice, setStartPrice] = useState(0)
+  const [perPrice, setPerPrice] = useState(0)
+  const [directPrice, setDirectPrice] = useState(0)
+  const [productDescription, setProductDescription] = useState('')
+  // 連線資料庫
+  useEffect(() => {
+    if (id > 0) {
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/BackStage/product/edit?id=' + id,
+        'Content-Type': 'application/json'
+      }).then((a) => {
+        // setData(a.data)
+        setProductName(a.data[0].productName)
+        setEndTime(a.data[0].endTime)
+        setCategoryName(a.data[0].categoryName)
+        // setBrandId(a.data[0].brandId)
+        setBrandName(a.data[0].brandName)
+        setProductConditionId(a.data[0].productConditionId)
+        setNowPrice(a.data[0].nowPrice)
+        setStartPrice(a.data[0].startPrice)
+        setPerPrice(a.data[0].perPrice)
+        setDirectPrice(a.data[0].directPrice)
+        setProductDescription(a.data[0].productDescription)
+      })
+    }
+  }, [])
+
+  function brandSelect (e) {
+    if (e === 'Bag') {
+      setCategoryName('Bag')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/B',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    } else if (e === 'Cloth') {
+      setCategoryName('Cloth')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/C',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    } else if (e === 'Watch') {
+      setCategoryName('Watch')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/W',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    } else if (e === 'Shoes') {
+      setCategoryName('Shoes')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/S',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    }
+  }
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -37,8 +113,11 @@ function AddProduct () {
               <TextField
                 type="text"
                 name="name"
-                value=""
-                onChange=""
+                // value={data.length > 0 ? data[0].categoryName : ''}
+                value={productName}
+                onChange={(e) => {
+                  setProductName(e.target.value)
+                }}
                 variant="outlined"
                 label="商品標題"
                 className="mininput"
@@ -50,16 +129,27 @@ function AddProduct () {
             <label htmlFor="deadline">
               *截標日期:
               <br />
-              <TextField
+              {/* <TextField
                 id="deadline"
                 type="datetime-local"
                 name="deadline"
-                value=""
+                value={endTime}
                 onChange=""
                 variant="outlined"
                 label="DataTime"
                 className="dateinput"
                 InputLabelProps={{ shrink: true }}
+              /> */}
+              <TextField
+                type="text"
+                name="name"
+                value={endTime}
+                onChange={(e) => {
+                  setEndTime(e.target.value)
+                }}
+                variant="outlined"
+                label="截標日期"
+                className="mininput"
               />
             </label>
           </div>
@@ -73,22 +163,45 @@ function AddProduct () {
                 <Select
                   labelId="kind"
                   id="kind"
-                  value=""
-                  onChange=""
+                  value={categoryName}
+                  onChange={(e) => brandSelect(e.target.value)}
                   label="kind"
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem>鞋子</MenuItem>
-                  <MenuItem>衣服</MenuItem>
-                  <MenuItem>包包</MenuItem>
-                  <MenuItem>手錶</MenuItem>
+                  <MenuItem value="Shoes">鞋子</MenuItem>
+                  <MenuItem value="Cloth">衣服</MenuItem>
+                  <MenuItem value="Bag">包包</MenuItem>
+                  <MenuItem value="Watch">手錶</MenuItem>
                 </Select>
               </FormControl>
             </label>
           </div>
-
+          {/* {data.map((item, index) => {
+            return (
+          <label htmlFor="brand" key={index}>
+            *商品品牌:
+            <br />
+            <FormControl variant="outlined" className="mininput">
+              <InputLabel id="brand">brand</InputLabel>
+                  <Select
+                    labelId="brand"
+                    id="brand"
+                    value={brandName}
+                    onChange={(e) => {
+                      setBrandName(e.target.value)
+                    }}
+                    label="brand"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                  </Select>
+            </FormControl>
+          </label>
+            )
+          })} */}
           <label htmlFor="brand">
             *商品品牌:
             <br />
@@ -97,20 +210,21 @@ function AddProduct () {
               <Select
                 labelId="brand"
                 id="brand"
-                value=""
-                onChange=""
+                value={brandName}
+                onChange={(e) => {
+                  // setBrandId(e.target.value)
+                  setBrandName(e.target.innerText)
+                }}
                 label="brand"
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem>UnderArmour</MenuItem>
-                <MenuItem>Nike</MenuItem>
-                <MenuItem>Adidas</MenuItem>
+                {data.map((item) => (
+                  <MenuItem value={item.brandId} key={item.brandId}>
+                    <em>{item.brandName}</em>
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </label>
-
           <div className="form_row">
             <label>
               商品顏色:
@@ -153,12 +267,12 @@ function AddProduct () {
                 defaultValue="new"
               >
                 <FormControlLabel
-                  value="new"
+                  value={productConditionId === 1}
                   control={<Radio color="primary" />}
                   label="全新"
                 />
                 <FormControlLabel
-                  value="used"
+                  value={productConditionId === 2}
                   control={<Radio color="primary" />}
                   label="二手"
                 />
@@ -173,8 +287,10 @@ function AddProduct () {
               <TextField
                 type="number"
                 name="bid"
-                value=""
-                onChange=""
+                value={nowPrice}
+                onChange={(e) => {
+                  setNowPrice(e.target.value)
+                }}
                 variant="outlined"
                 label="bid"
                 className="mininput"
@@ -191,8 +307,10 @@ function AddProduct () {
                 id="basic"
                 type="number"
                 name="basic"
-                value=""
-                onChange=""
+                value={startPrice}
+                onChange={(e) => {
+                  setStartPrice(e.target.value)
+                }}
                 variant="outlined"
                 label="basic"
                 className="mininput"
@@ -208,8 +326,10 @@ function AddProduct () {
               <TextField
                 type="number"
                 name="per"
-                value=""
-                onChange=""
+                value={perPrice}
+                onChange={(e) => {
+                  setPerPrice(e.target.value)
+                }}
                 variant="outlined"
                 label="per"
                 className="mininput"
@@ -225,8 +345,11 @@ function AddProduct () {
               <TextField
                 type="number"
                 name="direct"
-                value=""
-                onChange=""
+                value={directPrice}
+                onChange={(e) => {
+                  console.log(e.target.value)
+                  setDirectPrice(e.target.value)
+                }}
                 variant="outlined"
                 label="direct"
                 className="mininput"
@@ -240,38 +363,41 @@ function AddProduct () {
           </div>
 
           <div className="form_row">
-            <Typography
+            {/* <Typography
               variant="h4"
               style={{ fontWeight: 'bold', margin: '2rem 0 1rem' }}
             >
-              賣場描述：
+              商品描述：
             </Typography>
             <CKEditor
               editor={ClassicEditor}
               onChange={(event, editor) => {
                 setDescWord(editor.getData())
               }}
-            />
-            {/* <label>
-          商品描述:
-          <br/>
-          <TextField
-            id="description"
-            type="text"
-            name="description"
-            value=""
-            onChange=""
-            label="買場描述"
-            variant="outlined"
-            multiline={true}
-            rows={6}
-            className="txtinput"
-            InputLabelProps={{ shrink: true }}
-          />
-        </label> */}
+              value=''
+            /> */}
+            <label>
+              商品描述:
+              <br />
+              <TextField
+                id="description"
+                type="text"
+                name="description"
+                value={productDescription}
+                onChange={(e) => {
+                  setProductDescription(e.target.value)
+                }}
+                label="商品描述"
+                variant="outlined"
+                multiline={true}
+                rows={6}
+                className="txtinput"
+                InputLabelProps={{ shrink: true }}
+              />
+            </label>
           </div>
 
-          <button className="button">新增</button>
+          <button className="button">儲存</button>
         </form>
       </div>{' '}
     </div>

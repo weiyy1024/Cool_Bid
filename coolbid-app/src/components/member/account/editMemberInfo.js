@@ -28,6 +28,7 @@ const EditContainer = styled.div`
 const EditMemberInfo = () => {
   const classes = useStyles()
   const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+
   const [lastName, setLastName] = useState()
   const [firstName, setFirstName] = useState()
   const [nickname, setNickname] = useState()
@@ -35,6 +36,11 @@ const EditMemberInfo = () => {
   const [birthday, setBirthday] = useState()
   const [phone, setPhone] = useState()
   const [email, setEmail] = useState()
+  const [county, setCounty] = useState('')
+  const [dist, setDist] = useState([])
+  const [addr, setAddr] = useState()
+  const [zipData, setZipData] = useState([])
+  const [zip, setZip] = useState('')
 
   useEffect(() => {
     axios
@@ -42,15 +48,29 @@ const EditMemberInfo = () => {
         memberId: userInfo.memberId
       })
       .then(res => {
-        setLastName(res.data[0].lastName)
-        setFirstName(res.data[0].firstName)
-        setNickname(res.data[0].nickname)
-        setGender(res.data[0].gender)
-        setBirthday(res.data[0].birthday)
-        setPhone(res.data[0].phone)
-        setEmail(res.data[0].email)
+        console.log(res.data)
+        setLastName(res.data[0][0].lastName)
+        setFirstName(res.data[0][0].firstName)
+        setNickname(res.data[0][0].nickname)
+        // setCounty(res.data[1][0].city)
+        // setDist(res.data[1][0].district)
+        setAddr(res.data[1][0].address)
+        setGender(res.data[0][0].gender)
+        setBirthday(res.data[0][0].birthday)
+        setPhone(res.data[0][0].phone)
+        setEmail(res.data[0][0].email)
+        setZipData(res.data[2])
       })
   }, [])
+
+  // find zip
+  const countyData = zipData.map(zip => {
+    return zip.name
+  })
+  const distData = county ? zipData[countyData.indexOf(county)].districts : []
+  // console.log(zipData)
+  // console.log(countyData)
+  // console.log(distData)
 
   const dateFormat = date => {
     const d = new Date(birthday)
@@ -78,6 +98,16 @@ const EditMemberInfo = () => {
   const handleEmailChange = e => {
     setEmail(e.target.value)
   }
+  const handleCountyChange = e => {
+    setCounty(e.target.value)
+  }
+  const handleDistChange = e => {
+    setDist(e.target.value)
+    setZip(e.target.value)
+  }
+  const handleAddrChange = e => {
+    setAddr(e.target.value)
+  }
 
   const onSave = () => {
     axios
@@ -90,7 +120,9 @@ const EditMemberInfo = () => {
         gender: gender,
         birthday: birthday,
         phone: phone,
-        email: email
+        email: email,
+        address: addr,
+        zipCode: zip
       })
 
     swal({
@@ -108,6 +140,9 @@ const EditMemberInfo = () => {
     setBirthday('')
     setPhone('')
     setEmail('')
+    setCounty('')
+    setDist('')
+    setAddr('')
   }
 
   return (
@@ -115,13 +150,10 @@ const EditMemberInfo = () => {
       <NestedList className="content" />
       <div className="content">
         <Typography variant="h2">會員資料更新</Typography>
-        <Typography variant="h6" className={classes.inline}>
-          * 為必填
-        </Typography>
         <br />
         <FormGroup>
           {/* 姓 */}
-          <Typography variant="h5">* 姓</Typography>
+          <Typography variant="h5">姓</Typography>
           <FormControl className={classes.inline}>
             <Input
               id="lastName"
@@ -130,13 +162,13 @@ const EditMemberInfo = () => {
               value={lastName}
             />
             <FormHelperText id="my-helper-text">
-              僅收貨時使用，請填寫真實姓名
+              僅收貨時使用，請填寫真實姓氏
             </FormHelperText>
           </FormControl>
           <br />
 
           {/* 名 */}
-          <Typography variant="h5">* 名</Typography>
+          <Typography variant="h5">名</Typography>
           <FormControl className={classes.inline}>
             <Input
               id="firstName"
@@ -145,13 +177,13 @@ const EditMemberInfo = () => {
               value={firstName}
             />
             <FormHelperText id="my-helper-text">
-              僅收貨時使用，請填寫真實姓名
+              僅收貨時使用，請填寫真實名字
             </FormHelperText>
           </FormControl>
           <br />
 
           {/* 暱稱 */}
-          <Typography variant="h5">* 暱稱</Typography>
+          <Typography variant="h5">暱稱</Typography>
           <FormControl className={classes.inline}>
             <Input
               id="nickname"
@@ -163,7 +195,39 @@ const EditMemberInfo = () => {
           <br />
 
           {/* 地址 */}
-          <Typography variant="h5">地址：台中市台中路168號</Typography>
+          <Typography>地址</Typography>
+          <FormControl className={classes.formControl}>
+            {/* 縣市 */}
+            <Select
+              id="county-select"
+              value={county}
+              onChange={handleCountyChange}
+            >
+            {zipData.map(zip => {
+              return <MenuItem key={zip.name} value={zip.name}>{zip.name}</MenuItem>
+            })}
+            </Select>
+            {/* 行政區 */}
+            <Select
+              id="dist-select"
+              value={dist}
+              onChange={handleDistChange}
+            >
+            {distData.map(dist => {
+              return <MenuItem key={dist.name} value={dist.zip}>{dist.name}</MenuItem>
+            })}
+            </Select>
+            {/* 詳細地址 */}
+            <Input
+              id="address"
+              aria-describedby="my-helper-text"
+              onChange={handleAddrChange}
+              value={addr}
+            />
+            <FormHelperText id="my-helper-text">
+              僅收貨時使用，請填寫真實地址
+            </FormHelperText>
+          </FormControl>
           <br />
 
           {/* 性別 */}
@@ -194,7 +258,7 @@ const EditMemberInfo = () => {
           <br />
 
           {/* 手機 */}
-          <Typography variant="h5">* 手機</Typography>
+          <Typography variant="h5">手機</Typography>
           <FormControl className={classes.inline}>
             <Input
               id="phone"
@@ -206,7 +270,7 @@ const EditMemberInfo = () => {
           <br />
 
           {/* 信箱 */}
-          <Typography variant="h5">* 信箱</Typography>
+          <Typography variant="h5">信箱</Typography>
           <FormControl className={classes.inline}>
             <Input
               id="email"
