@@ -168,7 +168,7 @@ const AuctionCountdown = () => {
   const [time, setTime] = useState(false)
   const [timer, setTimer] = useState()
   const [state, dispatch] = React.useReducer(slidesReducer, initialState)
-  const auctionDay = moment('2021-5-11 19:16:00')
+  const auctionDay = moment('2021-5-12 20:45:00')
   const countdown = () => {
     const now = moment()
     const difference = auctionDay.diff(now)
