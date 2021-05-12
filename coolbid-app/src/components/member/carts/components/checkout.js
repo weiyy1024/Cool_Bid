@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable space-before-function-paren */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Bidding from './bidding'
 import Wish from './wish'
@@ -188,9 +188,45 @@ export default function Checkout() {
     url: '/address/' + userinfo.memberId,
     'Content-Type': 'application/json'
   }).then((res) => {
-    console.log(res.data[0].address)
-    setAddress(res.data[0].address)
+    if (res.data.length) {
+      setAddress(res.data[0].address)
+    } else {
+      setAddress('')
+    }
   })
+  useEffect(() => {
+    // 創建訂單
+    const products = '(' + orderProduct.toString() + ')'
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/order',
+      data: {
+        products: products
+      }
+    }).then((res) => {
+      console.log(res.data)
+      axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/orderInfo',
+        data: {
+          data: res.data,
+          memberId: userinfo.memberId
+        }
+      }).then((res) => {
+        console.log(res.data)
+        axios({
+          method: 'post',
+          baseURL: 'http://localhost:3001',
+          url: '/orderCreate',
+          data: {
+            data: res.data
+          }
+        })
+      })
+    })
+  }, [orderProduct])
 
   const handleBankName = (e) => {
     setBankName(e.target.value)

@@ -30,6 +30,7 @@ export function ItemDiv(props) {
   const [seconds, setSeconds] = useState(0)
   const [timer, setTimer] = useState()
   const [flag, setFlag] = useState(true)
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const endTime = data.endTime
   const countdown = () => {
     // 得now date
@@ -147,11 +148,20 @@ export function ItemDiv(props) {
           <p className={sort === 1 ? 'title' : 'title3'}>{data.productName}</p>
         </NavLink>
         <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
-          <span>最高出價：</span> NT.<span>{data.nowPrice}</span>
+          <span>最高出價：</span>
+          {currency === 'US' ? 'USD$' : 'NTD$'}
+          <span>
+            {currency === 'US' ? Math.floor(data.nowPrice / 30) : data.nowPrice}
+          </span>
         </p>
         <p className={sort === 1 ? 'price' : 'price3'}>
-          <span>直購價格：</span> NT.
-          <span>{data.directPrice}</span>
+          <span>直購價格：</span>
+          {currency === 'US' ? 'USD$' : 'NTD$'}
+          <span>
+            {currency === 'US'
+              ? Math.floor(data.directPrice / 30)
+              : data.directPrice}
+          </span>
         </p>
         <div style={{ position: 'absolute', bottom: '0', color: 'black' }}>
           <p className={sort === 1 ? 'infoEnd' : 'infoEnd3'}>即將結束</p>

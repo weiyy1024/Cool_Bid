@@ -149,6 +149,7 @@ const Clear = styled.div`
   }
 `
 function MyPrice(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const { productId, userinfo, a } = props
   const [price, setPrice] = useState([])
   useEffect(() => {
@@ -166,7 +167,12 @@ function MyPrice(props) {
     })
   }, [a])
 
-  return <div className="info">{price}</div>
+  return (
+    <div className="info">
+      {currency === 'US' ? 'USD$' : 'NTD$'}
+      {currency === 'US' ? Math.floor(price / 30) : price}
+    </div>
+  )
 }
 function Timer(props) {
   const { endTime } = props
@@ -199,6 +205,7 @@ function Timer(props) {
 }
 function Prod(props) {
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const { item, setBidEvent, direct, setDirect } = props
   const [bidPrice, setBidPrice] = useState(item.nowPrice + item.perPrice)
   const [a, setA] = useState(true)
@@ -208,7 +215,7 @@ function Prod(props) {
   }
   // 確認加價
   const handleSubmitPrice = () => {
-    setBidEvent(bidPrice)
+    setBidEvent(currency === 'US' ? bidPrice * 30 : bidPrice)
     setA(!a)
     swal({
       title: '出價成功',
@@ -292,16 +299,29 @@ function Prod(props) {
         </NavLink>
       </div>
       <Timer endTime={item.endTime} />
-      <div className="info">{item.nowPrice}</div>
+      <div className="info">
+        {currency === 'US' ? 'USD$' : 'NTD$'}
+        {currency === 'US' ? Math.floor(item.nowPrice / 30) : item.nowPrice}
+      </div>
       <MyPrice a={a} userinfo={userinfo} productId={item.productId} />
       <form className="bidinfo">
         <TextField
           label="再次出價"
           type="number"
-          defaultValue={item.nowPrice + item.perPrice}
+          defaultValue={
+            currency === 'US'
+              ? Math.floor((item.nowPrice + item.perPrice) / 30)
+              : item.nowPrice + item.perPrice
+          }
           inputProps={{
-            min: `${item.nowPrice + item.perPrice}`,
-            step: `${item.perPrice}`,
+            min: `${
+              currency === 'US'
+                ? Math.floor((item.nowPrice + item.perPrice) / 30)
+                : item.nowPrice + item.perPrice
+            }`,
+            step: `${
+              currency === 'US' ? Math.floor(item.perPrice / 30) : item.perPrice
+            }`,
             className: 'bid'
           }}
           onChange={handleBidPrice}
@@ -319,7 +339,10 @@ function Prod(props) {
         </Button>
       </form>
       <div className="direct">
-        {item.directPrice}
+        {currency === 'US' ? 'USD$' : 'NTD$'}
+        {currency === 'US'
+          ? Math.floor(item.directPrice / 30)
+          : item.directPrice}
         <div>
           <Button
             style={{ width: '10rem' }}

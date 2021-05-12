@@ -59,9 +59,7 @@ export default function ShoppingCart() {
             <Shopping userinfo={userinfo} />
           </div>
           <div className="tab-2">
-            <p>
-              <Bidding userinfo={userinfo} />
-            </p>
+            <Bidding userinfo={userinfo} />
           </div>
           <div className="tab-3">
             <Wish userinfo={userinfo} />
