@@ -11,8 +11,7 @@ import ProductTabs from '../product1920/ProductTabs'
 // import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 import { makeStyles } from '@material-ui/core/styles'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowsAltV } from '@fortawesome/free-solid-svg-icons'
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 
@@ -95,7 +94,7 @@ function BidingList() {
               <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
               <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
               <TableCell align="center" className={classes.itemTitle} onClick={changebidPrice} style={{ cursor: 'pointer' }}>
-              競標<FontAwesomeIcon icon={faArrowsAltV} /></TableCell>
+              競標<UnfoldMoreIcon/></TableCell>
               <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
                 結標
               </TableCell>

@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function DialogSelect () {
+export default function DialogSelect() {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
   const [country, setCountry] = React.useState('')
@@ -39,17 +40,19 @@ export default function DialogSelect () {
     setCountry(event.target.value || '')
   }
   const handleChangeCurrency = (event) => {
-    setCurrency(event.target.value || '')
+    setCurrency(event.target.value)
   }
 
   const handleClickOpen = () => {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    if (e.target.innerText === 'OK') {
+      window.sessionStorage.setItem('currency', JSON.stringify(country))
+    }
     setOpen(false)
   }
-
   return (
     <div
       style={{

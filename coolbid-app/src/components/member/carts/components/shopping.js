@@ -13,6 +13,7 @@ const Shop = styled.div`
   padding: 2rem;
   width: 75%;
   margin: 2rem auto;
+  border-radius: 1rem;
   .top {
     display: flex;
     font-size: 2.4rem;
@@ -268,6 +269,7 @@ function Items(props) {
   )
 }
 function Prod(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const [time, setTime] = useState('剩下0天0時0分0秒結束')
   const {
     item,
@@ -345,7 +347,10 @@ function Prod(props) {
         <AccessAlarmIcon />
         {countdown(item.endTime)}
       </div>
-      <div className="info">{item.nowPrice}</div>
+      <div className="info">
+        {currency === 'US' ? 'USD$' : 'NTD$'}
+        {currency === 'US' ? Math.floor(item.nowPrice / 30) : item.nowPrice}
+      </div>
     </div>
   )
 }

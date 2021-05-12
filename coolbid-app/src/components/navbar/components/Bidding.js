@@ -16,6 +16,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 // styled Components
 const ProductDiv = styled.div`
   display: flex;
+  justify-content: center;
 `
 const ProductImg = styled.div`
   width: 15rem;
@@ -25,8 +26,18 @@ const ProductImg = styled.div`
 const ProductInfo = styled.div`
   padding: 1rem;
   .productName {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     margin-bottom: 0rem;
+  }
+  a {
+    color: grey;
+    text-decoration: none;
+  }
+  a:hover {
+    color: rgb(237, 174, 16);
+  }
+  p {
+    font-size: 1.4rem;
   }
 `
 const CartNum = styled.span`
@@ -94,9 +105,11 @@ function ProductDiv1(props) {
         </NavLink>
       </ProductImg>
       <ProductInfo>
-        <NavLink to={'/bidding/product/product?=' + data.productId}>
+        <NavLink
+          className="productName"
+          to={'/bidding/product/product?=' + data.productId}
+        >
           <p
-            className="productName"
             style={{
               maxWidth: '200px',
               overflow: 'hidden',
@@ -194,7 +207,9 @@ export default function Bidding(props) {
   const toggleDrawer = (anchor, open) => (event) => {
     setState({ [anchor]: open })
   }
-
+  const handleSignin = () => {
+    window.location.href = 'http://localhost:3000/member/signin'
+  }
   const list = (anchor) => (
     <div style={{ width: '40rem' }}>
       <List>
@@ -212,9 +227,10 @@ export default function Bidding(props) {
         </h1>
         <Divider />
         {userinfo ? (
+          product.length > 0 &&
           product.map((item, index) => <ProductDiv1 key={index} data={item} />)
         ) : (
-          <SignIn>請先登入</SignIn>
+          <SignIn onClick={handleSignin}>請先登入</SignIn>
         )}
       </List>
     </div>

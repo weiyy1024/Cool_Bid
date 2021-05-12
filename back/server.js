@@ -184,8 +184,9 @@ app.get('/category/:category', function (req, res) {
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
   conn.query(
-    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.bagSexId = n.newcategoryDetailId WHERE productId = ?) as bagSex, (SELECT description from product as p join newcategorydetail as n on p.bagTypeId = n.newcategoryDetailId WHERE productId = ?) as bagType, (SELECT description from product as p join newcategorydetail as n on p.bagColorId = n.newcategoryDetailId WHERE productId = ?) as bagColor FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.clothSexId = n.newcategoryDetailId WHERE productId = ?) as clothSex, (SELECT description from product as p join newcategorydetail as n on p.clothSizeId = n.newcategoryDetailId WHERE productId = ?) as clothSize, (SELECT description from product as p join newcategorydetail as n on p.clothSeasonId = n.newcategoryDetailId WHERE productId = ?) as clothSeason FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.shoesSexId = n.newcategoryDetailId WHERE productId = ?) as shoesSex, (SELECT description from product as p join newcategorydetail as n on p.shoesSizeId = n.newcategoryDetailId WHERE productId = ?) as shoesSize, (SELECT description from product as p join newcategorydetail as n on p.shoesYearId = n.newcategoryDetailId WHERE productId = ?) as shoesYear FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.watchSexId = n.newcategoryDetailId WHERE productId = ?) as watchSex, (SELECT description from product as p join newcategorydetail as n on p.watchTypeId = n.newcategoryDetailId WHERE productId = ?) as watchType FROM product WHERE productId = ?',
+    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.bagSexId = n.newcategoryDetailId WHERE productId = ?) as bagSex, (SELECT description from product as p join newcategorydetail as n on p.bagTypeId = n.newcategoryDetailId WHERE productId = ?) as bagType, (SELECT description from product as p join newcategorydetail as n on p.bagColorId = n.newcategoryDetailId WHERE productId = ?) as bagColor FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.clothSexId = n.newcategoryDetailId WHERE productId = ?) as clothSex, (SELECT description from product as p join newcategorydetail as n on p.clothSizeId = n.newcategoryDetailId WHERE productId = ?) as clothSize, (SELECT description from product as p join newcategorydetail as n on p.clothSeasonId = n.newcategoryDetailId WHERE productId = ?) as clothSeason FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.shoesSexId = n.newcategoryDetailId WHERE productId = ?) as shoesSex, (SELECT description from product as p join newcategorydetail as n on p.shoesSizeId = n.newcategoryDetailId WHERE productId = ?) as shoesSize, (SELECT description from product as p join newcategorydetail as n on p.shoesYearId = n.newcategoryDetailId WHERE productId = ?) as shoesYear FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.watchSexId = n.newcategoryDetailId WHERE productId = ?) as watchSex, (SELECT description from product as p join newcategorydetail as n on p.watchTypeId = n.newcategoryDetailId WHERE productId = ?) as watchType FROM product WHERE productId = ?; SELECT COUNT(*) AS itemNum FROM `product` WHERE `shopId` = (SELECT `shopId` FROM `product` WHERE `productId` = ?)',
     [
+      para,
       para,
       para,
       para,
@@ -694,7 +695,7 @@ app.post('/changeStatus', function (req, res) {
   let sql = `UPDATE product SET productStatusId=5,nowPrice=${price} WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
 })
-//bidding car 更新得標者 20200511 weiyy
+//bidding cart 更新得標者 20200511 weiyy
 app.post('/directBuy', function (req, res) {
   let product = req.body.productId
   let member = req.body.memberId
@@ -744,6 +745,113 @@ app.get('/shop/:memberId', function (req, res) {
 app.get('/address/:memberId', function (req, res) {
   let test = req.params.memberId
   let sql = `SELECT address FROM address WHERE memberId=${test}`
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+//shopping cart 後的 check out page
+//取得商家id
+app.post('/order', function (req, res) {
+  let product = req.body.products
+  let sql = `
+  SELECT shopId, productId FROM product WHERE productId IN ${product};
+  SELECT DISTINCT shopId FROM product WHERE productId IN ${product};
+  `
+  conn.query(sql, function (err, result) {
+    if (err) console.log(err)
+    // distinct商店id-->[shop1,shop2,shop3]
+    let shop = result[1].map((item) => item.shopId)
+
+    // 商品依商店分組--->[{shopId:2,productId:4},{shopId:2,productId:7},{shopId:5,productId:17}]
+    let product = result[0]
+
+    let array2 = []
+    let array3 = []
+    //以商家個數存存陣列[[],[],[]]
+    for (let i = 0; i < shop.length; i++) {
+      array2[i] = []
+    }
+    //判別同店家存入商品Id到array2陣列的相對位子[[1,2],[5]]
+    product.forEach((val) => {
+      for (let i = 0; i < shop.length; i++) {
+        if (val.shopId == shop[i]) {
+          array2[i].push(val.productId)
+        }
+      }
+    })
+    //將array2每項改為(1,2)存入新的陣列
+    for (let i = 0; i < array2.length; i++) {
+      array3.push('(' + array2[i].toString() + ')')
+    }
+
+    let obj = {
+      shop: shop,
+      product: array3
+    }
+
+    res.send(JSON.stringify(obj))
+  })
+})
+app.post('/orderInfo', function (req, res) {
+  //商家id的陣列
+  let shop = req.body.data.shop
+  //一商家分類的商品id陣列--->每一項(product1,product2)
+  let product = req.body.data.product
+  let member = req.body.memberId
+
+  conn.query('SELECT MAX(orderId) as max FROM `order`', function (err, result) {
+    if (err) console.log(err)
+
+    //取最後一筆orderId
+    let max = result[0].max
+
+    //新增訂單
+    let sql1 = '(orderId, buyerId, shopId, addressId) values'
+
+    //要新增的value內容
+    for (let i = 0; i < shop.length; i++) {
+      sql1 += ` (${max + i + 1}, ${member}, ${shop[i]}, 1),`
+    }
+
+    //跑完迴圈後將最後一個,去掉改成;的語法
+    console.log(sql1.slice(0, -1) + ';')
+    let sql3 = sql1.slice(0, -1) + ';' + '\n'
+
+    //update orederId 到product裡的語法
+    let sql2 = ''
+    for (let i = 0; i < shop.length; i++) {
+      sql2 += `update product set orderId = ${
+        max + i + 1
+      } , productStatusId = 6 where productId in ${product[i]};\n`
+    }
+    res.send(sql3 + sql2)
+  })
+})
+//新增訂單並更新的到商品表裡
+app.post('/orderCreate', function (req, res) {
+  let sql = req.body.data
+  conn.query('insert into ' + '`order` ' + `${sql}`, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+  })
+})
+// 成立訂單的資訊
+app.get('/getOrderId/:info', function (req, res) {
+  let test = req.params.info
+  test = '(' + test + ')'
+  let sql = `SELECT orderId FROM product WHERE productId IN ${test}`
+  conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+//各項商品資訊
+app.get('/orderProduct/:info', function (req, res) {
+  let test = req.params.info
+  test = '(' + test + ')'
+  let sql = `SELECT orderId,shopId, productName,nowPrice,productId FROM product WHERE productId IN ${test}`
+  // let sql = `SELECT  p.orderId,shopId, productName,nowPrice,productId,orderStatusBuyer FROM product AS p JOIN orderstatusdetail AS od ON p.orderId=od.orderId JOIN orderstatus AS os ON od.orderStatusId=os.orderStatusId WHERE productId IN ${test}`
   conn.query(sql, function (err, result) {
     res.send(result)
   })

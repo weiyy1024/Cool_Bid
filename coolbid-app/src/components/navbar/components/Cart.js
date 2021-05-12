@@ -17,6 +17,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 // styled Components
 const ProductDiv = styled.div`
   display: flex;
+  justify-content:center;
 `
 const ProductImg = styled.div`
   width: 12rem;
@@ -190,7 +191,9 @@ export default function ShoppingCart(props) {
       })
     }
   }, [userinfo])
-
+  const handleSignin = () => {
+    window.location.href = 'http://localhost:3000/member/signin'
+  }
   const list = (anchor) => (
     <div
       style={{ width: '40rem' }}
@@ -216,7 +219,7 @@ export default function ShoppingCart(props) {
             product.length > 0 &&
             product.map((item, index) => <ItemDiv key={index} data={item} />)
           ) : (
-            <SignIn>請先登入</SignIn>
+            <SignIn onClick={handleSignin}>請先登入</SignIn>
           )}
         </div>
       </List>
