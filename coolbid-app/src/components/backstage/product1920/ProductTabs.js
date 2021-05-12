@@ -8,7 +8,7 @@ function ProductTabs() {
     <nav className="tabs">
       <ul>
       <li>
-          <Link to="/BackStage/product/all">全&emsp;部</Link>
+          <Link to="/BackStage/product">全&emsp;部</Link>
         </li>
       <li>
           <Link to="/BackStage/product/onTheMarket">上架中</Link>

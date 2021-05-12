@@ -43,6 +43,7 @@ const TotalContainer = styled.div`
 `
 
 export default function CartTotal(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const { totPrice, totalArray, productArray } = props
   function handleCheckoutProuduct() {
     if (productArray[0]) {
@@ -68,7 +69,7 @@ export default function CartTotal(props) {
       </div>
       <div className="totalAmount">
         總金額（<span>{totalArray.length}</span>個商品）：$
-        <span>{totPrice}</span>
+        <span>{currency === 'US' ? Math.floor(totPrice / 30) : totPrice}</span>
       </div>
       <div className="checkOutBtn" onClick={handleCheckoutProuduct}>
         去買單

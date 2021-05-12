@@ -79,7 +79,7 @@ const gotobid = {
 const Prods = (props) => {
   const { prod } = props
   const [likeProduct, setLikeProduct] = useState([])
-
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   // get wishlist
   useEffect(() => {
     if (userinfo) {
@@ -158,9 +158,18 @@ const Prods = (props) => {
           </p>
         </NavLink>
         <p style={biddingPrice}>
-          <span>最高出價：</span> NT.<span>{prod.nowPrice}</span>
+          <span>最高出價：</span>
+          {currency === 'US' ? 'USD$' : 'NTD$'}
+          <span>
+            {currency === 'US' ? Math.floor(prod.nowPrice / 30) : prod.nowPrice}
+          </span>
           <br />
-          <span>直購價：</span> NT.<span>{prod.directPrice}</span>
+          <span>直購價：</span> {currency === 'US' ? 'USD$' : 'NTD$'}
+          <span>
+            {currency === 'US'
+              ? Math.floor(prod.directPrice / 30)
+              : prod.directPrice}
+          </span>
         </p>
       </div>
       <NavLink
@@ -184,7 +193,6 @@ const BiddingCarousel = () => {
       url: '/getPopularProducts',
       'Content-Type': 'application/json'
     }).then((res) => {
-      console.log(res.data)
       setPopular(res.data)
     })
   }, [])
