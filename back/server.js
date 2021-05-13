@@ -172,7 +172,7 @@ app.post('/member/renewMemberPwd', function (req, res) {
 app.get('/category/:category', function (req, res) {
   let test = req.params.category
   conn.query(
-    'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE c.categoryName = ?',
+    'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE productStatusId in (1,4) and c.categoryName = ?',
     [test],
     function (err, result) {
       res.send(result)
@@ -698,11 +698,11 @@ app.post('/changeStatus', function (req, res) {
   let sql = `UPDATE product SET productStatusId=5,nowPrice=${price} WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
 })
-//bidding cart 更新得標者 20200511 weiyy
+//bidding cart 更新得標者＋得標時間 20200513 weiyy
 app.post('/directBuy', function (req, res) {
   let product = req.body.productId
   let member = req.body.memberId
-  let sql = `UPDATE product SET finalBidderId=${member} WHERE productId=${product}`
+  let sql = `UPDATE product SET finalBidderId=${member},endTime = CURRENT_TIMESTAMP WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
 })
 

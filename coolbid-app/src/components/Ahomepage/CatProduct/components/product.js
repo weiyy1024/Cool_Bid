@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable indent */
 /* eslint-disable space-before-function-paren */
@@ -147,13 +148,21 @@ export function ItemDiv(props) {
         >
           <p className={sort === 1 ? 'title' : 'title3'}>{data.productName}</p>
         </NavLink>
-        <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
-          <span>最高出價：</span>
-          {currency === 'US' ? 'USD$' : 'NTD$'}
-          <span>
-            {currency === 'US' ? Math.floor(data.nowPrice / 30) : data.nowPrice}
-          </span>
-        </p>
+        {data.nowPrice ? (
+          <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
+            <span>最高出價：</span>
+            {currency === 'US' ? 'USD$' : 'NTD$'}
+            <span>
+              {currency === 'US'
+                ? Math.floor(data.nowPrice / 30)
+                : data.nowPrice}
+            </span>
+          </p>
+        ) : (
+          <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice3'}>
+            <span>目前無人出價</span>
+          </p>
+        )}
         <p className={sort === 1 ? 'price' : 'price3'}>
           <span>直購價格：</span>
           {currency === 'US' ? 'USD$' : 'NTD$'}
@@ -311,6 +320,7 @@ export default function Product(props) {
   // eslint-disable-next-line no-unused-vars
   const [catProduct, setCatProduct] = useState()
   const [isLoading, setIsLoading] = useState(true)
+  // 透過data（category）撈資料
   useEffect(() => {
     setIsLoading(true)
     axios({
@@ -344,13 +354,13 @@ export default function Product(props) {
     if (sortPrice === 0) {
       const sortAfter = productData.map((item) => item)
       sortAfter.sort(function (a, b) {
-        return a.directPrice - b.directPrice
+        return a.nowPrice - b.nowPrice
       })
       setProductData(sortAfter)
     } else {
       const sortAfter = productData.map((item) => item)
       sortAfter.sort(function (a, b) {
-        return b.directPrice - a.directPrice
+        return b.nowPrice - a.nowPrice
       })
       setProductData(sortAfter)
     }
