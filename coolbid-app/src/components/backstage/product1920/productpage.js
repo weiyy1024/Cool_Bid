@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
+import swal from 'sweetalert'
 
 const goEdit = (id) => {
   window.location.href = 'product/' + id
@@ -177,14 +178,24 @@ const productpage = () => {
   useEffect(() => {}, [directPrice, perPrice, startPrice, nowPrice])
 
   const handleDelete = (e) => {
-    axios({
-      method: 'post',
-      baseURL: 'http://localhost:3001',
-      url: '/BackStage/deleteProduct',
-      'Content-Type': 'application/json',
-      data: { id: e }
-    }).then((e) => {
-      console.log(e.data)
+    swal({
+      title: '真的要刪除？',
+      // text: 'Once deleted, you will not be able to recover this imaginary file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios({
+          method: 'post',
+          baseURL: 'http://localhost:3001',
+          url: '/BackStage/deleteProduct',
+          'Content-Type': 'application/json',
+          data: { id: e }
+        })
+      } else {
+        swal('已取消刪除')
+      }
     })
   }
 
