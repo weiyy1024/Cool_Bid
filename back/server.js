@@ -1,4 +1,5 @@
 var express = require('express')
+var multer  = require('multer')
 var app = express()
 const cors = require('cors')
 
@@ -12,7 +13,7 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'UnicornglLen3550',
   database: 'coolbidLatest',
   port: 3306,
   multipleStatements: true
@@ -142,8 +143,6 @@ app.post('/member/edit', function (req, res, next) {
 
 // overwrite address
 app.post('/member/edit', function (req, res) {
-  console.log(req.body)
-
   const {
     isOverwrite,
     memberId,
@@ -161,6 +160,38 @@ app.post('/member/edit', function (req, res) {
     )
   }
 })
+
+// upload member pic
+// var storage = multer.diskStorage({
+//     destination: '../coolbid-app/public/imgs/sellerPic/',
+//     filename: function (req, file, cb) {
+//       cb(null, req.body.memberId + '.jpg')
+//     }
+//   })
+// var upload = multer({ storage }).single('profilePic')
+
+// app.post('/member/edit', upload, function(req, res) {
+//   const {
+//     isOverwrite,
+//     memberId
+//   } = req.body
+
+//   console.log(req.body)
+//   console.log(req.file)
+//   if (isOverwrite) {
+//     conn.query(
+//       '',
+//       [memberId],
+//       function (err, result) {
+//         console.log(result)
+//       }
+//     )
+//   }
+// })
+
+
+
+
 
 // read and overwrite password
 app.post('/member/renewMemberPwd', function (req, res) {
