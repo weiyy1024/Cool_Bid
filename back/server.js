@@ -602,6 +602,7 @@ app.get('/shopName/:productId', function (req, res) {
 app.get('/getPopularProducts', function (req, res) {
   let sql = `SELECT b.productId, productName, nowPrice, endTime, directPrice, COUNT(b.productId) as bidCount FROM biddinghistory as b
   JOIN product as p on b.productId = p.productId
+  where productStatusId in (1,4)
   GROUP BY productId
   ORDER BY bidCount DESC limit 8`
 
