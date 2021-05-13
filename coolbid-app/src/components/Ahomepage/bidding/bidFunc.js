@@ -92,9 +92,9 @@ const BidFunc = (props, { bidState }) => {
 
   // 下標
   const bidNow = () => {
+    directBidPrice = nowBidPrice + bidPriceStep
     if (!userInfo) {
       swal('需登入才能使用競標功能喔').then((value) => {
-        console.log(123)
         window.location.href = '/member/signin'
       })
     } else {
@@ -233,12 +233,12 @@ const BidFunc = (props, { bidState }) => {
           }
           defaultValue={
             nowBidPrice <= startBidPrice
-              ? currency === 'US'
+              ? (currency === 'US'
                 ? Math.floor(startBidPrice / 30)
-                : startBidPrice
-              : currency === 'US'
+                : startBidPrice)
+              : (currency === 'US'
               ? Math.floor((nowBidPrice + bidPriceStep) / 30)
-              : nowBidPrice + bidPriceStep
+              : nowBidPrice + bidPriceStep)
           }
         />
         <Button
