@@ -219,8 +219,8 @@ const BidFunc = (props, { bidState }) => {
           min={
             nowBidPrice <= startBidPrice
               ? currency === 'US'
-                ? Math.floor((startBidPrice + bidPriceStep) / 30)
-                : startBidPrice + bidPriceStep
+                ? Math.floor(startBidPrice / 30)
+                : startBidPrice
               : currency === 'US'
               ? Math.floor((nowBidPrice + bidPriceStep) / 30)
               : nowBidPrice + bidPriceStep
@@ -232,15 +232,14 @@ const BidFunc = (props, { bidState }) => {
             currency === 'US' ? Math.floor(bidPriceStep / 30) : bidPriceStep
           }
           defaultValue={
-            currency === 'US' ? Math.floor(nowBidPrice / 30) : nowBidPrice
+            nowBidPrice <= startBidPrice
+              ? currency === 'US'
+                ? Math.floor(startBidPrice / 30)
+                : startBidPrice
+              : currency === 'US'
+              ? Math.floor((nowBidPrice + bidPriceStep) / 30)
+              : nowBidPrice + bidPriceStep
           }
-          // {defaultValue={startBidPrice}
-          // ? startBidPrice + bidPriceStep
-          // : nowBidPrice + bidPriceStep
-          // }
-          // max={directBuyPrice}
-          // step={bidPriceStep}
-          // defaultValue={startBidPrice}
         />
         <Button
           className={classes.bidBtn}
