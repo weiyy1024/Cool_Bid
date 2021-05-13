@@ -14,7 +14,7 @@ var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'UnicornglLen3550',
-  database: 'coolbidLatest',
+  database: 'coolbid',
   port: 3306,
   multipleStatements: true
 })

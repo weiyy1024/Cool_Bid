@@ -12,10 +12,22 @@ const useStyles = makeStyles(theme => ({
     height: '40rem',
     border: '1px solid black'
   },
-  profilePic: {
-    width: '20rem',
-    height: '20rem',
-    border: '1px solid black'
+  breadcrumb: {
+    margin: '3rem 0'
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  btnGroup: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  inputGroup: {
+    display: 'flex'
   }
 }))
 

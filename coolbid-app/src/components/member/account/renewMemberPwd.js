@@ -8,21 +8,24 @@ import {
   FormControl,
   Input,
   FormHelperText,
-  Button
+  Button,
+  Breadcrumbs,
+  Link,
+  Card
 } from '@material-ui/core'
 
 import SaveIcon from '@material-ui/icons/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import useStyles from '../../../styles/renewMemberPwdStyle'
-import styled from '@emotion/styled'
+// import styled from '@emotion/styled'
 import NestedList from '../../backstage/Main/MemberList'
 
-const RenewContainer = styled.div`
-  width: 70%;
-  margin: 20rem auto;
-  display: flex;
-`
+// const RenewContainer = styled.div`
+//   width: 70%;
+//   margin: 20rem auto;
+//   display: flex;
+// `
 const RenewMemberPwd = () => {
   const classes = useStyles()
   const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
@@ -95,73 +98,97 @@ const RenewMemberPwd = () => {
   }
 
   return (
-    <RenewContainer>
-      <NestedList />
-      <div>
-        <Typography variant="h2">會員密碼更新</Typography>
-        <Typography variant="h6" className={classes.inline}>
-          * 為必填
-        </Typography>
-        <br />
-        <FormGroup>
-          {/* 舊密碼 */}
-          <Typography variant="h5">* 舊的密碼</Typography>
-          <FormControl className={classes.inline}>
-            <Input
-              id="old-password"
-              type="password"
-              onChange={handleOldPasswordChange}
-              value={oldPassword}
-            />
-          </FormControl>
-          <br />
+    <div className="sellerBackend_Member_Wrap">
+      <div className="sellerBackend_Member_Container">
+        <div className="backendLeft">
+          <NestedList />
+        </div>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div>
+              <Breadcrumbs aria-label='breadcrumb' className={classes.breadcrumb}>
+                <Link color='inherit' href='http://localhost:3000/member/edit'>
+                  會員中心
+                </Link>
+                <Link color='inherit' href='http://localhost:3000/member/renewMemberPwd'>
+                  更改密碼
+                </Link>
+              </Breadcrumbs>
+              <Card className={classes.card}>
+                <FormGroup>
+                  {/* 舊密碼 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">舊的密碼</Typography>
+                    <FormControl className={classes.inline}>
+                      <Input
+                        id="old-password"
+                        type="password"
+                        onChange={handleOldPasswordChange}
+                        value={oldPassword}
+                        required={true}
+                      />
+                    </FormControl>
+                  </div>
+                  <br />
 
-          {/* 新密碼 */}
-          <Typography variant="h5">* 新的密碼</Typography>
-          <FormControl className={classes.inline}>
-            <Input
-              id="new-password"
-              type="password"
-              onChange={handleNewPasswordChange}
-              value={newPassword}
-            />
-          </FormControl>
-          <br />
+                  {/* 新密碼 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">新的密碼</Typography>
+                    <FormControl className={classes.inline}>
+                      <Input
+                        id="new-password"
+                        type="password"
+                        onChange={handleNewPasswordChange}
+                        value={newPassword}
+                        required={true}
+                      />
+                    </FormControl>
+                  </div>
+                  <br />
 
-          {/* 確認密碼 */}
-          <Typography variant="h5">* 確認密碼</Typography>
-          <FormControl className={classes.inline}>
-            <Input
-              id="confirm-password"
-              type="password"
-              aria-describedby="my-helper-text"
-              onChange={handleConfirmPasswordChange}
-              value={confirmPassword}
-            />
-            <FormHelperText id="my-helper-text">請與新密碼一致</FormHelperText>
-          </FormControl>
-        </FormGroup>
-        <br />
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          startIcon={<SaveIcon />}
-          onClick={onSave}
-        >
-          Save
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          startIcon={<DeleteIcon />}
-          onClick={onDelete}
-        >
-          Delete
-        </Button>
+                  {/* 確認密碼 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">確認密碼</Typography>
+                    <FormControl className={classes.inline}>
+                      <Input
+                        id="confirm-password"
+                        type="password"
+                        aria-describedby="my-helper-text"
+                        onChange={handleConfirmPasswordChange}
+                        value={confirmPassword}
+                        required={true}
+                      />
+                      <FormHelperText id="my-helper-text">請與新密碼一致</FormHelperText>
+                    </FormControl>
+                  </div>
+                </FormGroup>
+                <br />
+                <div className={classes.btnGroup}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<SaveIcon />}
+                    onClick={onSave}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                    onClick={onDelete}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
       </div>
-    </RenewContainer>
+    </div>
   )
 }
 

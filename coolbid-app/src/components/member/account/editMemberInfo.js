@@ -10,7 +10,10 @@ import {
   FormHelperText,
   Button,
   Select,
-  MenuItem
+  MenuItem,
+  Breadcrumbs,
+  Link,
+  Card
   // Avatar
 } from '@material-ui/core'
 
@@ -188,163 +191,197 @@ const EditMemberInfo = () => {
         <div className="backendRight">
           <div className="backendRightContainer">
             <div className="content">
-              <Typography variant="h2">會員資料更新</Typography>
-              <br />
-              <FormGroup>
-                {/* 姓 */}
-                <Typography variant="h5">姓氏</Typography>
-                <FormControlWei className={classes.inline}>
-                  <Input
-                    id="lastName"
-                    aria-describedby="my-helper-text"
-                    onChange={handleLastNameChange}
-                    value={lastName}
-                  />
-                  <FormHelperText id="my-helper-text">
-                    僅收貨時使用，請填寫真實姓氏
-                  </FormHelperText>
-                </FormControlWei>
-                <br />
+              <Breadcrumbs aria-label='breadcrumb' className={classes.breadcrumb}>
+                <Link color='inherit' href='http://localhost:3000/member/edit'>
+                  會員中心
+                </Link>
+                <Link color='inherit' href='http://localhost:3000/member/edit'>
+                  會員編輯
+                </Link>
+              </Breadcrumbs>
+              <Card className={classes.card}>
+                <FormGroup>
+                  {/* 姓 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">姓氏</Typography>
+                    <FormControlWei className={classes.inline}>
+                      <Input
+                        id="lastName"
+                        aria-describedby="my-helper-text"
+                        onChange={handleLastNameChange}
+                        value={lastName}
+                        required={true}
+                      />
+                      <FormHelperText id="my-helper-text">
+                        僅收貨時使用，請填寫真實姓氏
+                      </FormHelperText>
+                    </FormControlWei>
+                  </div>
+                  <br />
 
-                {/* 名 */}
-                <Typography variant="h5">名字</Typography>
-                <FormControlWei className={classes.inline}>
-                  <Input
-                    id="firstName"
-                    aria-describedby="my-helper-text"
-                    onChange={handleFirstNameChange}
-                    value={firstName}
-                  />
-                  <FormHelperText id="my-helper-text">
-                    僅收貨時使用，請填寫真實名字
-                  </FormHelperText>
-                </FormControlWei>
-                <br />
+                  {/* 名 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">名字</Typography>
+                    <FormControlWei className={classes.inline}>
+                      <Input
+                        id="firstName"
+                        aria-describedby="my-helper-text"
+                        onChange={handleFirstNameChange}
+                        value={firstName}
+                        required={true}
+                      />
+                      <FormHelperText id="my-helper-text">
+                        僅收貨時使用，請填寫真實名字
+                      </FormHelperText>
+                    </FormControlWei>
+                  </div>
+                  <br />
 
-                {/* 暱稱 */}
-                <Typography variant="h5">暱稱</Typography>
-                <FormControlWei className={classes.inline}>
-                  <Input
-                    id="nickname"
-                    aria-describedby="my-helper-text"
-                    onChange={handleNicknameChange}
-                    value={nickname}
-                  />
-                </FormControlWei>
+                  {/* 暱稱 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">暱稱</Typography>
+                    <FormControlWei className={classes.inline}>
+                      <Input
+                        id="nickname"
+                        aria-describedby="my-helper-text"
+                        onChange={handleNicknameChange}
+                        value={nickname}
+                        required={true}
+                      />
+                    </FormControlWei>
+                  </div>
+                  <br />
+
+                  {/* 地址 */}
+                  <Typography>地址</Typography>
+                  <FormControlWei className={classes.FormControlWei}>
+                    {/* 縣市 */}
+                    <div className={classes.inputGroup}>
+                      <Select
+                        id="county-select"
+                        value={county}
+                        onChange={handleCountyChange}
+                        required={true}
+                      >
+                        {zipData.map((zip) => {
+                          return (
+                            <MenuItem key={zip.name} value={zip.name}>
+                              {zip.name}
+                            </MenuItem>
+                          )
+                        })}
+                      </Select>
+                      {/* 行政區 */}
+                      <Select
+                        id="dist-select"
+                        value={dist}
+                        onChange={handleDistChange}
+                        required={true}
+                      >
+                        {distData.map((dist) => {
+                          return (
+                            <MenuItem key={dist.name} value={dist.zip}>
+                              {dist.name}
+                            </MenuItem>
+                          )
+                        })}
+                      </Select>
+                    </div>
+                    {/* 詳細地址 */}
+                    <Input
+                      id="address"
+                      aria-describedby="my-helper-text"
+                      onChange={handleAddrChange}
+                      value={addr}
+                      required={true}
+                    />
+                    <FormHelperText id="my-helper-text">
+                      僅收貨時使用，請填寫真實地址
+                    </FormHelperText>
+                  </FormControlWei>
+                  <br />
+
+                  {/* 性別 */}
+                  <div className={classes.inputGroup}>
+                    <Typography>性別</Typography>
+                    <FormControlWei className={classes.FormControl}>
+                      <Select
+                        id="gender-select"
+                        value={gender}
+                        onChange={handleGenderChange}
+                      >
+                        <MenuItem value={'男'}>男</MenuItem>
+                        <MenuItem value={'女'}>女</MenuItem>
+                        <MenuItem value={'其他'}>其他</MenuItem>
+                      </Select>
+                    </FormControlWei>
+                  </div>
+                  <br />
+
+                  {/* 生日 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">生日</Typography>
+                    <FormControlWei className={classes.inline}>
+                      <Input
+                        id="birthday"
+                        type="date"
+                        value={dateFormat(birthday)}
+                        onChange={handleBirthdayChange}
+                      />
+                    </FormControlWei>
+                  </div>
+                  <br />
+
+                  {/* 手機 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">手機</Typography>
+                    <FormControlWei className={classes.inline}>
+                      <Input
+                        id="phone"
+                        aria-describedby="my-helper-text"
+                        onChange={handlePhoneChange}
+                        value={phone}
+                        required={true}
+                      />
+                    </FormControlWei>
+                  </div>
+                  <br />
+
+                  {/* 信箱 */}
+                  <div className={classes.inputGroup}>
+                    <Typography variant="h5">信箱</Typography>
+                    <FormControlWei className={classes.inline}>
+                      <Input
+                        id="email"
+                        aria-describedby="my-helper-text"
+                        onChange={handleEmailChange}
+                        value={email}
+                      />
+                    </FormControlWei>
+                  </div>
+                </FormGroup>
                 <br />
-                {/* 地址 */}
-                <Typography>地址</Typography>
-                <FormControlWei className={classes.FormControlWei}>
-                  {/* 縣市 */}
-                  <Select
-                    id="county-select"
-                    value={county}
-                    onChange={handleCountyChange}
+                <div className={classes.btnGroup}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<SaveIcon />}
+                    onClick={onSave}
                   >
-                    {zipData.map((zip) => {
-                      return (
-                        <MenuItem key={zip.name} value={zip.name}>
-                          {zip.name}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
-                  {/* 行政區 */}
-                  <Select
-                    id="dist-select"
-                    value={dist}
-                    onChange={handleDistChange}
+                    Save
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    startIcon={<DeleteIcon />}
+                    onClick={onDelete}
                   >
-                    {distData.map((dist) => {
-                      return (
-                        <MenuItem key={dist.name} value={dist.zip}>
-                          {dist.name}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
-                  {/* 詳細地址 */}
-                  <Input
-                    id="address"
-                    aria-describedby="my-helper-text"
-                    onChange={handleAddrChange}
-                    value={addr}
-                  />
-                  <FormHelperText id="my-helper-text">
-                    僅收貨時使用，請填寫真實地址
-                  </FormHelperText>
-                </FormControlWei>
-                <br />
-
-                {/* 性別 */}
-                <Typography>性別</Typography>
-                <FormControlWei className={classes.FormControl}>
-                  <Select
-                    id="gender-select"
-                    value={gender}
-                    onChange={handleGenderChange}
-                  >
-                    <MenuItem value={'男'}>男</MenuItem>
-                    <MenuItem value={'女'}>女</MenuItem>
-                    <MenuItem value={'其他'}>其他</MenuItem>
-                  </Select>
-                </FormControlWei>
-                <br />
-
-                {/* 生日 */}
-                <Typography variant="h5">生日</Typography>
-                <FormControlWei className={classes.inline}>
-                  <Input
-                    id="birthday"
-                    type="date"
-                    value={dateFormat(birthday)}
-                    onChange={handleBirthdayChange}
-                  />
-                </FormControlWei>
-                <br />
-
-                {/* 手機 */}
-                <Typography variant="h5">手機</Typography>
-                <FormControlWei className={classes.inline}>
-                  <Input
-                    id="phone"
-                    aria-describedby="my-helper-text"
-                    onChange={handlePhoneChange}
-                    value={phone}
-                  />
-                </FormControlWei>
-                <br />
-
-                {/* 信箱 */}
-                <Typography variant="h5">信箱</Typography>
-                <FormControlWei className={classes.inline}>
-                  <Input
-                    id="email"
-                    aria-describedby="my-helper-text"
-                    onChange={handleEmailChange}
-                    value={email}
-                  />
-                </FormControlWei>
-              </FormGroup>
-              <br />
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                startIcon={<SaveIcon />}
-                onClick={onSave}
-              >
-                Save
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.button}
-                startIcon={<DeleteIcon />}
-                onClick={onDelete}
-              >
-                Delete
-              </Button>
+                    Delete
+                  </Button>
+                </div>
+              </Card>
             </div>
           </div>
         </div>
