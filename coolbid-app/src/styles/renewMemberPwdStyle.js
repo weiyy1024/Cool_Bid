@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   inline: {
-    width: '300px'
+    width: '300px',
+    marginLeft: '2rem'
   },
   button: {
     margin: theme.spacing(1)
@@ -15,15 +16,20 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    padding: '5rem 0'
   },
   btnGroup: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: '2rem'
   },
   inputGroup: {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '1rem 0'
   }
 }))
 

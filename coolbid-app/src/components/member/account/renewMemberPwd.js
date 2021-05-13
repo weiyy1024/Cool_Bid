@@ -6,7 +6,7 @@ import {
   Typography,
   FormGroup,
   FormControl,
-  FormHelperText,
+  // FormHelperText,
   Button,
   Breadcrumbs,
   Link,
@@ -155,12 +155,11 @@ const RenewMemberPwd = () => {
                       <TextField
                         required
                         id="confirm-password"
-                        label="必填"
+                        label="請與新密碼一致"
                         onChange={handleConfirmPasswordChange}
                         value={confirmPassword}
                         variant="outlined"
                       />
-                      <FormHelperText id="my-helper-text">請與新密碼一致</FormHelperText>
                     </FormControl>
                   </div>
                 </FormGroup>

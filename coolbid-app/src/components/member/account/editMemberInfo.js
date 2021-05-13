@@ -6,8 +6,8 @@ import {
   Typography,
   FormGroup,
   FormControl,
+  TextField,
   Input,
-  FormHelperText,
   Button,
   Select,
   MenuItem,
@@ -205,16 +205,15 @@ const EditMemberInfo = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">姓氏</Typography>
                     <FormControlWei className={classes.inline}>
-                      <Input
+                      <TextField
                         id="lastName"
-                        aria-describedby="my-helper-text"
                         onChange={handleLastNameChange}
                         value={lastName}
-                        required={true}
+                        variant="outlined"
                       />
-                      <FormHelperText id="my-helper-text">
+                      {/* <FormHelperText id="my-helper-text">
                         僅收貨時使用，請填寫真實姓氏
-                      </FormHelperText>
+                      </FormHelperText> */}
                     </FormControlWei>
                   </div>
                   <br />
@@ -223,16 +222,15 @@ const EditMemberInfo = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">名字</Typography>
                     <FormControlWei className={classes.inline}>
-                      <Input
+                      <TextField
                         id="firstName"
-                        aria-describedby="my-helper-text"
                         onChange={handleFirstNameChange}
                         value={firstName}
-                        required={true}
+                        variant="outlined"
                       />
-                      <FormHelperText id="my-helper-text">
+                      {/* <FormHelperText id="my-helper-text">
                         僅收貨時使用，請填寫真實名字
-                      </FormHelperText>
+                      </FormHelperText> */}
                     </FormControlWei>
                   </div>
                   <br />
@@ -241,27 +239,25 @@ const EditMemberInfo = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">暱稱</Typography>
                     <FormControlWei className={classes.inline}>
-                      <Input
+                      <TextField
                         id="nickname"
-                        aria-describedby="my-helper-text"
                         onChange={handleNicknameChange}
                         value={nickname}
-                        required={true}
+                        variant="outlined"
                       />
                     </FormControlWei>
                   </div>
                   <br />
 
                   {/* 地址 */}
-                  <Typography>地址</Typography>
-                  <FormControlWei className={classes.FormControlWei}>
+                  <div className={classes.addrGroup}>
+                    <Typography variant="h5">地址</Typography>
+                    <FormControlWei className={classes.addrSelect}>
                     {/* 縣市 */}
-                    <div className={classes.inputGroup}>
                       <Select
                         id="county-select"
                         value={county}
                         onChange={handleCountyChange}
-                        required={true}
                       >
                         {zipData.map((zip) => {
                           return (
@@ -271,12 +267,13 @@ const EditMemberInfo = () => {
                           )
                         })}
                       </Select>
-                      {/* 行政區 */}
+                    </FormControlWei>
+                    {/* 行政區 */}
+                    <FormControlWei className={classes.addrSelect}>
                       <Select
                         id="dist-select"
                         value={dist}
                         onChange={handleDistChange}
-                        required={true}
                       >
                         {distData.map((dist) => {
                           return (
@@ -286,25 +283,26 @@ const EditMemberInfo = () => {
                           )
                         })}
                       </Select>
-                    </div>
+                    </FormControlWei>
+                  </div>
                     {/* 詳細地址 */}
-                    <Input
-                      id="address"
-                      aria-describedby="my-helper-text"
-                      onChange={handleAddrChange}
-                      value={addr}
-                      required={true}
-                    />
-                    <FormHelperText id="my-helper-text">
+                    <FormControlWei className={classes.addrInput}>
+                      <TextField
+                        id="address"
+                        onChange={handleAddrChange}
+                        value={addr}
+                        variant="outlined"
+                      />
+                    {/* <FormHelperText id="my-helper-text">
                       僅收貨時使用，請填寫真實地址
-                    </FormHelperText>
-                  </FormControlWei>
+                    </FormHelperText> */}
+                    </FormControlWei>
                   <br />
 
                   {/* 性別 */}
                   <div className={classes.inputGroup}>
-                    <Typography>性別</Typography>
-                    <FormControlWei className={classes.FormControl}>
+                    <Typography variant="h5">性別</Typography>
+                    <FormControlWei className={classes.inline}>
                       <Select
                         id="gender-select"
                         value={gender}
@@ -336,12 +334,11 @@ const EditMemberInfo = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">手機</Typography>
                     <FormControlWei className={classes.inline}>
-                      <Input
+                      <TextField
                         id="phone"
-                        aria-describedby="my-helper-text"
                         onChange={handlePhoneChange}
                         value={phone}
-                        required={true}
+                        variant="outlined"
                       />
                     </FormControlWei>
                   </div>
@@ -351,11 +348,11 @@ const EditMemberInfo = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">信箱</Typography>
                     <FormControlWei className={classes.inline}>
-                      <Input
+                      <TextField
                         id="email"
-                        aria-describedby="my-helper-text"
                         onChange={handleEmailChange}
                         value={email}
+                        variant="outlined"
                       />
                     </FormControlWei>
                   </div>
