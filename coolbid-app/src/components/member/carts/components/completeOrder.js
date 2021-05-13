@@ -146,17 +146,20 @@ export default function CompleteOrder() {
       baseURL: 'http://localhost:3001',
       url: '/orderProduct/' + orderProduct,
       'Content-Type': 'application/json'
-    }).then((res) => {
-      setProduct(res.data)
     })
-    axios({
-      method: 'get',
-      baseURL: 'http://localhost:3001',
-      url: '/getOrderId/' + orderProduct,
-      'Content-Type': 'application/json'
-    }).then((res) => {
-      setOrderNumInfo(res.data)
-    })
+      .then((res) => {
+        setProduct(res.data)
+      })
+      .then(() => {
+        axios({
+          method: 'get',
+          baseURL: 'http://localhost:3001',
+          url: '/getOrderId/' + orderProduct,
+          'Content-Type': 'application/json'
+        }).then((res) => {
+          setOrderNumInfo(res.data)
+        })
+      })
   }, [])
 
   return (

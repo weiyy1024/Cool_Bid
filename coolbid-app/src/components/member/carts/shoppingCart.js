@@ -22,7 +22,7 @@ export default function ShoppingCart() {
           name="active_tabs"
           id="btn-1"
           className="input btn-1"
-          defaultChecked={checked}
+          defaultChecked={false}
           onChange={() => {
             setChecked(!checked)
           }}
@@ -48,6 +48,7 @@ export default function ShoppingCart() {
           name="active_tabs"
           id="btn-3"
           className="input btn-3"
+          defaultChecked={checked}
         />
         <label htmlFor="btn-3" className="btn">
           <i className="fa fa-heart"></i> 收藏清單
