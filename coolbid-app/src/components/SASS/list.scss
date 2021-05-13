@@ -15,6 +15,10 @@
     padding: 10px 50px;
   }
 
+  a.active{
+    color: #edae10;
+  }
+
   a {
     text-decoration: none;
     color: #000000;
@@ -25,6 +29,7 @@
 
   a:hover {
     color: #edae10;
+    text-decoration: none;
   }
 
   a:after {

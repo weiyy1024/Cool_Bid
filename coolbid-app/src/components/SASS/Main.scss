@@ -20,18 +20,18 @@
   }
 }
 
-.backendLeft {
+.backstageLeft {
   display: inline-block;
   width: 200px;
   position: fixed;
 }
 
-.backendRight {
+.backstageRight {
   margin-left: 200px;
   width: calc(100vw - 200px);
 }
 
-.backendRightContainer {
+.backstageRightContainer {
   width: 90%;
   margin:0 auto;
 }
@@ -42,26 +42,26 @@
   text-align: center;
 }
 
-.backendNav {
+.backstageNav {
   height: 100vh;
   font-size: 2rem;
   background-color: white;
 }
-.backendNav .link {
+.backstageNav .link {
   display: block;
   padding: 10px;
   color: #000000;
   text-decoration: none;
 }
 
-// .backendNav li + li {
+// .backstageNav li + li {
 //   border-top: 1px dashed #707070;
 // }
 
-.backendNav li {
+.backstageNav li {
   list-style: none;
 }
 
-.backendNav li a:hover {
+.backstageNav li a:hover {
   color: #edae10;
 }

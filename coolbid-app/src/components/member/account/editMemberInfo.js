@@ -150,11 +150,11 @@ const EditMemberInfo = () => {
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
-        <div className="backendLeft">
+        <div className="backstageLeft">
           <NestedList />
         </div>
-        <div className="backendRight">
-          <div className="backendRightContainer">
+        <div className="backstageRight">
+          <div className="backstageRightContainer">
             <div className="content">
               <Typography variant="h2">會員資料更新</Typography>
               <br />

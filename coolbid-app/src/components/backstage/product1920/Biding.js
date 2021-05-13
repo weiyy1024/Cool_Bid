@@ -76,11 +76,11 @@ function BidingList() {
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
-        <div className="backendLeft">
+        <div className="backstageLeft">
           <SellerBackendList />
         </div>
-        <div className="backendRight">
-          <div className="backendRightContainer">
+        <div className="backstageRight">
+          <div className="backstageRightContainer">
             <div className="breadcrumbsArea">
               賣家專區/商品清單/競標中
               {/* <Breadcrumbs /> */}
