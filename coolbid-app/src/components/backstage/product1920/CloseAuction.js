@@ -14,6 +14,7 @@ import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   itemTitle: {
@@ -120,9 +121,6 @@ function CloseAuction() {
                       >
                         結標
                       </TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>
-                        狀態
-                      </TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -137,7 +135,7 @@ function CloseAuction() {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.productName}
+                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -149,10 +147,7 @@ function CloseAuction() {
                             {item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.endTime}
-                          </TableCell>
-                          <TableCell align="center" className={classes.itemTxt}>
-                            {item.productstatusDescription}
+                          {item.endTime.substr(0, 10)}
                           </TableCell>
                         </TableRow>
                       )

@@ -10,7 +10,7 @@ import ProductTabs from '../product1920/ProductTabs'
 // import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
-
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
@@ -244,9 +244,6 @@ const productpage = () => {
                       >
                         結標
                       </TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>
-                        狀態
-                      </TableCell>
                       <TableCell align="center" colSpan={2}></TableCell>
                     </TableRow>
                   </TableHead>
@@ -263,7 +260,7 @@ const productpage = () => {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.productName}
+                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -281,10 +278,7 @@ const productpage = () => {
                             {item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.endTime}
-                          </TableCell>
-                          <TableCell align="center" className={classes.itemTxt}>
-                            {item.productstatusDescription}
+                          {item.endTime}
                           </TableCell>
                           <TableCell align="center" colSpan={2}>
                             <input

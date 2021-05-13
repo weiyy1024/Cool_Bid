@@ -210,18 +210,18 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              總計:
+                              總計: {item.nowPrice}
                             </TableCell>
                           </TableRow>
 
                           <TableRow>
-                            <TableCell colSpan={5}>
+                            {/* <TableCell colSpan={5}>
                               <input
                                 type="submit"
                                 value="出貨"
                                 className="button SetStoreInfo_Submit"
                               />
-                            </TableCell>
+                            </TableCell> */}
                           </TableRow>
                         </TableBody>
                       </>
