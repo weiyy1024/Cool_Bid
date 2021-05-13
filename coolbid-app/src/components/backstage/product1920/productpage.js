@@ -207,7 +207,7 @@ const productpage = () => {
                         onClick={changestartPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        起標
+                        起標價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -216,7 +216,7 @@ const productpage = () => {
                         onClick={changePerPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        每標
+                        每標價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -225,7 +225,7 @@ const productpage = () => {
                         onClick={changedirectPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        直購
+                        直購價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -241,8 +241,14 @@ const productpage = () => {
                         onClick={changebidPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        出價
+                        目前出價
                         <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                      >
+                        狀態
                       </TableCell>
                       <TableCell align="center" colSpan={2}></TableCell>
                     </TableRow>
@@ -279,6 +285,9 @@ const productpage = () => {
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                           {item.nowPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                          {item.productstatusDescription}
                           </TableCell>
                           <TableCell align="center" colSpan={2}>
                             <input

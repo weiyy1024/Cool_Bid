@@ -109,7 +109,7 @@ function BidingList() {
                         onClick={changebidPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        出價
+                        目前出價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell

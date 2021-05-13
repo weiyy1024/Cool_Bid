@@ -111,7 +111,7 @@ function CloseAuction() {
                         onClick={changebidPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        結標
+                        結標價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell

@@ -183,7 +183,7 @@ function OnTheMarket() {
                         onClick={changestartPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        起標
+                        起標價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -192,7 +192,7 @@ function OnTheMarket() {
                         onClick={changePerPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        每標
+                        每標價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -201,7 +201,7 @@ function OnTheMarket() {
                         onClick={changedirectPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        直購
+                        直購價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell

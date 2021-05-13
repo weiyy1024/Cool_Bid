@@ -83,7 +83,7 @@ function OrderList () {
     return (
       <div>
         <span>{year}</span>
-        <span>-{month + 1}</span>
+        <span>-{(month + 1).toString().padStart(2, '0')}</span>
         <span>-{date + 7}</span>
       </div>
     )
@@ -176,7 +176,7 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              {item.orderTime}
+                              {item.orderTime.substr(0, 10)}
                             </TableCell>
                             <TableCell
                               align="center"
