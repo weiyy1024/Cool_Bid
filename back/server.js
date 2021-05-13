@@ -1,5 +1,5 @@
 var express = require('express')
-var multer  = require('multer')
+var multer = require('multer')
 var app = express()
 const cors = require('cors')
 
@@ -13,15 +13,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-<<<<<<< HEAD
-  password: '',
-  database: 'coolbidlatest',
-  port: 3306,
-=======
   password: 'root',
   database: 'coolbidLatest',
   port: 8889,
->>>>>>> 64258afce315764c525464094a839d814c5dd38a
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -188,10 +182,6 @@ app.post('/member/edit', function (req, res) {
 //     )
 //   }
 // })
-
-
-
-
 
 // read and overwrite password
 app.post('/member/renewMemberPwd', function (req, res) {
@@ -830,7 +820,6 @@ app.get('/orderProduct/:info', function (req, res) {
   })
 })
 
-
 //--------------------------------------------------------
 //夏會員中心_訂購清單
 app.get('/member/purchase', function (req, res) {
@@ -942,7 +931,6 @@ app.get('/BackStage/product/soldout', function (req, res) {
   })
 })
 
-
 //類別
 app.get('/category', function (req, res) {
   let cat = req.params.cat
@@ -966,7 +954,6 @@ app.get('/selectBrand/:cat', function (req, res) {
     res.send(result)
   })
 })
-
 
 //夏編輯商品select_找出所有品牌
 app.get('/selectBrandAll/brand', function (req, res) {
