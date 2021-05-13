@@ -43,10 +43,11 @@ const EditMemberInfo = () => {
   const [birthday, setBirthday] = useState()
   const [phone, setPhone] = useState()
   const [email, setEmail] = useState()
-  const [county, setCounty] = useState('')
+  const [county, setCounty] = useState()
   const [dist, setDist] = useState([])
   const [addr, setAddr] = useState()
   const [zipData, setZipData] = useState([])
+  // const [distData, setDistData] = useState([])
   const [zip, setZip] = useState('')
   // const [pic, setPic] = useState()
 
@@ -55,7 +56,7 @@ const EditMemberInfo = () => {
       .post('http://localhost:3001/member/edit', {
         memberId: userInfo.memberId
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data)
         setLastName(res.data[0][0].lastName)
         setFirstName(res.data[0][0].firstName)
@@ -76,9 +77,11 @@ const EditMemberInfo = () => {
     return zip.name
   })
   const distData = county ? zipData[countyData.indexOf(county)].districts : []
-  // console.log(zipData)
-  // console.log(countyData)
-  // console.log(distData)
+  console.log(county)
+  console.log(distData)
+  console.log(zipData)
+  console.log(countyData)
+  console.log(dist)
 
   const dateFormat = (date) => {
     const d = new Date(birthday)
