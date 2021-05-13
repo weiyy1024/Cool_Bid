@@ -67,10 +67,16 @@ const Shop = styled.div`
         padding: 1rem;
       }
       .infoTitle {
+        svg {
+          width: 2rem;
+          height: 2rem;
+          position: relative;
+          top: 0.3rem;
+        }
         width: 33%;
         font-size: 1.8rem;
         text-align: center;
-        line-height: 3.2rem;
+        line-height: 9rem;
         color: grey;
       }
       .infoProductName {
@@ -81,7 +87,7 @@ const Shop = styled.div`
         a:hover {
           color: #edaf11;
         }
-        width: 33%;
+        width: 30%;
         font-size: 1.8rem;
         text-align: center;
         line-height: 3.2rem;
@@ -93,14 +99,17 @@ const Shop = styled.div`
       }
       .info {
         color: grey;
-        width: 33%;
+        width: 30%;
         font-size: 2rem;
         text-align: center;
         line-height: 9rem;
         margin-left: 0;
       }
+      .now {
+        width: 20%;
+        padding-right: 3rem;
+      }
       .direct {
-        // margin-left: 2rem;
         padding-right: 0;
         color: grey;
         margin-top: 11px;
@@ -192,7 +201,7 @@ function Timer(props) {
       const hr = parseInt(offsetTime / 60 / 60 - day * 24)
       const min = parseInt((offsetTime / 60) % 60)
       const sec = parseInt(offsetTime % 60)
-      setTime(`剩下${day}天${hr}時${min}分${sec}秒`)
+      setTime(`${day}天${hr}時${min}分${sec}秒`)
     }, 1000)
     return time
   }
@@ -249,6 +258,7 @@ function Prod(props) {
   // 直接購買
   const handleDirect = () => {
     setDirect(!direct)
+    window.sessionStorage.setItem('renews', JSON.stringify(!direct))
     // 新增bidding history
     swal({
       title: '恭喜你購買成功',
@@ -300,7 +310,7 @@ function Prod(props) {
         </NavLink>
       </div>
       <Timer endTime={item.endTime} />
-      <div className="info">
+      <div className="info now">
         {currency === 'US' ? 'USD$' : 'NTD$'}
         {currency === 'US' ? Math.floor(item.nowPrice / 30) : item.nowPrice}
       </div>

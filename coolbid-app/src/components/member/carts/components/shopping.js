@@ -65,6 +65,12 @@ const Shop = styled.div`
         font-size: 2.4rem;
         text-align: center;
         line-height: 10rem;
+        svg {
+          position: relative;
+          top: 0.4rem;
+          width: 2.5rem;
+          height: 2.5rem;
+        }
       }
       .infoProductName {
         margin-top: 1rem;
@@ -125,6 +131,7 @@ const Clear = styled.div`
   }
 `
 export default function Shopping(props) {
+  const direct = JSON.parse(window.sessionStorage.getItem('direct'))
   const { userinfo } = props
   const [product, setProduct] = useState([])
   const [shopId, setShopId] = useState([])
@@ -165,7 +172,7 @@ export default function Shopping(props) {
           })
         }
       })
-  }, [userinfo])
+  }, [userinfo, direct])
 
   const handleCheckAll = (e) => {
     const eachCheckbox = document.getElementsByName(e.target.name)

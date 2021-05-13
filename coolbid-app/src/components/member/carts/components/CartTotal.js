@@ -18,7 +18,8 @@ const TotalContainer = styled.div`
     input {
       width: 1.8rem;
       height: 1.8rem;
-      margint: 2rem;
+      margin-top: 1rem;
+      margin-right: 1rem;
     }
   }
   .totalAmount {
@@ -29,14 +30,15 @@ const TotalContainer = styled.div`
     position: absolute;
     right: 3rem;
     text-align: center;
-    width: 20%;
-    border: #edaf11 solid 0.5rem;
+    padding: 0.5rem 3rem;
+    border: grey solid 0.2rem;
     border-radius: 0.5rem;
     text-decoration: none;
-    color: #edaf11;
+    color: grey;
     cursor: pointer;
   }
   .checkOutBtn:hover {
+    border: #edaf11 solid 0.2rem;
     background-color: #edaf11;
     color: white;
   }
