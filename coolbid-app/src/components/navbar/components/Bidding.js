@@ -70,6 +70,7 @@ const SignIn = styled.div`
 // styled Components--End
 
 function ProductDiv1(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const [time, setTime] = useState('剩下0天0時0分0秒結束')
   const { data } = props
   const [newPrice, setNewPrice] = useState([])
@@ -121,12 +122,16 @@ function ProductDiv1(props) {
           </p>
         </NavLink>
         <p>
-          最高出價：<span>$NT.</span>
-          {data.nowPrice}
+          最高出價：
+          <span>{currency === 'US' ? 'USD$' : 'NTD$'}</span>
+          {currency === 'US' ? Math.floor(data.nowPrice / 30) : data.nowPrice}
         </p>
         <p>
-          目前出價：<span>$NT.</span>
-          {data.directPrice}
+          目前出價：
+          <span>{currency === 'US' ? 'USD$' : 'NTD$'}</span>
+          {currency === 'US'
+            ? Math.floor(data.directPrice / 30)
+            : data.directPrice}
         </p>
         <TextField
           id="standard-number"
@@ -164,6 +169,7 @@ function ProductDiv1(props) {
 }
 
 export default function Bidding(props) {
+  const renews = JSON.parse(window.sessionStorage.getItem('renews'))
   const { userinfo } = props
   const [biddingProduct, setBiddingProduct] = useState()
   const [product, setProduct] = useState([])
@@ -194,7 +200,7 @@ export default function Bidding(props) {
           }
         })
     }
-  }, [userinfo, biddingProduct])
+  }, [userinfo, biddingProduct, renews])
 
   // 購物車商品數量
   let itemAmount = 0

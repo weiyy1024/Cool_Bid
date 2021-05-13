@@ -144,6 +144,7 @@ const Payment = styled.div`
   }
 `
 const ConfirmContainer = styled.div`
+  height: 5rem;
   display: flex;
   padding: 3rem;
   width: 60%;
@@ -166,6 +167,7 @@ const ConfirmContainer = styled.div`
     position: absolute;
     text-align: center;
     cursor: pointer;
+    bottom: 5rem;
   }
   .confirmBtn:hover {
     border: solid 0.3rem #f2c480;
@@ -241,10 +243,6 @@ export default function Checkout() {
   const handleOwner = (e) => {
     setOwner(e.target.value)
   }
-  function test() {
-    console.log(orderProduct)
-  }
-
   return (
     <ShoppingCartContainer>
       <div className="active-tabs">
@@ -341,9 +339,7 @@ export default function Checkout() {
               </div>
             </Address>
             <Payment>
-              <p onClick={test} className="myCard">
-                我的卡號
-              </p>
+              <p className="myCard">我的卡號</p>
               <div className="cardBidDiv">
                 <div className="cardDiv">
                   <img src={creditCard} />

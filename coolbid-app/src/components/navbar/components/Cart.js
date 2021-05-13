@@ -17,7 +17,7 @@ import AccessAlarmIcon from '@material-ui/icons/AccessAlarm'
 // styled Components
 const ProductDiv = styled.div`
   display: flex;
-  justify-content:center;
+  justify-content: center;
 `
 const ProductImg = styled.div`
   width: 12rem;
@@ -101,6 +101,7 @@ const SignIn = styled.div`
 
 // styled Components--End
 export function ItemDiv(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const { data } = props
   const [countDowntime, setCountDownTime] = useState('剩下0天0時0分0秒結束')
   const handleTimer = (orderDate) => {
@@ -150,7 +151,10 @@ export function ItemDiv(props) {
             {data.productName}
           </NavLink>
         </p>
-        <p className="productPrice">NT$ {data.nowPrice}</p>
+        <p className="productPrice">
+          {currency === 'US' ? 'USD$' : 'NTD$'}
+          {currency === 'US' ? Math.floor(data.nowPrice / 30) : data.nowPrice}
+        </p>
         <span className="seller">
           {/* 賣家：<NavLink to="/seller">{data.sellerId}</NavLink> */}
         </span>
@@ -164,6 +168,7 @@ export function ItemDiv(props) {
 }
 
 export default function ShoppingCart(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const { userinfo } = props
   const [product, setProduct] = useState([])
   const [state, setState] = React.useState({
@@ -239,7 +244,7 @@ export default function ShoppingCart(props) {
 
   // 往結帳頁跳轉的Btn
   const handleCheckOut = () => {
-    window.location.href = 'http://localhost:3000/Shopping/WishList'
+    window.location.href = '/Shopping/Cart'
   }
   return (
     <React.Fragment key="right">
@@ -274,7 +279,11 @@ export default function ShoppingCart(props) {
           }}
         >
           <Total>
-            Total:<div>NT$ {tot}</div>
+            Total:
+            <div>
+              {currency === 'US' ? 'USD$' : 'NTD$'}
+              {currency === 'US' ? Math.floor(tot / 30) : tot}
+            </div>
           </Total>
           <Button
             onClick={handleCheckOut}

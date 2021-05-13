@@ -11,7 +11,9 @@ const ShoppingCartContainer = styled.div`
   margin-top: 12.5rem;
 `
 
-export default function ShoppingCart() {
+export default function ShoppingCart(props) {
+  const cart = props.data.params.cart
+  console.log(cart)
   const [checked, setChecked] = useState(true)
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
   return (
@@ -22,7 +24,7 @@ export default function ShoppingCart() {
           name="active_tabs"
           id="btn-1"
           className="input btn-1"
-          defaultChecked={false}
+          defaultChecked={cart === 'Cart' ? 'checked' : ''}
           onChange={() => {
             setChecked(!checked)
           }}
@@ -48,7 +50,7 @@ export default function ShoppingCart() {
           name="active_tabs"
           id="btn-3"
           className="input btn-3"
-          defaultChecked={checked}
+          defaultChecked={cart === 'WishList' ? 'checked' : ''}
         />
         <label htmlFor="btn-3" className="btn">
           <i className="fa fa-heart"></i> 收藏清單

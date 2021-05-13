@@ -92,8 +92,16 @@ function App() {
           {/* Seller */}
           <Route path="/BackStage" component={Backstage} exact />
           <Route path="/BackStage/product" component={productpage} exact />
-          <Route path="/BackStage/product/OnTheMarket" component={OnTheMarket} exact />
-          <Route path="/BackStage/product/CloseAuction" component={CloseAuction} exact />
+          <Route
+            path="/BackStage/product/OnTheMarket"
+            component={OnTheMarket}
+            exact
+          />
+          <Route
+            path="/BackStage/product/CloseAuction"
+            component={CloseAuction}
+            exact
+          />
           <Route path="/BackStage/product/SoldOut" component={SoldOut} exact />
           <Route path="/BackStage/product/Biding" component={Biding} exact />
           <Route path="/BackStage/product/:id" component={Add} exact />
@@ -101,9 +109,11 @@ function App() {
           <Route path="/BackStage/orders" component={OrderList} exact />
 
           {/* Shopping */}
-          <Route path="/Shopping/Cart" component={ShoppingCart} exact />
-          <Route path="/Shopping/Bidding" component={Login} exact />
-          <Route path="/Shopping/WishList" component={ShoppingCart} exact />
+          <Route
+            path="/Shopping/:cart"
+            exact
+            render={({ match }) => <ShoppingCart data={match} />}
+          />
           <Route path="/Shopping/Cart/checkout" component={Checkout} exact />
           <Route path="/completeOrder" component={CompleteOrder} exact />
         </Switch>
