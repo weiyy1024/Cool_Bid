@@ -97,8 +97,24 @@ app.post('/member/signin', function (req, res) {
   )
 })
 
-// read and overwrite memberInfo
-app.post('/member/edit', function (req, res) {
+// read memberInfo
+app.post('/member/edit', function (req, res, next) {
+  const zipData = fs.readFileSync('./addr/taiwan_districts.json')
+  const { memberId } = req.body
+
+  conn.query(
+    'SELECT * FROM `member` WHERE memberId = ?; SELECT * FROM `address` AS a join zipcode AS z ON z.zipcodeId = a.zipcodeId WHERE memberId = ?',
+    [memberId, memberId],
+    function (err, result) {
+      result.push(JSON.parse(zipData))
+      res.send(result)
+    }
+  )
+  next()
+})
+
+// overwrite memberInfo
+app.post('/member/edit', function (req, res, next) {
   const {
     isOverwrite,
     memberId,
@@ -111,18 +127,28 @@ app.post('/member/edit', function (req, res) {
     email
   } = req.body
 
-  if (!isOverwrite) {
-    conn.query(
-      'SELECT * FROM `member` WHERE memberId = ?',
-      [memberId],
-      function (err, result) {
-        res.send(result)
-      }
-    )
-  } else {
+  if (isOverwrite) {
     conn.query(
       'UPDATE `member` SET `firstName`= ?, `lastName`= ?, `nickname`= ?, `gender`= ?, `birthday`= ?, `phone`= ?, `email`= ? WHERE memberId = ?',
       [firstName, lastName, nickname, gender, birthday, phone, email, memberId],
+      function (err, result) {
+        console.log(result)
+      }
+    )
+  }
+  next()
+})
+
+// overwrite address
+app.post('/member/edit', function (req, res) {
+  console.log(req.body)
+
+  const { isOverwrite, memberId, address, zipCode } = req.body
+
+  if (isOverwrite) {
+    conn.query(
+      'UPDATE `address` SET `zipcodeId`= ? ,`address`= ? WHERE `memberId` = ?',
+      [zipCode, address, memberId],
       function (err, result) {
         console.log(result)
       }
@@ -389,7 +415,7 @@ app.get('/search/:id', function (req, res) {
 //夏
 app.get('/member/purchase', function (req, res) {
   let sql =
-    'SELECT o.orderId, shopName, productName, p.productId, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err)
@@ -398,9 +424,10 @@ app.get('/member/purchase', function (req, res) {
   })
 })
 
+//訂單
 app.get('/BackStage/orders', function (req, res) {
   let sql =
-    'SELECT o.orderId, userId, p.productId, productName, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+    'SELECT o.orderId, userId, productName, productId, orderTime, nowPrice, orderStatusSeller FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.buyerId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err)
@@ -421,9 +448,23 @@ app.get('/BackStage/SellerPageHero', function (req, res) {
 })
 
 //全部
-app.get('/BackStage/product/all', function (req, res) {
+app.get('/BackStage/product', function (req, res) {
+  console.log(req)
   let sql =
-    'SELECT p.productId, productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId)'
+    'SELECT p.productId, p.brandId, productDescription, nowPrice, productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription, brandName, c.categoryId  FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId JOIN `brand` as b on p.brandId = b.brandId WHERE (p.productStatusId)'
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    res.send(result)
+  })
+})
+
+//add
+app.get('/BackStage/product/edit', function (req, res) {
+  let sql =
+    'SELECT p.productId, productName, nowPrice, productDescription, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE p.productId = ' +
+    req.query.id
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err)
@@ -444,7 +485,7 @@ app.get('/BackStage/product/OnTheMarket', function (req, res) {
   })
 })
 
-//結標 少撈競標價格與買家
+//結標
 app.get('/BackStage/product/closeAuction', function (req, res) {
   let sql =
     'SELECT p.productId, productName, categoryName, nowPrice, userId, endTime, productstatusDescription FROM product as p JOIN category as c on p.categoryId = c.categoryId JOIN productstatus as ps on p.productStatusId = ps.productStatusId JOIN biddinghistory as b on p.nowPrice = b.bidPrice JOIN member as m on b.memberId = m.memberId WHERE (shopId = 1 and p.productStatusId = 5)'
@@ -856,6 +897,18 @@ app.get('/orderProduct/:info', function (req, res) {
   let sql = `SELECT orderId,shopId, productName,nowPrice,productId FROM product WHERE productId IN ${test}`
   // let sql = `SELECT  p.orderId,shopId, productName,nowPrice,productId,orderStatusBuyer FROM product AS p JOIN orderstatusdetail AS od ON p.orderId=od.orderId JOIN orderstatus AS os ON od.orderStatusId=os.orderStatusId WHERE productId IN ${test}`
   conn.query(sql, function (err, result) {
+    res.send(result)
+  })
+})
+
+// 編輯商品
+app.get('/selectBrand/:cat', function (req, res) {
+  let cat = req.params.cat
+  let sql = `SELECT brand.brandId, brandName FROM brandcat JOIN brand on brandcat.brandId = brand.brandId WHERE categoryId = '${cat}'`
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
     res.send(result)
   })
 })

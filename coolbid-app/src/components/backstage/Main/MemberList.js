@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function NestedList () {
   return (
     <div className="side-menu">
-    <ul className="nav">
+    <ul className="backendNav">
         <li><Link className='link' to="/member/edit">會員編輯</Link></li>
         <li><Link className='link' to="/member/renewMemberPwd">更改密碼</Link></li>
         <li><Link className='link' to="/member/shippingInfo">收貨資訊</Link></li>

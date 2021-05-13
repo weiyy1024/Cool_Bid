@@ -15,6 +15,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 
+const goEdit = (id) => {
+  window.location.href = 'product/' + id
+}
+
 const useStyles = makeStyles((theme) => ({
   itemTitle: {
     fontSize: 20
@@ -32,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function productpage () {
+const productpage = () => {
   const classes = useStyles()
   const [data, setData] = useState([])
   const [startPrice, setstartPrice] = useState(0)
@@ -41,11 +45,10 @@ function productpage () {
   const [bidPrice, setbidPrice] = useState(0)
 
   useEffect(() => {
-    console.log('hi')
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
-      url: '/BackStage/product/all',
+      url: '/BackStage/product',
       'Content-Type': 'application/json'
     }).then((a) => setData(a.data))
   }, [])
@@ -80,6 +83,14 @@ function productpage () {
       setdirectPrice(0)
     }
   }
+
+  // const changeEndTime = () => {
+  //   if (endTime === 0) {
+  //     setEndTime(1)
+  //   } else {
+  //     setEndTime(0)
+  //   }
+  // }
 
   useEffect(() => {
     if (bidPrice === 0) {
@@ -145,67 +156,161 @@ function productpage () {
     }
   }, [directPrice])
 
+  // useEffect(() => {
+  //   if (endTime === 0) {
+  //     const endTimeAfter = data.map((item) => item)
+  //     endTimeAfter.sort(function (a, b) {
+  //       return new Date(a.endTime) - new Date(b.endTime)
+  //     })
+  //     setEndTime(endTimeAfter)
+  //   } else {
+  //     const endTimeAfter = data.map((item) => item)
+  //     endTimeAfter.sort(function (a, b) {
+  //       return new Date(b.endTime) - new Date(a.endTime)
+  //     })
+  //     setEndTime(endTimeAfter)
+  //   }
+  // }, [endTime])
+
   useEffect(() => {}, [directPrice, perPrice, startPrice, bidPrice])
 
   return (
     <div className="sellerBackend_Member_Wrap">
-    <div className="breadcrumbsArea">賣家專區/商品清單
-      {/* <Breadcrumbs /> */}
-    </div>
-    <div className="sellerBackend_Member_Container">
-    <div className="List">
-        <SellerBackendList />
-      </div>
-    <div className="Table_wrap" id='SoldOutId'>
-    <div>
-        <ProductTabs />
+      <div className="sellerBackend_Member_Container">
+        <div className="backendLeft">
+          <SellerBackendList />
         </div>
-      <TableContainer className="Table_container">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" className={classes.itemTitle}>圖片</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changebidPrice} style={{ cursor: 'pointer' }}>
-              競標<UnfoldMoreIcon/></TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changestartPrice} style={{ cursor: 'pointer' }}>
-              起標<UnfoldMoreIcon/>
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changePerPrice} style={{ cursor: 'pointer' }}>
-              出價<UnfoldMoreIcon/>
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changedirectPrice} style={{ cursor: 'pointer' }}>
-                直購<UnfoldMoreIcon/>
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
-                結標
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
-            </TableRow>
-          </TableHead>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            {/* <Breadcrumbs /> */}
+            <div className="breadcrumbsArea">賣家專區/商品清單</div>
+            <div id="SoldOutId">
+              <div>
+                <ProductTabs />
+              </div>
+              <TableContainer className="Table_container">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        圖片
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        項目
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        類別
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changebidPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        競標
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changestartPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        起標
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changePerPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        出價
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changedirectPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        直購
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        結標
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        狀態
+                      </TableCell>
+                      <TableCell align="center" colSpan={2}></TableCell>
+                    </TableRow>
+                  </TableHead>
 
-          <TableBody>
-          {data.map((item, index) => {
-            return (
-                <TableRow key={index}>
-                  <TableCell align="center" className={classes.itemTxt}> <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/></TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.perPrice}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.startPrice}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.perPrice}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.directPrice}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productstatusDescription}</TableCell>
-                </TableRow>
-            )
-          })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-    </div>
+                  <TableBody>
+                    {data.map((item, index) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {' '}
+                            <img
+                              src={'/imgs/' + item.productId + '.jpg'}
+                              className={classes.imgStyle}
+                            />
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.categoryName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.perPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.startPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.perPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.directPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.endTime}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productstatusDescription}
+                          </TableCell>
+                          <TableCell align="center" colSpan={2}>
+                            <input
+                              type="submit"
+                              value="編輯"
+                              className="button SetStoreInfo_Submit"
+                              onClick={() => goEdit(item.productId)}
+                            />
+                            <br />
+                            <input
+                              type="submit"
+                              value="刪除"
+                              className="button SetStoreInfo_Submit"
+                              id={item.id}
+                            />
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

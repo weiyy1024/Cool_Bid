@@ -245,7 +245,7 @@ export default function NavBar() {
           <Title
             className="Chomepage"
             to="/auction/coming"
-            style={{ marginTop: '4px' }}
+            style={{ marginTop: '5px' }}
           >
             拍賣會
           </Title>

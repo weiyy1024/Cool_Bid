@@ -5,41 +5,63 @@
 
 .sellerBackend_Member_Wrap {
   margin: auto;
-  margin-top: 15rem;
+  margin-top: 12.5rem;
+  min-height: calc(100vh - 125px);
 
   .breadcrumbsArea {
-    margin-left: 200px;
-    margin-bottom: 50px;
+    // margin-bottom: 50px;
+    padding: 2rem 2rem;
     font-size: 18px;
   }
 
   .sellerBackend_Member_Container {
-    margin: auto;
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
+    display: block;
+    width: 100%;
   }
 }
 
-.side-menu {
+.backendLeft {
+  display: inline-block;
   width: 200px;
+  position: fixed;
+}
+
+.backendRight {
+  margin-left: 200px;
+  width: calc(100vw - 200px);
+}
+
+.backendRightContainer {
+  width: 90%;
+  margin:0 auto;
+}
+
+.side-menu {
   display: flex;
   flex-direction: column;
   text-align: center;
-  // margin:0px 100px 0px 100px;
 }
 
-.nav .link {
+.backendNav {
+  height: 100vh;
+  font-size: 2rem;
+  background-color: white;
+}
+.backendNav .link {
   display: block;
   padding: 10px;
-  color: #707070;
+  color: #000000;
   text-decoration: none;
 }
 
-.nav li + li {
-  border-top: 1px dashed #707070;
+// .backendNav li + li {
+//   border-top: 1px dashed #707070;
+// }
+
+.backendNav li {
+  list-style: none;
 }
 
-.nav li {
-  list-style: none;
+.backendNav li a:hover {
+  color: #edae10;
 }

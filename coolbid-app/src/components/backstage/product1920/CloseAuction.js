@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 
 function CloseAuction() {
   // eslint-disable-next-line no-unused-vars
-  const classes = useStyles()
   const [data, setData] = useState([])
+  const classes = useStyles()
   const [bidPrice, setbidPrice] = useState(0)
 
   useEffect(() => {
@@ -72,61 +72,99 @@ function CloseAuction() {
     }
   }, [bidPrice])
 
-  useEffect(() => {}, [bidPrice])
-
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">賣家專區/商品清單/已結標
-        {/* <Breadcrumbs /> */}
-      </div>
       <div className="sellerBackend_Member_Container">
-      <div className="List">
+        <div className="backendLeft">
           <SellerBackendList />
         </div>
-    <div className="Table_wrap" id='CloseAuctionId'>
-    <div>
-        <ProductTabs />
-        </div>
-      <TableContainer className="Table_container">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" className={classes.itemTitle}>圖片</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>買家</TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changebidPrice} style={{ cursor: 'pointer' }}>
-              競標<UnfoldMoreIcon/></TableCell>
-              <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
-                結標
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
-            </TableRow>
-          </TableHead>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div className="breadcrumbsArea">
+              賣家專區/商品清單/已結標
+              {/* <Breadcrumbs /> */}
+            </div>
+            <div id="CloseAuctionId">
+              <div>
+                <ProductTabs />
+              </div>
+              <TableContainer className="Table_container">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        圖片
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        項目
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        類別
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        買家
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changebidPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        競標
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        結標
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        狀態
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
 
-          <TableBody>
-            {data.map((item, index) => {
-              return (
-                <TableRow key={index}>
-                  <TableCell align="center" className={classes.itemTxt}>
-                  <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
-                    </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.userId}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.nowPrice}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productstatusDescription}</TableCell>
-                </TableRow>
-
-              )
-            })}
-          </TableBody>
-            </Table>
-          </TableContainer>
+                  <TableBody>
+                    {data.map((item, index) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            <img
+                              src={'/imgs/' + item.productId + '.jpg'}
+                              className={classes.imgStyle}
+                            />
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.categoryName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.userId}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.nowPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.endTime}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productstatusDescription}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
         </div>
-        </div>
-        </div>
+      </div>
+    </div>
   )
 }
 

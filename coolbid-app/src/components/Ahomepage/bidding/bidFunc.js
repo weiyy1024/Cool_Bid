@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
@@ -29,7 +30,7 @@ const BidFunc = (props, { bidState }) => {
 
   const directBuyPrice = productF.length === 0 ? '' : productF[0][0].directPrice
   const bidPriceStep = productF.length === 0 ? '' : productF[0][0].perPrice
-
+  const startBidPrice = productF.length === 0 ? '' : productF[0][0].startPrice
   let [directBidPrice, setDirectBidPrice] = useState(nowBidPrice + bidPriceStep)
 
   // 結標判斷
@@ -46,7 +47,6 @@ const BidFunc = (props, { bidState }) => {
 
   const handleNowPriceChange = (e) => {
     setDirectBidPrice(e.target.value)
-    console.log(e.target)
   }
 
   const handleDirectBidPriceChange = (e) => {
@@ -58,7 +58,6 @@ const BidFunc = (props, { bidState }) => {
   const directBuy = () => {
     if (!userInfo) {
       swal('需登入才能使用競標功能喔').then((value) => {
-        console.log(123)
         window.location.href = '/member/signin'
       })
     } else {
@@ -222,7 +221,11 @@ const BidFunc = (props, { bidState }) => {
           type="number"
           onChange={handleDirectBidPriceChange}
           min={
-            currency === 'US'
+            nowBidPrice <= startBidPrice
+              ? currency === 'US'
+                ? Math.floor((startBidPrice + bidPriceStep) / 30)
+                : startBidPrice + bidPriceStep
+              : currency === 'US'
               ? Math.floor((nowBidPrice + bidPriceStep) / 30)
               : nowBidPrice + bidPriceStep
           }
@@ -235,6 +238,7 @@ const BidFunc = (props, { bidState }) => {
           defaultValue={
             currency === 'US' ? Math.floor(nowBidPrice / 30) : nowBidPrice
           }
+          // {defaultValue={startBidPrice}
         />
         <Button
           className={classes.bidBtn}

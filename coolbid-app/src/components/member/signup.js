@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input'
 import Tooltip from '@material-ui/core/Tooltip'
 
 const TitleContainer = styled.div`
-  margin-top: 15rem;
+  // margin-top: 15rem;
   color: grey;
 `
 const LoginContainer = styled.div`
@@ -26,7 +26,6 @@ const SignupContainer = styled.div`
 `
 const ButtonContainer = styled.div`
   text-align: center;
-  margin-bottom: 20px;
 `
 
 const Signup = () => {
@@ -123,7 +122,7 @@ const Signup = () => {
     }
   }
   return (
-    <>
+    <div style={{ marginTop: '20rem', minHeight: 'calc(100vh - 125px)' }}>
       <TitleContainer>
         <p className="logTitle" onClick={demo}>
           註冊會員
@@ -243,7 +242,7 @@ const Signup = () => {
           送出
         </Button>
       </ButtonContainer>
-    </>
+    </div>
   )
 }
 
