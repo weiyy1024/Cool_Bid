@@ -183,6 +183,10 @@ app.post('/member/edit', function (req, res) {
 //   }
 // })
 
+
+
+
+
 // read and overwrite password
 app.post('/member/renewMemberPwd', function (req, res) {
   const { isOverwrite, memberId, password, newPassword } = req.body
@@ -788,7 +792,13 @@ app.post('/orderInfo', function (req, res) {
         max + i + 1
       } , productStatusId = 6 where productId in ${product[i]};\n`
     }
-    res.send(sql3 + sql2)
+
+    // 新增訂單為待出貨到orderstatusdetail表單
+    let sql4 = ''
+    for (let i = 0; i < shop.length; i++) {
+      sql4 += `INSERT INTO orderstatusdetail (orderId, orderStatusId) VALUES (${ max + i + 1 }, '1');\n`
+    }
+    res.send(sql3 + sql2 + sql4)
   })
 })
 //新增訂單並更新的到商品表裡
@@ -819,6 +829,7 @@ app.get('/orderProduct/:info', function (req, res) {
     res.send(result)
   })
 })
+
 
 //--------------------------------------------------------
 //夏會員中心_訂購清單
