@@ -37,14 +37,16 @@ function BidingList() {
   const [data, setData] = useState([])
   const classes = useStyles()
   const [nowPrice, setNowPrice] = useState(0)
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
   useEffect(() => {
     console.log('hi')
     axios({
-      method: 'get',
+      method: 'post',
       baseURL: 'http://localhost:3001',
       url: '/BackStage/product/Biding',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      data: { id: userinfo.memberId }
     }).then((a) => setData(a.data))
   }, [])
 

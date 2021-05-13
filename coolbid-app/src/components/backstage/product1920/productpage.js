@@ -43,13 +43,15 @@ const productpage = () => {
   const [perPrice, setPerPrice] = useState(0)
   const [directPrice, setdirectPrice] = useState(0)
   const [nowPrice, setNowPrice] = useState(0)
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
   useEffect(() => {
     axios({
-      method: 'get',
+      method: 'post',
       baseURL: 'http://localhost:3001',
       url: '/BackStage/product',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      data: { id: userinfo.memberId }
     }).then((a) => setData(a.data))
   }, [])
 
