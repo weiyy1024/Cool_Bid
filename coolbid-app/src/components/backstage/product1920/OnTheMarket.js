@@ -192,7 +192,7 @@ function OnTheMarket() {
                         onClick={changePerPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        出價
+                        每標
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -209,7 +209,7 @@ function OnTheMarket() {
                         className={classes.itemTitle}
                         style={{ cursor: 'pointer' }}
                       >
-                        結標
+                        結標日
                       </TableCell>
                       {/* <TableCell align="center" className={classes.itemTitle}>
                         狀態
@@ -245,25 +245,8 @@ function OnTheMarket() {
                             {item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.endTime}
+                          {item.endTime.substr(0, 10)}
                           </TableCell>
-                          {/* <TableCell align="center" className={classes.itemTxt}>
-                            {item.productstatusDescription}
-                          </TableCell> */}
-                          {/* <TableCell align="center" colSpan={2}>
-                    <input
-                      type="submit"
-                      value="編輯"
-                      className="button SetStoreInfo_Submit"
-                    />
-                    <br />
-                    <input
-                      type="submit"
-                      value="刪除"
-                      className="button SetStoreInfo_Submit"
-                      id={item.id}
-                    />
-                  </TableCell> */}
                         </TableRow>
                       )
                     })}

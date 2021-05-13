@@ -42,7 +42,7 @@ const productpage = () => {
   const [startPrice, setstartPrice] = useState(0)
   const [perPrice, setPerPrice] = useState(0)
   const [directPrice, setdirectPrice] = useState(0)
-  const [bidPrice, setbidPrice] = useState(0)
+  const [nowPrice, setNowPrice] = useState(0)
 
   useEffect(() => {
     axios({
@@ -54,10 +54,10 @@ const productpage = () => {
   }, [])
 
   const changebidPrice = () => {
-    if (bidPrice === 0) {
-      setbidPrice(1)
+    if (nowPrice === 0) {
+      setNowPrice(1)
     } else {
-      setbidPrice(0)
+      setNowPrice(0)
     }
   }
 
@@ -93,20 +93,20 @@ const productpage = () => {
   // }
 
   useEffect(() => {
-    if (bidPrice === 0) {
-      const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function (a, b) {
-        return a.bidPrice - b.bidPrice
+    if (nowPrice === 0) {
+      const nowPriceAfter = data.map((item) => item)
+      nowPriceAfter.sort(function (a, b) {
+        return a.nowPrice - b.nowPrice
       })
-      setData(bidPriceAfter)
+      setData(nowPriceAfter)
     } else {
-      const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function (a, b) {
-        return b.bidPrice - a.bidPrice
+      const nowPriceAfter = data.map((item) => item)
+      nowPriceAfter.sort(function (a, b) {
+        return b.nowPrice - a.nowPrice
       })
-      setData(bidPriceAfter)
+      setData(nowPriceAfter)
     }
-  }, [bidPrice])
+  }, [nowPrice])
 
   useEffect(() => {
     if (startPrice === 0) {
@@ -172,7 +172,7 @@ const productpage = () => {
   //   }
   // }, [endTime])
 
-  useEffect(() => {}, [directPrice, perPrice, startPrice, bidPrice])
+  useEffect(() => {}, [directPrice, perPrice, startPrice, nowPrice])
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -204,15 +204,6 @@ const productpage = () => {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
-                        onClick={changebidPrice}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        競標
-                        <UnfoldMoreIcon />
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        className={classes.itemTitle}
                         onClick={changestartPrice}
                         style={{ cursor: 'pointer' }}
                       >
@@ -225,7 +216,7 @@ const productpage = () => {
                         onClick={changePerPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        出價
+                        每標
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -242,7 +233,16 @@ const productpage = () => {
                         className={classes.itemTitle}
                         style={{ cursor: 'pointer' }}
                       >
-                        結標
+                        結標日
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changebidPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        出價
+                        <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell align="center" colSpan={2}></TableCell>
                     </TableRow>
@@ -266,9 +266,6 @@ const productpage = () => {
                             {item.categoryName}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.perPrice}
-                          </TableCell>
-                          <TableCell align="center" className={classes.itemTxt}>
                             {item.startPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
@@ -278,7 +275,10 @@ const productpage = () => {
                             {item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.endTime}
+                          {item.endTime.substr(0, 10)}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                          {item.nowPrice}
                           </TableCell>
                           <TableCell align="center" colSpan={2}>
                             <input

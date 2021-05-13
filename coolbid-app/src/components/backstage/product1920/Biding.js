@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 function BidingList() {
   const [data, setData] = useState([])
   const classes = useStyles()
-  const [bidPrice, setbidPrice] = useState(0)
+  const [nowPrice, setNowPrice] = useState(0)
 
   useEffect(() => {
     console.log('hi')
@@ -49,30 +49,30 @@ function BidingList() {
   }, [])
 
   const changebidPrice = () => {
-    if (bidPrice === 0) {
-      setbidPrice(1)
+    if (nowPrice === 0) {
+      setNowPrice(1)
     } else {
-      setbidPrice(0)
+      setNowPrice(0)
     }
   }
 
   useEffect(() => {
-    if (bidPrice === 0) {
-      const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function (a, b) {
-        return a.bidPrice - b.bidPrice
+    if (nowPrice === 0) {
+      const nowPriceAfter = data.map((item) => item)
+      nowPriceAfter.sort(function (a, b) {
+        return a.nowPrice - b.nowPrice
       })
-      setData(bidPriceAfter)
+      setData(nowPriceAfter)
     } else {
-      const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function (a, b) {
-        return b.bidPrice - a.bidPrice
+      const nowPriceAfter = data.map((item) => item)
+      nowPriceAfter.sort(function (a, b) {
+        return b.nowPrice - a.nowPrice
       })
-      setData(bidPriceAfter)
+      setData(nowPriceAfter)
     }
-  }, [bidPrice])
+  }, [nowPrice])
 
-  useEffect(() => {}, [bidPrice])
+  useEffect(() => {}, [nowPrice])
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -109,7 +109,7 @@ function BidingList() {
                         onClick={changebidPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        競標
+                        出價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -117,7 +117,7 @@ function BidingList() {
                         className={classes.itemTitle}
                         style={{ cursor: 'pointer' }}
                       >
-                        結標
+                        結標日
                       </TableCell>
                     </TableRow>
                   </TableHead>
