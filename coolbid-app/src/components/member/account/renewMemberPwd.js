@@ -6,12 +6,12 @@ import {
   Typography,
   FormGroup,
   FormControl,
-  Input,
   FormHelperText,
   Button,
   Breadcrumbs,
   Link,
-  Card
+  Card,
+  TextField
 } from '@material-ui/core'
 
 import SaveIcon from '@material-ui/icons/Save'
@@ -120,12 +120,13 @@ const RenewMemberPwd = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">舊的密碼</Typography>
                     <FormControl className={classes.inline}>
-                      <Input
+                      <TextField
+                        required
                         id="old-password"
-                        type="password"
+                        label="必填"
                         onChange={handleOldPasswordChange}
                         value={oldPassword}
-                        required={true}
+                        variant="outlined"
                       />
                     </FormControl>
                   </div>
@@ -135,12 +136,13 @@ const RenewMemberPwd = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">新的密碼</Typography>
                     <FormControl className={classes.inline}>
-                      <Input
+                      <TextField
+                        required
                         id="new-password"
-                        type="password"
+                        label="必填"
                         onChange={handleNewPasswordChange}
                         value={newPassword}
-                        required={true}
+                        variant="outlined"
                       />
                     </FormControl>
                   </div>
@@ -150,13 +152,13 @@ const RenewMemberPwd = () => {
                   <div className={classes.inputGroup}>
                     <Typography variant="h5">確認密碼</Typography>
                     <FormControl className={classes.inline}>
-                      <Input
+                      <TextField
+                        required
                         id="confirm-password"
-                        type="password"
-                        aria-describedby="my-helper-text"
+                        label="必填"
                         onChange={handleConfirmPasswordChange}
                         value={confirmPassword}
-                        required={true}
+                        variant="outlined"
                       />
                       <FormHelperText id="my-helper-text">請與新密碼一致</FormHelperText>
                     </FormControl>
