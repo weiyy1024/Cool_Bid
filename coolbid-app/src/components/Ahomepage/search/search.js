@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable space-before-function-paren */
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
@@ -20,6 +21,7 @@ const SearchProducts = styled.div`
 `
 
 export function ItemDiv(props) {
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const { data, index, handlelike, sort } = props
   const [days, setDays] = useState(0)
   const [hours, setHours] = useState(0)
@@ -76,7 +78,12 @@ export function ItemDiv(props) {
       <div className={sort === 1 ? 'Information' : 'Information2'}>
         <p className={sort === 1 ? 'title' : 'title2'}>{data.productName}</p>
         <p className={sort === 1 ? 'biddingPrice' : 'biddingPrice2'}>
-          <span>最高出價：</span> NT.<span>{data.directPrice}</span>
+          <span>最高出價：</span> {currency === 'US' ? 'USD$' : 'NTD$'}
+          <span>
+            {currency === 'US'
+              ? Math.floor(data.directPrice / 30)
+              : data.directPrice}
+          </span>
         </p>
         <p className={sort === 1 ? 'price' : 'price2'}>
           <span>直購價格：</span> NT.
@@ -237,8 +244,8 @@ const SortList = styled.div`
     cursor: pointer;
     padding: 1rem;
     svg {
-      position:relative;
-      top:4px;
+      position: relative;
+      top: 4px;
       font-size: 2.3rem;
       padding-right: 0.2rem;
     }
@@ -407,7 +414,7 @@ export default function Search(props) {
               />
             ))
           : productData.map((item, index) => {
-            return (
+              return (
                 <ItemDiv
                   key={index}
                   index={index}
@@ -415,8 +422,8 @@ export default function Search(props) {
                   handlelike={handlelike}
                   sort={sort}
                 />
-            )
-          })}
+              )
+            })}
       </SearchProducts>
       {/* <Page>
         <Pagination count={10} page={page} onChange={handleChange} />

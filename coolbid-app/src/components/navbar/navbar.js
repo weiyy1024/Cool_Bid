@@ -182,7 +182,7 @@ export default function NavBar() {
       url: '/getPopularProducts',
       'Content-Type': 'application/json'
     }).then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setPopular(res.data)
     })
   }, [])

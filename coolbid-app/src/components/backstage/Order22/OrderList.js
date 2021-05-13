@@ -83,7 +83,7 @@ function OrderList () {
     return (
       <div>
         <span>{year}</span>
-        <span>-{month + 1}</span>
+        <span>-{(month + 1).toString().padStart(2, '0')}</span>
         <span>-{date + 7}</span>
       </div>
     )
@@ -176,7 +176,7 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              {item.orderTime}
+                              {item.orderTime.substr(0, 10)}
                             </TableCell>
                             <TableCell
                               align="center"
@@ -210,18 +210,18 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              總計:
+                              總計: {item.nowPrice}
                             </TableCell>
                           </TableRow>
 
                           <TableRow>
-                            <TableCell colSpan={5}>
+                            {/* <TableCell colSpan={5}>
                               <input
                                 type="submit"
                                 value="出貨"
                                 className="button SetStoreInfo_Submit"
                               />
-                            </TableCell>
+                            </TableCell> */}
                           </TableRow>
                         </TableBody>
                       </>

@@ -6,9 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import Radio from '@material-ui/core/Radio'
+// import RadioGroup from '@material-ui/core/RadioGroup'
+// import FormControlLabel from '@material-ui/core/FormControlLabel'
 // import { CKEditor } from '@ckeditor/ckeditor5-react'
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 // import Typography from '@material-ui/core/Typography'
@@ -26,9 +26,9 @@ const AddProduct = () => {
   const [productName, setProductName] = useState('')
   const [endTime, setEndTime] = useState('')
   const [categoryName, setCategoryName] = useState('')
-  const [brandId, setBrandId] = useState('')
-  // const [brandName, setBrandName] = useState('')
-  const [productConditionId, setProductConditionId] = useState(1)
+  // const [brandId, setBrandId] = useState('')
+  const [brandName, setBrandName] = useState('')
+  // const [productConditionId, setProductConditionId] = useState(1)
   const [nowPrice, setNowPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
   const [perPrice, setPerPrice] = useState(0)
@@ -43,13 +43,11 @@ const AddProduct = () => {
         url: '/BackStage/product/edit?id=' + id,
         'Content-Type': 'application/json'
       }).then((a) => {
-        // setData(a.data)
         setProductName(a.data[0].productName)
         setEndTime(a.data[0].endTime)
         setCategoryName(a.data[0].categoryName)
-        setBrandId(a.data[0].brandId)
-        // setBrandName(a.data[0].brandName)
-        setProductConditionId(a.data[0].productConditionId)
+        setBrandName(a.data[0].brandName)
+        // setProductConditionId(a.data[0].productConditionId)
         setNowPrice(a.data[0].nowPrice)
         setStartPrice(a.data[0].startPrice)
         setPerPrice(a.data[0].perPrice)
@@ -94,6 +92,16 @@ const AddProduct = () => {
       }).then((a) => setData(a.data))
     }
   }
+
+  // useEffect(() => {
+  //   axios({
+  //     method: 'get',
+  //     baseURL: 'http://localhost:3001',
+  //     url: '/selectBrandAll/brand',
+  //     'Content-Type': 'application/json'
+  //   }).then((a) => setBrandName(a.brandName)
+  //   )
+  // }, [])
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -178,30 +186,6 @@ const AddProduct = () => {
                   </FormControl>
                 </label>
               </div>
-              {/* {data.map((item, index) => {
-            return (
-          <label htmlFor="brand" key={index}>
-            *商品品牌:
-            <br />
-            <FormControl variant="outlined" className="mininput">
-              <InputLabel id="brand">brand</InputLabel>
-                  <Select
-                    labelId="brand"
-                    id="brand"
-                    value={brandName}
-                    onChange={(e) => {
-                      setBrandName(e.target.value)
-                    }}
-                    label="brand"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                  </Select>
-            </FormControl>
-          </label>
-            )
-          })} */}
               <label htmlFor="brand">
                 *商品品牌:
                 <br />
@@ -210,18 +194,34 @@ const AddProduct = () => {
                   <Select
                     labelId="brand"
                     id="brand"
-                    value={brandId}
-                    onChange={(e) => setBrandId(e.target.innerText)}
+                    value={brandName}
+                    // (e.target.value)怎麼抓到value={item.brandName}?
+                    onChange={(e) => { setBrandName(e.target.value) }}
                     label="brand"
                   >
                     {data.map((item) => (
                       <MenuItem value={item.brandId} key={item.brandId}>
-                        <em>{item.brandName}</em>
+                     {item.brandName}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </label>
+              {/* <div className="form_row">
+                <label>
+                商品性別:
+                  <br />
+                  <TextField
+                    type="text"
+                    name="size"
+                    value=""
+                    onChange=""
+                    variant="outlined"
+                    label="商品尺寸"
+                    className="mininput"
+                  />
+                </label>
+              </div>
               <div className="form_row">
                 <label>
                   商品顏色:
@@ -237,23 +237,6 @@ const AddProduct = () => {
                   />
                 </label>
               </div>
-
-              <div className="form_row">
-                <label>
-                  商品尺寸:
-                  <br />
-                  <TextField
-                    type="text"
-                    name="size"
-                    value=""
-                    onChange=""
-                    variant="outlined"
-                    label="商品尺寸"
-                    className="mininput"
-                  />
-                </label>
-              </div>
-
               <div className="from_row">
                 <label>
                   商品狀況:
@@ -275,7 +258,7 @@ const AddProduct = () => {
                     />
                   </RadioGroup>
                 </label>
-              </div>
+              </div> */}
 
               <div className="form_row">
                 <label htmlFor="bid">

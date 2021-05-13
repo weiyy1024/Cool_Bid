@@ -14,6 +14,7 @@ import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   itemTitle: {
@@ -36,7 +37,7 @@ function CloseAuction() {
   // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([])
   const classes = useStyles()
-  const [bidPrice, setbidPrice] = useState(0)
+  const [nowPrice, setNowPrice] = useState(0)
 
   useEffect(() => {
     console.log('hi')
@@ -49,28 +50,28 @@ function CloseAuction() {
   }, [])
 
   const changebidPrice = () => {
-    if (bidPrice === 0) {
-      setbidPrice(1)
+    if (nowPrice === 0) {
+      setNowPrice(1)
     } else {
-      setbidPrice(0)
+      setNowPrice(0)
     }
   }
 
   useEffect(() => {
-    if (bidPrice === 0) {
-      const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function (a, b) {
-        return a.bidPrice - b.bidPrice
+    if (nowPrice === 0) {
+      const nowPriceAfter = data.map((item) => item)
+      nowPriceAfter.sort(function (a, b) {
+        return a.nowPrice - b.nowPrice
       })
-      setData(bidPriceAfter)
+      setData(nowPriceAfter)
     } else {
-      const bidPriceAfter = data.map((item) => item)
-      bidPriceAfter.sort(function (a, b) {
-        return b.bidPrice - a.bidPrice
+      const nowPriceAfter = data.map((item) => item)
+      nowPriceAfter.sort(function (a, b) {
+        return b.nowPrice - a.nowPrice
       })
-      setData(bidPriceAfter)
+      setData(nowPriceAfter)
     }
-  }, [bidPrice])
+  }, [nowPrice])
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -110,7 +111,7 @@ function CloseAuction() {
                         onClick={changebidPrice}
                         style={{ cursor: 'pointer' }}
                       >
-                        競標
+                        結標價
                         <UnfoldMoreIcon />
                       </TableCell>
                       <TableCell
@@ -118,10 +119,7 @@ function CloseAuction() {
                         className={classes.itemTitle}
                         style={{ cursor: 'pointer' }}
                       >
-                        結標
-                      </TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>
-                        狀態
+                        結標日
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -137,7 +135,7 @@ function CloseAuction() {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.productName}
+                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -149,10 +147,7 @@ function CloseAuction() {
                             {item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.endTime}
-                          </TableCell>
-                          <TableCell align="center" className={classes.itemTxt}>
-                            {item.productstatusDescription}
+                          {item.endTime.substr(0, 10)}
                           </TableCell>
                         </TableRow>
                       )
