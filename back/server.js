@@ -853,6 +853,15 @@ app.get('/BackStage/SellerPageHero', function (req, res) {
   })
 })
 
+// 賣家中心 找訂單數量
+app.post('/BackStage/sellerhomepage', function (req, res){
+  let sql = 'SELECT COUNT(*) as count FROM `order` as o JOIN orderstatusdetail as od on o.orderId = od.orderId WHERE orderstatusId = 1 and shopId = ?'
+  conn.query(sql, [req.body.id], function(err, result){
+    if(err) {console.log(err)}
+    res.send(result)
+  })
+})
+
 //夏賣家中心_訂單清單
 app.post('/BackStage/orders', function (req, res) {
   let sql =
