@@ -1,11 +1,8 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
 import swal from 'sweetalert'
-
 import { Container, Button, FormControl, Typography } from '@material-ui/core'
-
 import useStyles from '../../../styles/bidFuncStyle'
 
 const BidFunc = (props, { bidState }) => {
@@ -25,6 +22,7 @@ const BidFunc = (props, { bidState }) => {
       'Content-Type': 'application/json'
     }).then((res) => {
       setProductF(res.data)
+      console.log(res.data)
     })
   }, [bidState])
 
@@ -73,23 +71,22 @@ const BidFunc = (props, { bidState }) => {
           swal('感謝您的購買：）', {
             icon: 'success'
           })
+          axios({
+            method: 'post',
+            url: `http://localhost:3001/product/${props.originPId}`,
+            'Content-Type': 'application/json',
+            data: {
+              isDirectBuy: true,
+              directBidPrice: directBidPrice,
+              id: props.pId,
+              memberId: userInfo.memberId,
+              productStatusId: 5
+            }
+          }).then((res) => console.log(res.data))
         } else {
           swal('再想想也沒關係唷～')
         }
       })
-
-      axios({
-        method: 'post',
-        url: `http://localhost:3001/product/${props.originPId}`,
-        'Content-Type': 'application/json',
-        data: {
-          isDirectBuy: true,
-          directBidPrice: directBidPrice,
-          id: props.pId,
-          memberId: userInfo.memberId,
-          productStatusId: 5
-        }
-      }).then((res) => console.log(res.data))
     }
   }
 
@@ -136,23 +133,22 @@ const BidFunc = (props, { bidState }) => {
               swal('感謝您的購買：）', {
                 icon: 'success'
               })
+              axios({
+                method: 'post',
+                url: `http://localhost:3001/product/${props.originPId}`,
+                'Content-Type': 'application/json',
+                data: {
+                  isDirectBuy: true,
+                  directBidPrice: directBidPrice,
+                  id: props.pId,
+                  memberId: userInfo.memberId,
+                  productStatusId: 5
+                }
+              }).then((res) => console.log(res.data))
             } else {
               swal('再想想也沒關係唷～')
             }
           })
-
-          axios({
-            method: 'post',
-            url: `http://localhost:3001/product/${props.originPId}`,
-            'Content-Type': 'application/json',
-            data: {
-              isDirectBuy: true,
-              directBidPrice: directBidPrice,
-              id: props.pId,
-              memberId: userInfo.memberId,
-              productStatusId: 5
-            }
-          }).then((res) => console.log(res.data))
         }
       }
     }
@@ -239,6 +235,12 @@ const BidFunc = (props, { bidState }) => {
             currency === 'US' ? Math.floor(nowBidPrice / 30) : nowBidPrice
           }
           // {defaultValue={startBidPrice}
+          // ? startBidPrice + bidPriceStep
+          // : nowBidPrice + bidPriceStep
+          // }
+          // max={directBuyPrice}
+          // step={bidPriceStep}
+          // defaultValue={startBidPrice}
         />
         <Button
           className={classes.bidBtn}

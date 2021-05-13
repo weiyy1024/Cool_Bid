@@ -1,4 +1,5 @@
 var express = require('express')
+var multer  = require('multer')
 var app = express()
 const cors = require('cors')
 
@@ -141,8 +142,6 @@ app.post('/member/edit', function (req, res, next) {
 
 // overwrite address
 app.post('/member/edit', function (req, res) {
-  console.log(req.body)
-
   const { isOverwrite, memberId, address, zipCode } = req.body
 
   if (isOverwrite) {
@@ -155,6 +154,38 @@ app.post('/member/edit', function (req, res) {
     )
   }
 })
+
+// upload member pic
+// var storage = multer.diskStorage({
+//     destination: '../coolbid-app/public/imgs/sellerPic/',
+//     filename: function (req, file, cb) {
+//       cb(null, req.body.memberId + '.jpg')
+//     }
+//   })
+// var upload = multer({ storage }).single('profilePic')
+
+// app.post('/member/edit', upload, function(req, res) {
+//   const {
+//     isOverwrite,
+//     memberId
+//   } = req.body
+
+//   console.log(req.body)
+//   console.log(req.file)
+//   if (isOverwrite) {
+//     conn.query(
+//       '',
+//       [memberId],
+//       function (err, result) {
+//         console.log(result)
+//       }
+//     )
+//   }
+// })
+
+
+
+
 
 // read and overwrite password
 app.post('/member/renewMemberPwd', function (req, res) {
@@ -602,6 +633,7 @@ app.get('/shopName/:productId', function (req, res) {
 app.get('/getPopularProducts', function (req, res) {
   let sql = `SELECT b.productId, productName, nowPrice, endTime, directPrice, COUNT(b.productId) as bidCount FROM biddinghistory as b
   JOIN product as p on b.productId = p.productId
+  where productStatusId in (1,4)
   GROUP BY productId
   ORDER BY bidCount DESC limit 8`
 
