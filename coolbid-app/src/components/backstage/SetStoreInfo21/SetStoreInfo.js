@@ -35,46 +35,51 @@ function SetStoreInfo() {
 
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">賣家專區/賣場設定
-        {/* <Breadcrumbs /> */}
-      </div>
       <div className="sellerBackend_Member_Container">
-        <div className="List">
+        <div className="backendLeft">
           <SellerBackendList />
         </div>
-        <div>
-          <div className="form_warp">
-            <form>
-              <div className="form_row">
-                <label>
-                  賣場名稱:&emsp;&emsp;
-                  <TextField
-                    label="賣場名稱"
-                    value={data.StoreTitle}
-                    name="StoreTitle"
-                    variant="outlined"
-                    className="mininput"
-                  />
-                </label>
-              </div>
 
-              <div className="form_row">
-                <label>
-                  賣場圖片:&emsp;
-                  <p></p>
-                </label>
-              </div>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div className="breadcrumbsArea">
+              賣家專區/賣場設定
+              {/* <Breadcrumbs /> */}
+            </div>
+            <div className="form_warp">
+              <form>
+                <div className="form_row">
+                  <label>
+                    賣場名稱:&emsp;&emsp;
+                    <TextField
+                      label="賣場名稱"
+                      value={data.StoreTitle}
+                      name="StoreTitle"
+                      variant="outlined"
+                      className="mininput"
+                    />
+                  </label>
+                </div>
 
-              <div className="form_row">
-                <Typography
-                  variant="h4"
-                  style={ { fontWeight: 'bold', margin: '2rem 0 1rem' } }
-                >賣場描述：</Typography>
+                <div className="form_row">
+                  <label>
+                    賣場圖片:&emsp;
+                    <p></p>
+                  </label>
+                </div>
+
+                <div className="form_row">
+                  <Typography
+                    variant="h4"
+                    style={{ fontWeight: 'bold', margin: '2rem 0 1rem' }}
+                  >
+                    賣場描述：
+                  </Typography>
                   <CKEditor
-                    editor={ ClassicEditor }
+                    editor={ClassicEditor}
                     onChange={(event, editor) => {
                       setDescWord(editor.getData())
-                    } }
+                    }}
                   />
                   {/* <TextField
                     label="賣場描述"
@@ -85,86 +90,93 @@ function SetStoreInfo() {
                     multiline={true}
                     rows="6"
                   /> */}
-              </div>
-              <div className="form_row">
-                <label>
-                  運送方式:&emsp;&emsp;
-                  <FormGroup row>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.delivery}
-                          onChange={handleChange}
-                          name="delivery"
-                          color="primary"
-                        />
-                      }
-                    /><p>宅配</p>&emsp;
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.family}
-                          onChange={handleChange}
-                          name="family"
-                          color="primary"
-                        />
-                      }
-                    /><p>全家</p>&emsp;&emsp;
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.seveneleven}
-                          onChange={handleChange}
-                          name="seveneleven"
-                          color="primary"
-                        />
-                      }
-                    /><p>7-11</p>
-                  </FormGroup>
-                </label>
-              </div>
+                </div>
+                <div className="form_row">
+                  <label>
+                    運送方式:&emsp;&emsp;
+                    <FormGroup row>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={state.delivery}
+                            onChange={handleChange}
+                            name="delivery"
+                            color="primary"
+                          />
+                        }
+                      />
+                      <p>宅配</p>&emsp;
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={state.family}
+                            onChange={handleChange}
+                            name="family"
+                            color="primary"
+                          />
+                        }
+                      />
+                      <p>全家</p>&emsp;&emsp;
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={state.seveneleven}
+                            onChange={handleChange}
+                            name="seveneleven"
+                            color="primary"
+                          />
+                        }
+                      />
+                      <p>7-11</p>
+                    </FormGroup>
+                  </label>
+                </div>
 
-              <div className="form_row">
-                <label>
-                  付款方式:&emsp;
-                  <FormGroup row>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.transfer}
-                          onChange={handleChange}
-                          name="transfer"
-                          color="primary"
-                        />
-                      }
-                    /><p>轉帳</p>&emsp;
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.creditCard}
-                          onChange={handleChange}
-                          name="creditCard"
-                          color="primary"
-                        />
-                      }
-                    /><p>信用卡</p>&emsp;
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={state.COD}
-                          onChange={handleChange}
-                          name="COD"
-                          color="primary"
-                          className="Mui-checked"
-                        />
-                      }
-                    /><p>貨到付款</p>
-                  </FormGroup>
-                </label>
-              </div>
-              <input type="submit" value="提交" className="button" />
-           <br/>
-            </form>
+                <div className="form_row">
+                  <label>
+                    付款方式:&emsp;
+                    <FormGroup row>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={state.transfer}
+                            onChange={handleChange}
+                            name="transfer"
+                            color="primary"
+                          />
+                        }
+                      />
+                      <p>轉帳</p>&emsp;
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={state.creditCard}
+                            onChange={handleChange}
+                            name="creditCard"
+                            color="primary"
+                          />
+                        }
+                      />
+                      <p>信用卡</p>&emsp;
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={state.COD}
+                            onChange={handleChange}
+                            name="COD"
+                            color="primary"
+                            className="Mui-checked"
+                          />
+                        }
+                      />
+                      <p>貨到付款</p>
+                    </FormGroup>
+                  </label>
+                </div>
+                <input type="submit" value="提交" className="button" />
+                <br />
+              </form>
+            </div>
           </div>
         </div>
       </div>

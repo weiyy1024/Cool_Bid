@@ -17,16 +17,17 @@ import '../../SASS/Components.scss'
 import SellerBackendList from '../Main/SellerBackendList'
 import { useParams } from 'react-router'
 
-function AddProduct () {
-  // const [data, setData] = useState([])
+const AddProduct = () => {
+  const [data, setData] = useState([])
   const { id } = useParams()
   // const [descWord, setDescWord] = useState('')
   // console.log(descWord)
   // 綁定change事件
   const [productName, setProductName] = useState('')
   const [endTime, setEndTime] = useState('')
-  const [categoryId, setCategoryId] = useState('')
+  const [categoryName, setCategoryName] = useState('')
   const [brandId, setBrandId] = useState('')
+  // const [brandName, setBrandName] = useState('')
   const [productConditionId, setProductConditionId] = useState(1)
   const [nowPrice, setNowPrice] = useState(0)
   const [startPrice, setStartPrice] = useState(0)
@@ -45,8 +46,9 @@ function AddProduct () {
         // setData(a.data)
         setProductName(a.data[0].productName)
         setEndTime(a.data[0].endTime)
-        setCategoryId(a.data[0].categoryId)
+        setCategoryName(a.data[0].categoryName)
         setBrandId(a.data[0].brandId)
+        // setBrandName(a.data[0].brandName)
         setProductConditionId(a.data[0].productConditionId)
         setNowPrice(a.data[0].nowPrice)
         setStartPrice(a.data[0].startPrice)
@@ -57,255 +59,308 @@ function AddProduct () {
     }
   }, [])
 
+  const brandSelect = (e) => {
+    if (e === 'Bag') {
+      setCategoryName('Bag')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/B',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    } else if (e === 'Cloth') {
+      setCategoryName('Cloth')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/C',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    } else if (e === 'Watch') {
+      setCategoryName('Watch')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/W',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    } else if (e === 'Shoes') {
+      setCategoryName('Shoes')
+      axios({
+        method: 'get',
+        baseURL: 'http://localhost:3001',
+        url: '/selectBrand/S',
+        'Content-Type': 'application/json'
+      }).then((a) => setData(a.data))
+    }
+  }
+
   return (
     <div className="sellerBackend_Member_Wrap">
-      <div className="breadcrumbsArea">
-        賣家專區/新增商品
-        {/* <Breadcrumbs /> */}
-      </div>
       <div className="sellerBackend_Member_Container">
-        <div className="List">
+        <div className="backendLeft">
           <SellerBackendList />
         </div>
-        <form className="form_warp">
-          <div className="form_row">
-            <label>
-              *商品標題:
-              <br />
-              <TextField
-                type="text"
-                name="name"
-                // value={data.length > 0 ? data[0].categoryName : ''}
-                value={productName}
-                onChange={(e) => {
-                  setProductName(e.target.value)
-                }}
-                variant="outlined"
-                label="商品標題"
-                className="mininput"
-              />
-            </label>
-          </div>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            {/* <Breadcrumbs /> */}
+            <div className="breadcrumbsArea">賣家專區/新增商品</div>
+            <form className="form_warp">
+              <div className="form_row">
+                <label>
+                  *商品標題:
+                  <br />
+                  <TextField
+                    type="text"
+                    name="name"
+                    // value={data.length > 0 ? data[0].categoryName : ''}
+                    value={productName}
+                    onChange={(e) => {
+                      setProductName(e.target.value)
+                    }}
+                    variant="outlined"
+                    label="商品標題"
+                    className="mininput"
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label htmlFor="deadline">
-              *截標日期:
-              <br />
-              {/* <TextField
+              <div className="form_row">
+                <label htmlFor="deadline">
+                  *截標日期:
+                  <br />
+                  {/* <TextField
                 id="deadline"
                 type="datetime-local"
                 name="deadline"
-                value={data.length > 0 ? moment(data[0].endTime) : ''}
+                value={endTime}
                 onChange=""
                 variant="outlined"
                 label="DataTime"
                 className="dateinput"
                 InputLabelProps={{ shrink: true }}
               /> */}
-               <TextField
-                type="text"
-                name="name"
-                value={endTime}
-                onChange={(e) => {
-                  setEndTime(e.target.value)
-                }}
-                variant="outlined"
-                label="截標日期"
-                className="mininput"
-              />
-            </label>
-          </div>
+                  <TextField
+                    type="text"
+                    name="name"
+                    value={endTime}
+                    onChange={(e) => {
+                      setEndTime(e.target.value)
+                    }}
+                    variant="outlined"
+                    label="截標日期"
+                    className="mininput"
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label htmlFor="kind">
-              *商品類型:
-              <br />
-              <FormControl variant="outlined" className="mininput">
-                <InputLabel id="kind">kind</InputLabel>
-                <Select
-                  labelId="kind"
-                  id="kind"
-                  value={categoryId}
-                  onChange={(e) => {
-                    setCategoryId(e.target.value)
-                  }}
-                  label="kind"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="S">鞋子</MenuItem>
-                  <MenuItem value="C">衣服</MenuItem>
-                  <MenuItem value="B">包包</MenuItem>
-                  <MenuItem value="W">手錶</MenuItem>
-                </Select>
-              </FormControl>
-            </label>
-          </div>
-
-          <label htmlFor="brand">
+              <div className="form_row">
+                <label htmlFor="kind">
+                  *商品類型:
+                  <br />
+                  <FormControl variant="outlined" className="mininput">
+                    <InputLabel id="kind">kind</InputLabel>
+                    <Select
+                      labelId="kind"
+                      id="kind"
+                      value={categoryName}
+                      onChange={(e) => brandSelect(e.target.value)}
+                      label="kind"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value="Shoes">鞋子</MenuItem>
+                      <MenuItem value="Cloth">衣服</MenuItem>
+                      <MenuItem value="Bag">包包</MenuItem>
+                      <MenuItem value="Watch">手錶</MenuItem>
+                    </Select>
+                  </FormControl>
+                </label>
+              </div>
+              {/* {data.map((item, index) => {
+            return (
+          <label htmlFor="brand" key={index}>
             *商品品牌:
             <br />
             <FormControl variant="outlined" className="mininput">
               <InputLabel id="brand">brand</InputLabel>
-              <Select
-                labelId="brand"
-                id="brand"
-                value={brandId}
-                onChange={(e) => {
-                  setBrandId(e.target.value)
-                }}
-                label="brand"
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem>UnderArmour</MenuItem>
-                <MenuItem>Nike</MenuItem>
-                <MenuItem>Adidas</MenuItem>
-              </Select>
+                  <Select
+                    labelId="brand"
+                    id="brand"
+                    value={brandName}
+                    onChange={(e) => {
+                      setBrandName(e.target.value)
+                    }}
+                    label="brand"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                  </Select>
             </FormControl>
           </label>
+            )
+          })} */}
+              <label htmlFor="brand">
+                *商品品牌:
+                <br />
+                <FormControl variant="outlined" className="mininput">
+                  <InputLabel id="brand">brand</InputLabel>
+                  <Select
+                    labelId="brand"
+                    id="brand"
+                    value={brandId}
+                    onChange={(e) => setBrandId(e.target.innerText)}
+                    label="brand"
+                  >
+                    {data.map((item) => (
+                      <MenuItem value={item.brandId} key={item.brandId}>
+                        <em>{item.brandName}</em>
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </label>
+              <div className="form_row">
+                <label>
+                  商品顏色:
+                  <br />
+                  <TextField
+                    type="text"
+                    name="colour"
+                    value=""
+                    onChange=""
+                    variant="outlined"
+                    label="商品顏色"
+                    className="mininput"
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label>
-              商品顏色:
-              <br />
-              <TextField
-                type="text"
-                name="colour"
-                value=""
-                onChange=""
-                variant="outlined"
-                label="商品顏色"
-                className="mininput"
-              />
-            </label>
-          </div>
+              <div className="form_row">
+                <label>
+                  商品尺寸:
+                  <br />
+                  <TextField
+                    type="text"
+                    name="size"
+                    value=""
+                    onChange=""
+                    variant="outlined"
+                    label="商品尺寸"
+                    className="mininput"
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label>
-              商品尺寸:
-              <br />
-              <TextField
-                type="text"
-                name="size"
-                value=""
-                onChange=""
-                variant="outlined"
-                label="商品尺寸"
-                className="mininput"
-              />
-            </label>
-          </div>
+              <div className="from_row">
+                <label>
+                  商品狀況:
+                  <RadioGroup
+                    row
+                    aria-label="productStatus"
+                    name="productStatus"
+                    defaultValue="new"
+                  >
+                    <FormControlLabel
+                      value={productConditionId === 1}
+                      control={<Radio color="primary" />}
+                      label="全新"
+                    />
+                    <FormControlLabel
+                      value={productConditionId === 2}
+                      control={<Radio color="primary" />}
+                      label="二手"
+                    />
+                  </RadioGroup>
+                </label>
+              </div>
 
-          <div className="from_row">
-            <label>
-              商品狀況:
-              <RadioGroup
-                row
-                aria-label="productStatus"
-                name="productStatus"
-                defaultValue="new"
-              >
-                <FormControlLabel
-                  value={productConditionId === 1}
-                  control={<Radio color="primary" />}
-                  label="全新"
-                />
-                <FormControlLabel
-                  value={productConditionId === 2}
-                  control={<Radio color="primary" />}
-                  label="二手"
-                />
-              </RadioGroup>
-            </label>
-          </div>
+              <div className="form_row">
+                <label htmlFor="bid">
+                  *競標價格:
+                  <br />
+                  <TextField
+                    type="number"
+                    name="bid"
+                    value={nowPrice}
+                    onChange={(e) => {
+                      setNowPrice(e.target.value)
+                    }}
+                    variant="outlined"
+                    label="bid"
+                    className="mininput"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label htmlFor="bid">
-              *競標價格:
-              <br />
-              <TextField
-                type="number"
-                name="bid"
-                value={nowPrice}
-                onChange={(e) => {
-                  setNowPrice(e.target.value)
-                }}
-                variant="outlined"
-                label="bid"
-                className="mininput"
-                InputLabelProps={{ shrink: true }}
-              />
-            </label>
-          </div>
+              <div className="form_row">
+                <label htmlFor="basic">
+                  *起標價格:
+                  <br />
+                  <TextField
+                    id="basic"
+                    type="number"
+                    name="basic"
+                    value={startPrice}
+                    onChange={(e) => {
+                      setStartPrice(e.target.value)
+                    }}
+                    variant="outlined"
+                    label="basic"
+                    className="mininput"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label htmlFor="basic">
-              *起標價格:
-              <br />
-              <TextField
-                id="basic"
-                type="number"
-                name="basic"
-                value={startPrice}
-                onChange={(e) => {
-                  setStartPrice(e.target.value)
-                }}
-                variant="outlined"
-                label="basic"
-                className="mininput"
-                InputLabelProps={{ shrink: true }}
-              />
-            </label>
-          </div>
+              <div className="form_row">
+                <label htmlFor="per">
+                  *出價增額:
+                  <br />
+                  <TextField
+                    type="number"
+                    name="per"
+                    value={perPrice}
+                    onChange={(e) => {
+                      setPerPrice(e.target.value)
+                    }}
+                    variant="outlined"
+                    label="per"
+                    className="mininput"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label htmlFor="per">
-              *出價增額:
-              <br />
-              <TextField
-                type="number"
-                name="per"
-                value={perPrice}
-                onChange={(e) => {
-                  setPerPrice(e.target.value)
-                }}
-                variant="outlined"
-                label="per"
-                className="mininput"
-                InputLabelProps={{ shrink: true }}
-              />
-            </label>
-          </div>
+              <div className="form_row">
+                <label htmlFor="direct">
+                  直購價格:
+                  <br />
+                  <TextField
+                    type="number"
+                    name="direct"
+                    value={directPrice}
+                    onChange={(e) => {
+                      console.log(e.target.value)
+                      setDirectPrice(e.target.value)
+                    }}
+                    variant="outlined"
+                    label="direct"
+                    className="mininput"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </label>
+              </div>
 
-          <div className="form_row">
-            <label htmlFor="direct">
-              直購價格:
-              <br />
-              <TextField
-                type="number"
-                name="direct"
-                value={directPrice}
-                onChange={(e) => {
-                  console.log(e.target.value)
-                  setDirectPrice(e.target.value)
-                }}
-                variant="outlined"
-                label="direct"
-                className="mininput"
-                InputLabelProps={{ shrink: true }}
-              />
-            </label>
-          </div>
+              <div className="form_row">
+                <label>圖片檔案: null</label>
+              </div>
 
-          <div className="form_row">
-            <label>圖片檔案: null</label>
-          </div>
-
-          <div className="form_row">
-            {/* <Typography
+              <div className="form_row">
+                {/* <Typography
               variant="h4"
               style={{ fontWeight: 'bold', margin: '2rem 0 1rem' }}
             >
@@ -318,29 +373,31 @@ function AddProduct () {
               }}
               value=''
             /> */}
-            <label>
-          商品描述:
-          <br/>
-          <TextField
-            id="description"
-            type="text"
-            name="description"
-            value={productDescription}
-            onChange={(e) => {
-              setProductDescription(e.target.value)
-            }}
-            label="商品描述"
-            variant="outlined"
-            multiline={true}
-            rows={6}
-            className="txtinput"
-            InputLabelProps={{ shrink: true }}
-          />
-        </label>
-          </div>
+                <label>
+                  商品描述:
+                  <br />
+                  <TextField
+                    id="description"
+                    type="text"
+                    name="description"
+                    value={productDescription}
+                    onChange={(e) => {
+                      setProductDescription(e.target.value)
+                    }}
+                    label="商品描述"
+                    variant="outlined"
+                    multiline={true}
+                    rows={6}
+                    className="txtinput"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </label>
+              </div>
 
-          <button className="button" >新增</button>
-        </form>
+              <button className="button">儲存</button>
+            </form>
+          </div>
+        </div>
       </div>{' '}
     </div>
   )

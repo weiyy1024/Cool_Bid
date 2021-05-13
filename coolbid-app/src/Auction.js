@@ -35,7 +35,7 @@ function Auction() {
     let userInfo = window.sessionStorage.getItem('userinfo')
     if (userInfo) {
       userInfo = JSON.parse(userInfo)
-      setUser(userInfo.nickname)
+      setUser(userInfo)
     } else {
       setUser('Guest')
     }

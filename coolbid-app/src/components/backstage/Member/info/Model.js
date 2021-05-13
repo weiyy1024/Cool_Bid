@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: '50px'
+    padding: '50px',
+    borderRadius: '1rem'
   }
 }))
 
@@ -32,8 +32,10 @@ export default function TransitionsModal () {
   }
 
   return (
-    <div>
-         <button className="button" type="button" onClick={handleOpen}>新增地址</button>
+    <div style={{ marginTop: '1rem' }}>
+      <button className="button" type="button" onClick={handleOpen}>
+        新增地址
+      </button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -48,54 +50,55 @@ export default function TransitionsModal () {
       >
         <Fade in={open}>
           <div className={classes.paper}>
+            <div className="addlist">
+              <p>
+                姓名：
+                <TextField
+                  type="text"
+                  name="name"
+                  value=""
+                  onChange=""
+                  variant="outlined"
+                  className="mininput"
+                />
+              </p>
+              <p>
+                手機：
+                <TextField
+                  type="text"
+                  name="phonee"
+                  value=""
+                  onChange=""
+                  variant="outlined"
+                  className="mininput"
+                />
+              </p>
+              <p>
+                超商：
+                <TextField
+                  type="text"
+                  name="convenience"
+                  value=""
+                  onChange=""
+                  variant="outlined"
+                  className="mininput"
+                />
+              </p>
+              <p>
+                地址：
+                <TextField
+                  type="text"
+                  name="address"
+                  value=""
+                  onChange=""
+                  variant="outlined"
+                  className="mininput"
+                />
+              </p>
 
-           <div className="addlist">
-           <p>姓名：
-           <TextField
-            type="text"
-            name="name"
-            value=""
-            onChange=""
-            variant="outlined"
-            className="mininput"
-          />
-
-           </p>
-             <p>手機：
-             <TextField
-            type="text"
-            name="phonee"
-            value=""
-            onChange=""
-            variant="outlined"
-            className="mininput"
-          />
-             </p>
-             <p>超商：
-             <TextField
-            type="text"
-            name="convenience"
-            value=""
-            onChange=""
-            variant="outlined"
-            className="mininput"
-          />
-             </p>
-             <p>地址：
-             <TextField
-            type="text"
-            name="address"
-            value=""
-            onChange=""
-            variant="outlined"
-            className="mininput"
-          />
-             </p>
-
-             <button className="button" >新增地址</button>
-           </div>
-           </div>
-
+              <button className="button">新增地址</button>
+            </div>
+          </div>
         </Fade>
       </Modal>
     </div>

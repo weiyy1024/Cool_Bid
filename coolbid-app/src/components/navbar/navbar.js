@@ -129,9 +129,6 @@ const Title = styled(NavLink)`
   padding-left: 30px;
   &:hover {
     color: #ffae19;
-    .dropList {
-      visibility: visible;
-    }
   }
 `
 const Member = styled(NavLink)`
@@ -235,17 +232,24 @@ export default function NavBar() {
       <Navbar style={{ zIndex: '1000' }}>
         <LogoBox to="/" className="logo" />
         <NavLeft>
-          <Title className="Ahomepage" to="/bidding">
+          <Title
+            className="Ahomepage"
+            to="/bidding"
+            onMouseEnter={() => {
+              const dropdown = document.getElementById('dropdown')
+              dropdown.style.visibility = 'visible'
+            }}
+          >
             競標區
             <ArrowDropDownIcon
               style={{ position: 'relative', top: '6px', fontSize: '3rem' }}
             />
-            <DropDown pop={popular} />
           </Title>
+          <DropDown pop={popular} />
           <Title
             className="Chomepage"
             to="/auction/coming"
-            style={{ marginTop: '4px' }}
+            style={{ marginTop: '5px' }}
           >
             拍賣會
           </Title>

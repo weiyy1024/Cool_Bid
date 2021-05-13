@@ -75,53 +75,91 @@ function BidingList() {
 
   return (
     <div className="sellerBackend_Member_Wrap">
-    <div className="breadcrumbsArea">賣家專區/商品清單/競標中
-      {/* <Breadcrumbs /> */}
-    </div>
-    <div className="sellerBackend_Member_Container">
-    <div className="List">
-        <SellerBackendList />
-      </div>
-    <div className="Table_wrap" id='BidingId'>
-    <div>
-        <ProductTabs />
+      <div className="sellerBackend_Member_Container">
+        <div className="backendLeft">
+          <SellerBackendList />
         </div>
-      <TableContainer className="Table_container">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" className={classes.itemTitle}>圖片</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>項目</TableCell>
-              <TableCell align="center" className={classes.itemTitle}>類別</TableCell>
-              <TableCell align="center" className={classes.itemTitle} onClick={changebidPrice} style={{ cursor: 'pointer' }}>
-              競標<UnfoldMoreIcon/></TableCell>
-              <TableCell align="center" className={classes.itemTitle} style={{ cursor: 'pointer' }}>
-                結標
-              </TableCell>
-              <TableCell align="center" className={classes.itemTitle}>狀態</TableCell>
-            </TableRow>
-          </TableHead>
+        <div className="backendRight">
+          <div className="backendRightContainer">
+            <div className="breadcrumbsArea">
+              賣家專區/商品清單/競標中
+              {/* <Breadcrumbs /> */}
+            </div>
+            <div id="BidingId">
+              <div>
+                <ProductTabs />
+              </div>
+              <TableContainer className="Table_container">
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        圖片
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        項目
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        類別
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        onClick={changebidPrice}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        競標
+                        <UnfoldMoreIcon />
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        className={classes.itemTitle}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        結標
+                      </TableCell>
+                      <TableCell align="center" className={classes.itemTitle}>
+                        狀態
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
 
-          <TableBody>
-            {data.map((item, index) => {
-              return (
-                <TableRow key={index}>
-                  <TableCell align="center" className={classes.itemTxt}>
-                  <img src={'/imgs/' + item.productId + '.jpg'} className={classes.imgStyle}/>
-                  </TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.productName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.categoryName}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.nowPrice}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}>{item.endTime}</TableCell>
-                  <TableCell align="center" className={classes.itemTxt}> {item.productstatusDescription}</TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-    </div>
+                  <TableBody>
+                    {data.map((item, index) => {
+                      return (
+                        <TableRow key={index}>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            <img
+                              src={'/imgs/' + item.productId + '.jpg'}
+                              className={classes.imgStyle}
+                            />
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.productName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.categoryName}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.nowPrice}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {item.endTime}
+                          </TableCell>
+                          <TableCell align="center" className={classes.itemTxt}>
+                            {' '}
+                            {item.productstatusDescription}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
