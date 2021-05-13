@@ -52,7 +52,15 @@ export default function DropDown(props) {
   const { pop } = props
   return (
     <>
-      <div className="dropList" style={dropbg}>
+      <div
+        className="dropList"
+        style={dropbg}
+        id="dropdown"
+        onMouseLeave={() => {
+          const dropdown = document.getElementById('dropdown')
+          dropdown.style.visibility = 'hidden'
+        }}
+      >
         <div style={category}>
           <span style={subtitle}>SHOP BY PRODUCT</span>
           <div style={{ marginTop: '2.5rem' }}>
@@ -258,31 +266,49 @@ export default function DropDown(props) {
           <div style={{ width: '100%', marginTop: '2rem' }}>
             <NavLink
               to={
-                pop.length ? `/bidding/product/product?=${pop[0].productId}` : ''
+                pop.length
+                  ? `/bidding/product/product?=${pop[0].productId}`
+                  : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '30%', height: '15rem' }}
+                style={{
+                  objectFit: 'scale-down',
+                  width: '30%',
+                  height: '15rem'
+                }}
                 src={pop.length ? `/imgs/${pop[0].productId}.jpg` : ''}
               ></img>
             </NavLink>
             <NavLink
               to={
-                pop.length ? `/bidding/product/product?=${pop[1].productId}` : ''
+                pop.length
+                  ? `/bidding/product/product?=${pop[1].productId}`
+                  : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '30%', height: '15rem' }}
+                style={{
+                  objectFit: 'scale-down',
+                  width: '30%',
+                  height: '15rem'
+                }}
                 src={pop.length ? `/imgs/${pop[1].productId}.jpg` : ''}
               ></img>
             </NavLink>
             <NavLink
               to={
-                pop.length ? `/bidding/product/product?=${pop[2].productId}` : ''
+                pop.length
+                  ? `/bidding/product/product?=${pop[2].productId}`
+                  : ''
               }
             >
               <img
-                style={{ objectFit: 'scale-down', width: '30%', height: '15rem' }}
+                style={{
+                  objectFit: 'scale-down',
+                  width: '30%',
+                  height: '15rem'
+                }}
                 src={pop.length ? `/imgs/${pop[2].productId}.jpg` : ''}
               ></img>
             </NavLink>
