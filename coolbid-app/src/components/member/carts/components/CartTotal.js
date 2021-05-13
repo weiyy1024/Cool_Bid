@@ -68,7 +68,8 @@ export default function CartTotal(props) {
         <label>全選</label>
       </div>
       <div className="totalAmount">
-        總金額（<span>{totalArray.length}</span>個商品）：$
+        總金額（<span>{totalArray.length}</span>個商品）：{' '}
+        {currency === 'US' ? 'USD$' : 'NTD$'}
         <span>{currency === 'US' ? Math.floor(totPrice / 30) : totPrice}</span>
       </div>
       <div className="checkOutBtn" onClick={handleCheckoutProuduct}>

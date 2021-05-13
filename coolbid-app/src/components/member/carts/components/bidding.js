@@ -134,7 +134,7 @@ const Clear = styled.div`
   div {
     font-size: 2.5rem;
     width: 8%;
-    min-width:150px;
+    min-width: 150px;
     margin: 1rem auto;
     text-align: center;
     padding: 0.5rem 1rem;
@@ -212,7 +212,7 @@ function Prod(props) {
   const [a, setA] = useState(true)
   // 監聽競標加價金額
   const handleBidPrice = (e) => {
-    setBidPrice(e.target.value)
+    setBidPrice(currency === 'US' ? e.target.value * 30 : e.target.value)
   }
   // 確認加價
   const handleSubmitPrice = () => {
@@ -276,7 +276,7 @@ function Prod(props) {
         productId: item.productId
       }
     })
-    // 更新得標者
+    // 更新得標者＆更新得標時間
     axios({
       method: 'post',
       baseURL: 'http://localhost:3001',
@@ -319,6 +319,11 @@ function Prod(props) {
               currency === 'US'
                 ? Math.floor((item.nowPrice + item.perPrice) / 30)
                 : item.nowPrice + item.perPrice
+            }`,
+            max: `${
+              currency === 'US'
+                ? Math.floor(item.directPrice / 30)
+                : item.directPrice
             }`,
             step: `${
               currency === 'US' ? Math.floor(item.perPrice / 30) : item.perPrice
@@ -386,6 +391,7 @@ export default function Bidding(props) {
   const [biddingProduct, setBiddingProduct] = useState([])
   const [product, setProduct] = useState([1])
   const [shopId, setShopId] = useState([])
+  // 子傳父監聽出價並即時更新
   const [bidEvent, setBidEvent] = useState()
   const [direct, setDirect] = useState(false)
 
@@ -403,7 +409,7 @@ export default function Bidding(props) {
         setBiddingProduct(bP)
       })
       .then(() => {
-        // 篩選競標中商品
+        // 篩選競標中商品(status=競標中)
         if (biddingProduct) {
           axios({
             method: 'get',

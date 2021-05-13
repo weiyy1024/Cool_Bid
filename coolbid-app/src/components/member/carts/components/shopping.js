@@ -109,7 +109,7 @@ const Clear = styled.div`
   div {
     font-size: 2.5rem;
     width: 8%;
-    min-width:150px;
+    min-width: 150px;
     margin: 1rem auto;
     text-align: center;
     padding: 0.5rem 1rem;
@@ -167,6 +167,19 @@ export default function Shopping(props) {
       })
   }, [userinfo])
 
+  const handleCheckAll = (e) => {
+    const eachCheckbox = document.getElementsByName(e.target.name)
+
+    if (e.target.checked) {
+      for (let i = 0; i < eachCheckbox.length; i++) {
+        eachCheckbox[i].checked = true
+      }
+    } else {
+      for (let i = 0; i < eachCheckbox.length; i++) {
+        eachCheckbox[i].checked = false
+      }
+    }
+  }
   // 往競標頁跳轉的Btn
   const handleBackHome = () => {
     window.location.href = 'http://localhost:3000/bidding'
@@ -193,7 +206,14 @@ export default function Shopping(props) {
                 <div className="items">
                   <div className="cartTitle">
                     <div className="check">
-                      <input className="checkAll" type="checkbox" />
+                      <input
+                        onChange={(e) => {
+                          handleCheckAll(e)
+                        }}
+                        className="checkAll"
+                        type="checkbox"
+                        name={item.shopId}
+                      />
                     </div>
                     <div className="picInfo">商品</div>
                     <div className="info">商品名稱</div>
@@ -300,16 +320,16 @@ function Prod(props) {
     return time
   }
 
-  function handleChecked(e) {
+  function handleChecked(e, price, id) {
+    // 將點選的checkebox存成兩個個陣列
     const newTotal = totalArray.map((item) => item)
     const newProductArray = productArray.map((item) => item)
-    const addPrice = e.target.name
-    const addProduct = e.target.value
-    console.log(e.target.value)
+    // 分別將金額跟producitId存進兩個不同陣列
+    const addPrice = price
+    const addProduct = id
     if (e.target.checked) {
       newTotal.push(addPrice)
       newProductArray.push(addProduct)
-      console.log(newProductArray)
       setTotalArray(newTotal)
       setProductArray(newProductArray)
     } else {
@@ -317,7 +337,6 @@ function Prod(props) {
       const index2 = newProductArray.indexOf(addProduct)
       newTotal.splice(index, 1)
       newProductArray.splice(index2, 1)
-      console.log(newProductArray)
       setTotalArray(newTotal)
       setProductArray(newProductArray)
     }
@@ -326,10 +345,12 @@ function Prod(props) {
     <div className="cartItems">
       <div className="check">
         <input
-          onChange={handleChecked}
+          onChange={(e) => {
+            handleChecked(e, item.nowPrice, item.productId)
+          }}
           className="checkEach"
           type="checkbox"
-          name={item.nowPrice}
+          name={item.shopId}
           value={item.productId}
         />
       </div>

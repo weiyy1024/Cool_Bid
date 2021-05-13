@@ -1,4 +1,5 @@
 var express = require('express')
+var multer  = require('multer')
 var app = express()
 const cors = require('cors')
 
@@ -12,9 +13,15 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
+<<<<<<< HEAD
   password: '',
   database: 'coolbidlatest',
   port: 3306,
+=======
+  password: 'root',
+  database: 'coolbidLatest',
+  port: 8889,
+>>>>>>> 64258afce315764c525464094a839d814c5dd38a
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -141,8 +148,6 @@ app.post('/member/edit', function (req, res, next) {
 
 // overwrite address
 app.post('/member/edit', function (req, res) {
-  console.log(req.body)
-
   const { isOverwrite, memberId, address, zipCode } = req.body
 
   if (isOverwrite) {
@@ -155,6 +160,38 @@ app.post('/member/edit', function (req, res) {
     )
   }
 })
+
+// upload member pic
+// var storage = multer.diskStorage({
+//     destination: '../coolbid-app/public/imgs/sellerPic/',
+//     filename: function (req, file, cb) {
+//       cb(null, req.body.memberId + '.jpg')
+//     }
+//   })
+// var upload = multer({ storage }).single('profilePic')
+
+// app.post('/member/edit', upload, function(req, res) {
+//   const {
+//     isOverwrite,
+//     memberId
+//   } = req.body
+
+//   console.log(req.body)
+//   console.log(req.file)
+//   if (isOverwrite) {
+//     conn.query(
+//       '',
+//       [memberId],
+//       function (err, result) {
+//         console.log(result)
+//       }
+//     )
+//   }
+// })
+
+
+
+
 
 // read and overwrite password
 app.post('/member/renewMemberPwd', function (req, res) {
@@ -198,7 +235,7 @@ app.post('/member/renewMemberPwd', function (req, res) {
 app.get('/category/:category', function (req, res) {
   let test = req.params.category
   conn.query(
-    'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE c.categoryName = ?',
+    'SELECT * FROM `product` AS p join category AS c ON p.categoryId= c.categoryId WHERE productStatusId in (1,4) and c.categoryName = ?',
     [test],
     function (err, result) {
       res.send(result)
@@ -493,6 +530,7 @@ app.get('/shopName/:productId', function (req, res) {
 app.get('/getPopularProducts', function (req, res) {
   let sql = `SELECT b.productId, productName, nowPrice, endTime, directPrice, COUNT(b.productId) as bidCount FROM biddinghistory as b
   JOIN product as p on b.productId = p.productId
+  where productStatusId in (1,4)
   GROUP BY productId
   ORDER BY bidCount DESC limit 8`
 
@@ -630,11 +668,11 @@ app.post('/changeStatus', function (req, res) {
   let sql = `UPDATE product SET productStatusId=5,nowPrice=${price} WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
 })
-//bidding cart 更新得標者 20200511 weiyy
+//bidding cart 更新得標者＋得標時間 20200513 weiyy
 app.post('/directBuy', function (req, res) {
   let product = req.body.productId
   let member = req.body.memberId
-  let sql = `UPDATE product SET finalBidderId=${member} WHERE productId=${product}`
+  let sql = `UPDATE product SET finalBidderId=${member},endTime = CURRENT_TIMESTAMP WHERE productId=${product}`
   conn.query(sql, function (err, result) {})
 })
 

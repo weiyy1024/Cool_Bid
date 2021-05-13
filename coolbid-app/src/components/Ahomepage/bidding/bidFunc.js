@@ -1,10 +1,8 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
 import swal from 'sweetalert'
-
 import { Container, Button, FormControl, Typography } from '@material-ui/core'
-
 import useStyles from '../../../styles/bidFuncStyle'
 
 const BidFunc = (props, { bidState }) => {
@@ -24,6 +22,7 @@ const BidFunc = (props, { bidState }) => {
       'Content-Type': 'application/json'
     }).then((res) => {
       setProductF(res.data)
+      console.log(res.data)
     })
   }, [bidState])
 
@@ -72,23 +71,22 @@ const BidFunc = (props, { bidState }) => {
           swal('感謝您的購買：）', {
             icon: 'success'
           })
+          axios({
+            method: 'post',
+            url: `http://localhost:3001/product/${props.originPId}`,
+            'Content-Type': 'application/json',
+            data: {
+              isDirectBuy: true,
+              directBidPrice: directBidPrice,
+              id: props.pId,
+              memberId: userInfo.memberId,
+              productStatusId: 5
+            }
+          }).then((res) => console.log(res.data))
         } else {
           swal('再想想也沒關係唷～')
         }
       })
-
-      axios({
-        method: 'post',
-        url: `http://localhost:3001/product/${props.originPId}`,
-        'Content-Type': 'application/json',
-        data: {
-          isDirectBuy: true,
-          directBidPrice: directBidPrice,
-          id: props.pId,
-          memberId: userInfo.memberId,
-          productStatusId: 5
-        }
-      }).then((res) => console.log(res.data))
     }
   }
 
@@ -135,23 +133,22 @@ const BidFunc = (props, { bidState }) => {
               swal('感謝您的購買：）', {
                 icon: 'success'
               })
+              axios({
+                method: 'post',
+                url: `http://localhost:3001/product/${props.originPId}`,
+                'Content-Type': 'application/json',
+                data: {
+                  isDirectBuy: true,
+                  directBidPrice: directBidPrice,
+                  id: props.pId,
+                  memberId: userInfo.memberId,
+                  productStatusId: 5
+                }
+              }).then((res) => console.log(res.data))
             } else {
               swal('再想想也沒關係唷～')
             }
           })
-
-          axios({
-            method: 'post',
-            url: `http://localhost:3001/product/${props.originPId}`,
-            'Content-Type': 'application/json',
-            data: {
-              isDirectBuy: true,
-              directBidPrice: directBidPrice,
-              id: props.pId,
-              memberId: userInfo.memberId,
-              productStatusId: 5
-            }
-          }).then((res) => console.log(res.data))
         }
       }
     }
@@ -177,13 +174,16 @@ const BidFunc = (props, { bidState }) => {
         onChange={handleNowPriceChange}
         className={classes.bidInfo}
       >
-        目前出價：{nowBidPrice}元
+        {/* 新增幣別切換 20200512 weiyy */}
+        目前出價： {currency === 'US' ? 'USD$' : 'NTD$'}
+        {currency === 'US' ? Math.floor(nowBidPrice / 30) : nowBidPrice}元
       </Typography>
       <Typography variant="h4" color="primary" className={classes.bidInfo}>
         出價次數：{bidTimes}次
       </Typography>
       <Typography variant="h4" color="primary" className={classes.bidInfo}>
-        出價增額：{bidPriceStep}元
+        出價增額： {currency === 'US' ? 'USD$' : 'NTD$'}
+        {currency === 'US' ? Math.floor(bidPriceStep / 30) : bidPriceStep}元
       </Typography>
       <br />
       <hr />
@@ -216,10 +216,31 @@ const BidFunc = (props, { bidState }) => {
           className={classes.priceInput}
           type="number"
           onChange={handleDirectBidPriceChange}
-          min={nowBidPrice <= startBidPrice ? startBidPrice + bidPriceStep : nowBidPrice + bidPriceStep}
-          max={directBuyPrice}
-          step={bidPriceStep}
-          defaultValue={startBidPrice}
+          min={
+            nowBidPrice <= startBidPrice
+              ? currency === 'US'
+                ? Math.floor((startBidPrice + bidPriceStep) / 30)
+                : startBidPrice + bidPriceStep
+              : currency === 'US'
+              ? Math.floor((nowBidPrice + bidPriceStep) / 30)
+              : nowBidPrice + bidPriceStep
+          }
+          max={
+            currency === 'US' ? Math.floor(directBuyPrice / 30) : directBuyPrice
+          }
+          step={
+            currency === 'US' ? Math.floor(bidPriceStep / 30) : bidPriceStep
+          }
+          defaultValue={
+            currency === 'US' ? Math.floor(nowBidPrice / 30) : nowBidPrice
+          }
+          // {defaultValue={startBidPrice}
+          // ? startBidPrice + bidPriceStep
+          // : nowBidPrice + bidPriceStep
+          // }
+          // max={directBuyPrice}
+          // step={bidPriceStep}
+          // defaultValue={startBidPrice}
         />
         <Button
           className={classes.bidBtn}

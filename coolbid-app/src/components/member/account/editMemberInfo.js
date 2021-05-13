@@ -11,6 +11,7 @@ import {
   Button,
   Select,
   MenuItem
+  // Avatar
 } from '@material-ui/core'
 
 import SaveIcon from '@material-ui/icons/Save'
@@ -44,6 +45,7 @@ const EditMemberInfo = () => {
   const [addr, setAddr] = useState()
   const [zipData, setZipData] = useState([])
   const [zip, setZip] = useState('')
+  // const [pic, setPic] = useState()
 
   useEffect(() => {
     axios
@@ -147,6 +149,36 @@ const EditMemberInfo = () => {
     setAddr('')
   }
 
+  // const handlePicSubmit = e => {
+  //   e.preventDefault()
+  //   console.log(pic)
+
+  //   const formData = new FormData()
+  //   formData.append([pic.name], [pic])
+  //   axios.post('http://localhost:3001/member/edit', formData, {
+  //     headers: { 'content-type': 'multipart/form-data' },
+  //     data: {
+  //       memberId: userInfo.memberId
+  //     }
+  //   }).then(res => console.log(res.data))
+  // }
+
+  //   axios({
+  //     method: 'post',
+  //     url: 'http://localhost:3001/member/edit',
+  //     'Content-Type': 'multipart/form-data',
+  //     // 'Content-Type': 'application/json',
+  //     data: {
+  //       memberId: userInfo.memberId,
+  //       profilePic: pic
+  //     }
+  //   }).then(res => console.log(res.data))
+  // }
+
+  // const handlePicChange = e => {
+  //   setPic(e.target.files[0])
+  // }
+
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
@@ -200,7 +232,6 @@ const EditMemberInfo = () => {
                   />
                 </FormControlWei>
                 <br />
-
                 {/* 地址 */}
                 <Typography>地址</Typography>
                 <FormControlWei className={classes.FormControlWei}>
@@ -318,6 +349,23 @@ const EditMemberInfo = () => {
           </div>
         </div>
       </div>
+      {/* <form
+        className={classes.imgUpload}
+        onSubmit={handlePicSubmit}
+      >
+        <Avatar
+          className={classes.profilePic}
+          src={`/imgs/sellerPic/${userInfo.memberId}.jpg`}
+        />
+        <input
+          type='file'
+          name='profilePic'
+          onChange={handlePicChange}
+        />
+        <Button type='submit'>
+          上傳照片
+        </Button>
+      </form> */}
     </div>
   )
 }
