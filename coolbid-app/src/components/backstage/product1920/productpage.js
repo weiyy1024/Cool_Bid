@@ -205,7 +205,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changestartPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         起標價
                         <UnfoldMoreIcon />
@@ -214,7 +214,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changePerPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         每標價
                         <UnfoldMoreIcon />
@@ -223,7 +223,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changedirectPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         直購價
                         <UnfoldMoreIcon />
@@ -231,7 +231,7 @@ const productpage = () => {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         結標日
                       </TableCell>
@@ -239,7 +239,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changebidPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '150px', cursor: 'pointer' }}
                       >
                         目前出價
                         <UnfoldMoreIcon />
@@ -247,6 +247,7 @@ const productpage = () => {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
+                        style={{ width: '100px' }}
                       >
                         狀態
                       </TableCell>

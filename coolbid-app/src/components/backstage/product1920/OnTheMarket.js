@@ -181,7 +181,7 @@ function OnTheMarket() {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changestartPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         起標價
                         <UnfoldMoreIcon />
@@ -190,7 +190,7 @@ function OnTheMarket() {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changePerPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         每標價
                         <UnfoldMoreIcon />
@@ -199,7 +199,7 @@ function OnTheMarket() {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changedirectPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         直購價
                         <UnfoldMoreIcon />
@@ -207,7 +207,7 @@ function OnTheMarket() {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         結標日
                       </TableCell>
