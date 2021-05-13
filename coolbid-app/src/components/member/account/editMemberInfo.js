@@ -185,11 +185,11 @@ const EditMemberInfo = () => {
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
-        <div className="backendLeft">
+        <div className="backstageLeft">
           <NestedList />
         </div>
-        <div className="backendRight">
-          <div className="backendRightContainer">
+        <div className="backstageRight">
+          <div className="backstageRightContainer">
             <div className="content">
               <Breadcrumbs aria-label='breadcrumb' className={classes.breadcrumb}>
                 <Link color='inherit' href='http://localhost:3000/member/edit'>

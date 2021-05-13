@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
+import swal from 'sweetalert'
 
 const goEdit = (id) => {
   window.location.href = 'product/' + id
@@ -176,14 +177,36 @@ const productpage = () => {
 
   useEffect(() => {}, [directPrice, perPrice, startPrice, nowPrice])
 
+  const handleDelete = (e) => {
+    swal({
+      title: '真的要刪除？',
+      // text: 'Once deleted, you will not be able to recover this imaginary file!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true
+    }).then((willDelete) => {
+      if (willDelete) {
+        axios({
+          method: 'post',
+          baseURL: 'http://localhost:3001',
+          url: '/BackStage/deleteProduct',
+          'Content-Type': 'application/json',
+          data: { id: e }
+        })
+      } else {
+        swal('已取消刪除')
+      }
+    })
+  }
+
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
-        <div className="backendLeft">
+        <div className="backstageLeft">
           <SellerBackendList />
         </div>
-        <div className="backendRight">
-          <div className="backendRightContainer">
+        <div className="backstageRight">
+          <div className="backstageRightContainer">
             {/* <Breadcrumbs /> */}
             <div className="breadcrumbsArea">賣家專區/商品清單</div>
             <div id="SoldOutId">
@@ -207,7 +230,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changestartPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         起標價
                         <UnfoldMoreIcon />
@@ -216,7 +239,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changePerPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         每標價
                         <UnfoldMoreIcon />
@@ -225,7 +248,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changedirectPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         直購價
                         <UnfoldMoreIcon />
@@ -233,7 +256,7 @@ const productpage = () => {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '100px', cursor: 'pointer' }}
                       >
                         結標日
                       </TableCell>
@@ -241,7 +264,7 @@ const productpage = () => {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changebidPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ width: '150px', cursor: 'pointer' }}
                       >
                         目前出價
                         <UnfoldMoreIcon />
@@ -249,6 +272,7 @@ const productpage = () => {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
+                        style={{ width: '100px' }}
                       >
                         狀態
                       </TableCell>
@@ -268,7 +292,12 @@ const productpage = () => {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
+                            <Link
+                              className="linkStyle"
+                              to={'/bidding/product/product?=' + item.productId}
+                            >
+                              {item.productName}
+                            </Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -283,13 +312,13 @@ const productpage = () => {
                             {item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.endTime.substr(0, 10)}
+                            {item.endTime.substr(0, 10)}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.nowPrice}
+                            {item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.productstatusDescription}
+                            {item.productstatusDescription}
                           </TableCell>
                           <TableCell align="center" colSpan={2}>
                             <input
@@ -304,6 +333,7 @@ const productpage = () => {
                               value="刪除"
                               className="button SetStoreInfo_Submit"
                               id={item.id}
+                              onClick={() => handleDelete(item.productId)}
                             />
                           </TableCell>
                         </TableRow>

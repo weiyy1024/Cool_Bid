@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function NestedList () {
   return (
     <div className="side-menu">
-      <ul className="backendNav">
+      <ul className="backstageNav">
         <li>
           <Link className="link" to="/BackStage">
             賣家首頁

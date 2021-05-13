@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
+  password: 'root',
   database: 'coolbid',
-  port: 3306,
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -789,7 +789,9 @@ app.post('/orderInfo', function (req, res) {
     // 新增訂單為待出貨到orderstatusdetail表單
     let sql4 = ''
     for (let i = 0; i < shop.length; i++) {
-      sql4 += `INSERT INTO orderstatusdetail (orderId, orderStatusId) VALUES (${ max + i + 1 }, '1');\n`
+      sql4 += `INSERT INTO orderstatusdetail (orderId, orderStatusId) VALUES (${
+        max + i + 1
+      }, '1');\n`
     }
     res.send(sql3 + sql2 + sql4)
   })
@@ -823,7 +825,6 @@ app.get('/orderProduct/:info', function (req, res) {
   })
 })
 
-
 //--------------------------------------------------------
 //夏會員中心_訂購清單
 app.get('/member/purchase', function (req, res) {
@@ -849,6 +850,15 @@ app.get('/BackStage/SellerPageHero', function (req, res) {
   })
 })
 
+// 賣家中心 找訂單數量
+app.post('/BackStage/sellerhomepage', function (req, res){
+  let sql = 'SELECT COUNT(*) as count FROM `order` as o JOIN orderstatusdetail as od on o.orderId = od.orderId WHERE orderstatusId = 1 and shopId = ?'
+  conn.query(sql, [req.body.id], function(err, result){
+    if(err) {console.log(err)}
+    res.send(result)
+  })
+})
+
 //夏賣家中心_訂單清單
 app.post('/BackStage/orders', function (req, res) {
   let sql =
@@ -866,7 +876,7 @@ app.post('/BackStage/product', function (req, res) {
   // console.log(req)
   let sql =
     'SELECT p.productId, p.brandId, productDescription, nowPrice, productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription, brandName, c.categoryId  FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId JOIN `brand` as b on p.brandId = b.brandId WHERE (p.productStatusId) in (1,4,5,6) and (p.shopId = ?)'
-  conn.query(sql,[req.body.id], function (err, result) {
+  conn.query(sql, [req.body.id], function (err, result) {
     if (err) {
       console.log(err)
     }
@@ -891,7 +901,7 @@ app.get('/BackStage/product/edit', function (req, res) {
 app.post('/BackStage/product/OnTheMarket', function (req, res) {
   let sql =
     'SELECT p.productId, productName, categoryName, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 1) and (p.shopId = ?)'
-  conn.query(sql,[req.body.id], function (err, result) {
+  conn.query(sql, [req.body.id], function (err, result) {
     if (err) {
       console.log(err)
     }
@@ -903,7 +913,7 @@ app.post('/BackStage/product/OnTheMarket', function (req, res) {
 app.post('/BackStage/product/closeAuction', function (req, res) {
   let sql =
     'SELECT p.productId, productName, categoryName, nowPrice, userId, endTime, productstatusDescription FROM product as p JOIN category as c on p.categoryId = c.categoryId JOIN productstatus as ps on p.productStatusId = ps.productStatusId JOIN biddinghistory as b on p.nowPrice = b.bidPrice JOIN member as m on b.memberId = m.memberId WHERE (p.shopId = ? and p.productStatusId = 5)'
-  conn.query(sql,[req.body.id], function (err, result) {
+  conn.query(sql, [req.body.id], function (err, result) {
     if (err) {
       console.log(err)
     }
@@ -915,7 +925,7 @@ app.post('/BackStage/product/closeAuction', function (req, res) {
 app.post('/BackStage/product/Biding', function (req, res) {
   let sql =
     'SELECT p.productId, productName, categoryName, nowPrice, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 4) and (p.shopId = ?)'
-  conn.query(sql,[ req.body.id ], function (err, result) {
+  conn.query(sql, [req.body.id], function (err, result) {
     if (err) {
       console.log(err)
     }
@@ -927,7 +937,7 @@ app.post('/BackStage/product/Biding', function (req, res) {
 app.post('/BackStage/product/soldout', function (req, res) {
   let sql =
     'SELECT p.productId, productName, categoryName, nowPrice, startPrice, perPrice, directPrice, endTime, productstatusDescription FROM `product` as p JOIN `category` as c on p.categoryId = c.categoryId JOIN `productstatus` as ps on p.productStatusId = ps.productStatusId WHERE (p.productStatusId = 6) and (p.shopId = ?)'
-  conn.query(sql,[req.body.id], function (err, result) {
+  conn.query(sql, [req.body.id], function (err, result) {
     if (err) {
       console.log(err)
     }
@@ -956,6 +966,18 @@ app.get('/selectBrand/:cat', function (req, res) {
       console.log(err)
     }
     res.send(result)
+  })
+})
+
+app.post('/BackStage/deleteProduct', function (req, res) {
+  let sql = `UPDATE product SET productStatusId = 3 WHERE productId = ?`
+  console.log(req.body)
+  id = req.body.id
+  conn.query(sql, [id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    res.send('OK')
   })
 })
 

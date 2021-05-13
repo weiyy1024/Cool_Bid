@@ -152,11 +152,11 @@ function OnTheMarket() {
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
-        <div className="backendLeft">
+        <div className="backstageLeft">
           <SellerBackendList />
         </div>
-        <div className="backendRight">
-          <div className="backendRightContainer">
+        <div className="backstageRight">
+          <div className="backstageRightContainer">
             <div className="breadcrumbsArea">
               賣家專區/商品清單/上架中
               {/* <Breadcrumbs /> */}
@@ -183,7 +183,7 @@ function OnTheMarket() {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changestartPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         起標價
                         <UnfoldMoreIcon />
@@ -192,7 +192,7 @@ function OnTheMarket() {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changePerPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         每標價
                         <UnfoldMoreIcon />
@@ -201,7 +201,7 @@ function OnTheMarket() {
                         align="center"
                         className={classes.itemTitle}
                         onClick={changedirectPrice}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         直購價
                         <UnfoldMoreIcon />
@@ -209,7 +209,7 @@ function OnTheMarket() {
                       <TableCell
                         align="center"
                         className={classes.itemTitle}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', width: '100px' }}
                       >
                         結標日
                       </TableCell>
