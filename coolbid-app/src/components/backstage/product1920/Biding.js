@@ -11,6 +11,7 @@ import ProductTabs from '../product1920/ProductTabs'
 // import Breadcrumbs from '../Main/Breadcrumbs'
 import SellerBackendList from '../Main/SellerBackendList'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import '../../SASS/list.scss'
 import '../../SASS/Components.scss'
@@ -118,9 +119,6 @@ function BidingList() {
                       >
                         結標
                       </TableCell>
-                      <TableCell align="center" className={classes.itemTitle}>
-                        狀態
-                      </TableCell>
                     </TableRow>
                   </TableHead>
 
@@ -135,7 +133,7 @@ function BidingList() {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.productName}
+                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -144,11 +142,7 @@ function BidingList() {
                             {item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.endTime}
-                          </TableCell>
-                          <TableCell align="center" className={classes.itemTxt}>
-                            {' '}
-                            {item.productstatusDescription}
+                          {item.endTime.substr(0, 10)}
                           </TableCell>
                         </TableRow>
                       )
