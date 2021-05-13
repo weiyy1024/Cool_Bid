@@ -15,8 +15,9 @@ import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import { makeStyles } from '@material-ui/core/styles'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
@@ -55,6 +56,7 @@ function getSteps () {
 function OrderList () {
   const steps = getSteps()
   const [open, setOpen] = React.useState(false)
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
   const handleOpen = () => {
     setOpen(true)
@@ -68,15 +70,17 @@ function OrderList () {
   const classes = useStyles()
   useEffect(() => {
     axios({
-      method: 'get',
+      method: 'post',
       baseURL: 'http://localhost:3001',
       url: '/BackStage/orders',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      data: { id: userinfo.memberId }
     }).then((a) => setData(a.data))
   }, [])
 
   function OrderDate ({ ordertime }) {
     const time = new Date(ordertime)
+    time.setDate(time.getDate() + 7)
     const year = time.getFullYear()
     const month = time.getMonth()
     const date = time.getDate()
@@ -84,7 +88,7 @@ function OrderList () {
       <div>
         <span>{year}</span>
         <span>-{(month + 1).toString().padStart(2, '0')}</span>
-        <span>-{date + 7}</span>
+        <span>-{date}</span>
       </div>
     )
   }
@@ -114,8 +118,8 @@ function OrderList () {
                               colSpan={4}
                               className={classes.itemTitle}
                             >
-                              買家:{item.userId}
-                              <FontAwesomeIcon icon={faCommentDots} />
+                              買家 : {item.userId}
+                              {/* <FontAwesomeIcon icon={faCommentDots} /> */}
                             </TableCell>
 
                             <TableCell className={classes.itemTxt}>
@@ -170,7 +174,7 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              {item.productName}
+                              <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
                             </TableCell>
                             <TableCell
                               align="center"

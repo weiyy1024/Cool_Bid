@@ -43,13 +43,15 @@ const productpage = () => {
   const [perPrice, setPerPrice] = useState(0)
   const [directPrice, setdirectPrice] = useState(0)
   const [nowPrice, setNowPrice] = useState(0)
+  const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
   useEffect(() => {
     axios({
-      method: 'get',
+      method: 'post',
       baseURL: 'http://localhost:3001',
       url: '/BackStage/product',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      data: { id: userinfo.memberId }
     }).then((a) => setData(a.data))
   }, [])
 
@@ -174,6 +176,18 @@ const productpage = () => {
 
   useEffect(() => {}, [directPrice, perPrice, startPrice, nowPrice])
 
+  const handleDelete = (e) => {
+    axios({
+      method: 'post',
+      baseURL: 'http://localhost:3001',
+      url: '/BackStage/deleteProduct',
+      'Content-Type': 'application/json',
+      data: { id: e }
+    }).then((e) => {
+      console.log(e.data)
+    })
+  }
+
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
@@ -267,7 +281,12 @@ const productpage = () => {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
+                            <Link
+                              className="linkStyle"
+                              to={'/bidding/product/product?=' + item.productId}
+                            >
+                              {item.productName}
+                            </Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -282,13 +301,13 @@ const productpage = () => {
                             {item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.endTime.substr(0, 10)}
+                            {item.endTime.substr(0, 10)}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.nowPrice}
+                            {item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.productstatusDescription}
+                            {item.productstatusDescription}
                           </TableCell>
                           <TableCell align="center" colSpan={2}>
                             <input
@@ -303,6 +322,7 @@ const productpage = () => {
                               value="刪除"
                               className="button SetStoreInfo_Submit"
                               id={item.id}
+                              onClick={() => handleDelete(item.productId)}
                             />
                           </TableCell>
                         </TableRow>
