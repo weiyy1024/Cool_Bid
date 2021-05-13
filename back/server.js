@@ -6,9 +6,6 @@ const cors = require('cors')
 app.use(express.json())
 app.listen(3001)
 
-var NodeRSA = require('node-rsa')
-var fs = require('fs')
-
 var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
@@ -182,10 +179,6 @@ app.post('/member/edit', function (req, res) {
 //     )
 //   }
 // })
-
-
-
-
 
 // read and overwrite password
 app.post('/member/renewMemberPwd', function (req, res) {
