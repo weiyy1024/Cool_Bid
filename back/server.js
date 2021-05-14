@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
-  database: 'coolbidLatest',
-  port: 8889,
+  password: 'UnicornglLen3550',
+  database: 'coolbid',
+  port: 3306,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -268,10 +268,10 @@ app.post('/product/:product_id', function (req, res, next) {
 
   if (isDirectBuy) {
     conn.query(
-      'UPDATE product SET nowPrice = ?, productStatusId = ?, finalBidderId = ? WHERE productId = ?',
+      'UPDATE product SET nowPrice = ?, productStatusId = ?, finalBidderId = ?, endTime = CURRENT_TIMESTAMP WHERE productId = ?',
       [directBidPrice, productStatusId, memberId, id],
       function (err, result) {
-        res.send(result)
+        // res.send(result)
       }
     )
   } else if (directBidPrice) {

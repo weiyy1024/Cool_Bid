@@ -48,7 +48,7 @@ const BidFunc = (props, { bidState }) => {
   }
 
   const handleDirectBidPriceChange = (e) => {
-    const bidPrice = e.target.value
+    const bidPrice = parseInt(e.target.value)
     setDirectBidPrice(currency === 'US' ? bidPrice * 30 : bidPrice)
   }
 
@@ -70,8 +70,10 @@ const BidFunc = (props, { bidState }) => {
         if (confirmPurchased) {
           swal('感謝您的購買：）', {
             icon: 'success'
-          })
-          axios({
+          }).then(() => {
+            location.reload()
+
+            axios({
             method: 'post',
             url: `http://localhost:3001/product/${props.originPId}`,
             'Content-Type': 'application/json',
@@ -83,6 +85,8 @@ const BidFunc = (props, { bidState }) => {
               productStatusId: 5
             }
           }).then((res) => console.log(res.data))
+          })
+          setBidState(bidState + 1)
         } else {
           swal('再想想也沒關係唷～')
         }
@@ -92,7 +96,8 @@ const BidFunc = (props, { bidState }) => {
 
   // 下標
   const bidNow = () => {
-    !nowBidPrice ? directBidPrice = startBidPrice + bidPriceStep : directBidPrice = nowBidPrice + bidPriceStep
+    if (!nowBidPrice) directBidPrice = startBidPrice + bidPriceStep
+    if (!directBidPrice) directBidPrice = nowBidPrice + bidPriceStep
 
     if (!userInfo) {
       swal('需登入才能使用競標功能喔').then((value) => {
@@ -130,11 +135,12 @@ const BidFunc = (props, { bidState }) => {
             buttons: true
           }).then((confirmPurchased) => {
             if (confirmPurchased) {
-              // 更改商品頁
               swal('感謝您的購買：）', {
                 icon: 'success'
-              })
-              axios({
+              }).then(() => {
+                location.reload()
+
+                axios({
                 method: 'post',
                 url: `http://localhost:3001/product/${props.originPId}`,
                 'Content-Type': 'application/json',
@@ -146,6 +152,7 @@ const BidFunc = (props, { bidState }) => {
                   productStatusId: 5
                 }
               }).then((res) => console.log(res.data))
+              })
             } else {
               swal('再想想也沒關係唷～')
             }
@@ -220,8 +227,8 @@ const BidFunc = (props, { bidState }) => {
           min={
             nowBidPrice <= startBidPrice
               ? currency === 'US'
-                ? Math.floor(startBidPrice / 30)
-                : startBidPrice
+                ? Math.floor((startBidPrice + bidPriceStep) / 30)
+                : startBidPrice + bidPriceStep
               : currency === 'US'
               ? Math.floor((nowBidPrice + bidPriceStep) / 30)
               : nowBidPrice + bidPriceStep
