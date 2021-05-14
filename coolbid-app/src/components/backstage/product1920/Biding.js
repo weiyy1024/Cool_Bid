@@ -38,6 +38,8 @@ function BidingList() {
   const classes = useStyles()
   const [nowPrice, setNowPrice] = useState(0)
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  // 新增幣別切換 20200513 weiyy
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
 
   useEffect(() => {
     console.log('hi')
@@ -135,16 +137,24 @@ function BidingList() {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
+                            <Link
+                              className="linkStyle"
+                              to={'/bidding/product/product?=' + item.productId}
+                            >
+                              {item.productName}
+                            </Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.nowPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.nowPrice / 30)
+                              : item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.endTime.substr(0, 10)}
+                            {item.endTime.substr(0, 10)}
                           </TableCell>
                         </TableRow>
                       )
