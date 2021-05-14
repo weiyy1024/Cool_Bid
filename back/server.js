@@ -233,8 +233,9 @@ app.get('/category/:category', function (req, res) {
 // 讀取商品資料 & 出價紀錄
 app.get('/product/:product_id', function (req, res) {
   let para = req.params.product_id
+  // `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname`
   conn.query(
-    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT `biddingHistoryId`, `bidprice`, `bidTime`, `userId`, `nickname` FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.bagSexId = n.newcategoryDetailId WHERE productId = ?) as bagSex, (SELECT description from product as p join newcategorydetail as n on p.bagTypeId = n.newcategoryDetailId WHERE productId = ?) as bagType, (SELECT description from product as p join newcategorydetail as n on p.bagColorId = n.newcategoryDetailId WHERE productId = ?) as bagColor FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.clothSexId = n.newcategoryDetailId WHERE productId = ?) as clothSex, (SELECT description from product as p join newcategorydetail as n on p.clothSizeId = n.newcategoryDetailId WHERE productId = ?) as clothSize, (SELECT description from product as p join newcategorydetail as n on p.clothSeasonId = n.newcategoryDetailId WHERE productId = ?) as clothSeason FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.shoesSexId = n.newcategoryDetailId WHERE productId = ?) as shoesSex, (SELECT description from product as p join newcategorydetail as n on p.shoesSizeId = n.newcategoryDetailId WHERE productId = ?) as shoesSize, (SELECT description from product as p join newcategorydetail as n on p.shoesYearId = n.newcategoryDetailId WHERE productId = ?) as shoesYear FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.watchSexId = n.newcategoryDetailId WHERE productId = ?) as watchSex, (SELECT description from product as p join newcategorydetail as n on p.watchTypeId = n.newcategoryDetailId WHERE productId = ?) as watchType FROM product WHERE productId = ?; SELECT COUNT(*) AS itemNum FROM `product` WHERE `shopId` = (SELECT `shopId` FROM `product` WHERE `productId` = ?)',
+    'SELECT * FROM `product` AS p join `productcondition` AS pc ON pc.productConditionId = p.productConditionId join `brand` AS b ON b.brandId = p.brandId join `category` AS c ON c.categoryId = p.categoryId join `member` AS m ON m.memberId = p.shopId join `shoplevel` AS sl ON sl.shopLevelId = m.shoplevelId WHERE productId = ?; SELECT * FROM `biddinghistory` AS bh join member AS m ON m.memberId = bh.memberId WHERE `productId` = ? ORDER BY bidprice DESC; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.bagSexId = n.newcategoryDetailId WHERE productId = ?) as bagSex, (SELECT description from product as p join newcategorydetail as n on p.bagTypeId = n.newcategoryDetailId WHERE productId = ?) as bagType, (SELECT description from product as p join newcategorydetail as n on p.bagColorId = n.newcategoryDetailId WHERE productId = ?) as bagColor FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.clothSexId = n.newcategoryDetailId WHERE productId = ?) as clothSex, (SELECT description from product as p join newcategorydetail as n on p.clothSizeId = n.newcategoryDetailId WHERE productId = ?) as clothSize, (SELECT description from product as p join newcategorydetail as n on p.clothSeasonId = n.newcategoryDetailId WHERE productId = ?) as clothSeason FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.shoesSexId = n.newcategoryDetailId WHERE productId = ?) as shoesSex, (SELECT description from product as p join newcategorydetail as n on p.shoesSizeId = n.newcategoryDetailId WHERE productId = ?) as shoesSize, (SELECT description from product as p join newcategorydetail as n on p.shoesYearId = n.newcategoryDetailId WHERE productId = ?) as shoesYear FROM product WHERE productId = ?; SELECT productId, productName, (SELECT description from product as p join newcategorydetail as n on p.watchSexId = n.newcategoryDetailId WHERE productId = ?) as watchSex, (SELECT description from product as p join newcategorydetail as n on p.watchTypeId = n.newcategoryDetailId WHERE productId = ?) as watchType FROM product WHERE productId = ?; SELECT COUNT(*) AS itemNum FROM `product` WHERE `shopId` = (SELECT `shopId` FROM `product` WHERE `productId` = ?)',
     [
       para,
       para,
@@ -264,14 +265,22 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, isDirectBuy, directBidPrice, productStatusId, memberId } = req.body
+  let { id, isDirectBuy, directBidPrice, productStatusId, memberId, isTimeUp } = req.body
 
   if (isDirectBuy) {
     conn.query(
       'UPDATE product SET nowPrice = ?, productStatusId = ?, finalBidderId = ?, endTime = CURRENT_TIMESTAMP WHERE productId = ?',
       [directBidPrice, productStatusId, memberId, id],
       function (err, result) {
-        // res.send(result)
+        res.send(result)
+      }
+    )
+  } else if (isTimeUp) {
+    conn.query(
+      'UPDATE product SET nowPrice = ?, productStatusId = ?, finalBidderId = ?, endTime = CURRENT_TIMESTAMP WHERE productId = ?',
+      [directBidPrice, productStatusId, memberId, id],
+      function (err, result) {
+        res.send(result)
       }
     )
   } else if (directBidPrice) {

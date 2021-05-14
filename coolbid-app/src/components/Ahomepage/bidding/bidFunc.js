@@ -79,6 +79,7 @@ const BidFunc = (props, { bidState }) => {
             'Content-Type': 'application/json',
             data: {
               isDirectBuy: true,
+              isTimeUp: false,
               directBidPrice: directBidPrice,
               id: props.pId,
               memberId: userInfo.memberId,
@@ -86,7 +87,6 @@ const BidFunc = (props, { bidState }) => {
             }
           }).then((res) => console.log(res.data))
           })
-          setBidState(bidState + 1)
         } else {
           swal('再想想也沒關係唷～')
         }
@@ -120,6 +120,7 @@ const BidFunc = (props, { bidState }) => {
           'Content-Type': 'application/json',
           data: {
             isDirectBuy: false,
+            isTimeUp: false,
             directBidPrice: directBidPrice,
             id: props.pId,
             memberId: userInfo.memberId,
@@ -146,6 +147,7 @@ const BidFunc = (props, { bidState }) => {
                 'Content-Type': 'application/json',
                 data: {
                   isDirectBuy: true,
+                  isTimeUp: false,
                   directBidPrice: directBidPrice,
                   id: props.pId,
                   memberId: userInfo.memberId,
