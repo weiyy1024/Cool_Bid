@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
-  database: 'coolbidLatest',
-  port: 8889,
+  password: '',
+  database: 'coolbid',
+  port: 3306,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -972,6 +972,7 @@ app.get('/selectBrand/:cat', function (req, res) {
   })
 })
 
+// 夏編輯商品_刪除
 app.post('/BackStage/deleteProduct', function (req, res) {
   let sql = `UPDATE product SET productStatusId = 3 WHERE productId = ?`
   console.log(req.body)
@@ -983,6 +984,63 @@ app.post('/BackStage/deleteProduct', function (req, res) {
     res.send('OK')
   })
 })
+
+// 夏編輯商品_編輯
+app.post('/BackStage/Product/edit/:editid', function (req, res) {
+  const para = req.params.editid
+  let sql = `UPDATE product SET productName = ?, endTime = ?, startPrice = ?, perPrice = ?, directPrice = ?, nowPrice = ?, productDescription = ? WHERE productId = ?`
+  console.log(req.body)
+  const { 
+    productName,
+    endTime,
+    categoryName,
+    startPrice,
+    perPrice,
+    directPrice,
+    brandName,
+    nowPrice,
+    direcrPrice,
+    productDescription, 
+    productId
+  } = req.body
+  let data = [productName, endTime, startPrice, perPrice, directPrice, nowPrice, productDescription, para ] //, productId
+  // let data = [productName, para ]
+  conn.query(sql, data, function (err, result) {
+    console.log(result)
+    if (err) {
+      console.log(err)
+    }
+    res.send('OK')
+  })
+})
+
+app.post('/BackStage/Product/add/:addid', function (req, res) {
+  const addid = res.params.editid
+      let sql = `INSERT INTO product (id,productName,endTime,categoryName,startPrice,perPrice,directPrice,brandName,nowPrice,productDescription)` + `VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      let id = req.body.id
+    const { 
+      productName,
+      endTime,
+      categoryName,
+      startPrice,
+      perPrice,
+      directPrice,
+      brandName,
+      nowPrice,
+      direcrPrice,
+      productDescription, 
+      productId
+    } = req.body
+    let data = [productName, endTime, startPrice, perPrice, directPrice, nowPrice, productDescription, para ]
+  
+      conn.query(sql, data, function (err, result) {
+        if (err) {
+          console.log(err)
+        }
+        res.send('OK')
+      })
+    })
+  
 
 //夏編輯商品select_找出所有品牌
 app.get('/selectBrandAll/brand', function (req, res) {

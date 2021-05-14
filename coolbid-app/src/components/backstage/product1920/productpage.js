@@ -195,6 +195,11 @@ const productpage = () => {
           'Content-Type': 'application/json',
           data: { id: e }
         })
+        setData(
+          (prev) => {
+            return prev.filter((item) => item.productId !== e)
+          }
+        )
       } else {
         swal('已取消刪除')
       }
