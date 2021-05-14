@@ -44,7 +44,7 @@ const EditMemberInfo = () => {
   const [phone, setPhone] = useState()
   const [email, setEmail] = useState()
   const [county, setCounty] = useState()
-  const [dist, setDist] = useState([])
+  const [dist, setDist] = useState()
   const [addr, setAddr] = useState()
   const [zipData, setZipData] = useState([])
   // const [distData, setDistData] = useState([])
@@ -78,9 +78,9 @@ const EditMemberInfo = () => {
   })
   const distData = county ? zipData[countyData.indexOf(county)].districts : []
   console.log(county)
-  console.log(distData)
   console.log(zipData)
   console.log(countyData)
+  console.log(distData)
   console.log(dist)
 
   const dateFormat = (date) => {

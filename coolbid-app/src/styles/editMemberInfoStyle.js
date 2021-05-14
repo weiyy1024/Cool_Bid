@@ -6,7 +6,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '2rem'
   },
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    fontSize: '1.7rem',
+    marginLeft: '3rem'
   },
   imgUpload: {
     width: '40rem',
@@ -28,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '2rem'
+    marginTop: '1rem'
   },
   inputGroup: {
     display: 'flex',
