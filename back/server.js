@@ -924,7 +924,7 @@ app.post('/BackStage/product/OnTheMarket', function (req, res) {
 //夏賣家中心_商品清單_結標
 app.post('/BackStage/product/closeAuction', function (req, res) {
   let sql =
-    'SELECT p.productId, productName, categoryName, nowPrice, userId, endTime, productstatusDescription FROM product as p JOIN category as c on p.categoryId = c.categoryId JOIN productstatus as ps on p.productStatusId = ps.productStatusId JOIN biddinghistory as b on p.nowPrice = b.bidPrice JOIN member as m on b.memberId = m.memberId WHERE (p.shopId = ? and p.productStatusId = 5)'
+    'SELECT p.productId, productName, categoryName, nowPrice, userId, endTime, productstatusDescription FROM product as p JOIN category as c on p.categoryId = c.categoryId JOIN productstatus as ps on p.productStatusId = ps.productStatusId JOIN member as m on p.finalBidderId = m.memberId WHERE (p.shopId = ? and p.productStatusId = 5)'
   conn.query(sql, [req.body.id], function (err, result) {
     if (err) {
       console.log(err)
