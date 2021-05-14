@@ -39,6 +39,8 @@ function OnTheMarket() {
   const [directPrice, setdirectPrice] = useState(0)
   // const [endTime, setEndTime] = useState(0)
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  // 新增切換幣別 20200513 weiyy
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
 
   useEffect(() => {
     console.log('hi')
@@ -232,22 +234,36 @@ function OnTheMarket() {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
+                            <Link
+                              className="linkStyle"
+                              to={'/bidding/product/product?=' + item.productId}
+                            >
+                              {item.productName}
+                            </Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.startPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.startPrice / 30)
+                              : item.startPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.perPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.perPrice / 30)
+                              : item.perPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.directPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.directPrice / 30)
+                              : item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.endTime.substr(0, 10)}
+                            {item.endTime.substr(0, 10)}
                           </TableCell>
                         </TableRow>
                       )

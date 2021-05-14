@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 function CloseAuction() {
   // eslint-disable-next-line no-unused-vars
+  // 新增幣別切換20200513 weiyy
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const [data, setData] = useState([])
   const classes = useStyles()
   const [nowPrice, setNowPrice] = useState(0)
@@ -137,7 +139,12 @@ function CloseAuction() {
                             />
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
+                            <Link
+                              className="linkStyle"
+                              to={'/bidding/product/product?=' + item.productId}
+                            >
+                              {item.productName}
+                            </Link>
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.categoryName}
@@ -146,10 +153,13 @@ function CloseAuction() {
                             {item.userId}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.nowPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.nowPrice / 30)
+                              : item.nowPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                          {item.endTime.substr(0, 10)}
+                            {item.endTime.substr(0, 10)}
                           </TableCell>
                         </TableRow>
                       )

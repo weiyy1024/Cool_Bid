@@ -22,7 +22,7 @@ const goEdit = (id) => {
 
 const useStyles = makeStyles((theme) => ({
   itemTitle: {
-    fontSize: 20
+    fontSize: 18
   },
   itemTxt: {
     fontSize: 16
@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const productpage = () => {
+  // 增加幣別切換 20200513 weiyy
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
   const classes = useStyles()
   const [data, setData] = useState([])
   const [startPrice, setstartPrice] = useState(0)
@@ -303,19 +305,37 @@ const productpage = () => {
                             {item.categoryName}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.startPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.startPrice / 30)
+                              : item.startPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.perPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.perPrice / 30)
+                              : item.perPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.directPrice}
+                            {currency === 'US' ? 'USD$' : 'NTD$'}
+                            {currency === 'US'
+                              ? Math.floor(item.directPrice / 30)
+                              : item.directPrice}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.endTime.substr(0, 10)}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
-                            {item.nowPrice}
+                            {item.nowPrice
+                              ? currency === 'US'
+                                ? 'USD$'
+                                : 'NTD$'
+                              : ''}
+                            {item.nowPrice
+                              ? currency === 'US'
+                                ? Math.floor(item.nowPrice / 30)
+                                : item.nowPrice
+                              : '尚無人出價'}
                           </TableCell>
                           <TableCell align="center" className={classes.itemTxt}>
                             {item.productstatusDescription}

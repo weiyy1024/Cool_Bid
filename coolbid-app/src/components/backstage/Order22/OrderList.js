@@ -1,3 +1,4 @@
+/* eslint-disable space-before-function-paren */
 import React, { useState, useEffect } from 'react'
 import OrderTabs from './OrderTabs'
 import '../../SASS/list.scss'
@@ -49,14 +50,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function getSteps () {
+function getSteps() {
   return ['訂單成立', '撿貨中', '運送中', '已送達']
 }
 
-function OrderList () {
+function OrderList() {
   const steps = getSteps()
   const [open, setOpen] = React.useState(false)
   const userinfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  // 新增幣別切換 20200513 weiyy
+  const currency = JSON.parse(window.sessionStorage.getItem('currency'))
 
   const handleOpen = () => {
     setOpen(true)
@@ -78,7 +81,7 @@ function OrderList () {
     }).then((a) => setData(a.data))
   }, [])
 
-  function OrderDate ({ ordertime }) {
+  function OrderDate({ ordertime }) {
     const time = new Date(ordertime)
     time.setDate(time.getDate() + 7)
     const year = time.getFullYear()
@@ -174,7 +177,14 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              <Link className='linkStyle' to={'/bidding/product/product?=' + item.productId}>{item.productName}</Link>
+                              <Link
+                                className="linkStyle"
+                                to={
+                                  '/bidding/product/product?=' + item.productId
+                                }
+                              >
+                                {item.productName}
+                              </Link>
                             </TableCell>
                             <TableCell
                               align="center"
@@ -193,7 +203,10 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              {item.nowPrice}
+                              {currency === 'US' ? 'USD$' : 'NTD$'}
+                              {currency === 'US'
+                                ? Math.floor(item.nowPrice / 30)
+                                : item.nowPrice}
                             </TableCell>
                           </TableRow>
 
@@ -214,7 +227,11 @@ function OrderList () {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              總計: {item.nowPrice}
+                              總計:
+                              {currency === 'US' ? 'USD$' : 'NTD$'}
+                              {currency === 'US'
+                                ? Math.floor(item.nowPrice)
+                                : item.nowPrice}
                             </TableCell>
                           </TableRow>
 
