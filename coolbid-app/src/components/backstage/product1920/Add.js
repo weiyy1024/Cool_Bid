@@ -43,6 +43,7 @@ const AddProduct = () => {
         url: '/BackStage/product/edit?id=' + id,
         'Content-Type': 'application/json'
       }).then((a) => {
+        console.log(a)
         setProductName(a.data[0].productName)
         setEndTime(a.data[0].endTime)
         setCategoryName(a.data[0].categoryName)
@@ -93,15 +94,60 @@ const AddProduct = () => {
     }
   }
 
-  // useEffect(() => {
-  //   axios({
-  //     method: 'get',
-  //     baseURL: 'http://localhost:3001',
-  //     url: '/selectBrandAll/brand',
-  //     'Content-Type': 'application/json'
-  //   }).then((a) => setBrandName(a.brandName)
-  //   )
-  // }, [])
+  // 編輯商品
+  const save = () => {
+    if (id > 0) {
+      console.log('1')
+      const senddata = {
+        id: id,
+        productName: productName,
+        endTime: endTime,
+        categoryName: categoryName,
+        startPrice: startPrice,
+        perPrice: perPrice,
+        directPrice: directPrice,
+        brandName: brandName,
+        nowPrice: nowPrice,
+        productDescription: productDescription
+      }
+      console.log(senddata)
+      axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/BackStage/Product/edit/' + id,
+        'Content-Type': 'application/json',
+        data: senddata
+      }).then((response) => {
+        console.log(response)
+      }, (error) => {
+        console.log(error)
+      })
+    } else {
+      console.log('2')
+      axios({
+        method: 'post',
+        baseURL: 'http://localhost:3001',
+        url: '/BackStage/Product/add' + id,
+        'Content-Type': 'application/json',
+        data: {
+          id: id,
+          productName: productName,
+          endTime: endTime,
+          categoryName: categoryName,
+          startPrice: startPrice,
+          perPrice: perPrice,
+          directPrice: directPrice,
+          brandName: brandName,
+          nowPrice: nowPrice,
+          productDescription: productDescription
+        }
+      }).then((response) => {
+        console.log(response)
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -339,7 +385,16 @@ const AddProduct = () => {
               </div>
 
               <div className="form_row">
-                <label>圖片檔案: null</label>
+                <label>圖片檔案:<br/>
+                <TextField
+                    type="file"
+                    name="picture"
+                    variant="outlined"
+                    label="direct"
+                    className="mininput"
+                    InputLabelProps={{ shrink: true }}
+                  />
+                </label>
               </div>
 
               <div className="form_row">
@@ -377,7 +432,7 @@ const AddProduct = () => {
                 </label>
               </div>
 
-              <button className="button">儲存</button>
+              <button className="button" onClick={save}>儲存</button>
             </form>
           </div>
         </div>
@@ -385,5 +440,4 @@ const AddProduct = () => {
     </div>
   )
 }
-
 export default AddProduct
