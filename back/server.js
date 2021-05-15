@@ -10,7 +10,7 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'UnicornglLen3550',
   database: 'coolbid',
   port: 3306,
   multipleStatements: true
@@ -838,7 +838,7 @@ app.get('/orderProduct/:info', function (req, res) {
 //夏會員中心_訂購清單
 app.get('/member/purchase', function (req, res) {
   let sql =
-    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
+    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, productId, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
   conn.query(sql, function (err, result) {
     if (err) {
       console.log(err)

@@ -78,6 +78,13 @@ const BuyList = () => {
     }).then((a) => setData(a.data))
   }, [])
 
+  console.log(data)
+  let totPrice = 0
+  data.map(item => {
+    totPrice += item.nowPrice
+    return totPrice
+  })
+
   return (
     <div className="sellerBackend_Member_Wrap">
       <div className="sellerBackend_Member_Container">
@@ -88,7 +95,6 @@ const BuyList = () => {
           <div className="backstageRightContainer">
             <div className="breadcrumbsArea">
               買家專區/購買清單
-              {/* <Breadcrumbs /> */}
             </div>
             <div>
               <OrderTabs />
@@ -100,7 +106,7 @@ const BuyList = () => {
                         <TableHead key={index}>
                           <TableRow>
                             <TableCell colSpan={4} className={classes.itemTxt}>
-                              買家:{item.shopName}
+                              賣家：{item.shopName}{' '}
                               <FontAwesomeIcon icon={faCommentDots} />
                             </TableCell>
                             <TableCell className={classes.itemTxt}>
@@ -180,7 +186,7 @@ const BuyList = () => {
 
                           <TableRow>
                             <TableCell colSpan={4} className={classes.itemTxt}>
-                              狀態:
+                              狀態：
                               <a
                                 onClick={handleOpen}
                                 style={{
@@ -196,7 +202,7 @@ const BuyList = () => {
                               align="center"
                               className={classes.itemTxt}
                             >
-                              總計:
+                              總計：{totPrice} 元
                             </TableCell>
                           </TableRow>
                           <TableRow>
