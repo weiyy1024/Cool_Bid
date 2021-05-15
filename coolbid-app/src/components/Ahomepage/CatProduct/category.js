@@ -236,7 +236,7 @@ export default function Category(props) {
       'Content-Type': 'application/json'
     }).then((res) => setTypes(res.data))
     setTypesTitle(types[0].detailTitleDescription)
-  }, [cat, types])
+  }, [cat])
 
   // sizes & colors
   useEffect(() => {
@@ -246,7 +246,7 @@ export default function Category(props) {
       url: '/sizes/' + props.data.params.category,
       'Content-Type': 'application/json'
     }).then((res) => setSizes(res.data))
-  }, [cat, sizes])
+  }, [cat])
   // filter brands
   const filterBrand = (e) => {
     const myFilter = filterInfo.map((item) => item)
