@@ -116,7 +116,7 @@ const Clear = styled.div`
     font-size: 2.5rem;
     width: 8%;
     min-width: 150px;
-    margin: 1rem auto;
+    margin: 3rem auto 8rem auto;
     text-align: center;
     padding: 0.5rem 1rem;
     border: 0.35rem solid grey;
