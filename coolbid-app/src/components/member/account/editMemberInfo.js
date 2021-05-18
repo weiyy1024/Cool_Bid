@@ -19,6 +19,7 @@ import {
 
 import SaveIcon from '@material-ui/icons/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
+
 import useStyles from '../../../styles/editMemberInfoStyle'
 import styled from '@emotion/styled'
 import NestedList from '../../backstage/Main/MemberList'
@@ -29,7 +30,7 @@ import NestedList from '../../backstage/Main/MemberList'
 //   display: flex;
 // `
 const FormControlWei = styled(FormControl)`
-  width:300px;
+  width: 30rem;
 `
 
 const EditMemberInfo = () => {
@@ -44,7 +45,7 @@ const EditMemberInfo = () => {
   const [phone, setPhone] = useState()
   const [email, setEmail] = useState()
   const [county, setCounty] = useState()
-  const [dist, setDist] = useState([])
+  const [dist, setDist] = useState()
   const [addr, setAddr] = useState()
   const [zipData, setZipData] = useState([])
   // const [distData, setDistData] = useState([])
@@ -77,11 +78,6 @@ const EditMemberInfo = () => {
     return zip.name
   })
   const distData = county ? zipData[countyData.indexOf(county)].districts : []
-  console.log(county)
-  console.log(distData)
-  console.log(zipData)
-  console.log(countyData)
-  console.log(dist)
 
   const dateFormat = (date) => {
     const d = new Date(birthday)

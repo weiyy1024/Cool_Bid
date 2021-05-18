@@ -6,12 +6,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '2rem'
   },
   button: {
-    margin: theme.spacing(1)
-  },
-  imgUpload: {
-    width: '40rem',
-    height: '40rem',
-    border: '1px solid black'
+    margin: theme.spacing(1),
+    fontSize: '1.7rem',
+    marginLeft: '3rem'
   },
   breadcrumb: {
     padding: '2rem 0',
@@ -28,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '2rem'
+    marginTop: '1rem'
   },
   inputGroup: {
     display: 'flex',

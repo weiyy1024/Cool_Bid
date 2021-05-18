@@ -18,7 +18,7 @@ import SaveIcon from '@material-ui/icons/Save'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import useStyles from '../../../styles/renewMemberPwdStyle'
-// import styled from '@emotion/styled'
+import styled from '@emotion/styled'
 import NestedList from '../../backstage/Main/MemberList'
 
 // const RenewContainer = styled.div`
@@ -26,6 +26,11 @@ import NestedList from '../../backstage/Main/MemberList'
 //   margin: 20rem auto;
 //   display: flex;
 // `
+
+const FormControlWei = styled(FormControl)`
+  width: 30rem;
+`
+
 const RenewMemberPwd = () => {
   const classes = useStyles()
   const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
@@ -98,19 +103,25 @@ const RenewMemberPwd = () => {
   }
 
   return (
-    <div className="sellerBackend_Member_Wrap">
-      <div className="sellerBackend_Member_Container">
-        <div className="backendLeft">
+    <div className='sellerBackend_Member_Wrap'>
+      <div className='sellerBackend_Member_Container'>
+        <div className='backstageLeft'>
           <NestedList />
         </div>
-        <div className="backendRight">
-          <div className="backendRightContainer">
-            <div>
-              <Breadcrumbs aria-label='breadcrumb' className={classes.breadcrumb}>
+        <div className='backstageRight'>
+          <div className='backstageRightContainer'>
+            <div className='content'>
+              <Breadcrumbs
+                aria-label='breadcrumb'
+                className={classes.breadcrumb}
+              >
                 <Link color='inherit' href='http://localhost:3000/member/edit'>
                   會員中心
                 </Link>
-                <Link color='inherit' href='http://localhost:3000/member/renewMemberPwd'>
+                <Link
+                  color='inherit'
+                  href='http://localhost:3000/member/renewMemberPwd'
+                >
                   更改密碼
                 </Link>
               </Breadcrumbs>
@@ -118,56 +129,59 @@ const RenewMemberPwd = () => {
                 <FormGroup>
                   {/* 舊密碼 */}
                   <div className={classes.inputGroup}>
-                    <Typography variant="h5">舊的密碼</Typography>
-                    <FormControl className={classes.inline}>
+                    <Typography variant='h5'>舊的密碼</Typography>
+                    <FormControlWei className={classes.inline}>
                       <TextField
                         required
-                        id="old-password"
-                        label="必填"
+                        id='old-password'
+                        label='必填'
                         onChange={handleOldPasswordChange}
                         value={oldPassword}
-                        variant="outlined"
+                        variant='outlined'
+                        type='password'
                       />
-                    </FormControl>
+                    </FormControlWei>
                   </div>
                   <br />
 
                   {/* 新密碼 */}
                   <div className={classes.inputGroup}>
-                    <Typography variant="h5">新的密碼</Typography>
-                    <FormControl className={classes.inline}>
+                    <Typography variant='h5'>新的密碼</Typography>
+                    <FormControlWei className={classes.inline}>
                       <TextField
                         required
-                        id="new-password"
-                        label="必填"
+                        id='new-password'
+                        label='必填'
                         onChange={handleNewPasswordChange}
                         value={newPassword}
-                        variant="outlined"
+                        variant='outlined'
+                        type='password'
                       />
-                    </FormControl>
+                    </FormControlWei>
                   </div>
                   <br />
 
                   {/* 確認密碼 */}
                   <div className={classes.inputGroup}>
-                    <Typography variant="h5">確認密碼</Typography>
-                    <FormControl className={classes.inline}>
+                    <Typography variant='h5'>確認密碼</Typography>
+                    <FormControlWei className={classes.inline}>
                       <TextField
                         required
-                        id="confirm-password"
-                        label="請與新密碼一致"
+                        id='confirm-password'
+                        label='請與新密碼一致'
                         onChange={handleConfirmPasswordChange}
                         value={confirmPassword}
-                        variant="outlined"
+                        variant='outlined'
+                        type='password'
                       />
-                    </FormControl>
+                    </FormControlWei>
                   </div>
                 </FormGroup>
                 <br />
                 <div className={classes.btnGroup}>
                   <Button
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     className={classes.button}
                     startIcon={<SaveIcon />}
                     onClick={onSave}
@@ -175,8 +189,8 @@ const RenewMemberPwd = () => {
                     Save
                   </Button>
                   <Button
-                    variant="contained"
-                    color="secondary"
+                    variant='contained'
+                    color='secondary'
                     className={classes.button}
                     startIcon={<DeleteIcon />}
                     onClick={onDelete}

@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     width: '8rem',
     padding: '.3rem 0 .3rem 1rem',
     fontSize: '1.8rem',
-    marginLeft: '1rem',
+    marginLeft: '3rem',
     border: 'none',
     borderBottom: '2px solid #888',
     color: '#666'
@@ -50,6 +50,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.5rem'
   },
   bidBtn: {
+    marginLeft: '4.5rem',
     fontSize: '1.5rem',
     margin: '0 1rem'
   },

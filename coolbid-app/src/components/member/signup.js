@@ -19,6 +19,7 @@ const LoginContainer = styled.div`
   justify-content: center;
   .account {
     width: 70%;
+    font-size: 2rem;
   }
 `
 const SignupContainer = styled.div`
@@ -26,6 +27,7 @@ const SignupContainer = styled.div`
 `
 const ButtonContainer = styled.div`
   text-align: center;
+  padding: 4rem;
 `
 
 const Signup = () => {
@@ -122,7 +124,7 @@ const Signup = () => {
     }
   }
   return (
-    <div style={{ marginTop: '20rem', minHeight: 'calc(100vh - 125px)' }}>
+    <div style={{ marginTop: '16rem', minHeight: 'calc(100vh - 125px)' }}>
       <TitleContainer>
         <p className="logTitle" onClick={demo}>
           註冊會員

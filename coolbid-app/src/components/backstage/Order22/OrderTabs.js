@@ -17,7 +17,7 @@ function OrderTabs() {
           </Link>
         </li>
         <li>
-          <Link href="#">待出貨</Link>
+          <Link href="#" style={{ color: '#edae10' }}>待出貨</Link>
         </li>
         <li>
           <Link href="#">運送中</Link>

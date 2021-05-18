@@ -62,7 +62,8 @@ function Chat(props) {
     const msg = {
       user: user.nickname,
       text: text,
-      time: moment().format('LTS')
+      time: moment().format('LTS'),
+      memberId: user.memberId
     }
     ws.emit('sendMsg', msg)
     setText('')
@@ -131,7 +132,7 @@ function Chat(props) {
               <ListItemAvatar>
                 <Avatar
                   alt={item.user + 'Sharp'}
-                  src={`/imgs/sellerPic/${user.memberId}.jpg`}
+                  src={`/imgs/sellerPic/${item.memberId}.jpg`}
                 />
               </ListItemAvatar>
               <ListItemText

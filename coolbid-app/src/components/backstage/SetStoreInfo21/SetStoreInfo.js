@@ -34,7 +34,8 @@ function SetStoreInfo() {
               <form>
                 <div className="form_row">
                   <label>
-                    賣場名稱:&emsp;&emsp;
+                    賣場名稱:
+                    <br />
                     <TextField
                       label="賣場名稱"
                       value={data.StoreTitle}

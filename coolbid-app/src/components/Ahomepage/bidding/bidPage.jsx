@@ -27,7 +27,7 @@ import BidFunc from './bidFunc'
 const BidPage = props => {
   const classes = useStyles()
 
-  const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  // const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
 
   let [toggle, setToggle] = useState(true)
   const [product, setProduct] = useState([])
@@ -88,20 +88,23 @@ const BidPage = props => {
 
   // 時間截止
   const lastTime = dateObject - Date.now()
-  if (lastTime <= 0) {
-    axios({
-      method: 'post',
-      url: `http://localhost:3001/product/${props.originPId}`,
-      'Content-Type': 'application/json',
-      data: {
-        isDirectBuy: false,
-        directBidPrice: nowBidPrice,
-        id: props.pId,
-        memberId: userInfo.memberId,
-        productStatusId: 5
-      }
-    }).then(res => console.log(res.data))
-  }
+  useEffect(() => {
+    if (lastTime <= 0) {
+      axios({
+        method: 'post',
+        url: `http://localhost:3001/product/${props.originPId}`,
+        'Content-Type': 'application/json',
+        data: {
+          isDirectBuy: false,
+          isTimeUp: true,
+          directBidPrice: nowBidPrice,
+          id: props.pId,
+          finalBidderId: product[1].length === 0 ? '' : product[1][0].memberId,
+          productStatusId: 5
+        }
+      }).then(res => console.log(res.data))
+    }
+  }, [])
 
   return (
     <>
