@@ -23,6 +23,11 @@ export default function Login(props) {
   const [account, setAccount] = useState('')
   const [pwd, setPwd] = useState('')
 
+  const demo = () => {
+    setAccount('joutzu')
+    setPwd('12345')
+  }
+
   const handlelogin = () => {
     axios
       .post('http://localhost:3001/member/signin', {
@@ -58,7 +63,7 @@ export default function Login(props) {
   return (
     <>
       <LoginContainer>
-        <p className="logTitle">登入會員</p>
+        <p className="logTitle" onClick={demo}>登入會員</p>
         <span className="title2"> 帳號 </span>
         <br />
         <input

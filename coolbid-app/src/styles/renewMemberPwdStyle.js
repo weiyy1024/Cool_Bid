@@ -2,11 +2,13 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   inline: {
-    width: '300px',
+    width: '30rem',
     marginLeft: '2rem'
   },
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    fontSize: '1.7rem',
+    marginLeft: '3rem'
   },
   breadcrumb: {
     padding: '2rem 0',

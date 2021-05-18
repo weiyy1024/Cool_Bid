@@ -10,11 +10,6 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.7rem',
     marginLeft: '3rem'
   },
-  imgUpload: {
-    width: '40rem',
-    height: '40rem',
-    border: '1px solid black'
-  },
   breadcrumb: {
     padding: '2rem 0',
     fontSize: '2rem'

@@ -116,10 +116,9 @@ const Signup = () => {
             title: e.data,
             icon: 'success',
             button: '開始競標！'
+          }).then(() => {
+            window.location.href = '/member/signin'
           })
-        })
-        .then(() => {
-          window.location.href = '/member/signin'
         })
     }
   }

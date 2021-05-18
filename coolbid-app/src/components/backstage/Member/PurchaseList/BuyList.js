@@ -6,23 +6,26 @@ import '../../../SASS/Components.scss'
 import '../../../SASS/Main.scss'
 import NestedList from '../../Main/MemberList'
 import axios from 'axios'
-import Table from '@material-ui/core/Table'
-import TableRow from '@material-ui/core/TableRow'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableBody from '@material-ui/core/TableBody'
+import {
+  Table,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableBody,
+  Breadcrumbs,
+  Link,
+  Modal,
+  Backdrop,
+  Fade,
+  Stepper,
+  Step,
+  StepLabel
+} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons'
 import { makeStyles } from '@material-ui/core/styles'
-// import Breadcrumbs from '../../Main/Breadcrumbs'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   itemTitle: {
     fontSize: 20
   },
@@ -48,6 +51,10 @@ const useStyles = makeStyles((theme) => ({
   },
   imgStyle: {
     width: 80
+  },
+  breadcrumb: {
+    padding: '2rem 0',
+    fontSize: '2rem'
   }
 }))
 
@@ -56,6 +63,9 @@ const getSteps = () => {
 }
 
 const BuyList = () => {
+  const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  console.log(userInfo.memberId)
+
   const steps = getSteps()
   const [open, setOpen] = React.useState(false)
 
@@ -69,14 +79,23 @@ const BuyList = () => {
   const classes = useStyles()
   const [data, setData] = useState([])
   useEffect(() => {
-    console.log('hiiiiii')
     axios({
-      method: 'get',
+      method: 'post',
       baseURL: 'http://localhost:3001',
       url: '/member/purchase',
-      'Content-Type': 'application/json'
-    }).then((a) => setData(a.data))
+      'Content-Type': 'application/json',
+      data: {
+        memberId: userInfo.memberId
+      }
+    }).then(res => setData(res.data))
   }, [])
+
+  console.log(data)
+  let totPrice = 0
+  data.map(item => {
+    totPrice += item.nowPrice
+    return totPrice
+  })
 
   return (
     <div className="sellerBackend_Member_Wrap">
@@ -86,10 +105,14 @@ const BuyList = () => {
         </div>
         <div className="backstageRight">
           <div className="backstageRightContainer">
-            <div className="breadcrumbsArea">
-              買家專區/購買清單
-              {/* <Breadcrumbs /> */}
-            </div>
+            <Breadcrumbs aria-label='breadcrumb' className={classes.breadcrumb}>
+                <Link color='inherit' href='http://localhost:3000/member/edit'>
+                  會員中心
+                </Link>
+                <Link color='inherit' href='http://localhost:3000/member/purchase'>
+                  購買清單
+                </Link>
+              </Breadcrumbs>
             <div>
               <OrderTabs />
               <TableContainer className="Table_container">
@@ -100,40 +123,40 @@ const BuyList = () => {
                         <TableHead key={index}>
                           <TableRow>
                             <TableCell colSpan={4} className={classes.itemTxt}>
-                              買家:{item.shopName}
+                              賣家：{item.shopName}{' '}
                               <FontAwesomeIcon icon={faCommentDots} />
                             </TableCell>
                             <TableCell className={classes.itemTxt}>
-                              訂單編號:{item.orderId}
+                              訂單編號：{item.orderId}
                             </TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTitle}
                             >
                               圖片
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTitle}
                             >
                               項目
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTitle}
                             >
                               日期
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTitle}
                             >
                               狀態
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTitle}
                             >
                               價錢
@@ -144,7 +167,7 @@ const BuyList = () => {
                         <TableBody>
                           <TableRow>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTxt}
                             >
                               <img
@@ -153,25 +176,27 @@ const BuyList = () => {
                               />
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTxt}
                             >
                               {item.productName}
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTxt}
                             >
-                              {item.orderTime}
+                              {new Date(
+                                Date.parse(item.orderTime)
+                              ).toLocaleString()}
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTxt}
                             >
                               訂單成立
                             </TableCell>
                             <TableCell
-                              align="center"
+                              align='center'
                               className={classes.itemTxt}
                             >
                               {item.nowPrice}
@@ -180,7 +205,7 @@ const BuyList = () => {
 
                           <TableRow>
                             <TableCell colSpan={4} className={classes.itemTxt}>
-                              狀態:
+                              狀態：
                               <a
                                 onClick={handleOpen}
                                 style={{
@@ -190,32 +215,35 @@ const BuyList = () => {
                               >
                                 {item.orderStatusBuyer}
                               </a>
-                              &emsp;{item.orderStatusDate}
+                              &emsp;
+                              {new Date(
+                                Date.parse(item.orderStatusDate)
+                              ).toLocaleString()}
                             </TableCell>
-                            <TableCell
-                              align="center"
+                            {/* <TableCell
+                              align='center'
                               className={classes.itemTxt}
                             >
-                              總計:
-                            </TableCell>
+                              總計：{totPrice} 元
+                            </TableCell> */}
                           </TableRow>
                           <TableRow>
                             <TableCell colSpan={5}>
                               <input
-                                type="submit"
-                                value="完成訂單"
-                                className="button SetStoreInfo_Submit"
+                                type='submit'
+                                value='完成訂單'
+                                className='button SetStoreInfo_Submit'
                               />
                               <input
-                                type="submit"
-                                value="評價"
-                                className="button SetStoreInfo_Submit"
+                                type='submit'
+                                value='評價'
+                                className='button SetStoreInfo_Submit'
                               />
 
                               <input
-                                type="submit"
-                                value="退貨/退款"
-                                className="button SetStoreInfo_Submit"
+                                type='submit'
+                                value='退貨/退款'
+                                className='button SetStoreInfo_Submit'
                               />
                             </TableCell>
                           </TableRow>

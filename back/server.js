@@ -265,7 +265,14 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, isDirectBuy, directBidPrice, productStatusId, memberId, isTimeUp } = req.body
+  let {
+    id,
+    isDirectBuy,
+    directBidPrice,
+    productStatusId,
+    memberId,
+    isTimeUp
+  } = req.body
 
   if (isDirectBuy) {
     conn.query(
@@ -836,14 +843,16 @@ app.get('/orderProduct/:info', function (req, res) {
 
 //--------------------------------------------------------
 //夏會員中心_訂購清單
-app.get('/member/purchase', function (req, res) {
+app.post('/member/purchase', function (req, res) {
+  const { memberId } = req.body
   let sql =
-    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId'
-  conn.query(sql, function (err, result) {
+    'SELECT o.orderId, shopName, productName, orderTime, nowPrice, orderStatusBuyer, productId, orderStatusDate FROM `order` as o join `product` as p on o.orderId = p.orderId join `member` as m on o.shopId = m.memberId join `orderstatusdetail` as osd on o.orderId = osd.orderId join `orderstatus` as os on osd.orderStatusId = os.orderStatusId WHERE buyerId = ?'
+  conn.query(sql, [memberId], function (err, result) {
     if (err) {
       console.log(err)
     }
     res.send(result)
+    console.log(result)
   })
 })
 

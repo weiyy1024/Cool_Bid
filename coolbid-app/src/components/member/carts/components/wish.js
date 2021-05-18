@@ -22,16 +22,6 @@ const Shop = styled.div`
     .cartTitle {
       display: flex;
       background-color: #d9d7d7;
-      .check {
-        width: 2%;
-        font-size: 2.4rem;
-        text-align: center;
-        padding: 1rem;
-        .checkAll {
-          width: 1.8rem;
-          height: 1.8rem;
-        }
-      }
       .info {
         width: 33%;
         font-size: 2rem;
@@ -49,7 +39,7 @@ const Shop = styled.div`
           height: 10rem;
           object-fit: scale-down;
         }
-        padding: 1rem;
+        padding-top: 0.5rem;
       }
       .infoProductName {
         a {
@@ -70,15 +60,11 @@ const Shop = styled.div`
         -webkit-box-orient: vertical;
         white-space: normal;
       }
-      .check {
-        width: 2%;
-        font-size: 2.4rem;
+      .timer{
+        width: 33%;
+        font-size: 1.8rem;
         text-align: center;
-        padding: 1rem;
-        .checkEach {
-          width: 1.8rem;
-          height: 1.8rem;
-        }
+        line-height: 10rem;
       }
       .info {
         width: 33%;
@@ -86,6 +72,13 @@ const Shop = styled.div`
         text-align: center;
         line-height: 10rem;
       }
+      // .price{
+      //   width: 33%;
+      //   font-size: 2.4rem;
+      //   text-align: center;
+      //   line-height: 10rem;
+      //   margin-left: 10rem
+      // }
       .submitBtn {
         font-size: 1.8rem;
       }
@@ -231,7 +224,9 @@ export default function Wish() {
                   {item.productName}
                 </NavLink>
               </div>
+              <div className="timer">
               <Timer endTime={item.endTime} />
+              </div>
               <div className="info">{item.startPrice}</div>
               <div className="info">
                 <Button
@@ -274,7 +269,9 @@ export default function Wish() {
                   {item.productName}
                 </NavLink>
               </div>
+              <div className="timer">
               <Timer endTime={item.endTime} />
+              </div>
               <div className="info">{item.nowPrice}</div>
               <div className="info">
                 <Button
