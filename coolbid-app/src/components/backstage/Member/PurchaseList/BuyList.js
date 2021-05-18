@@ -63,6 +63,9 @@ const getSteps = () => {
 }
 
 const BuyList = () => {
+  const userInfo = JSON.parse(window.sessionStorage.getItem('userinfo'))
+  console.log(userInfo.memberId)
+
   const steps = getSteps()
   const [open, setOpen] = React.useState(false)
 
@@ -77,11 +80,14 @@ const BuyList = () => {
   const [data, setData] = useState([])
   useEffect(() => {
     axios({
-      method: 'get',
+      method: 'post',
       baseURL: 'http://localhost:3001',
       url: '/member/purchase',
-      'Content-Type': 'application/json'
-    }).then((a) => setData(a.data))
+      'Content-Type': 'application/json',
+      data: {
+        memberId: userInfo.memberId
+      }
+    }).then(res => setData(res.data))
   }, [])
 
   console.log(data)
