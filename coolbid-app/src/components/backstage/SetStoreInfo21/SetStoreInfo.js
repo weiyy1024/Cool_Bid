@@ -34,7 +34,8 @@ function SetStoreInfo() {
               <form>
                 <div className="form_row">
                   <label>
-                    賣場名稱:<br/>
+                    賣場名稱:
+                    <br />
                     <TextField
                       label="賣場名稱"
                       value={data.StoreTitle}
@@ -46,16 +47,21 @@ function SetStoreInfo() {
                 </div>
 
                 <div className="form_row">
-                <label>賣場圖片:<br/>
-                <TextField
-                    type="file"
-                    name="picture"
-                    variant="outlined"
-                    label="direct"
-                    className="mininput"
-                    InputLabelProps={{ shrink: true }}
-                  />
-                </label>
+                  <label>
+                    匯率設定:&emsp;&emsp;
+                    <TextField
+                      label="美金匯率"
+                      name="StoreTitle"
+                      variant="outlined"
+                    />
+                  </label>
+                </div>
+                <div className="form_row">
+                  <label>
+                    賣場圖片:&emsp;
+                    <input type="file"></input>
+                    <p></p>
+                  </label>
                 </div>
 
                 <div className="form_row">

@@ -10,9 +10,9 @@ var mysql = require('mysql')
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'UnicornglLen3550',
-  database: 'coolbid',
-  port: 3306,
+  password: 'root',
+  database: 'coolBidFinal',
+  port: 8889,
   multipleStatements: true
 })
 //-----------------------------------------------------
@@ -265,7 +265,14 @@ app.get('/product/:product_id', function (req, res) {
 // 寫入目前價格
 app.post('/product/:product_id', function (req, res, next) {
   let para = req.params.product_id
-  let { id, isDirectBuy, directBidPrice, productStatusId, memberId, isTimeUp } = req.body
+  let {
+    id,
+    isDirectBuy,
+    directBidPrice,
+    productStatusId,
+    memberId,
+    isTimeUp
+  } = req.body
 
   if (isDirectBuy) {
     conn.query(

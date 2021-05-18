@@ -87,7 +87,7 @@ const Shop = styled.div`
         a:hover {
           color: #edaf11;
         }
-        width: 30%;
+        width: 26%;
         font-size: 1.8rem;
         text-align: center;
         line-height: 3.2rem;
@@ -99,7 +99,7 @@ const Shop = styled.div`
       }
       .info {
         color: grey;
-        width: 30%;
+        width: 24%;
         font-size: 2rem;
         text-align: center;
         line-height: 9rem;
