@@ -251,11 +251,11 @@ const SortList = styled.div`
     }
   }
 `
-const Bread = styled.div`
-  font-size: 2rem;
-  margin: 3rem;
-  width: 100%;
-`
+// const Bread = styled.div`
+//   font-size: 2rem;
+//   margin: 3rem;
+//   width: 100%;
+// `
 
 // const Page = styled.div`
 //   width: 35rem;
@@ -378,7 +378,7 @@ export default function Search(props) {
         </ul>
       </nav>
       {/* Breadcrumbs */}
-      <Bread>首頁/競標區/包包類</Bread>
+      {/* <Bread>首頁/競標區/包包類</Bread> */}
       {/* sort */}
       <SortList>
         <div onClick={() => changeSort(1)}>
