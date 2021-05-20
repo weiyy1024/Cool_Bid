@@ -39,7 +39,7 @@ export default function Ahomepage() {
         <img className="AhomepageImg" src={forA}></img>
       </div>
       {/* 麵包屑 */}
-      <p className="breadcrumb">首頁/Ahomepage</p>
+      <p className="breadcrumb">首頁/競標區</p>
       {/* 分類選項 */}
       <div className="category">
         {category.map((item) => (

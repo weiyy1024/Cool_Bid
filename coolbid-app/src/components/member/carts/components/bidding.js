@@ -407,6 +407,7 @@ export default function Bidding(props) {
 
   // 得有出過標的商品ID
   useEffect(() => {
+    // 挑選出有下標過的商品
     axios({
       method: 'get',
       baseURL: 'http://localhost:3001',
@@ -417,6 +418,7 @@ export default function Bidding(props) {
         let bP = res.data.map((item) => item.productId)
         bP = '(' + bP.toString() + ')'
         setBiddingProduct(bP)
+        console.log(res.data)
       })
       .then(() => {
         // 篩選競標中商品(status=競標中)
