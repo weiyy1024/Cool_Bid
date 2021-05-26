@@ -363,7 +363,10 @@ function Prod(props) {
       </div>
       <div className="picInfo">
         <NavLink to={'/bidding/product/product?=' + item.productId}>
-          <img src={'/imgs/' + item.productId + '.jpg'} />
+          <img
+            style={{ objectFit: 'scale-down' }}
+            src={'/imgs/' + item.productId + '.jpg'}
+          />
         </NavLink>
       </div>
       <div className="infoProductName">
